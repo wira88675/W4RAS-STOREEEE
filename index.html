@@ -3,113 +3,172 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | ONTOP STORE</title>
+    <title>W4RAS STORE | PREMIUM MARKET</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0e0e12; color: white; scroll-behavior: smooth; }
-        .glass { background: rgba(22, 22, 28, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
         
-        /* Card Styling */
-        .card-discord { transition: all 0.3s ease; border: 1px solid #27272a; position: relative; overflow: hidden; background: #16161c; display: flex; flex-direction: column; }
-        .card-discord:hover { transform: translateY(-8px); border-color: #22c55e; box-shadow: 0 0 30px rgba(34, 197, 94, 0.15); }
+        :root {
+            --primary-green: #22c55e;
+            --dark-bg: #050505;
+        }
+
+        body { 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            background-color: var(--dark-bg); 
+            color: white; 
+            scroll-behavior: smooth;
+            overflow-x: hidden;
+        }
+
+        /* Background Elegan Kece */
+        .bg-mesh {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: radial-gradient(circle at 50% 50%, #111827 0%, #050505 100%);
+        }
+
+        .mesh-blob {
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
+            filter: blur(80px);
+            animation: move 20s infinite alternate;
+        }
+
+        @keyframes move {
+            from { transform: translate(-10%, -10%); }
+            to { transform: translate(20%, 20%); }
+        }
+
+        .glass { 
+            background: rgba(255, 255, 255, 0.03); 
+            backdrop-filter: blur(20px); 
+            border: 1px solid rgba(255, 255, 255, 0.08); 
+        }
         
-        /* Tombol Hijau Global */
-        .btn-green { background-color: #22c55e; transition: 0.3s; border-radius: 9999px; }
-        .btn-green:hover { background-color: #16a34a; transform: scale(1.02); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+        /* Card Styling Kece */
+        .card-discord { 
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            background: rgba(18, 18, 18, 0.6);
+            backdrop-filter: blur(10px);
+        }
+
+        .card-discord:hover { 
+            transform: translateY(-12px) scale(1.02); 
+            border-color: var(--primary-green); 
+            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1); 
+        }
         
-        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1rem; margin-bottom: 1rem; background: #1a1a24; display: flex; justify-content: center; align-items: center; }
-        .img-container img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; filter: grayscale(50%); }
-        .card-discord:hover img { filter: grayscale(0%); transform: scale(1.1); }
+        .btn-green { 
+            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
+            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            border-radius: 14px;
+        }
+
+        .btn-green:hover { 
+            transform: translateY(-2px);
+            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
+            filter: brightness(1.1);
+        }
         
-        /* Modal & UI Cart */
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); }
-        .modal-content { background: #16161c; margin: 5% auto; padding: 25px; border: 1px solid rgba(34, 197, 94, 0.3); width: 90%; max-width: 420px; border-radius: 28px; position: relative; }
-        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 20px; cursor: pointer; color: #555; transition: 0.3s; }
-        .close-modal:hover { color: white; }
-        .qris-frame { background: white; padding: 12px; border-radius: 18px; margin-top: 15px; }
-        #cart-nav { background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); cursor: pointer; }
+        .img-container { 
+            width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; 
+            background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; 
+        }
+
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); animation: fadeIn 0.3s ease; }
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        .modal-content { background: #0f0f13; margin: 5% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 90%; max-width: 400px; border-radius: 30px; }
     </style>
 </head>
-<body class="pb-24">
+<body>
 
-    <nav class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center">
+    <div class="bg-mesh">
+        <div class="mesh-blob" style="top: -10%; left: -10%;"></div>
+        <div class="mesh-blob" style="bottom: -10%; right: -10%; animation-delay: -5s;"></div>
+    </div>
+
+    <nav class="sticky top-0 z-50 glass px-8 py-5 flex justify-between items-center mx-4 mt-4 rounded-3xl">
         <div class="flex items-center gap-3">
-            <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-10 h-10 rounded-full border-2 border-[#22c55e]">
-            <h1 class="text-xl font-black tracking-tighter italic">W4RAS<span class="text-[#22c55e]">STORE</span></h1>
+            <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-10 h-10 rounded-full border border-green-500/50 shadow-lg shadow-green-500/20">
+            <h1 class="text-xl font-black tracking-tighter italic">W4RAS<span class="text-green-500">STORE</span></h1>
         </div>
         
-        <div class="flex items-center gap-3">
-            <button onclick="checkout()" id="cart-nav" class="hidden flex items-center gap-2 px-4 py-2 rounded-full transition">
+        <div class="flex items-center gap-4">
+            <button onclick="checkout()" id="cart-nav" class="hidden flex items-center gap-2 px-5 py-2.5 rounded-2xl glass transition-all border-green-500/30">
                 <div class="relative">
-                    <i class="fa-solid fa-cart-shopping text-sm text-[#22c55e]"></i>
-                    <span id="cart-count" class="absolute -top-3 -right-3 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-green-500">0</span>
+                    <i class="fa-solid fa-cart-shopping text-sm text-green-500"></i>
+                    <span id="cart-count" class="absolute -top-3 -right-3 bg-white text-black text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
                 </div>
             </button>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-5 py-2 text-xs font-bold text-white flex items-center gap-2 shadow-lg shadow-green-500/20">
-                <i class="fa-brands fa-discord"></i> JOIN
+            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-6 py-2.5 text-xs font-bold text-white uppercase tracking-widest shadow-lg shadow-green-500/10">
+                <i class="fa-brands fa-discord mr-2"></i> Join
             </a>
         </div>
     </nav>
 
-    <div class="relative pt-24 pb-20 px-4 overflow-hidden text-center">
-        <div class="max-w-6xl mx-auto relative z-10">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-tight uppercase italic">
-                W4RAS <span class="text-[#22c55e]">STORE</span>
-            </h2>
-            <p class="text-slate-400 max-w-2xl mx-auto mb-10 text-sm font-medium uppercase tracking-widest italic">Number one destination for quality accounts</p>
-        </div>
-        <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
-            <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#22c55e] rounded-full blur-[130px]"></div>
-        </div>
+    <div class="relative pt-32 pb-24 px-4 text-center">
+        <span class="px-4 py-2 rounded-full glass text-[10px] font-bold text-green-500 uppercase tracking-[0.3em] mb-6 inline-block">Trusted Gaming Market</span>
+        <h2 class="text-6xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-none">
+            UNLEASH <br> <span class="text-green-500">THE POWER.</span>
+        </h2>
+        <p class="text-slate-400 max-w-xl mx-auto text-sm font-medium leading-relaxed">Penyedia akun premium kualitas bintang lima dengan harga ramah dikantong.</p>
     </div>
 
-    <main id="produk" class="max-w-6xl mx-auto px-4 mt-12">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+    <main class="max-w-6xl mx-auto px-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
             
-            <div class="card-discord p-4 rounded-3xl">
+            <div class="card-discord p-5 rounded-[2.5rem]">
                 <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png?ex=698ed61c&is=698d849c&hm=0ea8aa57a66d893c107fcb1c4fcd3cc95a638e80e29af6f9e7c43ad5fd3e16ce&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase italic">ROCKSTAR ACCOUNT</h4>
+                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Rockstar Account</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center"><p class="text-lg font-black text-[#22c55e]">Rp 14.999</p></div>
-                    <button onclick="addToCart('Rockstar Account', 14999)" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
+                    <p class="text-xl font-black text-green-500 mb-4">Rp 14.999</p>
+                    <button onclick="addToCart('Rockstar Account', 14999)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                 </div>
             </div>
 
-            <div class="card-discord p-4 rounded-3xl">
+            <div class="card-discord p-5 rounded-[2.5rem]">
                 <div class="img-container"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase italic">ACCOUNT DISCORD</h4>
+                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Discord Account</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center"><p class="text-lg font-black text-[#22c55e]">Rp 15.000</p></div>
-                    <button onclick="addToCart('Discord Account', 15000)" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
+                    <p class="text-xl font-black text-green-500 mb-4">Rp 15.000</p>
+                    <button onclick="addToCart('Discord Account', 15000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                 </div>
             </div>
 
-            <div class="card-discord p-4 rounded-3xl">
+            <div class="card-discord p-5 rounded-[2.5rem]">
                 <div class="img-container"><img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase italic">SPOTIFY PREMIUM</h4>
+                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Spotify Premium</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center"><p class="text-lg font-black text-[#22c55e]">Rp 15.000</p></div>
-                    <button onclick="addToCart('Spotify Premium', 15000)" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
+                    <p class="text-xl font-black text-green-500 mb-4">Rp 15.000</p>
+                    <button onclick="addToCart('Spotify Premium', 15000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                 </div>
             </div>
 
-            <div class="card-discord p-4 rounded-3xl">
+            <div class="card-discord p-5 rounded-[2.5rem]">
                 <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase italic">OPTIMIZE PC</h4>
+                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">PC Optimize</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center"><p class="text-lg font-black text-[#22c55e]">Rp 55.000</p></div>
-                    <button onclick="addToCart('PC Optimize', 55000)" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
+                    <p class="text-xl font-black text-green-500 mb-4">Rp 55.000</p>
+                    <button onclick="addToCart('PC Optimize', 55000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                 </div>
             </div>
 
-            <div class="card-discord p-4 rounded-3xl">
+            <div class="card-discord p-5 rounded-[2.5rem]">
                 <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase italic">STEAM ACCOUNT</h4>
+                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Steam Account</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center"><p class="text-lg font-black text-[#22c55e]">Rp 1.500</p></div>
-                    <button onclick="addToCart('Steam Account', 1500)" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
+                    <p class="text-xl font-black text-green-500 mb-4">Rp 1.500</p>
+                    <button onclick="addToCart('Steam Account', 1500)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                 </div>
             </div>
 
@@ -119,23 +178,17 @@
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="flex items-center gap-3 mb-6">
-                <div class="bg-green-500/20 p-3 rounded-xl"><i class="fa-solid fa-cart-shopping text-green-500"></i></div>
-                <h2 class="text-xl font-bold">Beli Produk</h2>
-            </div>
-            <div class="space-y-4">
+            <h2 class="text-2xl font-black mb-6 italic uppercase tracking-tighter">Checkout</h2>
+            <div class="space-y-5">
                 <div>
-                    <label class="text-[10px] uppercase font-bold text-gray-500">Email Penerima Akun</label>
-                    <input type="email" id="buyerEmail" placeholder="Email untuk menerima akun" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl mt-1 focus:border-green-500 outline-none text-sm transition">
+                    <label class="text-[9px] uppercase font-black text-slate-500 tracking-[0.2em]">Email Penerima</label>
+                    <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mt-2 focus:border-green-500 outline-none text-sm transition-all">
                 </div>
-                <div class="bg-white/5 p-4 rounded-2xl">
-                    <p class="text-[10px] uppercase font-bold text-gray-500 mb-1">Total Pembayaran</p>
-                    <div class="flex items-center gap-2 text-green-500">
-                        <i class="fa-solid fa-wallet text-sm"></i>
-                        <span id="totalDisplay" class="text-2xl font-black">Rp 0</span>
-                    </div>
+                <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center">
+                    <p class="text-[9px] uppercase font-bold text-green-500/60 mb-1">Total Bayar</p>
+                    <span id="totalDisplay" class="text-3xl font-black text-green-500 tracking-tighter">Rp 0</span>
                 </div>
-                <button onclick="showQRIS()" class="w-full btn-green py-4 font-black uppercase text-xs text-white tracking-widest">Bayar Sekarang (QRIS)</button>
+                <button onclick="showQRIS()" class="w-full btn-green py-4 font-black uppercase text-[11px] text-white tracking-[0.2em]">Bayar via QRIS</button>
             </div>
         </div>
     </div>
@@ -143,28 +196,25 @@
     <div id="qrisModal" class="modal">
         <div class="modal-content text-center">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 class="text-xl font-bold mb-4 text-left">Pembayaran QRIS</h2>
-            <div class="bg-white/5 p-4 rounded-xl flex justify-between items-center mb-4 text-left">
-                <div>
-                    <p class="text-[9px] text-gray-500 uppercase font-bold">Order ID</p>
-                    <p id="orderID" class="text-xs font-mono text-green-500 font-bold">ORD-GENERATING...</p>
+            <div class="text-left mb-6">
+                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Order ID</p>
+                <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl mt-1">
+                    <p id="orderID" class="text-xs font-mono text-green-500 font-bold">ORD-XXXXXXXX</p>
+                    <button onclick="copyOrderID()" class="text-green-500 hover:scale-110 transition"><i class="fa-solid fa-copy"></i></button>
                 </div>
-                <button onclick="copyOrderID()" class="bg-green-500/10 hover:bg-green-500/20 p-2 rounded-lg transition">
-                    <i class="fa-solid fa-copy text-green-500"></i>
-                </button>
             </div>
-            <div class="qris-frame flex flex-col items-center">
-                <img src="https://cdn.discordapp.com/attachments/1464997913695358978/1464999511788093440/QRIS.png?ex=698e94dd&is=698d435d&hm=fecb8bc9557639bc4a29799f6d2edc488f0f920784871a574e62782da9665f5d" class="w-full max-w-[220px] rounded-lg">
-                <p class="text-black text-[9px] font-black mt-3 uppercase">Scan to Pay • W4RAS STORE</p>
+            <div class="bg-white p-3 rounded-3xl inline-block shadow-2xl shadow-green-500/20">
+                <img src="https://cdn.discordapp.com/attachments/1464997913695358978/1464999511788093440/QRIS.png?ex=698e94dd&is=698d435d&hm=fecb8bc9557639bc4a29799f6d2edc488f0f920784871a574e62782da9665f5d" class="w-full max-w-[240px]">
             </div>
-            <button onclick="window.open('https://discord.gg/aB5HqUkNQK')" class="w-full mt-4 bg-[#5865F2] hover:bg-[#4752c4] py-3 rounded-xl text-[10px] font-black uppercase text-white transition flex items-center justify-center gap-2">
-                <i class="fa-brands fa-discord"></i> Kirim Bukti ke Discord
+            <p class="text-[10px] font-black mt-4 uppercase tracking-tighter text-slate-400 italic italic">Scan to Pay • W4RAS Store</p>
+            <button onclick="window.open('https://discord.gg/aB5HqUkNQK')" class="w-full mt-6 bg-[#5865F2] py-4 rounded-2xl text-[10px] font-black uppercase text-white transition-all hover:brightness-110 flex items-center justify-center gap-2">
+                <i class="fa-brands fa-discord text-lg"></i> Konfirmasi ke Discord
             </button>
         </div>
     </div>
 
-    <footer class="mt-24 border-t border-white/5 p-12 text-center text-slate-600 text-[10px] font-black uppercase tracking-[0.4em]">
-        &copy; 2026 W4RAS STORE - BY WIRA
+    <footer class="mt-32 p-12 text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] opacity-40">
+        &copy; 2026 W4RAS STORE • PRO MARKET
     </footer>
 
     <script>
@@ -173,7 +223,6 @@
         function addToCart(name, price) {
             cart.push({ name, price });
             updateCartUI();
-            alert(name + " ditambahkan ke keranjang!");
         }
 
         function updateCartUI() {
@@ -181,6 +230,7 @@
             const count = document.getElementById('cart-count');
             if (cart.length > 0) {
                 btn.classList.remove('hidden');
+                btn.classList.add('flex');
                 count.innerText = cart.length;
             }
         }
@@ -192,22 +242,19 @@
         }
 
         function showQRIS() {
-            if(!document.getElementById('buyerEmail').value) return alert("Isi email dulu bos!");
-            const randomID = "ORD" + Math.floor(Math.random() * 900000000 + 100000000);
-            document.getElementById('orderID').innerText = randomID;
+            if(!document.getElementById('buyerEmail').value) return alert("Email jangan kosong ya!");
+            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random() * 9000000 + 1000000);
             document.getElementById('paymentModal').style.display = "none";
             document.getElementById('qrisModal').style.display = "block";
         }
 
         function copyOrderID() {
-            const id = document.getElementById('orderID').innerText;
-            navigator.clipboard.writeText(id);
-            alert("Order ID disalin: " + id);
+            navigator.clipboard.writeText(document.getElementById('orderID').innerText);
+            alert("Order ID Berhasil Disalin!");
         }
 
         function closeModal() {
-            document.getElementById('paymentModal').style.display = "none";
-            document.getElementById('qrisModal').style.display = "none";
+            document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
         }
 
         window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
