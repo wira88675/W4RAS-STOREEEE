@@ -34,11 +34,9 @@
 
         .card-discord { background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; border-radius: 2rem; }
         .card-discord:hover { border-color: var(--primary-green); transform: translateY(-10px); }
-        .img-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border-radius: 1.5rem; overflow: hidden; }
-        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain; }
-
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
-        .modal-content { background: #0f0f13; margin: 5% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.3); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
+        
+        .img-container { width: 100%; height: 180px; display: flex; justify-content: center; align-items: center; background: rgba(255,255,255,0.02); border-radius: 1.5rem; overflow: hidden; margin-bottom: 1rem; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; }
     </style>
 </head>
 <body>
@@ -55,39 +53,19 @@
     <div id="shop-section" class="max-w-4xl mx-auto px-6 mb-12">
         <div class="flex flex-wrap justify-center gap-3 mb-6">
             <button onclick="filterCategory('FiveM')" class="cat-pill active" id="cat-FiveM"><i class="fa-solid fa-gamepad"></i> FiveM</button>
-            <button onclick="filterCategory('Accounts')" class="cat-pill" id="cat-Accounts"><i class="fa-solid fa-user-shield"></i> Accounts</button>
             <button onclick="filterCategory('Cloud Phone')" class="cat-pill" id="cat-Cloud"><i class="fa-solid fa-mobile-screen-button"></i> Cloud Phone</button>
-            <button onclick="filterCategory('All')" class="cat-pill" id="cat-All"><i class="fa-solid fa-border-all"></i> All</button>
+            <button onclick="filterCategory('All')" class="cat-pill" id="cat-All"><i class="fa-solid fa-border-all"></i> All Products</button>
         </div>
 
         <div class="search-container flex items-center px-4 py-4">
             <i class="fa-solid fa-magnifying-glass text-slate-500 mr-3"></i>
-            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Cari Discord, Steam, Rockstar..." class="bg-transparent w-full outline-none text-white text-sm">
+            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Cari Rockstar, Steam, atau Discord..." class="bg-transparent w-full outline-none text-white text-sm">
         </div>
     </div>
 
     <main class="max-w-6xl mx-auto px-6 pb-32">
         <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
-
-    <div id="adminModal" class="modal">
-        <div class="modal-content text-white">
-            <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center">Admin Panel</h2>
-            <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
-                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="number" id="p-price" placeholder="Harga (Angka)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="text" id="p-img" placeholder="URL Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <select id="p-cat" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-slate-400">
-                    <option value="FiveM">FiveM</option>
-                    <option value="Accounts">Accounts</option>
-                    <option value="Cloud Phone">Cloud Phone</option>
-                </select>
-                <button onclick="saveProduct()" class="w-full btn-action py-3 text-[10px] uppercase">Simpan Produk</button>
-            </div>
-            <div id="admin-product-list" class="space-y-4 max-h-[250px] overflow-y-auto pr-2"></div>
-            <button onclick="closeModal()" class="w-full mt-4 text-[10px] text-slate-500 uppercase">Tutup</button>
-        </div>
-    </div>
 
     <footer class="p-12 text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] opacity-40">
         &copy; 2026 W4RAS STORE • <button onclick="openAdmin()" class="hover:text-green-500 transition">Admin Login</button>
@@ -96,22 +74,24 @@
     <script>
         const ADMIN_PASS = "Wira123";
         
-        // Produk yang sudah dipindahkan sesuai permintaan Admin
-        let initialProducts = [
-            { id: 101, name: 'ROCKSTAR SOCIAL', price: 20000, img: 'https://i.ibb.co/LzfN0fP/rockstar.png', cat: 'Accounts' },
-            { id: 102, name: 'DISCORD ACCOUNT', price: 15000, img: 'https://i.ibb.co/V9m8zQ7/discord.png', cat: 'Accounts' },
-            { id: 103, name: 'STEAM', price: 1500, img: 'https://i.ibb.co/YyYf8sR/steam.png', cat: 'Accounts' },
-            { id: 104, name: 'OPTIMIZE PC/LAPTOP', price: 55000, img: 'https://i.ibb.co/fF3q3vD/optimize.png', cat: 'FiveM' },
-            { id: 105, name: 'DISCORD NITRO', price: 50000, img: 'https://i.ibb.co/V9m8zQ7/discord.png', cat: 'Accounts' }
+        // Produk yang dipindahkan ke kategori FiveM sesuai gambar
+        let defaultProducts = [
+            { id: 1, name: 'ROCKSTAR SOCIAL', price: 20000, img: 'https://i.ibb.co/LzfN0fP/rockstar.png', cat: 'FiveM' },
+            { id: 2, name: 'DISCORD ACCOUNT', price: 15000, img: 'https://i.ibb.co/V9m8zQ7/discord.png', cat: 'FiveM' },
+            { id: 3, name: 'STEAM', price: 1500, img: 'https://i.ibb.co/YyYf8sR/steam.png', cat: 'FiveM' },
+            { id: 4, name: 'OPTIMIZE PC/LAPTOP', price: 55000, img: 'https://i.ibb.co/fF3q3vD/optimize.png', cat: 'FiveM' },
+            { id: 5, name: 'DISCORD NITRO', price: 50000, img: 'https://i.ibb.co/V9m8zQ7/discord.png', cat: 'FiveM' }
         ];
 
-        let products = JSON.parse(localStorage.getItem('w4ras_db')) || initialProducts;
+        let products = JSON.parse(localStorage.getItem('w4ras_db')) || defaultProducts;
         let currentCategory = 'FiveM';
 
         function filterCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-pill').forEach(el => el.classList.remove('active'));
-            document.getElementById('cat-' + (cat === 'Cloud Phone' ? 'Cloud' : cat)).classList.add('active');
+            if(cat === 'FiveM') document.getElementById('cat-FiveM').classList.add('active');
+            else if(cat === 'Cloud Phone') document.getElementById('cat-Cloud').classList.add('active');
+            else document.getElementById('cat-All').classList.add('active');
             renderProducts();
         }
 
@@ -119,11 +99,8 @@
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            const adminList = document.getElementById('admin-product-list');
             const query = document.getElementById('searchInput').value.toLowerCase();
-            
             grid.innerHTML = '';
-            adminList.innerHTML = '';
 
             products.forEach(p => {
                 const matchCat = (currentCategory === 'All' || p.cat === currentCategory);
@@ -132,41 +109,22 @@
                 if(matchCat && matchSearch) {
                     grid.innerHTML += `
                         <div class="card-discord p-6 text-center">
-                            <div class="img-container mb-4"><img src="${p.img}" alt="${p.name}"></div>
+                            <div class="img-container"><img src="${p.img}" alt="${p.name}"></div>
                             <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">${p.cat}</p>
                             <h4 class="font-bold text-sm mb-4 uppercase text-white truncate">${p.name}</h4>
                             <p class="text-xl font-black text-green-500 mb-6">Rp ${p.price.toLocaleString('id-ID')}</p>
-                            <button onclick="window.open('https://discord.gg/yourlink')" class="btn-action w-full py-3 text-[10px] uppercase">Buy Now</button>
+                            <button class="btn-action w-full py-3 text-[10px] uppercase">Buy Now</button>
                         </div>`;
                 }
-
-                adminList.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
-                        <div class="text-left"><p class="text-[10px] font-bold text-green-500">${p.name}</p></div>
-                        <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
-                    </div>`;
             });
         }
 
         function openAdmin() {
-            if(prompt("Password Admin:") === ADMIN_PASS) { document.getElementById('adminModal').style.display = "block"; renderProducts(); }
-        }
-
-        function saveProduct() {
-            const n = document.getElementById('p-name').value, p = parseInt(document.getElementById('p-price').value), i = document.getElementById('p-img').value, c = document.getElementById('p-cat').value;
-            if(n && p && i) {
-                products.push({id: Date.now(), name: n, price: p, img: i, cat: c});
-                localStorage.setItem('w4ras_db', JSON.stringify(products));
-                renderProducts();
-                alert("Produk Berhasil Ditambah!");
+            if(prompt("Password Admin:") === ADMIN_PASS) {
+                // Kamu bisa tambah menu admin di sini jika perlu
+                alert("Login Berhasil! Gunakan localStorage atau update defaultProducts untuk ganti barang.");
             }
         }
-
-        function deleteProduct(id) {
-            if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderProducts(); }
-        }
-
-        function closeModal() { document.getElementById('adminModal').style.display = "none"; }
         
         renderProducts();
     </script>
