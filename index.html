@@ -8,256 +8,206 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        
-        :root {
-            --primary-green: #22c55e;
-            --dark-bg: #050505;
-        }
-
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--dark-bg); 
-            color: white; 
-            scroll-behavior: smooth;
-            overflow-x: hidden;
-        }
-
-        /* Background Elegan Kece */
-        .bg-mesh {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            background: radial-gradient(circle at 50% 50%, #111827 0%, #050505 100%);
-        }
-
-        .mesh-blob {
-            position: absolute;
-            width: 500px;
-            height: 500px;
-            background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%);
-            filter: blur(80px);
-            animation: move 20s infinite alternate;
-        }
-
-        @keyframes move {
-            from { transform: translate(-10%, -10%); }
-            to { transform: translate(20%, 20%); }
-        }
-
-        .glass { 
-            background: rgba(255, 255, 255, 0.03); 
-            backdrop-filter: blur(20px); 
-            border: 1px solid rgba(255, 255, 255, 0.08); 
-        }
-        
-        /* Card Styling Kece */
-        .card-discord { 
-            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); 
-            border: 1px solid rgba(255, 255, 255, 0.05); 
-            background: rgba(18, 18, 18, 0.6);
-            backdrop-filter: blur(10px);
-        }
-
-        .card-discord:hover { 
-            transform: translateY(-12px) scale(1.02); 
-            border-color: var(--primary-green); 
-            box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1); 
-        }
-        
-        .btn-green { 
-            background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%);
-            transition: 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            border-radius: 14px;
-        }
-
-        .btn-green:hover { 
-            transform: translateY(-2px);
-            box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3);
-            filter: brightness(1.1);
-        }
-        
-        .img-container { 
-            width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; 
-            background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; 
-        }
-
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); animation: fadeIn 0.3s ease; }
-        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
-
-        .modal-content { background: #0f0f13; margin: 5% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 90%; max-width: 400px; border-radius: 30px; }
+        :root { --primary-green: #22c55e; --dark-bg: #050505; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; overflow-x: hidden; }
+        .bg-mesh { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 50%, #111827 0%, #050505 100%); }
+        .mesh-blob { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%); filter: blur(80px); animation: move 20s infinite alternate; }
+        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
+        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
+        .card-discord { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); }
+        .card-discord:hover { transform: translateY(-12px) scale(1.02); border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1); }
+        .btn-green { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); transition: 0.3s; border-radius: 14px; }
+        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
+        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); }
+        .modal-content { background: #0f0f13; margin: 2% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
+        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 20px; cursor: pointer; color: #555; }
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="bg-mesh">
-        <div class="mesh-blob" style="top: -10%; left: -10%;"></div>
-        <div class="mesh-blob" style="bottom: -10%; right: -10%; animation-delay: -5s;"></div>
-    </div>
+    <div class="bg-mesh"><div class="mesh-blob" style="top: -10%; left: -10%;"></div></div>
 
     <nav class="sticky top-0 z-50 glass px-8 py-5 flex justify-between items-center mx-4 mt-4 rounded-3xl">
         <div class="flex items-center gap-3">
-            <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-10 h-10 rounded-full border border-green-500/50 shadow-lg shadow-green-500/20">
+            <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-10 h-10 rounded-full border border-green-500/50">
             <h1 class="text-xl font-black tracking-tighter italic uppercase">W4RAS<span class="text-green-500">STORE</span></h1>
         </div>
-        
         <div class="flex items-center gap-4">
-            <button onclick="checkout()" id="cart-nav" class="hidden flex items-center gap-2 px-5 py-2.5 rounded-2xl glass transition-all border-green-500/30">
-                <div class="relative">
-                    <i class="fa-solid fa-cart-shopping text-sm text-green-500"></i>
-                    <span id="cart-count" class="absolute -top-3 -right-3 bg-white text-black text-[9px] font-black w-4 h-4 rounded-full flex items-center justify-center">0</span>
-                </div>
+            <button onclick="checkout()" id="cart-nav" class="hidden items-center gap-2 px-5 py-2.5 rounded-2xl glass transition-all border-green-500/30">
+                <i class="fa-solid fa-cart-shopping text-green-500"></i>
+                <span id="cart-count" class="text-white text-[10px] font-black">0</span>
             </button>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-6 py-2.5 text-xs font-bold text-white uppercase tracking-widest shadow-lg shadow-green-500/10">
-                <i class="fa-brands fa-discord mr-2"></i> Join
-            </a>
+            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-6 py-2.5 text-xs font-bold text-white uppercase tracking-widest">Join</a>
         </div>
     </nav>
 
     <div class="relative pt-32 pb-24 px-4 text-center">
-        <span class="px-4 py-2 rounded-full glass text-[10px] font-bold text-green-500 uppercase tracking-[0.3em] mb-6 inline-block">Trusted Gaming Market</span>
-        <h2 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-none">
-            W4RAS STORE ONTOP <br> <span class="text-green-500">#1 DI DUNIA.</span>
-        </h2>
-        <p class="text-slate-400 max-w-xl mx-auto text-sm font-medium leading-relaxed">Penyedia akun premium kualitas bintang lima dengan harga ramah dikantong.</p>
+        <span class="px-4 py-2 rounded-full glass text-[10px] font-bold text-green-500 uppercase tracking-[0.3em] mb-6 inline-block italic">W4RAS STORE ONTOP #1 DI DUNIA</span>
+        <h2 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-none">W4RAS STORE ONTOP <br> <span class="text-green-500">#1 DI DUNIA.</span></h2>
     </div>
 
     <main class="max-w-6xl mx-auto px-6">
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8">
-            
-            <div class="card-discord p-5 rounded-[2.5rem]">
-                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png?ex=698ed61c&is=698d849c&hm=0ea8aa57a66d893c107fcb1c4fcd3cc95a638e80e29af6f9e7c43ad5fd3e16ce&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Rockstar Account</h4>
-                <div class="mt-auto">
-                    <p class="text-xl font-black text-green-500 mb-4">Rp 14.999</p>
-                    <button onclick="addToCart('Rockstar Account', 14999)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                </div>
-            </div>
-
-            <div class="card-discord p-5 rounded-[2.5rem]">
-                <div class="img-container"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Discord Account</h4>
-                <div class="mt-auto">
-                    <p class="text-xl font-black text-green-500 mb-4">Rp 15.000</p>
-                    <button onclick="addToCart('Discord Account', 15000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                </div>
-            </div>
-
-            <div class="card-discord p-5 rounded-[2.5rem]">
-                <div class="img-container"><img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Spotify Premium</h4>
-                <div class="mt-auto">
-                    <p class="text-xl font-black text-green-500 mb-4">Rp 15.000</p>
-                    <button onclick="addToCart('Spotify Premium', 15000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                </div>
-            </div>
-
-            <div class="card-discord p-5 rounded-[2.5rem]">
-                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">PC Optimize</h4>
-                <div class="mt-auto">
-                    <p class="text-xl font-black text-green-500 mb-4">Rp 55.000</p>
-                    <button onclick="addToCart('PC Optimize', 55000)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                </div>
-            </div>
-
-            <div class="card-discord p-5 rounded-[2.5rem]">
-                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&"></div>
-                <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">Steam Account</h4>
-                <div class="mt-auto">
-                    <p class="text-xl font-black text-green-500 mb-4">Rp 1.500</p>
-                    <button onclick="addToCart('Steam Account', 1500)" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                </div>
-            </div>
-
-        </div>
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"></div>
     </main>
+
+    <div id="adminModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeModal()">&times;</span>
+            <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center">Admin Dashboard</h2>
+            
+            <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
+                <p class="text-[10px] font-bold uppercase text-slate-400">Tambah Produk Baru</p>
+                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
+                <input type="number" id="p-price" placeholder="Harga (Angka saja)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
+                <input type="text" id="p-img" placeholder="Link Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
+                <button onclick="saveProduct()" class="w-full btn-green py-3 font-black uppercase text-[10px]">Simpan Produk</button>
+            </div>
+
+            <p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Kelola Produk Aktif</p>
+            <div id="admin-product-list" class="space-y-3 max-h-[250px] overflow-y-auto pr-2"></div>
+        </div>
+    </div>
 
     <div id="paymentModal" class="modal">
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 class="text-2xl font-black mb-6 italic uppercase tracking-tighter">Checkout</h2>
-            <div class="space-y-5">
-                <div>
-                    <label class="text-[9px] uppercase font-black text-slate-500 tracking-[0.2em]">Email Penerima</label>
-                    <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mt-2 focus:border-green-500 outline-none text-sm transition-all">
-                </div>
-                <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center">
-                    <p class="text-[9px] uppercase font-bold text-green-500/60 mb-1">Total Bayar</p>
-                    <span id="totalDisplay" class="text-3xl font-black text-green-500 tracking-tighter">Rp 0</span>
-                </div>
-                <button onclick="showQRIS()" class="w-full btn-green py-4 font-black uppercase text-[11px] text-white tracking-[0.2em]">Bayar via QRIS</button>
+            <h2 class="text-2xl font-black mb-6 italic uppercase">Checkout</h2>
+            <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-sm outline-none focus:border-green-500">
+            <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center mb-4">
+                <span id="totalDisplay" class="text-3xl font-black text-green-500">Rp 0</span>
             </div>
+            <button onclick="showQRIS()" class="w-full btn-green py-4 font-black uppercase text-xs">Bayar via QRIS</button>
         </div>
     </div>
 
-    <div id="qrisModal" class="modal">
-        <div class="modal-content text-center">
+    <div id="qrisModal" class="modal text-center">
+        <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="text-left mb-6">
-                <p class="text-[9px] text-slate-500 uppercase font-bold tracking-widest">Order ID</p>
-                <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl mt-1">
-                    <p id="orderID" class="text-xs font-mono text-green-500 font-bold">ORD-XXXXXXXX</p>
-                    <button onclick="copyOrderID()" class="text-green-500 hover:scale-110 transition"><i class="fa-solid fa-copy"></i></button>
-                </div>
+            <div class="flex justify-between bg-white/5 p-3 rounded-xl mb-4 items-center text-left">
+                <p id="orderID" class="text-[10px] font-mono text-green-500 font-bold">ORD-XXXX</p>
+                <button onclick="copyOrderID()" class="text-green-500 text-xs"><i class="fa-solid fa-copy"></i></button>
             </div>
-            <div class="bg-white p-3 rounded-3xl inline-block shadow-2xl shadow-green-500/20">
-                <img src="https://cdn.discordapp.com/attachments/1464997913695358978/1464999511788093440/QRIS.png?ex=698e94dd&is=698d435d&hm=fecb8bc9557639bc4a29799f6d2edc488f0f920784871a574e62782da9665f5d" class="w-full max-w-[240px]">
+            <div class="bg-white p-3 rounded-3xl inline-block mb-4">
+                <img src="https://cdn.discordapp.com/attachments/1464997913695358978/1464999511788093440/QRIS.png?ex=698e94dd&is=698d435d&hm=fecb8bc9557639bc4a29799f6d2edc488f0f920784871a574e62782da9665f5d" class="w-[220px]">
             </div>
-            <p class="text-[10px] font-black mt-4 uppercase tracking-tighter text-slate-400 italic">Scan to Pay • W4RAS Store</p>
-            <button onclick="window.open('https://discord.gg/aB5HqUkNQK')" class="w-full mt-6 bg-[#5865F2] py-4 rounded-2xl text-[10px] font-black uppercase text-white transition-all hover:brightness-110 flex items-center justify-center gap-2">
-                <i class="fa-brands fa-discord text-lg"></i> Konfirmasi ke Discord
-            </button>
+            <button onclick="window.open('https://discord.gg/aB5HqUkNQK')" class="w-full btn-green py-4 text-xs font-black uppercase">Konfirmasi Discord</button>
         </div>
     </div>
 
     <footer class="mt-32 p-12 text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] opacity-40">
-        &copy; 2026 W4RAS STORE • ONTOP #1 DI DUNIA
+        &copy; 2026 W4RAS STORE • <button onclick="openAdmin()" class="hover:text-green-500 transition">Admin Login</button>
     </footer>
 
     <script>
+        // Data Produk
+        let products = JSON.parse(localStorage.getItem('w4ras_db')) || [
+            {id: 1, name: 'Rockstar Social', price: 14999, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png'},
+            {id: 2, name: 'Discord Account', price: 15000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png'}
+        ];
+        
         let cart = [];
 
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
+        function renderProducts() {
+            const grid = document.getElementById('product-grid');
+            const adminList = document.getElementById('admin-product-list');
+            grid.innerHTML = '';
+            adminList.innerHTML = '';
+
+            products.forEach(p => {
+                // Tampilan Buyer
+                grid.innerHTML += `
+                    <div class="card-discord p-5 rounded-[2.5rem]">
+                        <div class="img-container"><img src="${p.img}"></div>
+                        <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">${p.name}</h4>
+                        <p class="text-xl font-black text-green-500 mb-4">Rp ${p.price.toLocaleString()}</p>
+                        <button onclick="addToCart('${p.name}', ${p.price})" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
+                    </div>`;
+                
+                // Tampilan Edit Admin
+                adminList.innerHTML += `
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 space-y-2">
+                        <div class="flex justify-between items-center text-[10px] font-bold">
+                            <span class="text-white uppercase">${p.name}</span>
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <div class="flex gap-2">
+                            <input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" 
+                                class="w-full bg-black border border-white/10 p-2 rounded-lg text-[10px] outline-none focus:border-green-500" placeholder="Edit Harga">
+                        </div>
+                    </div>`;
+            });
         }
 
-        function updateCartUI() {
-            const btn = document.getElementById('cart-nav');
-            const count = document.getElementById('cart-count');
-            if (cart.length > 0) {
-                btn.classList.remove('hidden');
-                btn.classList.add('flex');
-                count.innerText = cart.length;
+        // Fungsi Admin
+        function openAdmin() {
+            if(prompt("Password Admin:") === "admin123") {
+                document.getElementById('adminModal').style.display = "block";
+                renderProducts();
+            } else { alert("Akses Ditolak!"); }
+        }
+
+        function saveProduct() {
+            const name = document.getElementById('p-name').value;
+            const price = parseInt(document.getElementById('p-price').value);
+            const img = document.getElementById('p-img').value;
+            if(name && price && img) {
+                products.push({id: Date.now(), name, price, img});
+                saveDB();
             }
         }
 
+        function updatePrice(id, newPrice) {
+            const index = products.findIndex(p => p.id === id);
+            products[index].price = parseInt(newPrice);
+            saveDB();
+        }
+
+        function deleteProduct(id) {
+            if(confirm("Hapus produk ini?")) {
+                products = products.filter(p => p.id !== id);
+                saveDB();
+            }
+        }
+
+        function saveDB() {
+            localStorage.setItem('w4ras_db', JSON.stringify(products));
+            renderProducts();
+        }
+
+        // Fungsi Buyer
+        function addToCart(name, price) {
+            cart.push({name, price});
+            const btn = document.getElementById('cart-nav');
+            btn.classList.remove('hidden');
+            btn.classList.add('flex');
+            document.getElementById('cart-count').innerText = cart.length;
+        }
+
         function checkout() {
-            let total = cart.reduce((sum, item) => sum + item.price, 0);
+            let total = cart.reduce((sum, i) => sum + i.price, 0);
             document.getElementById('totalDisplay').innerText = "Rp " + total.toLocaleString('id-ID');
             document.getElementById('paymentModal').style.display = "block";
         }
 
         function showQRIS() {
-            if(!document.getElementById('buyerEmail').value) return alert("Email jangan kosong ya!");
-            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random() * 9000000 + 1000000);
+            if(!document.getElementById('buyerEmail').value) return alert("Email jangan kosong!");
+            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000);
             document.getElementById('paymentModal').style.display = "none";
             document.getElementById('qrisModal').style.display = "block";
         }
 
         function copyOrderID() {
             navigator.clipboard.writeText(document.getElementById('orderID').innerText);
-            alert("Order ID Berhasil Disalin!");
+            alert("Order ID Disalin!");
         }
 
-        function closeModal() {
-            document.querySelectorAll('.modal').forEach(m => m.style.display = "none");
-        }
-
+        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
         window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
+        
+        renderProducts();
     </script>
 </body>
 </html>
