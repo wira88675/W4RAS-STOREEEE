@@ -3,226 +3,166 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | ONTOP MARKET</title>
-    <script src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&"></script>
+    <title>W4RAS STORE | PREMIUM MARKET</title>
+    <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;500;700&family=Syncopate:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Syncopate:wght@700&display=swap');
 
-        :root {
-            --primary: #5865F2;
-            --bg-dark: #050505;
-            --card-bg: #0d0d12;
-            --border: rgba(255, 255, 255, 0.05);
-        }
-
-        body {
-            background-color: var(--bg-dark);
-            color: #ffffff;
-            font-family: 'Space Grotesk', sans-serif;
-            background-image: 
-                linear-gradient(to right, rgba(255,255,255,0.02) 1px, transparent 1px),
-                linear-gradient(to bottom, rgba(255,255,255,0.02) 1px, transparent 1px);
-            background-size: 40px 40px;
+        body { 
+            background-color: #050505; 
+            color: white; 
+            font-family: 'Plus Jakarta Sans', sans-serif;
             overflow-x: hidden;
         }
 
-        .font-header { font-family: 'Syncopate', sans-serif; }
-
-        /* Lah Market Glow Effect */
-        .glow-overlay {
-            position: absolute;
-            width: 100%;
-            height: 100%;
-            background: radial-gradient(circle at 50% -20%, rgba(88, 101, 242, 0.15), transparent 70%);
-            pointer-events: none;
-            top: 0;
-            left: 0;
+        /* Hero Background ala Lah Market */
+        .hero-bg {
+            background: linear-gradient(to bottom, rgba(5,5,5,0.7), #050505), 
+                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
+            background-size: cover;
+            background-position: center;
         }
 
-        .glass-nav {
-            background: rgba(5, 5, 5, 0.8);
-            backdrop-filter: blur(10px);
-            border-bottom: 1px solid var(--border);
-        }
-
-        /* Bento Grid Card Style */
-        .bento-card {
-            background: var(--card-bg);
-            border: 1px solid var(--border);
-            border-radius: 24px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        /* Card Glowing Effect */
+        .card-premium {
+            background: rgba(20, 20, 25, 0.8);
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            transition: all 0.4s ease;
             position: relative;
-            overflow: hidden;
         }
 
-        .bento-card:hover {
-            transform: translateY(-10px);
-            border-color: var(--primary);
-            box-shadow: 0 10px 40px -10px rgba(88, 101, 242, 0.3);
+        .card-premium:hover {
+            border-color: #5865F2;
+            transform: translateY(-5px);
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.2);
         }
 
-        .bento-card::before {
-            content: '';
-            position: absolute;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.03), transparent);
-            transform: translateX(-100%);
-            transition: 0.6s;
+        .price-tag {
+            background: linear-gradient(45deg, #5865F2, #9b59b6);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
         }
 
-        .bento-card:hover::before {
-            transform: translateX(100%);
-        }
-
-        .product-img {
-            width: 100%;
-            height: 180px;
-            object-fit: contain;
-            padding: 20px;
-            transition: 0.5s;
-        }
-
-        .bento-card:hover .product-img {
-            transform: scale(1.1) rotate(3deg);
-        }
-
-        .btn-buy {
-            background: var(--primary);
-            box-shadow: 0 4px 15px rgba(88, 101, 242, 0.4);
+        .btn-action {
+            background: linear-gradient(45deg, #5865F2, #4752c4);
             transition: 0.3s;
         }
 
-        .btn-buy:hover {
-            filter: brightness(1.2);
-            transform: scale(1.02);
+        .btn-action:hover {
+            box-shadow: 0 0 15px rgba(88, 101, 242, 0.5);
+            transform: scale(1.05);
         }
 
-        /* Badge Style */
-        .badge-pro {
-            background: rgba(88, 101, 242, 0.1);
-            color: var(--primary);
-            border: 1px solid rgba(88, 101, 242, 0.2);
-            font-size: 10px;
-            padding: 4px 12px;
-            border-radius: 100px;
-            text-transform: uppercase;
-            font-weight: 700;
-        }
+        .font-sync { font-family: 'Syncopate', sans-serif; }
     </style>
 </head>
 <body>
 
-    <div class="glow-overlay"></div>
-
-    <nav class="sticky top-0 z-50 glass-nav px-6 py-4">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-4">
-                <img src="https://telegra.ph/file/5e128186259048a178972.jpg" class="w-10 h-10 rounded-full border border-white/10 shadow-2xl">
-                <span class="font-header font-bold text-lg tracking-tighter">W4RAS<span class="text-[#5865F2]">.</span></span>
-            </div>
-            <div class="hidden md:flex gap-10 font-medium text-sm text-gray-400">
-                <a href="#" class="hover:text-white transition">Inventory</a>
-                <a href="#" class="hover:text-white transition">Statistics</a>
-                <a href="https://discord.gg/aB5HqUkNQK" class="hover:text-white transition">Reviews</a>
-            </div>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="bg-white text-black px-6 py-2 rounded-full font-bold text-xs uppercase tracking-widest hover:bg-gray-200 transition">
-                Discord
+    <nav class="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
+        <div class="flex items-center gap-3">
+            <img src="https://telegra.ph/file/5e128186259048a178972.jpg" class="w-10 h-10 rounded-full border border-[#5865F2]">
+            <span class="font-sync text-lg tracking-tighter italic">W4RAS <span class="text-[#5865F2]">STORE</span></span>
+        </div>
+        <div class="flex gap-4">
+            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-action px-5 py-2 rounded-lg text-xs font-bold uppercase tracking-widest">
+                <i class="fa-brands fa-discord mr-2"></i> Join
             </a>
         </div>
     </nav>
 
-    <header class="relative pt-32 pb-20 px-4">
-        <div class="max-w-5xl mx-auto text-center">
-            <div class="inline-block badge-pro mb-6">Premium Gaming Marketplace</div>
-            <h1 class="font-header text-5xl md:text-8xl font-black mb-8 tracking-tighter leading-none">
-                UNLIMITED <br> <span class="text-[#5865F2]">POSSIBILITIES.</span>
-            </h1>
-            <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10 font-light">
-                Elevate your gaming experience with the most trusted provider in the scene. High quality, instant delivery.
-            </p>
-            <div class="flex flex-wrap justify-center gap-4">
-                <a href="#produk" class="btn-buy px-10 py-4 rounded-2xl font-bold uppercase text-sm tracking-widest">
-                    Browse Store
-                </a>
-                <div class="bg-white/5 border border-white/5 px-10 py-4 rounded-2xl font-bold uppercase text-sm tracking-widest cursor-pointer">
-                    Dashboard
-                </div>
+    <header class="hero-bg pt-40 pb-24 px-6 text-center">
+        <div class="max-w-4xl mx-auto">
+            <div class="inline-block bg-[#5865F2]/10 border border-[#5865F2]/20 px-4 py-1 rounded-full text-[10px] font-bold text-[#5865F2] uppercase tracking-[3px] mb-6">
+                Online Game Store
             </div>
+            <h1 class="font-sync text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter">
+                ELEVATE YOUR <br> <span class="text-[#5865F2]">GAMING LIFE</span>
+            </h1>
+            <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto mb-10 leading-relaxed font-medium">
+                Penyedia akun premium tercepat dan terpercaya. Kami memberikan kualitas terbaik dengan harga paling miring.
+            </p>
         </div>
     </header>
 
-    <main id="produk" class="max-w-7xl mx-auto px-6 py-20">
-        <div class="flex justify-between items-end mb-12">
-            <div>
-                <h2 class="font-header text-3xl font-bold uppercase tracking-tighter">Featured</h2>
-                <p class="text-gray-500 text-sm mt-2">The best of W4RAS Store.</p>
-            </div>
-        </div>
-
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+    <main class="max-w-7xl mx-auto px-6 -mt-10 mb-20">
+        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4">
             
-            <div class="bento-card p-8">
-                <div class="badge-pro mb-4">Stock Ready</div>
-                <img src="https://socialclub.rockstargames.com/mweb/img/rockstar-logo-gold.png" class="product-img">
-                <h3 class="font-header text-xl font-bold mt-4 uppercase">Rockstar Account</h3>
-                <p class="text-gray-500 text-sm mb-6">Full access, fresh accounts.</p>
-                <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-white tracking-tighter">Rp 14.999</span>
-                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-buy p-4 rounded-xl"><i class="fa-solid fa-cart-plus"></i></a>
+            <div class="card-premium p-5 rounded-2xl">
+                <div class="h-32 flex items-center justify-center mb-4 bg-black/20 rounded-xl">
+                    <img src="https://socialclub.rockstargames.com/mweb/img/rockstar-logo-gold.png" class="w-20">
+                </div>
+                <h3 class="font-bold text-xs uppercase mb-1">Rockstar Social</h3>
+                <p class="text-[10px] text-gray-500 mb-4 uppercase">Full Access Account</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="font-extrabold text-sm price-tag tracking-tighter">Rp 14.999</span>
+                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-action w-8 h-8 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="bento-card p-8">
-                <div class="badge-pro mb-4">Fast Delivery</div>
-                <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png" class="product-img">
-                <h3 class="font-header text-xl font-bold mt-4 uppercase">Discord Nitro</h3>
-                <p class="text-gray-500 text-sm mb-6">Boost your profile features.</p>
+            <div class="card-premium p-5 rounded-2xl">
+                <div class="h-32 flex items-center justify-center mb-4 bg-black/20 rounded-xl">
+                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png" class="w-20">
+                </div>
+                <h3 class="font-bold text-xs uppercase mb-1">Discord Account</h3>
+                <p class="text-[10px] text-gray-500 mb-4 uppercase">High Quality</p>
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-white tracking-tighter">Rp 15.000</span>
-                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-buy p-4 rounded-xl"><i class="fa-solid fa-cart-plus"></i></a>
+                    <span class="font-extrabold text-sm price-tag tracking-tighter">Rp 15.000</span>
+                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-action w-8 h-8 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="bento-card p-8">
-                <div class="badge-pro mb-4" style="color:#1DB954; border-color: rgba(29, 185, 84, 0.3);">Lifetime Waranty</div>
-                <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png" class="product-img">
-                <h3 class="font-header text-xl font-bold mt-4 uppercase">Spotify Premium</h3>
-                <p class="text-gray-500 text-sm mb-6">No ads, high quality audio.</p>
+            <div class="card-premium p-5 rounded-2xl">
+                <div class="h-32 flex items-center justify-center mb-4 bg-black/20 rounded-xl">
+                    <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png" class="w-20">
+                </div>
+                <h3 class="font-bold text-xs uppercase mb-1">Spotify Premium</h3>
+                <p class="text-[10px] text-gray-500 mb-4 uppercase">Individual Plan</p>
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-[#1DB954] tracking-tighter">Rp 15.000</span>
-                    <a href="https://discord.gg/aB5HqUkNQK" class="bg-[#1DB954] p-4 rounded-xl text-black"><i class="fa-solid fa-cart-plus"></i></a>
+                    <span class="font-extrabold text-sm text-green-500 tracking-tighter">Rp 15.000</span>
+                    <a href="https://discord.gg/aB5HqUkNQK" class="bg-green-600 w-8 h-8 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="bento-card p-8">
-                <div class="badge-pro mb-4">4K Ultra HD</div>
-                <img src="https://images.ctfassets.net/y2ske730sjfq/4797V9zLAnXIl99LpY9S8a/e307779b531473950486c4767222384c/Netflix_N.png" class="product-img">
-                <h3 class="font-header text-xl font-bold mt-4 uppercase">Netflix 4K</h3>
-                <p class="text-gray-500 text-sm mb-6">Private profiles available.</p>
+            <div class="card-premium p-5 rounded-2xl">
+                <div class="h-32 flex items-center justify-center mb-4 bg-black/20 rounded-xl">
+                    <img src="https://images.ctfassets.net/y2ske730sjfq/4797V9zLAnXIl99LpY9S8a/e307779b531473950486c4767222384c/Netflix_N.png" class="w-12">
+                </div>
+                <h3 class="font-bold text-xs uppercase mb-1">Netflix Ultra HD</h3>
+                <p class="text-[10px] text-gray-500 mb-4 uppercase">4K Quality</p>
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-white tracking-tighter">Rp 35.000</span>
-                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-buy p-4 rounded-xl"><i class="fa-solid fa-cart-plus"></i></a>
+                    <span class="font-extrabold text-sm price-tag tracking-tighter">Rp 35.000</span>
+                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-action w-8 h-8 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </a>
                 </div>
             </div>
 
-            <div class="bento-card p-8">
-                <div class="badge-pro mb-4">Ad-Free</div>
-                <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="product-img">
-                <h3 class="font-header text-xl font-bold mt-4 uppercase">Youtube Prem</h3>
-                <p class="text-gray-500 text-sm mb-6">Background play enabled.</p>
+            <div class="card-premium p-5 rounded-2xl">
+                <div class="h-32 flex items-center justify-center mb-4 bg-black/20 rounded-xl">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="w-20">
+                </div>
+                <h3 class="font-bold text-xs uppercase mb-1">Youtube Prem</h3>
+                <p class="text-[10px] text-gray-500 mb-4 uppercase">No Ads</p>
                 <div class="flex items-center justify-between">
-                    <span class="text-2xl font-bold text-white tracking-tighter">Rp 10.000</span>
-                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-buy p-4 rounded-xl"><i class="fa-solid fa-cart-plus"></i></a>
+                    <span class="font-extrabold text-sm price-tag tracking-tighter">Rp 10.000</span>
+                    <a href="https://discord.gg/aB5HqUkNQK" class="btn-action w-8 h-8 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-shopping-cart"></i>
+                    </a>
                 </div>
             </div>
 
         </div>
     </main>
 
-    <footer class="py-20 px-6 border-t border-white/5 text-center">
-        <h2 class="font-header text-2xl font-bold mb-6">W4RAS STORE<span class="text-[#5865F2]">.</span></h2>
-        <p class="text-gray-600 text-xs uppercase tracking-[0.8em]">&copy; 2026 Designed for winners</p>
+    <footer class="py-10 border-t border-white/5 text-center text-gray-600 text-[10px] font-bold tracking-[5px] uppercase">
+        W4RAS STORE &copy; 2026 - ONTOP Market
     </footer>
 
 </body>
