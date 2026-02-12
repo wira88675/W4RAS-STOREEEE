@@ -3,124 +3,173 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | PREMIUM</title>
+    <title>W4RAS STORE | OFFICIAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        :root { --primary-green: #22c55e; --dark-bg: #050505; }
-        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; }
-        .hero-title { font-size: clamp(3rem, 8vw, 5rem); font-weight: 900; text-transform: uppercase; font-style: italic; }
-        .hero-green { color: var(--primary-green); text-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
-        .btn-action { background: var(--primary-green); color: black; transition: 0.3s; border-radius: 12px; font-weight: 800; box-shadow: 0 4px 15px rgba(34, 197, 94, 0.3); }
-        .btn-action:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        .cat-pill { padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 700; transition: 0.3s; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #94a3b8; }
-        .cat-pill.active { background: #3b82f6; color: white; border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
-        .card-discord { background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); border-radius: 2rem; overflow: hidden; }
-        .img-container { width: 100%; height: 180px; background: rgba(255,255,255,0.02); display: flex; align-items: center; justify-content: center; overflow: hidden; }
-        .img-container img { width: 100%; height: 100%; object-fit: cover; }
-        .admin-input { background: #eeeeee !important; border: 2px solid #333 !important; color: #000 !important; font-weight: 600; }
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); backdrop-filter: blur(10px); overflow-y: auto; }
-        .modal-content { background: #111; margin: 2% auto; padding: 25px; border: 1px solid rgba(34, 197, 94, 0.2); width: 95%; max-width: 600px; border-radius: 24px; }
+        :root { --primary-green: #22c55e; --dark-bg: #080808; --card-bg: #121212; }
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; overflow-x: hidden; }
+        
+        /* UI Glow Effects */
+        .glow-green { text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        .glass { background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Button Styles */
+        .btn-primary { background: var(--primary-green); color: black; font-weight: 800; border-radius: 14px; transition: 0.3s; box-shadow: 0 8px 20px -6px rgba(34, 197, 94, 0.5); }
+        .btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); box-shadow: 0 12px 25px -5px rgba(34, 197, 94, 0.6); }
+
+        /* Card Styles */
+        .product-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.03); border-radius: 24px; transition: 0.4s; overflow: hidden; }
+        .product-card:hover { border-color: var(--primary-green); transform: translateY(-5px); }
+        
+        /* Admin Input */
+        .admin-input { background: #f3f4f6 !important; border: 1px solid #d1d5db !important; color: #111827 !important; font-weight: 600; transition: 0.2s; }
+        .admin-input:focus { border-color: var(--primary-green) !important; box-shadow: 0 0 0 3px rgba(34, 197, 94, 0.2); }
+
+        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); overflow-y: auto; }
+        .modal-content { background: #0f0f0f; margin: 2rem auto; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 550px; border-radius: 32px; position: relative; }
     </style>
 </head>
 <body>
 
-    <nav class="fixed top-0 w-full z-50 px-6 py-4 flex justify-between items-center bg-black/50 backdrop-blur-md">
-        <div class="text-xl font-black italic">W4RAS <span class="text-green-500">STORE</span></div>
-        <button onclick="openCart()" class="relative p-3 bg-white/10 rounded-full hover:bg-green-500 transition hover:text-black">
-            <i class="fa-solid fa-cart-shopping"></i>
-            <span id="cart-count" class="absolute -top-1 -right-1 bg-red-600 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
-        </button>
+    <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/5">
+        <div class="text-2xl font-black tracking-tighter italic">W4RAS<span class="text-green-500">STORE</span></div>
+        <div class="flex gap-4">
+            <button onclick="openCart()" class="relative p-3 bg-white/5 rounded-2xl hover:bg-green-500 transition-all duration-300 hover:text-black">
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold border-2 border-[#080808]">0</span>
+            </button>
+        </div>
     </nav>
 
-    <section class="pt-32 pb-10 text-center">
-        <h1 class="hero-title">ELITE <span class="hero-green">EQUIPMENT</span></h1>
+    <header class="pt-40 pb-20 text-center px-6">
+        <h1 class="text-6xl md:text-8xl font-black italic mb-4 leading-none tracking-tight uppercase">ELITE <span class="text-green-500 glow-green">GEAR</span></h1>
+        <p class="text-slate-400 font-medium tracking-widest text-sm uppercase">#1 Trusted Marketplace for Gamers</p>
+    </header>
+
+    <section class="max-w-6xl mx-auto px-6 mb-16">
+        <div id="category-bar" class="flex flex-wrap justify-center gap-3 mb-10"></div>
+        <div class="glass rounded-3xl flex items-center px-6 py-5 max-w-2xl mx-auto shadow-2xl shadow-black">
+            <i class="fa-solid fa-magnifying-glass text-green-500 text-lg mr-4"></i>
+            <input type="text" id="searchInput" onkeyup="renderUI()" placeholder="Cari gear impianmu..." class="bg-transparent w-full outline-none text-white font-medium placeholder:text-slate-600">
+        </div>
     </section>
 
-    <div class="max-w-4xl mx-auto px-6 mb-12">
-        <div id="category-bar" class="flex flex-wrap justify-center gap-2 mb-8"></div>
-        <div class="bg-white/5 border border-white/10 rounded-2xl flex items-center px-5 py-4">
-            <i class="fa-solid fa-magnifying-glass text-slate-500 mr-3"></i>
-            <input type="text" id="searchInput" onkeyup="renderUI()" placeholder="Cari gear kamu..." class="bg-transparent w-full outline-none text-white">
-        </div>
-    </div>
-
-    <main class="max-w-6xl mx-auto px-6 pb-20">
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6 text-center"></div>
+    <main class="max-w-7xl mx-auto px-6 pb-32">
+        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </main>
 
     <div id="cartModal" class="modal">
         <div class="modal-content">
-            <h2 class="text-2xl font-black mb-6 text-green-500 italic uppercase"><i class="fa-solid fa-bag-shopping mr-2"></i> Keranjang Anda</h2>
-            <div id="cart-items" class="space-y-4 mb-8 max-h-[300px] overflow-y-auto"></div>
-            <div class="border-t border-white/10 pt-4 flex justify-between items-center mb-6">
-                <span class="font-bold">Total Pembayaran:</span>
-                <span id="cart-total" class="text-xl font-black text-green-500">Rp 0</span>
+            <div class="flex justify-between items-center mb-8">
+                <h2 class="text-2xl font-black uppercase italic text-green-500">Keranjang</h2>
+                <button onclick="closeCart()" class="text-slate-500 hover:text-white"><i class="fa-solid fa-xmark text-xl"></i></button>
             </div>
-            <button onclick="checkout()" class="w-full btn-action py-4 text-sm uppercase">Bayar via QRIS (Otomatis)</button>
-            <button onclick="closeCart()" class="w-full mt-4 text-slate-500 text-xs uppercase font-bold">Lanjut Belanja</button>
+            <div id="cart-items" class="space-y-4 mb-8"></div>
+            <div class="bg-white/5 p-6 rounded-2xl mb-8 border border-white/5">
+                <div class="flex justify-between items-center">
+                    <span class="text-slate-400 font-bold uppercase text-xs">Total Pembayaran</span>
+                    <span id="cart-total" class="text-2xl font-black text-green-500">Rp 0</span>
+                </div>
+            </div>
+            <button onclick="checkout()" class="w-full btn-primary py-5 uppercase tracking-tighter">Lanjut Pembayaran QRIS</button>
         </div>
     </div>
 
     <div id="qrisModal" class="modal">
         <div class="modal-content text-center">
-            <h2 class="text-xl font-black mb-4 uppercase">Selesaikan Pembayaran</h2>
-            <div class="bg-white p-4 rounded-2xl inline-block mb-4">
-                <img id="qris-img" src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=W4RAS_STORE_PAYMENT" alt="QRIS">
+            <div id="payment-step">
+                <h2 class="text-xl font-black mb-2 uppercase">Scan Untuk Membayar</h2>
+                <p id="generated-order-id" class="text-green-500 font-black text-sm mb-6 bg-green-500/10 py-2 rounded-lg"></p>
+                <div class="bg-white p-4 rounded-3xl inline-block shadow-2xl mb-6">
+                    <img id="qris-img" src="" alt="QRIS" class="w-64 h-64">
+                </div>
+                <div class="text-left bg-white/5 p-4 rounded-2xl mb-6 text-xs text-slate-400 leading-relaxed">
+                    1. Buka App E-Wallet / Bank Anda<br>
+                    2. Scan QR Code di atas<br>
+                    3. Masukkan nominal sesuai total belanja<br>
+                    4. Simpan bukti transfer
+                </div>
+                <button onclick="confirmPayment()" class="w-full btn-primary py-5">SAYA SUDAH BAYAR</button>
             </div>
-            <p class="text-xs text-slate-400 mb-6 px-6">Scan QRIS di atas dengan aplikasi bank atau e-wallet (Dana/OVO/GoPay). Harap jangan tutup halaman ini sebelum konfirmasi.</p>
-            <button onclick="confirmPayment()" class="w-full btn-action py-4">Konfirmasi Sudah Bayar</button>
+            
+            <div id="success-step" class="hidden">
+                <div class="text-6xl text-green-500 mb-6"><i class="fa-solid fa-circle-check"></i></div>
+                <h2 class="text-2xl font-black mb-2">PESANAN BERHASIL!</h2>
+                <p class="text-slate-400 text-sm mb-8">Silakan screenshot halaman ini dan kirim ke WhatsApp Admin bersama Bukti Bayar.</p>
+                <div class="bg-white/5 p-6 rounded-2xl border border-green-500/30 mb-8">
+                    <p class="text-xs text-slate-500 uppercase font-bold mb-1">Nomor Order Anda:</p>
+                    <p id="final-order-id" class="text-xl font-black text-white"></p>
+                </div>
+                <button onclick="location.reload()" class="w-full btn-primary py-4">KEMBALI KE BERANDA</button>
+            </div>
         </div>
     </div>
 
     <div id="adminModal" class="modal">
-        <div class="modal-content">
-            <div class="flex justify-between items-center mb-6 border-b border-white/10 pb-4">
-                <h2 class="text-xl font-black text-green-500 italic uppercase">Admin Dashboard</h2>
+        <div class="modal-content max-w-4xl">
+            <div class="flex justify-between items-center mb-8 border-b border-white/5 pb-6">
+                <div>
+                    <h2 class="text-2xl font-black text-green-500 uppercase italic">Admin Dashboard</h2>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase tracking-widest">W4RAS Operations Control</p>
+                </div>
                 <div class="text-right">
-                    <p class="text-[10px] text-slate-500 uppercase font-bold">Total Pemasukan</p>
-                    <p id="total-revenue" class="text-lg font-black text-white">Rp 0</p>
+                    <p class="text-[10px] text-slate-400 uppercase font-bold">Total Revenue</p>
+                    <p id="total-revenue" class="text-2xl font-black text-white glow-green">Rp 0</p>
                 </div>
             </div>
 
-            <div class="grid grid-cols-2 gap-4 mb-8">
-                <div class="bg-blue-600/20 border border-blue-500/30 p-4 rounded-2xl">
-                    <p class="text-[10px] uppercase font-bold text-blue-400">Total Produk</p>
-                    <p id="stat-products" class="text-2xl font-black">0</p>
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-10">
+                <div class="bg-white/5 p-5 rounded-3xl border border-white/5">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Orders</p>
+                    <p id="stat-orders" class="text-3xl font-black">0</p>
                 </div>
-                <div class="bg-green-600/20 border border-green-500/30 p-4 rounded-2xl">
-                    <p class="text-[10px] uppercase font-bold text-green-400">Pesanan Sukses</p>
-                    <p id="stat-orders" class="text-2xl font-black">0</p>
+                <div class="bg-white/5 p-5 rounded-3xl border border-white/5">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Products</p>
+                    <p id="stat-products" class="text-3xl font-black">0</p>
+                </div>
+                <div class="bg-white/5 p-5 rounded-3xl border border-white/5">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Categories</p>
+                    <p id="stat-cats" class="text-3xl font-black">0</p>
                 </div>
             </div>
 
-            <div class="space-y-4 bg-white/5 p-4 rounded-2xl border border-white/5 mb-6">
-                <p class="text-[10px] text-green-500 font-black uppercase">Kelola Inventaris</p>
-                <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input w-full p-3 rounded-xl text-sm outline-none">
-                <input type="number" id="p-price" placeholder="Harga" class="admin-input w-full p-3 rounded-xl text-sm outline-none">
-                <input type="text" id="p-img" placeholder="Link Gambar" class="admin-input w-full p-3 rounded-xl text-sm outline-none">
-                <select id="p-cat-select" class="admin-input w-full p-3 rounded-xl text-sm"></select>
-                <input type="text" id="p-cat-new" placeholder="Kategori Baru" class="admin-input w-full p-3 rounded-xl text-sm">
-                <button onclick="saveProduct()" class="w-full btn-action py-4 font-black text-xs">UPDATE STORE</button>
-            </div>
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <div class="space-y-4 bg-white/5 p-6 rounded-3xl border border-white/5">
+                    <p class="text-xs font-black text-green-500 uppercase mb-2">Tambah Gear Baru</p>
+                    <input type="text" id="p-name" placeholder="Nama Gear" class="admin-input w-full p-4 rounded-2xl text-sm outline-none">
+                    <input type="number" id="p-price" placeholder="Harga (Nominal)" class="admin-input w-full p-4 rounded-2xl text-sm outline-none">
+                    <input type="text" id="p-img" placeholder="URL Link Gambar" class="admin-input w-full p-4 rounded-2xl text-sm outline-none">
+                    <div class="flex gap-2">
+                        <select id="p-cat-select" class="admin-input flex-1 p-4 rounded-2xl text-sm"></select>
+                        <input type="text" id="p-cat-new" placeholder="Kategori Baru" class="admin-input flex-1 p-4 rounded-2xl text-sm">
+                    </div>
+                    <button onclick="saveProduct()" class="w-full btn-primary py-5 font-black uppercase text-xs">Simpan Ke Database</button>
+                </div>
 
-            <div id="admin-product-list" class="space-y-3 max-h-[250px] overflow-y-auto pr-2"></div>
-            <button onclick="closeModal()" class="w-full mt-6 text-slate-500 text-[10px] font-bold uppercase tracking-widest">Tutup Admin</button>
+                <div class="space-y-3">
+                    <p class="text-xs font-black text-slate-500 uppercase mb-2">Inventory Management</p>
+                    <div id="admin-product-list" class="space-y-3 max-h-[400px] overflow-y-auto pr-3"></div>
+                </div>
+            </div>
+            
+            <button onclick="closeModal()" class="w-full mt-10 py-3 text-slate-600 text-xs font-black uppercase tracking-widest hover:text-white transition">Tutup Dashboard</button>
         </div>
     </div>
 
-    <footer class="text-center py-20 opacity-30 text-[10px]">
-        <button onclick="openAdmin()" class="hover:text-green-500 font-bold tracking-widest uppercase">Console Admin</button>
+    <footer class="text-center py-20 opacity-20 hover:opacity-100 transition duration-500">
+        <button onclick="openAdmin()" class="text-[10px] font-black tracking-widest uppercase border border-white/10 px-6 py-2 rounded-full">System Access Portal</button>
     </footer>
 
     <script>
         const ADMIN_PASS = "Wira123";
         let products = JSON.parse(localStorage.getItem('w4ras_db')) || [];
         let categories = JSON.parse(localStorage.getItem('w4ras_cats')) || ['FiveM', 'Cloud Phone', 'PREMIUM'];
-        let cart = [];
         let stats = JSON.parse(localStorage.getItem('w4ras_stats')) || { revenue: 0, orders: 0 };
+        let cart = [];
         let currentCategory = 'All';
+        let activeOrderID = '';
 
         function renderUI() {
             const grid = document.getElementById('product-grid');
@@ -129,50 +178,64 @@
             const pCatSelect = document.getElementById('p-cat-select');
             const search = document.getElementById('searchInput').value.toLowerCase();
 
-            // Render Stats
+            // Stats Update
             document.getElementById('total-revenue').innerText = 'Rp ' + stats.revenue.toLocaleString('id-ID');
-            document.getElementById('stat-products').innerText = products.length;
             document.getElementById('stat-orders').innerText = stats.orders;
+            document.getElementById('stat-products').innerText = products.length;
+            document.getElementById('stat-cats').innerText = categories.length;
 
-            // Render Categories
-            catBar.innerHTML = `<button onclick="setFilter('All')" class="cat-pill ${currentCategory === 'All' ? 'active' : ''}">All</button>`;
+            // Categories
+            catBar.innerHTML = `<button onclick="setFilter('All')" class="cat-pill ${currentCategory === 'All' ? 'active' : ''}">All Products</button>`;
             categories.forEach(c => catBar.innerHTML += `<button onclick="setFilter('${c}')" class="cat-pill ${currentCategory === c ? 'active' : ''}">${c}</button>`);
             pCatSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 
-            // Render Product Grid
+            // Grid
             grid.innerHTML = ''; adminList.innerHTML = '';
             products.forEach(p => {
                 if ((currentCategory === 'All' || p.cat === currentCategory) && p.name.toLowerCase().includes(search)) {
                     grid.innerHTML += `
-                        <div class="card-discord">
-                            <div class="img-container"><img src="${p.img}" onerror="this.src='https://via.placeholder.com/300?text=No+Image'"></div>
-                            <div class="p-5">
-                                <p class="text-[8px] text-slate-500 uppercase font-black mb-1">${p.cat}</p>
-                                <h4 class="font-bold text-xs mb-3 text-white truncate">${p.name}</h4>
-                                <p class="text-lg font-black text-green-500 mb-4">Rp ${parseInt(p.price).toLocaleString('id-ID')}</p>
-                                <button onclick="addToCart(${p.id})" class="btn-action w-full py-2 text-[9px] uppercase">Tambah Keranjang</button>
+                        <div class="product-card group">
+                            <div class="relative h-56 overflow-hidden bg-zinc-900 flex items-center justify-center">
+                                <img src="${p.img}" class="w-full h-full object-cover transition duration-500 group-hover:scale-110" onerror="this.src='https://via.placeholder.com/400?text=Image+Not+Found'">
+                                <div class="absolute top-4 left-4 bg-black/60 backdrop-blur-md px-3 py-1 rounded-lg border border-white/10 text-[9px] font-black uppercase tracking-widest text-green-500">${p.cat}</div>
+                            </div>
+                            <div class="p-6">
+                                <h4 class="font-bold text-lg mb-1 truncate text-white">${p.name}</h4>
+                                <p class="text-2xl font-black text-green-500 mb-6 italic tracking-tighter">Rp ${parseInt(p.price).toLocaleString('id-ID')}</p>
+                                <button onclick="addToCart(${p.id})" class="w-full py-4 rounded-xl bg-white/5 border border-white/10 font-bold text-xs uppercase hover:bg-green-500 hover:text-black hover:border-green-500 transition-all">Add to Bag</button>
                             </div>
                         </div>`;
                 }
+
                 adminList.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/10">
-                        <div class="flex justify-between items-center mb-2">
-                            <span class="text-[10px] font-bold text-green-400">${p.name}</span>
-                            <button onclick="deleteProduct(${p.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/5 flex justify-between items-center">
+                        <div class="flex flex-col">
+                            <span class="text-xs font-black uppercase text-green-400">${p.name}</span>
+                            <span class="text-[9px] text-slate-500 font-bold uppercase">${p.cat} - Rp ${parseInt(p.price).toLocaleString('id-ID')}</span>
                         </div>
-                        <select onchange="moveCat(${p.id}, this.value)" class="w-full p-1 bg-white text-black text-[9px] rounded font-bold">
-                            ${categories.map(c => `<option value="${c}" ${p.cat === c ? 'selected' : ''}>Pindah ke: ${c}</option>`).join('')}
-                        </select>
+                        <div class="flex gap-2">
+                            <select onchange="moveCat(${p.id}, this.value)" class="bg-white text-black text-[9px] font-bold p-1 rounded-lg">
+                                ${categories.map(c => `<option value="${c}" ${p.cat === c ? 'selected' : ''}>${c}</option>`).join('')}
+                            </select>
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
+                        </div>
                     </div>`;
             });
         }
 
-        // --- Fitur Keranjang ---
+        // Generate Professional Order ID
+        function generateOrderID() {
+            const date = new Date();
+            const year = date.getFullYear();
+            const random = Math.floor(1000 + Math.random() * 9000);
+            return `#WRS-${year}-${random}`;
+        }
+
+        // Logic Cart & Checkout
         function addToCart(id) {
             const p = products.find(prod => prod.id === id);
             cart.push(p);
             updateCartCount();
-            alert(p.name + " ditambah ke keranjang!");
         }
 
         function updateCartCount() {
@@ -182,33 +245,33 @@
         function openCart() {
             const list = document.getElementById('cart-items');
             let total = 0;
-            list.innerHTML = cart.length === 0 ? '<p class="text-center text-slate-500 py-4 italic">Keranjang kosong...</p>' : '';
+            list.innerHTML = cart.length === 0 ? '<p class="text-center text-slate-600 py-10 font-bold italic">Your bag is empty.</p>' : '';
             cart.forEach((item, index) => {
                 total += parseInt(item.price);
                 list.innerHTML += `
-                    <div class="flex justify-between items-center bg-white/5 p-3 rounded-xl">
-                        <span class="text-sm font-bold">${item.name}</span>
-                        <div class="flex items-center gap-3">
-                            <span class="text-green-500 font-bold">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span>
-                            <button onclick="removeFromCart(${index})" class="text-red-500"><i class="fa-solid fa-circle-xmark"></i></button>
+                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/5">
+                        <div>
+                            <p class="text-sm font-black text-white">${item.name}</p>
+                            <p class="text-[10px] text-green-500 font-bold">Rp ${parseInt(item.price).toLocaleString('id-ID')}</p>
                         </div>
+                        <button onclick="removeFromCart(${index})" class="text-red-500 p-2"><i class="fa-solid fa-trash-can text-sm"></i></button>
                     </div>`;
             });
             document.getElementById('cart-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
             document.getElementById('cartModal').style.display = 'block';
         }
 
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartCount();
-            openCart();
-        }
+        function removeFromCart(index) { cart.splice(index, 1); updateCartCount(); openCart(); }
+        function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
 
         function checkout() {
-            if (cart.length === 0) return alert("Keranjang kosong!");
+            if (cart.length === 0) return;
+            activeOrderID = generateOrderID();
             let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
-            // API QRIS Dinamis (Dummy untuk demo, bisa diarahkan ke link QRIS asli kamu)
-            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=PAY_W4RAS_STORE_${total}`;
+            document.getElementById('generated-order-id').innerText = `ORDER ID: ${activeOrderID}`;
+            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS_STORE_PAY_${activeOrderID}_${total}`;
+            document.getElementById('payment-step').classList.remove('hidden');
+            document.getElementById('success-step').classList.add('hidden');
             document.getElementById('qrisModal').style.display = 'block';
         }
 
@@ -217,15 +280,15 @@
             stats.revenue += total;
             stats.orders += 1;
             localStorage.setItem('w4ras_stats', JSON.stringify(stats));
-            alert("Pembayaran Berhasil Dikonfirmasi! Admin akan memproses gear kamu.");
+            
+            document.getElementById('payment-step').classList.add('hidden');
+            document.getElementById('success-step').classList.remove('hidden');
+            document.getElementById('final-order-id').innerText = activeOrderID;
             cart = [];
             updateCartCount();
-            document.getElementById('qrisModal').style.display = 'none';
-            document.getElementById('cartModal').style.display = 'none';
-            renderUI();
         }
 
-        // --- Logika Admin ---
+        // Admin Logics
         function saveProduct() {
             const name = document.getElementById('p-name').value, price = document.getElementById('p-price').value, img = document.getElementById('p-img').value;
             const newCat = document.getElementById('p-cat-new').value, selectCat = document.getElementById('p-cat-select').value;
@@ -238,18 +301,18 @@
                 }
                 products.push({ id: Date.now(), name, price, img, cat: finalCat });
                 localStorage.setItem('w4ras_db', JSON.stringify(products));
+                document.getElementById('p-name').value = ''; document.getElementById('p-cat-new').value = '';
                 renderUI();
-                alert("Store Updated!");
             }
         }
 
-        function deleteProduct(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); } }
+        function deleteProduct(id) { if(confirm("Hapus Gear ini?")) { products = products.filter(p => p.id !== id); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); } }
         function moveCat(id, newCat) { products = products.map(p => p.id === id ? {...p, cat: newCat} : p); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); }
         function setFilter(cat) { currentCategory = cat; renderUI(); }
-        function openAdmin() { if(prompt("Pass?") === ADMIN_PASS) document.getElementById('adminModal').style.display = 'block'; renderUI(); }
-        function closeCart() { document.getElementById('cartModal').style.display = 'none'; }
+        function openAdmin() { if(prompt("Security Clearance Required:") === ADMIN_PASS) { document.getElementById('adminModal').style.display = 'block'; renderUI(); } }
         function closeModal() { document.getElementById('adminModal').style.display = 'none'; }
         
+        // Init UI
         renderUI();
     </script>
 </body>
