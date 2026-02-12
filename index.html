@@ -91,10 +91,14 @@
 
         <div id="admin-panel-content" class="hidden space-y-8">
             <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                
                 <div class="space-y-6">
                     <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                        <h3 class="text-green-500 font-black italic uppercase mb-6">Financial Dashboard</h3>
+                        <div class="flex justify-between items-center mb-6">
+                            <h3 class="text-green-500 font-black italic uppercase">Financial Dashboard</h3>
+                            <button onclick="resetStats()" class="text-[9px] bg-red-600/20 text-red-500 border border-red-500/50 px-3 py-1 rounded-lg font-black hover:bg-red-600 hover:text-white transition">
+                                <i class="fa-solid fa-rotate-right mr-1"></i> RESET STATS
+                            </button>
+                        </div>
                         <div class="grid grid-cols-2 gap-4">
                             <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
                                 <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pemasukan</p>
@@ -120,7 +124,6 @@
                         <input type="text" id="p-name" placeholder="Nama Gear" class="admin-input w-full p-4 rounded-xl text-sm">
                         <input type="number" id="p-price" placeholder="Harga" class="admin-input w-full p-4 rounded-xl text-sm">
                         <input type="text" id="p-img" placeholder="Link Gambar (URL)" class="admin-input w-full p-4 rounded-xl text-sm">
-                        
                         <div class="flex gap-2">
                             <select id="p-cat-select" class="admin-input flex-1 p-4 rounded-xl text-sm outline-none"></select>
                             <input type="text" id="p-cat-new" placeholder="Buat Baru?" class="admin-input flex-1 p-4 rounded-xl text-sm">
@@ -157,16 +160,13 @@
             document.getElementById('stat-orders').innerText = stats.orders;
             document.getElementById('webhook-url').value = webhook;
 
-            // Render Category Bar
             catBar.innerHTML = `<button onclick="setFilter('All')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === 'All' ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">All</button>`;
             categories.forEach(c => {
                 catBar.innerHTML += `<button onclick="setFilter('${c}')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === c ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">${c}</button>`;
             });
 
-            // Render Select Kategori di Form
             pSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
 
-            // Render Produk
             grid.innerHTML = ''; adminList.innerHTML = '';
             products.forEach(p => {
                 if((currentCat === 'All' || p.cat === currentCat) && p.name.toLowerCase().includes(search)) {
@@ -198,19 +198,30 @@
         function toggleAdminPanel() {
             if(prompt("Enter Admin Password:") === ADMIN_PASS) {
                 document.getElementById('admin-panel-content').classList.toggle('hidden');
-                document.getElementById('btn-admin-access').innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Close Admin Panel';
+                document.getElementById('btn-admin-access').innerHTML = document.getElementById('admin-panel-content').classList.contains('hidden') ? '<i class="fa-solid fa-lock mr-2"></i> Open Admin Control' : '<i class="fa-solid fa-unlock mr-2"></i> Close Admin Panel';
                 renderUI();
-                window.scrollTo(0, document.body.scrollHeight);
+                if(!document.getElementById('admin-panel-content').classList.contains('hidden')) window.scrollTo(0, document.body.scrollHeight);
             }
         }
 
-        // --- CORE LOGIC ---
+        function resetStats() {
+            if (confirm("⚠️ Hapus semua statistik pemasukan dan pesanan?")) {
+                if (prompt("Masukkan Password Admin:") === ADMIN_PASS) {
+                    stats = { revenue: 0, orders: 0 };
+                    localStorage.setItem('w4ras_stats', JSON.stringify(stats));
+                    renderUI();
+                    alert("Stats Reset!");
+                } else { alert("Wrong Password!"); }
+            }
+        }
+
         function setFilter(c) { currentCat = c; renderUI(); }
         function addToCart(id) { cart.push(products.find(p => p.id === id)); document.getElementById('cart-count').innerText = cart.length; }
+        
         function openCart() {
             const list = document.getElementById('cart-items');
             let total = 0; list.innerHTML = '';
-            cart.forEach((item, i) => {
+            cart.forEach((item) => {
                 total += parseInt(item.price);
                 list.innerHTML += `<div class="flex justify-between bg-white/5 p-3 rounded-xl text-xs"><span>${item.name}</span><span class="text-green-500 font-bold">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span></div>`;
             });
