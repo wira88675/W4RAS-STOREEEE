@@ -10,10 +10,15 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0e0e12; color: white; scroll-behavior: smooth; }
         .glass { background: rgba(22, 22, 28, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
+        
+        /* Card Styling */
         .card-discord { transition: all 0.3s ease; border: 1px solid #27272a; position: relative; overflow: hidden; background: #16161c; display: flex; flex-direction: column; }
-        .card-discord:hover { transform: translateY(-8px); border-color: #5865F2; box-shadow: 0 0 30px rgba(88, 101, 242, 0.2); }
-        .btn-discord { background-color: #5865F2; transition: 0.3s; }
-        .btn-discord:hover { background-color: #4752c4; }
+        .card-discord:hover { transform: translateY(-8px); border-color: #22c55e; box-shadow: 0 0 30px rgba(34, 197, 94, 0.15); }
+        
+        /* SEMUA TOMBOL MENJADI HIJAU */
+        .btn-green { background-color: #22c55e; transition: 0.3s; border-radius: 9999px; }
+        .btn-green:hover { background-color: #16a34a; transform: scale(1.02); box-shadow: 0 0 20px rgba(34, 197, 94, 0.4); }
+        
         .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1rem; margin-bottom: 1rem; background: #1a1a24; display: flex; justify-content: center; align-items: center; }
         .img-container img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; filter: grayscale(50%); }
         .card-discord:hover img { filter: grayscale(0%); transform: scale(1.1); }
@@ -23,15 +28,15 @@
 
     <nav class="sticky top-0 z-50 glass px-6 py-4 flex justify-between items-center">
         <div class="flex items-center gap-3">
-            <img src="https://telegra.ph/file/5e128186259048a178972.jpg" class="w-12 h-12 rounded-full border-2 border-[#5865F2] shadow-lg shadow-indigo-500/40">
-            <h1 class="text-2xl font-black tracking-tighter italic">W4RAS<span class="text-[#5865F2]">STORE</span></h1>
+            <img src="https://telegra.ph/file/5e128186259048a178972.jpg" class="w-12 h-12 rounded-full border-2 border-[#22c55e] shadow-lg shadow-green-500/40">
+            <h1 class="text-2xl font-black tracking-tighter italic">W4RAS<span class="text-[#22c55e]">STORE</span></h1>
         </div>
         <div class="hidden md:flex gap-8 text-sm font-bold text-slate-400">
             <a href="#" class="hover:text-white transition">Home</a>
             <a href="#produk" class="hover:text-white transition">Products</a>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="hover:text-white transition italic text-[#5865F2]">Discord</a>
+            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="hover:text-white transition italic text-[#22c55e]">Discord</a>
         </div>
-        <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="bg-[#5865F2] hover:bg-[#4752c4] px-5 py-2 rounded-full text-xs font-bold transition flex items-center gap-2">
+        <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-5 py-2 text-xs font-bold transition flex items-center gap-2 text-white">
             <i class="fa-brands fa-discord"></i> Join Discord
         </a>
     </nav>
@@ -40,26 +45,26 @@
         <div class="max-w-6xl mx-auto text-center relative z-10">
             <h2 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-tight uppercase italic">
                 Looking for <br>
-                <span class="text-[#5865F2]">Gaming Accounts?</span>
+                <span class="text-[#22c55e]">Gaming Accounts?</span>
             </h2>
             <h3 class="text-2xl md:text-3xl font-bold mb-6 text-slate-200 uppercase">We've got you covered.</h3>
             <p class="text-slate-400 max-w-2xl mx-auto mb-10 text-sm md:text-base leading-relaxed font-medium">
                 W4RAS STORE is the number one destination for quality accounts.
             </p>
             <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-                <a href="#produk" class="bg-[#5865F2] hover:bg-[#4752c4] px-10 py-4 rounded-2xl font-black transition flex items-center gap-2 shadow-xl shadow-indigo-500/30 uppercase italic text-white">
+                <a href="#produk" class="btn-green px-10 py-4 font-black transition flex items-center gap-2 shadow-xl shadow-green-500/20 uppercase italic text-white">
                     <i class="fa-solid fa-cart-shopping"></i> Check our Products
                 </a>
             </div>
         </div>
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
-            <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#5865F2] rounded-full blur-[130px]"></div>
+            <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#22c55e] rounded-full blur-[130px]"></div>
         </div>
     </div>
 
     <main id="produk" class="max-w-6xl mx-auto px-4 mt-12">
         <div class="flex items-center gap-3 mb-10">
-            <div class="h-8 w-2 bg-[#5865F2] rounded-full"></div>
+            <div class="h-8 w-2 bg-[#22c55e] rounded-full"></div>
             <h3 class="text-2xl font-black italic uppercase tracking-widest">Store Inventory</h3>
         </div>
 
@@ -71,10 +76,10 @@
                 </div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">ROCKSTAR ACCOUNT</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3">
-                        <p class="text-lg font-black text-[#5865F2]">Rp 14.999</p>
+                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
+                        <p class="text-lg font-black text-[#22c55e]">Rp 14.999</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2 rounded-xl text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
                 </div>
             </div>
 
@@ -84,51 +89,51 @@
                 </div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">ACCOUNT DISCORD</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3">
-                        <p class="text-lg font-black text-[#5865F2]">Rp 15.000</p>
+                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
+                        <p class="text-lg font-black text-[#22c55e]">Rp 15.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2 rounded-xl text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
                 </div>
             </div>
 
-            <div class="card-discord p-4 rounded-3xl border-green-500/20">
+            <div class="card-discord p-4 rounded-3xl">
                 <div class="img-container">
                     <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png">
                 </div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">Spotify Premium</h4>
                 <div class="mt-auto">
-                    <div class="bg-white/5 p-3 rounded-xl mb-3">
-                        <p class="text-lg font-black text-green-500">Rp 15.000</p>
+                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
+                        <p class="text-lg font-black text-[#22c55e]">Rp 15.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="bg-green-600 hover:bg-green-700 w-full py-2 rounded-xl text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-    <div class="img-container">
-        <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&">
-    </div>
-    <h4 class="font-bold text-xs mb-4 uppercase italic">OPTIMIZE PC</h4>
-    <div class="mt-auto">
-        <div class="bg-white/5 p-3 rounded-xl mb-3">
-            <p class="text-lg font-black text-[#5865F2]">Rp 55.000</p>
-        </div>
-        <a href=""https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2 rounded-xl text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
-    </div>
-</div>
+                <div class="img-container">
+                    <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&">
+                </div>
+                <h4 class="font-bold text-xs mb-4 uppercase italic">OPTIMIZE PC</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
+                        <p class="text-lg font-black text-[#22c55e]">Rp 55.000</p>
+                    </div>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                </div>
+            </div>
 
             <div class="card-discord p-4 rounded-3xl">
-    <div class="img-container">
-        <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&">
-    </div>
-    <h4 class="font-bold text-xs mb-4 uppercase italic">Steam</h4>
-    <div class="mt-auto">
-        <div class="bg-white/5 p-3 rounded-xl mb-3">
-            <p class="text-lg font-black text-[#5865F2]">Rp 1.500</p>
-        </div>
-        <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2 rounded-xl text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
-    </div>
-</div>
+                <div class="img-container">
+                    <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&">
+                </div>
+                <h4 class="font-bold text-xs mb-4 uppercase italic">Steam</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
+                        <p class="text-lg font-black text-[#22c55e]">Rp 1.500</p>
+                    </div>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                </div>
+            </div>
 
         </div>
     </main>
