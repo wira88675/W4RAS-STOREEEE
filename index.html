@@ -10,10 +10,13 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: #0e0e12; color: white; scroll-behavior: smooth; }
         .glass { background: rgba(22, 22, 28, 0.8); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .card-discord { transition: all 0.3s ease; border: 1px solid #27272a; position: relative; overflow: hidden; background: #16161c; }
+        .card-discord { transition: all 0.3s ease; border: 1px solid #27272a; position: relative; overflow: hidden; background: #16161c; display: flex; flex-direction: column; }
         .card-discord:hover { transform: translateY(-8px); border-color: #5865F2; box-shadow: 0 0 30px rgba(88, 101, 242, 0.2); }
         .btn-discord { background-color: #5865F2; transition: 0.3s; }
         .btn-discord:hover { background-color: #4752c4; }
+        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1rem; margin-bottom: 1rem; }
+        .img-container img { width: 100%; height: 100%; object-fit: cover; transition: 0.5s; filter: grayscale(100%); }
+        .card-discord:hover img { filter: grayscale(0%); transform: scale(1.1); }
     </style>
 </head>
 <body class="pb-24">
@@ -31,7 +34,7 @@
             <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="hover:text-white transition italic text-[#5865F2]">Discord</a>
         </div>
         <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="bg-[#5865F2] hover:bg-[#4752c4] px-5 py-2 rounded-full text-xs font-bold transition flex items-center gap-2">
-            <i class="fa-brands fa-discord"></i> Login
+            <i class="fa-brands fa-discord"></i> Join
         </a>
     </nav>
 
@@ -72,59 +75,83 @@
             <h3 class="text-2xl font-black italic uppercase tracking-widest">Store Inventory</h3>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             
             <div class="card-discord p-4 rounded-3xl">
-                <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=ROKSTAR+ACCOUNT" class="w-full h-40 object-cover rounded-2xl mb-4 grayscale hover:grayscale-0 transition duration-500">
-                <h4 class="font-bold text-lg mb-4 leading-tight uppercase italic">ROKSTAR ACCOUNT</h4>
-                <div class="flex flex-col gap-3">
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <div class="img-container">
+                    <img src="https://w0.peakpx.com/wallpaper/930/888/wallpaper-desktop-gta-v-logo.jpg">
+                </div>
+                <h4 class="font-bold text-sm mb-4 leading-tight uppercase italic">ROKSTAR ACCOUNT</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 mb-3">
                         <p class="text-[10px] text-slate-500 line-through">Rp 15.000</p>
-                        <p class="text-xl font-black text-[#5865F2]">Rp 14.999</p>
+                        <p class="text-lg font-black text-[#5865F2]">Rp 14.999</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-3 rounded-xl text-center text-xs font-black transition flex items-center justify-center gap-2 uppercase">
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2.5 rounded-xl text-center text-[10px] font-black transition flex items-center justify-center gap-2 uppercase tracking-tighter">
                         <i class="fa-solid fa-ticket"></i> Open Ticket
                     </a>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=ACCOUNT+DISCORD" class="w-full h-40 object-cover rounded-2xl mb-4 grayscale hover:grayscale-0 transition duration-500">
-                <h4 class="font-bold text-lg mb-4 leading-tight uppercase italic">ACCOUNT DISCORD</h4>
-                <div class="flex flex-col gap-3">
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <div class="img-container">
+                    <img src="https://p4.wallpaperbetter.com/wallpaper/845/834/622/discord-logo-wallpaper-preview.jpg">
+                </div>
+                <h4 class="font-bold text-sm mb-4 leading-tight uppercase italic">ACCOUNT DISCORD</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 mb-3">
                         <p class="text-[10px] text-slate-500 line-through">Rp 20.000</p>
-                        <p class="text-xl font-black text-[#5865F2]">Rp 15.000</p>
+                        <p class="text-lg font-black text-[#5865F2]">Rp 15.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-3 rounded-xl text-center text-xs font-black transition flex items-center justify-center gap-2 uppercase">
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2.5 rounded-xl text-center text-[10px] font-black transition flex items-center justify-center gap-2 uppercase tracking-tighter">
+                        <i class="fa-solid fa-ticket"></i> Open Ticket
+                    </a>
+                </div>
+            </div>
+
+            <div class="card-discord p-4 rounded-3xl border-green-500/20">
+                <div class="img-container">
+                    <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png">
+                </div>
+                <h4 class="font-bold text-sm mb-4 leading-tight uppercase italic">Spotify Premium</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 mb-3">
+                        <p class="text-[10px] text-slate-500 line-through">Rp 55.000</p>
+                        <p class="text-lg font-black text-green-500">Rp 15.000</p>
+                    </div>
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="bg-green-600 hover:bg-green-700 w-full py-2.5 rounded-xl text-center text-[10px] font-black transition flex items-center justify-center gap-2 uppercase tracking-tighter">
                         <i class="fa-solid fa-ticket"></i> Open Ticket
                     </a>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=NETFLIX+4K" class="w-full h-40 object-cover rounded-2xl mb-4 grayscale hover:grayscale-0 transition duration-500">
-                <h4 class="font-bold text-lg mb-4 leading-tight uppercase italic">Netflix 4K Ultra</h4>
-                <div class="flex flex-col gap-3">
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <div class="img-container">
+                    <img src="https://images.ctfassets.net/y2ske730sjfq/4797V9zLAnXIl99LpY9S8a/e307779b531473950486c4767222384c/Netflix_N.png">
+                </div>
+                <h4 class="font-bold text-sm mb-4 leading-tight uppercase italic">Netflix 4K Ultra</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 mb-3">
                         <p class="text-[10px] text-slate-500 line-through">Rp 186.000</p>
-                        <p class="text-xl font-black text-[#5865F2]">Rp 35.000</p>
+                        <p class="text-lg font-black text-[#5865F2]">Rp 35.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-3 rounded-xl text-center text-xs font-black transition flex items-center justify-center gap-2 uppercase">
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2.5 rounded-xl text-center text-[10px] font-black transition flex items-center justify-center gap-2 uppercase tracking-tighter">
                         <i class="fa-solid fa-ticket"></i> Open Ticket
                     </a>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <img src="https://via.placeholder.com/400x300/1e293b/ffffff?text=YOUTUBE+PREM" class="w-full h-40 object-cover rounded-2xl mb-4 grayscale hover:grayscale-0 transition duration-500">
-                <h4 class="font-bold text-lg mb-4 leading-tight uppercase italic">YouTube Premium</h4>
-                <div class="flex flex-col gap-3">
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5">
+                <div class="img-container">
+                    <img src="https://Logos-world.net/wp-content/uploads/2020/04/YouTube-Emblem.png">
+                </div>
+                <h4 class="font-bold text-sm mb-4 leading-tight uppercase italic">YouTube Premium</h4>
+                <div class="mt-auto">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 mb-3">
                         <p class="text-[10px] text-slate-500 line-through">Rp 59.000</p>
-                        <p class="text-xl font-black text-[#5865F2]">Rp 10.000</p>
+                        <p class="text-lg font-black text-[#5865F2]">Rp 10.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-3 rounded-xl text-center text-xs font-black transition flex items-center justify-center gap-2 uppercase">
+                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-discord w-full py-2.5 rounded-xl text-center text-[10px] font-black transition flex items-center justify-center gap-2 uppercase tracking-tighter">
                         <i class="fa-solid fa-ticket"></i> Open Ticket
                     </a>
                 </div>
@@ -134,7 +161,7 @@
     </main>
 
     <section class="max-w-6xl mx-auto px-4 mt-24 text-center">
-        <p class="text-xs font-bold text-slate-600 uppercase tracking-[0.4em] mb-8">Trusted Payment Methods</p>
+        <p class="text-[10px] font-bold text-slate-600 uppercase tracking-[0.4em] mb-8">Trusted Payment Methods</p>
         <div class="flex flex-wrap justify-center gap-10 opacity-30 hover:opacity-100 transition duration-500 grayscale hover:grayscale-0">
              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/e/e1/QRIS_logo.svg/1200px-QRIS_logo.svg.png" class="h-6">
              <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/72/Logo_dana_blue.svg/1200px-Logo_dana_blue.svg.png" class="h-5">
