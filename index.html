@@ -17,6 +17,10 @@
         .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1rem; margin-bottom: 1rem; background: #1a1a24; display: flex; justify-content: center; align-items: center; }
         .img-container img { width: 100%; height: 100%; object-fit: contain; transition: 0.5s; filter: grayscale(50%); }
         .card-discord:hover img { filter: grayscale(0%); transform: scale(1.1); }
+        
+        /* Nav Cart */
+        #cart-nav { transition: 0.3s; background: rgba(34, 197, 94, 0.1); border: 1px solid rgba(34, 197, 94, 0.2); }
+        #cart-nav:hover { background: rgba(34, 197, 94, 0.2); }
     </style>
 </head>
 <body class="pb-24">
@@ -26,107 +30,87 @@
             <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-12 h-12 rounded-full border-2 border-[#22c55e] shadow-lg shadow-green-500/40">
             <h1 class="text-2xl font-black tracking-tighter italic">W4RAS<span class="text-[#22c55e]">STORE</span></h1>
         </div>
-        <div class="hidden md:flex gap-8 text-sm font-bold text-slate-400">
-            <a href="#" class="hover:text-white transition">Home</a>
-            <a href="#produk" class="hover:text-white transition">Products</a>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="hover:text-white transition italic text-[#22c55e]">Discord</a>
+        
+        <div class="flex items-center gap-3">
+            <button onclick="checkout()" id="cart-nav" class="hidden flex items-center gap-2 px-4 py-2 rounded-full">
+                <div class="relative">
+                    <i class="fa-solid fa-cart-shopping text-sm text-[#22c55e]"></i>
+                    <span id="cart-count" class="absolute -top-3 -right-3 bg-white text-black text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center border border-green-500">0</span>
+                </div>
+                <span class="text-[10px] font-bold uppercase tracking-widest text-white hidden sm:block">Checkout</span>
+            </button>
+
+            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-5 py-2 text-xs font-bold transition flex items-center gap-2 text-white shadow-lg shadow-green-500/20">
+                <i class="fa-brands fa-discord"></i> Join Discord
+            </a>
         </div>
-        <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-5 py-2 text-xs font-bold transition flex items-center gap-2 text-white">
-            <i class="fa-brands fa-discord"></i> Join Discord
-        </a>
     </nav>
 
-    <div class="relative pt-24 pb-20 px-4 overflow-hidden">
-        <div class="max-w-6xl mx-auto text-center relative z-10">
-            <h2 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-tight uppercase italic">
-                Looking for <br>
-                <span class="text-[#22c55e]">Gaming Accounts?</span>
-            </h2>
-            <h3 class="text-2xl md:text-3xl font-bold mb-6 text-slate-200 uppercase">We've got you covered.</h3>
-            <p class="text-slate-400 max-w-2xl mx-auto mb-10 text-sm md:text-base leading-relaxed font-medium">
-                W4RAS STORE is the number one destination for quality accounts.
-            </p>
-            <div class="flex flex-col md:flex-row justify-center items-center gap-4">
-                <a href="#produk" class="btn-green px-10 py-4 font-black transition flex items-center gap-2 shadow-xl shadow-green-500/20 uppercase italic text-white">
-                    <i class="fa-solid fa-cart-shopping"></i> Check our Products
-                </a>
-            </div>
-        </div>
+    <div class="relative pt-24 pb-20 px-4 overflow-hidden text-center">
+        <h2 class="text-5xl md:text-7xl font-extrabold mb-4 tracking-tight leading-tight uppercase italic">
+            ELEVATE YOUR <br> <span class="text-[#22c55e]">GAMING LIFE</span>
+        </h2>
+        <p class="text-slate-400 max-w-2xl mx-auto mb-10 text-sm font-medium">Penyedia akun premium tercepat dan terpercaya. Klik ikon + untuk memasukkan ke keranjang.</p>
         <div class="absolute top-0 left-1/2 -translate-x-1/2 w-full h-full pointer-events-none opacity-20">
             <div class="absolute top-[-10%] left-1/2 -translate-x-1/2 w-[600px] h-[600px] bg-[#22c55e] rounded-full blur-[130px]"></div>
         </div>
     </div>
 
     <main id="produk" class="max-w-6xl mx-auto px-4 mt-12">
-        <div class="flex items-center gap-3 mb-10">
-            <div class="h-8 w-2 bg-[#22c55e] rounded-full"></div>
-            <h3 class="text-2xl font-black italic uppercase tracking-widest">Store Inventory</h3>
-        </div>
-
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             
             <div class="card-discord p-4 rounded-3xl">
-                <div class="img-container">
-                    <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png?ex=698ed61c&is=698d849c&hm=0ea8aa57a66d893c107fcb1c4fcd3cc95a638e80e29af6f9e7c43ad5fd3e16ce&">
-                </div>
+                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png?ex=698ed61c&is=698d849c&hm=0ea8aa57a66d893c107fcb1c4fcd3cc95a638e80e29af6f9e7c43ad5fd3e16ce&"></div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">ROCKSTAR ACCOUNT</h4>
                 <div class="mt-auto">
                     <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
                         <p class="text-lg font-black text-[#22c55e]">Rp 14.999</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <button onclick="addToCart('Rockstar Account', '14.999')" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <div class="img-container">
-                    <img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png">
-                </div>
+                <div class="img-container"><img src="https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png"></div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">ACCOUNT DISCORD</h4>
                 <div class="mt-auto">
                     <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
                         <p class="text-lg font-black text-[#22c55e]">Rp 15.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <button onclick="addToCart('Discord Account', '15.000')" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <div class="img-container">
-                    <img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png">
-                </div>
+                <div class="img-container"><img src="https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png"></div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">Spotify Premium</h4>
                 <div class="mt-auto">
                     <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
                         <p class="text-lg font-black text-[#22c55e]">Rp 15.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <button onclick="addToCart('Spotify Premium', '15.000')" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <div class="img-container">
-                    <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&">
-                </div>
+                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif?ex=698e9458&is=698d42d8&hm=ff89ebe4b933547bdffc2bc0b3a078e331c530cf17de934685338a2d30140a7d&"></div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">OPTIMIZE PC</h4>
                 <div class="mt-auto">
                     <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
                         <p class="text-lg font-black text-[#22c55e]">Rp 55.000</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <button onclick="addToCart('PC Optimize', '55.000')" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
                 </div>
             </div>
 
             <div class="card-discord p-4 rounded-3xl">
-                <div class="img-container">
-                    <img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&">
-                </div>
+                <div class="img-container"><img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png?ex=698ed669&is=698d84e9&hm=759fc1f9d00dae70bbd3f7080d74dab394d002d22298dbebe69dd2a379fa22be&"></div>
                 <h4 class="font-bold text-xs mb-4 uppercase italic">Steam</h4>
                 <div class="mt-auto">
                     <div class="bg-white/5 p-3 rounded-xl mb-3 text-center">
                         <p class="text-lg font-black text-[#22c55e]">Rp 1.500</p>
                     </div>
-                    <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green w-full py-2 text-[10px] font-black text-center uppercase text-white">Open Ticket</a>
+                    <button onclick="addToCart('Steam Account', '1.500')" class="btn-green w-full py-2 text-[10px] font-black uppercase text-white">Add to Cart</button>
                 </div>
             </div>
 
@@ -137,5 +121,35 @@
         &copy; 2011 W4RAS STORE - BY WIRA
     </footer>
 
+    <script>
+        let cart = [];
+        const discordLink = "https://discord.gg/aB5HqUkNQK";
+
+        function addToCart(name, price) {
+            cart.push({ name, price });
+            updateUI();
+            alert(name + " berhasil masuk keranjang!");
+        }
+
+        function updateUI() {
+            const btn = document.getElementById('cart-nav');
+            const count = document.getElementById('cart-count');
+            if (cart.length > 0) {
+                btn.classList.remove('hidden');
+                count.innerText = cart.length;
+            }
+        }
+
+        function checkout() {
+            let message = "Halo Admin W4RAS STORE, saya mau order:\n";
+            cart.forEach((item, i) => {
+                message += `${i+1}. ${item.name} - Rp ${item.price}\n`;
+            });
+            alert(message + "\nSilakan selesaikan di Discord!");
+            window.open(discordLink, "_blank");
+            cart = [];
+            document.getElementById('cart-nav').classList.add('hidden');
+        }
+    </script>
 </body>
 </html>
