@@ -24,19 +24,21 @@
         }
         .btn-action:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.6); filter: brightness(1.1); }
 
-        /* SEARCH BAR STYLE */
+        /* SEARCH BAR */
         .search-container { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; transition: 0.3s; }
         .search-container:focus-within { border-color: var(--primary-green); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
 
         /* CATEGORY PILLS */
         .cat-pill { padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #94a3b8; }
         .cat-pill.active { background: #3b82f6; color: white; border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
-        .cat-pill:not(.active):hover { background: rgba(255,255,255,0.08); color: white; }
 
         .card-discord { background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; border-radius: 2rem; }
         .card-discord:hover { border-color: var(--primary-green); transform: translateY(-10px); }
         .img-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); border-radius: 1.5rem; overflow: hidden; }
         .img-container img { max-width: 80%; mix-blend-mode: lighten; }
+
+        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
+        .modal-content { background: #0f0f13; margin: 5% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.3); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
     </style>
 </head>
 <body>
@@ -52,77 +54,128 @@
 
     <div id="shop-section" class="max-w-4xl mx-auto px-6 mb-12">
         <div class="flex flex-wrap justify-center gap-3 mb-6">
-            <button onclick="filterCategory('FiveM')" class="cat-pill active" id="cat-FiveM">
-                <i class="fa-solid fa-gamepad"></i> FiveM
-            </button>
-            <button onclick="filterCategory('Cloud Phone')" class="cat-pill" id="cat-Cloud">
-                <i class="fa-solid fa-mobile-screen-button"></i> Cloud Phone
-            </button>
-            <button onclick="filterCategory('All')" class="cat-pill" id="cat-All">
-                <i class="fa-solid fa-border-all"></i> All Apps
-            </button>
+            <button onclick="filterCategory('FiveM')" class="cat-pill active" id="cat-FiveM"><i class="fa-solid fa-gamepad"></i> FiveM</button>
+            <button onclick="filterCategory('Cloud Phone')" class="cat-pill" id="cat-Cloud"><i class="fa-solid fa-mobile-screen-button"></i> Cloud Phone</button>
+            <button onclick="filterCategory('All')" class="cat-pill" id="cat-All"><i class="fa-solid fa-border-all"></i> All Apps</button>
         </div>
 
         <div class="search-container flex items-center px-4 py-4">
             <i class="fa-solid fa-magnifying-glass text-slate-500 mr-3"></i>
-            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Cari produk..." class="bg-transparent w-full outline-none text-white text-sm">
+            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Cari produk yang kamu tambahkan..." class="bg-transparent w-full outline-none text-white text-sm">
         </div>
     </div>
 
     <main class="max-w-6xl mx-auto px-6 pb-32">
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
+            </div>
     </main>
 
+    <div id="adminModal" class="modal">
+        <div class="modal-content text-white">
+            <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center">Admin Panel</h2>
+            <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
+                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="number" id="p-price" placeholder="Harga (Angka)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="text" id="p-img" placeholder="URL Gambar Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <select id="p-cat" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-slate-400">
+                    <option value="FiveM">Kategori: FiveM</option>
+                    <option value="Cloud Phone">Kategori: Cloud Phone</option>
+                </select>
+                <button onclick="saveProduct()" class="w-full btn-action py-3 text-[10px] uppercase">Simpan Produk</button>
+            </div>
+            <div id="admin-product-list" class="space-y-4 max-h-[250px] overflow-y-auto pr-2"></div>
+            <button onclick="closeModal()" class="w-full mt-4 text-[10px] text-slate-500 uppercase">Tutup</button>
+        </div>
+    </div>
+
+    <footer class="p-12 text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] opacity-40">
+        &copy; 2026 W4RAS STORE • <button onclick="openAdmin()" class="hover:text-green-500 transition">Admin Login</button>
+    </footer>
+
     <script>
+        const ADMIN_PASS = "Wira123";
+        let products = JSON.parse(localStorage.getItem('w4ras_db')) || [];
         let currentCategory = 'FiveM';
-        
-        // Data Produk (Bisa ditambah via Admin atau manual di sini)
-        let products = [
-            { id: 1, name: 'FiveM Account Premium', price: 45000, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png', cat: 'FiveM' },
-            { id: 2, name: 'Cloud Phone 8GB RAM', price: 89000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/electronics-video-gadgets/smartphone-icon.png', cat: 'Cloud Phone' },
-            { id: 3, name: 'Cloud Phone Gaming Pro', price: 150000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/electronics-video-gadgets/smartphone-icon.png', cat: 'Cloud Phone' },
-            { id: 4, name: 'FiveM Mod Menu', price: 25000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png', cat: 'FiveM' }
-        ];
 
-        function filterCategory(category) {
-            currentCategory = category;
-            // Update UI Tombol
+        function filterCategory(cat) {
+            currentCategory = cat;
             document.querySelectorAll('.cat-pill').forEach(el => el.classList.remove('active'));
-            if(category === 'FiveM') document.getElementById('cat-FiveM').classList.add('active');
-            if(category === 'Cloud Phone') document.getElementById('cat-Cloud').classList.add('active');
-            if(category === 'All') document.getElementById('cat-All').classList.add('active');
-            
+            if(cat === 'FiveM') document.getElementById('cat-FiveM').classList.add('active');
+            if(cat === 'Cloud Phone') document.getElementById('cat-Cloud').classList.add('active');
+            if(cat === 'All') document.getElementById('cat-All').classList.add('active');
             renderProducts();
         }
 
-        function searchProduct() {
-            renderProducts();
-        }
+        function searchProduct() { renderProducts(); }
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
+            const adminList = document.getElementById('admin-product-list');
             const query = document.getElementById('searchInput').value.toLowerCase();
+            
             grid.innerHTML = '';
+            adminList.innerHTML = '';
 
-            let filtered = products.filter(p => {
+            if (products.length === 0) {
+                grid.innerHTML = `<p class="col-span-full text-center text-slate-500 py-10 italic">Belum ada produk. Silakan tambah via Admin.</p>`;
+            }
+
+            products.forEach(p => {
                 const matchCat = (currentCategory === 'All' || p.cat === currentCategory);
                 const matchSearch = p.name.toLowerCase().includes(query);
-                return matchCat && matchSearch;
-            });
 
-            filtered.forEach(p => {
-                grid.innerHTML += `
-                    <div class="card-discord p-6 text-center">
-                        <div class="img-container mb-4"><img src="${p.img}"></div>
-                        <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">${p.cat}</p>
-                        <h4 class="font-bold text-sm mb-4 uppercase text-white truncate">${p.name}</h4>
-                        <p class="text-xl font-black text-green-500 mb-6">Rp ${p.price.toLocaleString('id-ID')}</p>
-                        <button class="btn-action w-full py-3 text-[10px] uppercase">Buy Now</button>
+                if(matchCat && matchSearch) {
+                    grid.innerHTML += `
+                        <div class="card-discord p-6 text-center">
+                            <div class="img-container mb-4"><img src="${p.img}" onerror="this.src='https://uxwing.com/wp-content/themes/uxwing/download/electronics-video-gadgets/smartphone-icon.png'"></div>
+                            <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">${p.cat}</p>
+                            <h4 class="font-bold text-sm mb-4 uppercase text-white truncate">${p.name}</h4>
+                            <p class="text-xl font-black text-green-500 mb-6">Rp ${p.price.toLocaleString('id-ID')}</p>
+                            <button onclick="alert('Order ${p.name} dikirim ke Discord!')" class="btn-action w-full py-3 text-[10px] uppercase">Buy Now</button>
+                        </div>`;
+                }
+
+                adminList.innerHTML += `
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center">
+                        <div class="text-left">
+                            <p class="text-[10px] font-bold text-green-500">${p.name}</p>
+                            <p class="text-[8px] text-slate-400">${p.cat}</p>
+                        </div>
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
                     </div>`;
             });
         }
 
-        // Jalankan saat pertama buka
+        function openAdmin() {
+            if(prompt("Password Admin:") === ADMIN_PASS) {
+                document.getElementById('adminModal').style.display = "block";
+                renderProducts();
+            } else { alert("Salah Boss!"); }
+        }
+
+        function saveProduct() {
+            const n = document.getElementById('p-name').value;
+            const p = parseInt(document.getElementById('p-price').value);
+            const i = document.getElementById('p-img').value;
+            const c = document.getElementById('p-cat').value;
+            if(n && p && i) {
+                products.push({id: Date.now(), name: n, price: p, img: i, cat: c});
+                localStorage.setItem('w4ras_db', JSON.stringify(products));
+                renderProducts();
+                alert("Produk Berhasil Ditambah!");
+            }
+        }
+
+        function deleteProduct(id) {
+            if(confirm("Hapus produk ini?")) {
+                products = products.filter(p => p.id !== id);
+                localStorage.setItem('w4ras_db', JSON.stringify(products));
+                renderProducts();
+            }
+        }
+
+        function closeModal() { document.getElementById('adminModal').style.display = "none"; }
+        
         renderProducts();
     </script>
 </body>
