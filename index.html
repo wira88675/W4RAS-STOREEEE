@@ -10,191 +10,119 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         :root { --primary-green: #22c55e; --dark-bg: #050505; }
         
-        body { 
-            font-family: 'Plus Jakarta Sans', sans-serif; 
-            background-color: var(--dark-bg); 
-            color: white; 
-            scroll-behavior: smooth; 
-            overflow-x: hidden;
+        body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; }
+
+        /* HERO STYLE */
+        .hero-title { font-size: clamp(3rem, 10vw, 6rem); line-height: 0.9; font-style: italic; font-weight: 900; text-transform: uppercase; letter-spacing: -0.05em; }
+        .hero-green { color: var(--primary-green); text-shadow: 0 0 30px rgba(34, 197, 94, 0.4); }
+
+        /* BUTTON GREEN GLOW */
+        .btn-action { 
+            background: var(--primary-green); color: black; transition: 0.3s; 
+            border-radius: 12px; font-weight: 800; 
+            box-shadow: 0 4px 20px rgba(34, 197, 94, 0.4); 
         }
+        .btn-action:hover { transform: translateY(-3px); box-shadow: 0 8px 30px rgba(34, 197, 94, 0.6); filter: brightness(1.1); }
 
-        /* Background Effects */
-        .bg-mesh { position: fixed; top: 0; left: 0; width: 100%; height: 100%; z-index: -1; background: radial-gradient(circle at 50% 50%, #111827 0%, #050505 100%); }
-        .mesh-blob { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%); filter: blur(80px); animation: move 20s infinite alternate; }
-        @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
+        /* SEARCH BAR STYLE */
+        .search-container { background: rgba(255, 255, 255, 0.05); border: 1px solid rgba(255, 255, 255, 0.1); border-radius: 14px; transition: 0.3s; }
+        .search-container:focus-within { border-color: var(--primary-green); box-shadow: 0 0 15px rgba(34, 197, 94, 0.2); }
 
-        /* UI Elements */
-        .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .card-discord { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); }
-        .card-discord:hover { transform: translateY(-12px) scale(1.02); border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1); }
-        
-        .btn-green { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); transition: 0.3s; border-radius: 14px; color: white; font-weight: 800; }
-        .btn-green:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
+        /* CATEGORY PILLS */
+        .cat-pill { padding: 10px 20px; border-radius: 12px; font-size: 13px; font-weight: 700; transition: 0.3s; display: flex; align-items: center; gap: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.03); color: #94a3b8; }
+        .cat-pill.active { background: #3b82f6; color: white; border-color: #3b82f6; box-shadow: 0 0 15px rgba(59, 130, 246, 0.5); }
+        .cat-pill:not(.active):hover { background: rgba(255,255,255,0.08); color: white; }
 
-        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
-        .img-container img { max-width: 85%; max-height: 85%; object-fit: contain; mix-blend-mode: lighten; }
-
-        /* Modals */
-        .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); }
-        .modal-content { background: #0f0f13; margin: 5% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
-        .close-modal { position: absolute; right: 20px; top: 15px; font-size: 20px; cursor: pointer; color: #555; }
-        
-        ::-webkit-scrollbar { width: 5px; }
-        ::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }
+        .card-discord { background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); border: 1px solid rgba(255,255,255,0.05); transition: 0.4s; border-radius: 2rem; }
+        .card-discord:hover { border-color: var(--primary-green); transform: translateY(-10px); }
+        .img-container { width: 100%; height: 160px; display: flex; justify-content: center; align-items: center; background: rgba(0,0,0,0.2); border-radius: 1.5rem; overflow: hidden; }
+        .img-container img { max-width: 80%; mix-blend-mode: lighten; }
     </style>
 </head>
 <body>
 
-    <div class="bg-mesh"><div class="mesh-blob" style="top: -10%; left: -10%;"></div></div>
-
-    <nav class="sticky top-0 z-50 glass px-8 py-5 flex justify-between items-center mx-4 mt-4 rounded-3xl">
-        <div class="flex items-center gap-3">
-            <img src="https://cdn.discordapp.com/attachments/1457996020876316724/1470800880814133430/W4RAAS.png?ex=698e97d0&is=698d4650&hm=35d9dff68ff8cab6885cb6c39d34a9ca347de8d2fa96ca766ec17dfed8232af8&" class="w-10 h-10 rounded-full border border-green-500/50">
-            <h1 class="text-xl font-black tracking-tighter italic uppercase">W4RAS<span class="text-green-500">STORE</span></h1>
-        </div>
-        <div class="flex items-center gap-4">
-            <button onclick="checkout()" id="cart-nav" class="hidden items-center gap-2 px-5 py-2.5 rounded-2xl glass transition-all border-green-500/30">
-                <i class="fa-solid fa-cart-shopping text-green-500"></i>
-                <span id="cart-count" class="text-white text-[10px] font-black">0</span>
+    <section class="pt-24 pb-12 px-6 text-center">
+        <h1 class="hero-title">UNLEASH <br> <span class="hero-green">THE POWER.</span></h1>
+        <div class="mt-10">
+            <button onclick="document.getElementById('shop-section').scrollIntoView({behavior: 'smooth'})" class="btn-action px-10 py-5 flex items-center gap-3 mx-auto uppercase italic text-sm">
+                <i class="fa-solid fa-cart-shopping"></i> Check our Products
             </button>
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-green px-6 py-2.5 text-xs uppercase tracking-widest">Join</a>
         </div>
-    </nav>
+    </section>
 
-    <div class="relative pt-32 pb-24 px-4 text-center">
-        <span class="px-4 py-2 rounded-full glass text-[10px] font-bold text-green-500 uppercase tracking-[0.3em] mb-6 inline-block italic">W4RAS STORE ONTOP #1 DI DUNIA</span>
-        <h2 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-none">W4RAS STORE ONTOP <br> <span class="text-green-500">#1 DI DUNIA.</span></h2>
+    <div id="shop-section" class="max-w-4xl mx-auto px-6 mb-12">
+        <div class="flex flex-wrap justify-center gap-3 mb-6">
+            <button onclick="filterCategory('FiveM')" class="cat-pill active" id="cat-FiveM">
+                <i class="fa-solid fa-gamepad"></i> FiveM
+            </button>
+            <button onclick="filterCategory('Cloud Phone')" class="cat-pill" id="cat-Cloud">
+                <i class="fa-solid fa-mobile-screen-button"></i> Cloud Phone
+            </button>
+            <button onclick="filterCategory('All')" class="cat-pill" id="cat-All">
+                <i class="fa-solid fa-border-all"></i> All Apps
+            </button>
+        </div>
+
+        <div class="search-container flex items-center px-4 py-4">
+            <i class="fa-solid fa-magnifying-glass text-slate-500 mr-3"></i>
+            <input type="text" id="searchInput" onkeyup="searchProduct()" placeholder="Cari produk..." class="bg-transparent w-full outline-none text-white text-sm">
+        </div>
     </div>
 
     <main class="max-w-6xl mx-auto px-6 pb-32">
-        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"></div>
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6"></div>
     </main>
 
-    <div id="adminModal" class="modal">
-        <div class="modal-content text-white">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center">Admin Panel</h2>
-            <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
-                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="number" id="p-price" placeholder="Harga" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="text" id="p-img" placeholder="Link Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <button onclick="saveProduct()" class="w-full btn-green py-3 text-[10px] uppercase">Tambah Produk</button>
-            </div>
-            <div id="admin-product-list" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
-        </div>
-    </div>
-
-    <div id="paymentModal" class="modal">
-        <div class="modal-content text-white">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <h2 class="text-2xl font-black mb-6 italic uppercase text-center">Checkout</h2>
-            <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-sm outline-none text-white focus:border-green-500">
-            <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center mb-4">
-                <span id="totalDisplay" class="text-3xl font-black text-green-500">Rp 0</span>
-            </div>
-            <button onclick="showQRIS()" class="w-full btn-green py-4 text-xs uppercase">Bayar via QRIS</button>
-        </div>
-    </div>
-
-    <div id="qrisModal" class="modal text-center">
-        <div class="modal-content text-white">
-            <span class="close-modal" onclick="closeModal()">&times;</span>
-            <div class="flex justify-between bg-white/5 p-3 rounded-xl mb-4 items-center">
-                <p id="orderID" class="text-[10px] font-mono text-green-500 font-bold">ORD-XXXX</p>
-                <button onclick="copyOrderID()" class="text-green-500 text-xs"><i class="fa-solid fa-copy"></i></button>
-            </div>
-            <div class="bg-white p-3 rounded-3xl inline-block mb-4">
-                <img src="https://cdn.discordapp.com/attachments/1464997913695358978/1464999511788093440/QRIS.png?ex=698e94dd&is=698d435d&hm=fecb8bc9557639bc4a29799f6d2edc488f0f920784871a574e62782da9665f5d" class="w-[220px]">
-            </div>
-            <button onclick="window.open('https://discord.gg/aB5HqUkNQK')" class="w-full btn-green py-4 text-xs uppercase">Konfirmasi Discord</button>
-        </div>
-    </div>
-
-    <footer class="p-12 text-center text-slate-600 text-[9px] font-black uppercase tracking-[0.5em] opacity-40">
-        &copy; 2026 W4RAS STORE • <button onclick="openAdmin()" class="hover:text-green-500 transition">Admin Login</button>
-    </footer>
-
     <script>
-        // --- SECURITY & APP CONFIG ---
-        const ADMIN_PASS = "wira123";
-        let products = JSON.parse(localStorage.getItem('w4ras_db')) || [
-            {id: 1, name: 'Rockstar Social', price: 14999, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png'},
-            {id: 2, name: 'Discord Account', price: 15000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png'}
+        let currentCategory = 'FiveM';
+        
+        // Data Produk (Bisa ditambah via Admin atau manual di sini)
+        let products = [
+            { id: 1, name: 'FiveM Account Premium', price: 45000, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png', cat: 'FiveM' },
+            { id: 2, name: 'Cloud Phone 8GB RAM', price: 89000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/electronics-video-gadgets/smartphone-icon.png', cat: 'Cloud Phone' },
+            { id: 3, name: 'Cloud Phone Gaming Pro', price: 150000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/electronics-video-gadgets/smartphone-icon.png', cat: 'Cloud Phone' },
+            { id: 4, name: 'FiveM Mod Menu', price: 25000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png', cat: 'FiveM' }
         ];
-        let cart = [];
 
-        // Anti-DDoS Sederhana (Rate Limiter)
-        let lastClick = 0;
-        document.addEventListener('click', () => {
-            let now = Date.now();
-            if(now - lastClick < 200) { /* Mengabaikan klik terlalu cepat */ }
-            lastClick = now;
-        });
+        function filterCategory(category) {
+            currentCategory = category;
+            // Update UI Tombol
+            document.querySelectorAll('.cat-pill').forEach(el => el.classList.remove('active'));
+            if(category === 'FiveM') document.getElementById('cat-FiveM').classList.add('active');
+            if(category === 'Cloud Phone') document.getElementById('cat-Cloud').classList.add('active');
+            if(category === 'All') document.getElementById('cat-All').classList.add('active');
+            
+            renderProducts();
+        }
+
+        function searchProduct() {
+            renderProducts();
+        }
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
-            const adminList = document.getElementById('admin-product-list');
-            grid.innerHTML = ''; 
-            adminList.innerHTML = '';
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            grid.innerHTML = '';
 
-            products.forEach(p => {
+            let filtered = products.filter(p => {
+                const matchCat = (currentCategory === 'All' || p.cat === currentCategory);
+                const matchSearch = p.name.toLowerCase().includes(query);
+                return matchCat && matchSearch;
+            });
+
+            filtered.forEach(p => {
                 grid.innerHTML += `
-                    <div class="card-discord p-5 rounded-[2.5rem]">
-                        <div class="img-container"><img src="${p.img}"></div>
-                        <h4 class="font-bold text-[10px] my-4 uppercase text-slate-400 italic text-center">${p.name}</h4>
-                        <p class="text-xl font-black text-green-500 mb-4 text-center">Rp ${p.price.toLocaleString('id-ID')}</p>
-                        <button onclick="addToCart('${p.name}', ${p.price})" class="btn-green w-full py-3 text-[10px] uppercase">Add To Cart</button>
-                    </div>`;
-
-                adminList.innerHTML += `
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 space-y-2">
-                        <div class="flex justify-between text-[10px] font-bold">
-                            <span class="text-green-500">${p.name}</span>
-                            <button onclick="deleteProduct(${p.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                        <input type="text" value="${p.img}" onchange="updateImg(${p.id}, this.value)" class="w-full bg-black border border-white/10 p-2 rounded text-[9px] text-white">
-                        <input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" class="w-full bg-black border border-white/10 p-2 rounded text-[9px] text-white">
+                    <div class="card-discord p-6 text-center">
+                        <div class="img-container mb-4"><img src="${p.img}"></div>
+                        <p class="text-[9px] font-bold text-slate-500 uppercase mb-1">${p.cat}</p>
+                        <h4 class="font-bold text-sm mb-4 uppercase text-white truncate">${p.name}</h4>
+                        <p class="text-xl font-black text-green-500 mb-6">Rp ${p.price.toLocaleString('id-ID')}</p>
+                        <button class="btn-action w-full py-3 text-[10px] uppercase">Buy Now</button>
                     </div>`;
             });
         }
 
-        // --- ADMIN FUNCTIONS ---
-        function openAdmin() {
-            if(prompt("Password Admin:") === ADMIN_PASS) {
-                document.getElementById('adminModal').style.display = "block";
-                renderProducts();
-            } else { alert("Akses Ditolak!"); }
-        }
-        function saveProduct() {
-            const n = document.getElementById('p-name').value, p = parseInt(document.getElementById('p-price').value), i = document.getElementById('p-img').value;
-            if(n && p && i) { products.push({id: Date.now(), name: n, price: p, img: i}); saveDB(); alert("Berhasil!"); }
-        }
-        function updatePrice(id, v) { products[products.findIndex(p => p.id === id)].price = parseInt(v); saveDB(); }
-        function updateImg(id, v) { products[products.findIndex(p => p.id === id)].img = v; saveDB(); }
-        function deleteProduct(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); saveDB(); } }
-        function saveDB() { localStorage.setItem('w4ras_db', JSON.stringify(products)); renderProducts(); }
-
-        // --- SHOPPING FUNCTIONS ---
-        function addToCart(n, p) { 
-            cart.push({name: n, price: p}); 
-            document.getElementById('cart-nav').classList.replace('hidden', 'flex'); 
-            document.getElementById('cart-count').innerText = cart.length; 
-        }
-        function checkout() { 
-            let t = cart.reduce((s, i) => s + i.price, 0); 
-            document.getElementById('totalDisplay').innerText = "Rp " + t.toLocaleString('id-ID'); 
-            document.getElementById('paymentModal').style.display = "block"; 
-        }
-        function showQRIS() { 
-            if(!document.getElementById('buyerEmail').value) return alert("Isi Email!"); 
-            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000);
-            document.getElementById('paymentModal').style.display = "none";
-            document.getElementById('qrisModal').style.display = "block";
-        }
-        function copyOrderID() { navigator.clipboard.writeText(document.getElementById('orderID').innerText); alert("ID Disalin!"); }
-        function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
-        window.onclick = (e) => { if(e.target.className.includes('modal')) closeModal(); }
-
+        // Jalankan saat pertama buka
         renderProducts();
     </script>
 </body>
