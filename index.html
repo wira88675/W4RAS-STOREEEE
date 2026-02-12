@@ -8,150 +8,261 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
-        :root { --primary-green: #22c55e; --dark-bg: #080808; --card-bg: #121212; }
+        :root { --primary-green: #22c55e; --dark-bg: #080808; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; }
-        .glow-green { text-shadow: 0 0 15px rgba(34, 197, 94, 0.5); }
+        
         .glass { background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
-        .btn-primary { background: var(--primary-green); color: black; font-weight: 800; border-radius: 14px; transition: 0.3s; box-shadow: 0 8px 20px -6px rgba(34, 197, 94, 0.5); }
-        .btn-primary:hover { transform: translateY(-3px); filter: brightness(1.1); }
-        .product-card { background: var(--card-bg); border: 1px solid rgba(255,255,255,0.03); border-radius: 24px; transition: 0.4s; overflow: hidden; }
+        .btn-primary { background: var(--primary-green); color: black; font-weight: 800; border-radius: 12px; transition: 0.3s; }
+        .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
+        
+        /* INPUT KHUSUS ADMIN - TEKS HITAM JELAS */
         .admin-input { background: #f3f4f6 !important; border: 1px solid #d1d5db !important; color: #111827 !important; font-weight: 600; }
-        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.8); backdrop-filter: blur(8px); overflow-y: auto; }
-        .modal-content { background: #0f0f0f; margin: 2rem auto; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 550px; border-radius: 32px; }
+        
+        .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
+        .modal-content { background: #0f0f0f; margin: 2rem auto; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 600px; border-radius: 24px; }
     </style>
 </head>
-<body>
+<body class="pb-20">
 
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/5">
-        <div class="text-2xl font-black italic">W4RAS<span class="text-green-500">STORE</span></div>
-        <button onclick="openCart()" class="relative p-3 bg-white/5 rounded-2xl hover:bg-green-500 hover:text-black transition">
+        <div class="text-xl font-black italic">W4RAS<span class="text-green-500">STORE</span></div>
+        <button onclick="openCart()" class="relative p-3 bg-white/5 rounded-xl hover:bg-green-500 hover:text-black transition">
             <i class="fa-solid fa-cart-shopping"></i>
             <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
         </button>
     </nav>
 
-    <header class="pt-40 pb-20 text-center px-6">
-        <h1 class="text-6xl md:text-8xl font-black italic mb-4 uppercase">W4RAS <span class="text-green-500 glow-green">STORE</span></h1>
-        <p class="text-slate-400 font-medium tracking-widest text-sm uppercase">Automatic Order System v3.0</p>
+    <header class="pt-32 pb-10 text-center px-6">
+        <h1 class="text-5xl md:text-7xl font-black italic mb-2 uppercase tracking-tighter">W4RAS <span class="text-green-500">GEAR</span></h1>
+        <p class="text-slate-500 text-[10px] font-bold tracking-[0.3em] uppercase">High Performance Virtual Assets</p>
     </header>
 
-    <main class="max-w-7xl mx-auto px-6 pb-32">
-        <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
+    <div class="max-w-6xl mx-auto px-6 mb-10">
+        <div id="category-bar" class="flex flex-wrap justify-center gap-2 mb-8"></div>
+        <div class="glass rounded-2xl flex items-center px-5 py-4 max-w-xl mx-auto">
+            <i class="fa-solid fa-magnifying-glass text-slate-500 mr-3"></i>
+            <input type="text" id="searchInput" onkeyup="renderUI()" placeholder="Cari produk..." class="bg-transparent w-full outline-none text-white text-sm">
+        </div>
+    </div>
+
+    <main class="max-w-6xl mx-auto px-6 pb-20">
+        <div id="product-grid" class="grid grid-cols-2 md:grid-cols-4 gap-6"></div>
     </main>
+
+    <div id="cartModal" class="modal">
+        <div class="modal-content">
+            <h2 class="text-xl font-black mb-6 text-green-500 uppercase italic">Your Cart</h2>
+            <div id="cart-items" class="space-y-3 mb-6"></div>
+            <div class="flex justify-between font-black text-lg mb-6 border-t border-white/10 pt-4">
+                <span>Total:</span> <span id="cart-total" class="text-green-500">Rp 0</span>
+            </div>
+            <button onclick="checkout()" class="w-full btn-primary py-4 uppercase mb-2">Checkout (QRIS)</button>
+            <button onclick="closeModal('cartModal')" class="w-full text-slate-500 text-[10px] font-bold">CLOSE</button>
+        </div>
+    </div>
 
     <div id="qrisModal" class="modal">
         <div class="modal-content text-center">
             <div id="payment-step">
-                <h2 class="text-xl font-black mb-2 uppercase">Scan QRIS Otomatis</h2>
-                <p id="generated-order-id" class="text-green-500 font-black text-sm mb-6 bg-green-500/10 py-2 rounded-lg"></p>
-                <div class="bg-white p-4 rounded-3xl inline-block mb-6 shadow-2xl">
-                    <img id="qris-img" src="" alt="QRIS" class="w-64 h-64">
-                </div>
-                <button onclick="confirmPayment()" class="w-full btn-primary py-5">SAYA SUDAH BAYAR</button>
+                <h2 class="text-xl font-black mb-4 uppercase text-green-500">Scan QRIS Pay</h2>
+                <div class="bg-white p-4 rounded-2xl inline-block mb-6"><img id="qris-img" src="" class="w-64 h-64"></div>
+                <button onclick="confirmPayment()" class="w-full btn-primary py-4">SAYA SUDAH BAYAR</button>
             </div>
-            
             <div id="success-step" class="hidden">
-                <div class="w-16 h-16 bg-green-500 text-black text-3xl flex items-center justify-center rounded-full mx-auto mb-6">
-                    <i class="fa-solid fa-check"></i>
+                <h2 class="text-2xl font-black mb-2 text-green-500">PAYMENT SUCCESS!</h2>
+                <p class="text-slate-400 text-xs mb-6 leading-relaxed">Silakan Open Ticket di Discord dan kirim Nomor Order berikut:</p>
+                <div class="bg-white/5 p-4 rounded-xl border border-green-500/30 mb-6">
+                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Nomor Order:</p>
+                    <p id="final-order-id" class="text-2xl font-black text-white italic"></p>
                 </div>
-                <h2 class="text-2xl font-black mb-2">PESANAN BERHASIL!</h2>
-                <p class="text-slate-400 text-sm mb-6 leading-relaxed">
-                    Data pesanan telah terkirim ke Discord Admin.<br>
-                    Silakan <b>Open Ticket</b> di server Discord kami untuk klaim produk.
-                </p>
-                <div class="bg-white/5 p-6 rounded-2xl border border-green-500/30 mb-8">
-                    <p class="text-xs text-slate-500 uppercase font-bold mb-1">Nomor Order Anda:</p>
-                    <p id="final-order-id" class="text-xl font-black text-white"></p>
-                </div>
-                <a href="URL_INVITE_DISCORD_KAMU" target="_blank" class="block w-full btn-primary py-4 mb-3 text-center">
-                    <i class="fa-brands fa-discord mr-2"></i> OPEN TICKET SEKARANG
-                </a>
-                <button onclick="location.reload()" class="text-slate-500 text-xs font-bold uppercase">Kembali ke Beranda</button>
+                <button onclick="location.reload()" class="w-full btn-primary py-4">KEMBALI KE STORE</button>
             </div>
         </div>
     </div>
 
+    <hr class="opacity-10 my-20">
+
+    <section id="admin-section" class="max-w-6xl mx-auto px-6 pb-40">
+        <div class="flex flex-col items-center mb-10">
+            <button onclick="toggleAdminPanel()" id="btn-admin-access" class="border border-white/20 px-8 py-3 rounded-full text-[10px] font-black tracking-widest uppercase hover:bg-white hover:text-black transition">
+                <i class="fa-solid fa-lock mr-2"></i> Open Admin Control
+            </button>
+        </div>
+
+        <div id="admin-panel-content" class="hidden space-y-8">
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+                
+                <div class="space-y-6">
+                    <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
+                        <h3 class="text-green-500 font-black italic uppercase mb-6">Financial Dashboard</h3>
+                        <div class="grid grid-cols-2 gap-4">
+                            <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
+                                <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pemasukan</p>
+                                <p id="total-revenue" class="text-xl font-black text-white">Rp 0</p>
+                            </div>
+                            <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
+                                <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pesanan</p>
+                                <p id="stat-orders" class="text-xl font-black text-white">0</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="bg-blue-600/10 p-8 rounded-3xl border border-blue-500/20">
+                        <h3 class="text-blue-400 font-black italic uppercase mb-4 text-sm">Discord Webhook Integration</h3>
+                        <input type="text" id="webhook-url" placeholder="Paste Discord Webhook URL di sini..." class="admin-input w-full p-4 rounded-xl text-sm outline-none mb-3">
+                        <button onclick="saveWebhook()" class="w-full bg-blue-600 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-blue-500 transition">Simpan Webhook</button>
+                    </div>
+                </div>
+
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
+                    <h3 class="text-green-500 font-black italic uppercase mb-6">Manage Inventory</h3>
+                    <div class="space-y-4">
+                        <input type="text" id="p-name" placeholder="Nama Gear" class="admin-input w-full p-4 rounded-xl text-sm">
+                        <input type="number" id="p-price" placeholder="Harga" class="admin-input w-full p-4 rounded-xl text-sm">
+                        <input type="text" id="p-img" placeholder="Link Gambar (URL)" class="admin-input w-full p-4 rounded-xl text-sm">
+                        
+                        <div class="flex gap-2">
+                            <select id="p-cat-select" class="admin-input flex-1 p-4 rounded-xl text-sm outline-none"></select>
+                            <input type="text" id="p-cat-new" placeholder="Buat Baru?" class="admin-input flex-1 p-4 rounded-xl text-sm">
+                        </div>
+                        <button onclick="saveProduct()" class="w-full btn-primary py-4 text-xs font-black uppercase">Tambah Produk</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
+                <h3 class="text-slate-500 font-black italic uppercase mb-6 text-sm">Active Inventory & Relocation</h3>
+                <div id="admin-product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
+            </div>
+        </div>
+    </section>
+
     <script>
-        // --- KONFIGURASI WEBHOOK DISCORD ---
-        const DISCORD_WEBHOOK_URL = "GANTI_DENGAN_URL_WEBHOOK_DISCORD_KAMU";
-        
         const ADMIN_PASS = "Wira123";
         let products = JSON.parse(localStorage.getItem('w4ras_db')) || [];
+        let categories = JSON.parse(localStorage.getItem('w4ras_cats')) || ['FiveM', 'Cloud Phone', 'PREMIUM'];
         let stats = JSON.parse(localStorage.getItem('w4ras_stats')) || { revenue: 0, orders: 0 };
+        let webhook = localStorage.getItem('w4ras_webhook') || "";
         let cart = [];
-        let activeOrderID = '';
+        let currentCat = 'All';
 
         function renderUI() {
             const grid = document.getElementById('product-grid');
-            grid.innerHTML = '';
+            const catBar = document.getElementById('category-bar');
+            const adminList = document.getElementById('admin-product-list');
+            const pSelect = document.getElementById('p-cat-select');
+            const search = document.getElementById('searchInput').value.toLowerCase();
+
+            document.getElementById('total-revenue').innerText = 'Rp ' + stats.revenue.toLocaleString('id-ID');
+            document.getElementById('stat-orders').innerText = stats.orders;
+            document.getElementById('webhook-url').value = webhook;
+
+            // Render Category Bar
+            catBar.innerHTML = `<button onclick="setFilter('All')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === 'All' ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">All</button>`;
+            categories.forEach(c => {
+                catBar.innerHTML += `<button onclick="setFilter('${c}')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === c ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">${c}</button>`;
+            });
+
+            // Render Select Kategori di Form
+            pSelect.innerHTML = categories.map(c => `<option value="${c}">${c}</option>`).join('');
+
+            // Render Produk
+            grid.innerHTML = ''; adminList.innerHTML = '';
             products.forEach(p => {
-                grid.innerHTML += `
-                    <div class="product-card">
-                        <div class="h-56 bg-zinc-900 flex items-center justify-center overflow-hidden">
-                            <img src="${p.img}" class="w-full h-full object-cover" onerror="this.src='https://via.placeholder.com/400'">
+                if((currentCat === 'All' || p.cat === currentCat) && p.name.toLowerCase().includes(search)) {
+                    grid.innerHTML += `
+                        <div class="glass rounded-3xl overflow-hidden hover:border-green-500/50 transition duration-500">
+                            <div class="h-44 bg-zinc-900"><img src="${p.img}" class="w-full h-full object-cover"></div>
+                            <div class="p-5 text-center">
+                                <p class="text-[7px] text-slate-600 font-black uppercase tracking-[0.2em] mb-1">${p.cat}</p>
+                                <h4 class="font-bold text-xs mb-3 truncate">${p.name}</h4>
+                                <p class="text-lg font-black text-green-500 mb-5">Rp ${parseInt(p.price).toLocaleString('id-ID')}</p>
+                                <button onclick="addToCart(${p.id})" class="w-full py-3 btn-primary text-[9px] uppercase tracking-widest">Add To Cart</button>
+                            </div>
+                        </div>`;
+                }
+
+                adminList.innerHTML += `
+                    <div class="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3">
+                        <div class="flex justify-between items-center">
+                            <span class="text-[10px] font-black text-green-500 uppercase truncate mr-2">${p.name}</span>
+                            <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                        <div class="p-6">
-                            <h4 class="font-bold text-lg mb-1 text-white">${p.name}</h4>
-                            <p class="text-2xl font-black text-green-500 mb-6 italic">Rp ${parseInt(p.price).toLocaleString('id-ID')}</p>
-                            <button onclick="addToCart(${p.id})" class="w-full py-4 rounded-xl bg-white/5 border border-white/10 font-bold uppercase hover:bg-green-500 hover:text-black transition-all">Beli Sekarang</button>
-                        </div>
+                        <select onchange="moveCat(${p.id}, this.value)" class="w-full p-2 rounded-lg bg-white text-black text-[9px] font-black uppercase">
+                            ${categories.map(c => `<option value="${c}" ${p.cat === c ? 'selected' : ''}>Pindah ke: ${c}</option>`).join('')}
+                        </select>
                     </div>`;
             });
         }
 
-        function addToCart(id) {
-            const p = products.find(prod => prod.id === id);
-            cart = [p]; // Satu per satu untuk sistem gear profesional
-            activeOrderID = `#WRS-2026-${Math.floor(1000 + Math.random() * 9000)}`;
-            
-            document.getElementById('generated-order-id').innerText = `ORDER ID: ${activeOrderID}`;
-            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=PAY_W4RAS_${activeOrderID}_${p.price}`;
-            
+        function toggleAdminPanel() {
+            if(prompt("Enter Admin Password:") === ADMIN_PASS) {
+                document.getElementById('admin-panel-content').classList.toggle('hidden');
+                document.getElementById('btn-admin-access').innerHTML = '<i class="fa-solid fa-unlock mr-2"></i> Close Admin Panel';
+                renderUI();
+                window.scrollTo(0, document.body.scrollHeight);
+            }
+        }
+
+        // --- CORE LOGIC ---
+        function setFilter(c) { currentCat = c; renderUI(); }
+        function addToCart(id) { cart.push(products.find(p => p.id === id)); document.getElementById('cart-count').innerText = cart.length; }
+        function openCart() {
+            const list = document.getElementById('cart-items');
+            let total = 0; list.innerHTML = '';
+            cart.forEach((item, i) => {
+                total += parseInt(item.price);
+                list.innerHTML += `<div class="flex justify-between bg-white/5 p-3 rounded-xl text-xs"><span>${item.name}</span><span class="text-green-500 font-bold">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span></div>`;
+            });
+            document.getElementById('cart-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
+            document.getElementById('cartModal').style.display = 'block';
+        }
+
+        function checkout() {
+            if(cart.length === 0) return;
+            let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
+            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS_PAY_${total}`;
             document.getElementById('payment-step').classList.remove('hidden');
             document.getElementById('success-step').classList.add('hidden');
             document.getElementById('qrisModal').style.display = 'block';
         }
 
         async function confirmPayment() {
-            const p = cart[0];
-            const totalStr = parseInt(p.price).toLocaleString('id-ID');
-
-            // 1. Kirim Data ke Discord Webhook
-            const embedData = {
-                username: "W4RAS STORE NOTIFIER",
-                embeds: [{
-                    title: "🔔 PESANAN BARU MASUK!",
-                    color: 2263894,
-                    fields: [
-                        { name: "Nomor Order", value: activeOrderID, inline: true },
-                        { name: "Produk", value: p.name, inline: true },
-                        { name: "Total Bayar", value: `Rp ${totalStr}`, inline: true },
-                        { name: "Status", value: "Menunggu Konfirmasi Bukti (Tiket)", inline: false }
-                    ],
-                    footer: { text: "W4RAS Store System • 2026" },
-                    timestamp: new Date()
-                }]
-            };
-
-            try {
-                await fetch(DISCORD_WEBHOOK_URL, {
+            const orderID = `#WRS-${Date.now().toString().slice(-4)}`;
+            let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
+            if(webhook) {
+                await fetch(webhook, {
                     method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(embedData)
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({embeds: [{title: "NEW ORDER!", color: 2263894, fields: [{name: "ID", value: orderID}, {name: "Total", value: "Rp "+total.toLocaleString('id-ID')}]}]})
                 });
-            } catch (err) { console.error("Gagal kirim ke Discord"); }
-
-            // 2. Update Stats
-            stats.revenue += parseInt(p.price);
-            stats.orders += 1;
+            }
+            stats.revenue += total; stats.orders += 1;
             localStorage.setItem('w4ras_stats', JSON.stringify(stats));
-
-            // 3. Tampilkan Success Step
             document.getElementById('payment-step').classList.add('hidden');
             document.getElementById('success-step').classList.remove('hidden');
-            document.getElementById('final-order-id').innerText = activeOrderID;
+            document.getElementById('final-order-id').innerText = orderID;
+            cart = []; document.getElementById('cart-count').innerText = 0;
         }
 
+        function saveProduct() {
+            const name = document.getElementById('p-name').value, price = document.getElementById('p-price').value, img = document.getElementById('p-img').value;
+            const newCat = document.getElementById('p-cat-new').value, selectCat = document.getElementById('p-cat-select').value;
+            let finalCat = newCat.trim() !== "" ? newCat : selectCat;
+            if(name && price && img) {
+                if(!categories.includes(finalCat)) categories.push(finalCat);
+                products.push({id: Date.now(), name, price, img, cat: finalCat});
+                localStorage.setItem('w4ras_db', JSON.stringify(products));
+                localStorage.setItem('w4ras_cats', JSON.stringify(categories));
+                renderUI(); alert("Gear Added!");
+            }
+        }
+
+        function moveCat(id, newCat) { products = products.map(p => p.id === id ? {...p, cat: newCat} : p); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); }
+        function deleteProduct(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); } }
+        function saveWebhook() { webhook = document.getElementById('webhook-url').value; localStorage.setItem('w4ras_webhook', webhook); alert("Webhook Saved!"); }
+        function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
         renderUI();
     </script>
 </body>
