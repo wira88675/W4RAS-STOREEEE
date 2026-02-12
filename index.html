@@ -14,11 +14,12 @@
         .mesh-blob { position: absolute; width: 500px; height: 500px; background: radial-gradient(circle, rgba(34, 197, 94, 0.15) 0%, transparent 70%); filter: blur(80px); animation: move 20s infinite alternate; }
         @keyframes move { from { transform: translate(-10%, -10%); } to { transform: translate(20%, 20%); } }
         .glass { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(20px); border: 1px solid rgba(255, 255, 255, 0.08); }
-        .card-discord { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); }
+        .card-discord { transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); border: 1px solid rgba(255, 255, 255, 0.05); background: rgba(18, 18, 18, 0.6); backdrop-filter: blur(10px); display: flex; flex-direction: column; }
         .card-discord:hover { transform: translateY(-12px) scale(1.02); border-color: var(--primary-green); box-shadow: 0 20px 40px rgba(34, 197, 94, 0.1); }
         .btn-green { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); transition: 0.3s; border-radius: 14px; }
         .btn-green:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
-        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; margin-bottom: 1rem; }
+        .img-container img { max-width: 90%; max-height: 90%; object-fit: contain; }
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); backdrop-filter: blur(12px); }
         .modal-content { background: #0f0f13; margin: 2% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
         .close-modal { position: absolute; right: 20px; top: 15px; font-size: 20px; cursor: pointer; color: #555; }
@@ -49,7 +50,7 @@
         <h2 class="text-5xl md:text-8xl font-black mb-6 tracking-tighter uppercase italic leading-none">W4RAS STORE ONTOP <br> <span class="text-green-500">#1 DI DUNIA.</span></h2>
     </div>
 
-    <main class="max-w-6xl mx-auto px-6">
+    <main class="max-w-6xl mx-auto px-6 pb-20">
         <div id="product-grid" class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-8"></div>
     </main>
 
@@ -57,15 +58,13 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center">Admin Dashboard</h2>
-            
             <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
                 <p class="text-[10px] font-bold uppercase text-slate-400">Tambah Produk Baru</p>
-                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
-                <input type="number" id="p-price" placeholder="Harga (Angka saja)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
-                <input type="text" id="p-img" placeholder="Link Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs">
+                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="number" id="p-price" placeholder="Harga (Angka saja)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="text" id="p-img" placeholder="Link Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
                 <button onclick="saveProduct()" class="w-full btn-green py-3 font-black uppercase text-[10px]">Simpan Produk</button>
             </div>
-
             <p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Kelola Produk Aktif</p>
             <div id="admin-product-list" class="space-y-3 max-h-[250px] overflow-y-auto pr-2"></div>
         </div>
@@ -75,7 +74,7 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h2 class="text-2xl font-black mb-6 italic uppercase">Checkout</h2>
-            <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-sm outline-none focus:border-green-500">
+            <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-sm outline-none focus:border-green-500 text-white">
             <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center mb-4">
                 <span id="totalDisplay" class="text-3xl font-black text-green-500">Rp 0</span>
             </div>
@@ -102,12 +101,17 @@
     </footer>
 
     <script>
-        // Data Produk
-        let products = JSON.parse(localStorage.getItem('w4ras_db')) || [
-            {id: 1, name: 'Rockstar Social', price: 14999, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png'},
-            {id: 2, name: 'Discord Account', price: 15000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png'}
+        // DATA PRODUK AWAL (SUDAH LENGKAP)
+        const initialProducts = [
+            {id: 1, name: 'Rockstar Account', price: 14999, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png'},
+            {id: 2, name: 'Discord Account', price: 15000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png'},
+            {id: 3, name: 'Spotify Premium', price: 15000, img: 'https://storage.googleapis.com/pr-newsroom-wp/1/2023/05/Spotify_Primary_Logo_RGB_Green.png'},
+            {id: 4, name: 'PC Optimize', price: 55000, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1467535665037312152/FiveM.jfif'},
+            {id: 5, name: 'Steam Account', price: 1500, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png'}
         ];
-        
+
+        // Ambil dari memori, jika kosong baru pakai initialProducts
+        let products = JSON.parse(localStorage.getItem('w4ras_db')) || initialProducts;
         let cart = [];
 
         function renderProducts() {
@@ -117,7 +121,6 @@
             adminList.innerHTML = '';
 
             products.forEach(p => {
-                // Tampilan Buyer
                 grid.innerHTML += `
                     <div class="card-discord p-5 rounded-[2.5rem]">
                         <div class="img-container"><img src="${p.img}"></div>
@@ -126,17 +129,14 @@
                         <button onclick="addToCart('${p.name}', ${p.price})" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
                     </div>`;
                 
-                // Tampilan Edit Admin
                 adminList.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 space-y-2">
+                    <div class="bg-white/5 p-3 rounded-xl border border-white/5 space-y-2 text-white">
                         <div class="flex justify-between items-center text-[10px] font-bold">
-                            <span class="text-white uppercase">${p.name}</span>
+                            <span class="uppercase">${p.name}</span>
                             <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
                         </div>
-                        <div class="flex gap-2">
-                            <input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" 
-                                class="w-full bg-black border border-white/10 p-2 rounded-lg text-[10px] outline-none focus:border-green-500" placeholder="Edit Harga">
-                        </div>
+                        <input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" 
+                                class="w-full bg-black border border-white/10 p-2 rounded-lg text-[10px] outline-none focus:border-green-500 text-white">
                     </div>`;
             });
         }
@@ -146,7 +146,7 @@
             if(prompt("Password Admin:") === "admin123") {
                 document.getElementById('adminModal').style.display = "block";
                 renderProducts();
-            } else { alert("Akses Ditolak!"); }
+            } else { alert("Password Salah!"); }
         }
 
         function saveProduct() {
@@ -156,6 +156,10 @@
             if(name && price && img) {
                 products.push({id: Date.now(), name, price, img});
                 saveDB();
+                document.getElementById('p-name').value = '';
+                document.getElementById('p-price').value = '';
+                document.getElementById('p-img').value = '';
+                alert("Produk Berhasil Ditambah!");
             }
         }
 
@@ -177,13 +181,14 @@
             renderProducts();
         }
 
-        // Fungsi Buyer
+        // Fungsi Keranjang & Checkout
         function addToCart(name, price) {
             cart.push({name, price});
             const btn = document.getElementById('cart-nav');
             btn.classList.remove('hidden');
             btn.classList.add('flex');
             document.getElementById('cart-count').innerText = cart.length;
+            alert(name + " masuk keranjang!");
         }
 
         function checkout() {
@@ -194,7 +199,7 @@
 
         function showQRIS() {
             if(!document.getElementById('buyerEmail').value) return alert("Email jangan kosong!");
-            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000);
+            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000 + 100000);
             document.getElementById('paymentModal').style.display = "none";
             document.getElementById('qrisModal').style.display = "block";
         }
