@@ -3,6 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Content-Security-Policy" content="default-src 'self' https:; script-src 'self' 'unsafe-inline' https://cdn.tailwindcss.com https://cdnjs.cloudflare.com;">
     <title>W4RAS STORE | #1 DI DUNIA</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
@@ -15,7 +16,11 @@
             background-color: var(--dark-bg); 
             color: white; 
             scroll-behavior: smooth; 
-            overflow-x: hidden; 
+            overflow-x: hidden;
+            -webkit-user-select: none; /* Anti-copy teks */
+            -moz-user-select: none;
+            -ms-user-select: none;
+            user-select: none;
         }
 
         /* Efek Background Mesh */
@@ -31,27 +36,9 @@
         .btn-green { background: linear-gradient(135deg, #22c55e 0%, #16a34a 100%); transition: 0.3s; border-radius: 14px; }
         .btn-green:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(34, 197, 94, 0.3); }
 
-        /* Container Gambar & Auto-Remove Background Putih */
-        .img-container { 
-            width: 100%; 
-            height: 160px; 
-            overflow: hidden; 
-            border-radius: 1.25rem; 
-            background: rgba(0,0,0,0.3); 
-            display: flex; 
-            justify-content: center; 
-            align-items: center; 
-        }
-        .img-container img { 
-            max-width: 85%; 
-            max-height: 85%; 
-            object-fit: contain;
-            /* MAGIC: Hilangkan Background Putih */
-            mix-blend-mode: lighten; 
-            filter: contrast(1.1) brightness(1.1);
-        }
+        .img-container { width: 100%; height: 160px; overflow: hidden; border-radius: 1.25rem; background: rgba(0,0,0,0.3); display: flex; justify-content: center; align-items: center; }
+        .img-container img { max-width: 85%; max-height: 85%; object-fit: contain; mix-blend-mode: lighten; filter: contrast(1.1) brightness(1.1); }
 
-        /* Modal Style */
         .modal { display: none; position: fixed; z-index: 100; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.85); backdrop-filter: blur(15px); }
         .modal-content { background: #0f0f13; margin: 2% auto; padding: 30px; border: 1px solid rgba(34, 197, 94, 0.2); width: 95%; max-width: 450px; border-radius: 30px; position: relative; }
         .close-modal { position: absolute; right: 20px; top: 15px; font-size: 20px; cursor: pointer; color: #555; }
@@ -60,9 +47,7 @@
         ::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 10px; }
     </style>
 </head>
-<body>
-
-    <div class="bg-mesh"><div class="mesh-blob" style="top: -10%; left: -10%;"></div></div>
+<body oncontextmenu="return false;"> <div class="bg-mesh"><div class="mesh-blob" style="top: -10%; left: -10%;"></div></div>
 
     <nav class="sticky top-0 z-50 glass px-8 py-5 flex justify-between items-center mx-4 mt-4 rounded-3xl">
         <div class="flex items-center gap-3">
@@ -91,16 +76,13 @@
         <div class="modal-content">
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h2 class="text-xl font-black mb-4 uppercase text-green-500 italic text-center text-white">Admin Panel</h2>
-            
             <div class="space-y-3 mb-6 bg-white/5 p-4 rounded-2xl border border-white/5">
                 <p class="text-[10px] font-bold uppercase text-slate-400">Tambah Produk Baru</p>
                 <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="number" id="p-price" placeholder="Harga (Angka)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
-                <input type="text" id="p-img" placeholder="Link Gambar (URL)" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="number" id="p-price" placeholder="Harga" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
+                <input type="text" id="p-img" placeholder="Link Gambar" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl outline-none text-xs text-white">
                 <button onclick="saveProduct()" class="w-full btn-green py-3 font-black uppercase text-[10px] text-white">Simpan Produk</button>
             </div>
-
-            <p class="text-[10px] font-bold uppercase text-slate-400 mb-2">Kelola Produk Aktif</p>
             <div id="admin-product-list" class="space-y-4 max-h-[300px] overflow-y-auto pr-2"></div>
         </div>
     </div>
@@ -110,9 +92,7 @@
             <span class="close-modal" onclick="closeModal()">&times;</span>
             <h2 class="text-2xl font-black mb-6 italic uppercase text-white text-center">Checkout</h2>
             <input type="email" id="buyerEmail" placeholder="nama@email.com" class="w-full bg-white/5 border border-white/10 p-4 rounded-2xl mb-4 text-sm outline-none focus:border-green-500 text-white">
-            <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center mb-4">
-                <span id="totalDisplay" class="text-3xl font-black text-green-500">Rp 0</span>
-            </div>
+            <div class="bg-green-500/5 p-5 rounded-3xl border border-green-500/20 text-center mb-4"><span id="totalDisplay" class="text-3xl font-black text-green-500">Rp 0</span></div>
             <button onclick="showQRIS()" class="w-full btn-green py-4 font-black uppercase text-xs text-white">Bayar via QRIS</button>
         </div>
     </div>
@@ -136,128 +116,61 @@
     </footer>
 
     <script>
-        // CONFIG: Ubah password di sini
-        const ADMIN_PASS = "Wira123";
+        // --- SECURITY CORE ---
+        const Security = {
+            lastReq: Date.now(),
+            count: 0,
+            init() {
+                // Anti-Click Spam (Anti-DDoS Ringan)
+                window.addEventListener('click', () => {
+                    let now = Date.now();
+                    if(now - this.lastReq < 300) this.count++;
+                    else this.count = 0;
+                    if(this.count > 15) { alert("Sistem mendeteksi spam! Melambatlah."); window.location.reload(); }
+                    this.lastReq = now;
+                });
+                // Anti Injeksi Input
+                document.querySelectorAll('input').forEach(el => {
+                    el.addEventListener('blur', (e) => e.target.value = e.target.value.replace(/[<>'"/]/g, ''));
+                });
+            }
+        };
+        Security.init();
 
-        // DATA PRODUK (Membaca dari Memori Browser)
+        // --- APP LOGIC ---
+        const ADMIN_PASS = "Wira123";
         let products = JSON.parse(localStorage.getItem('w4ras_db')) || [
             {id: 1, name: 'Rockstar Social', price: 14999, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411355247443990/Rockstar_logo_for_tweets.png'},
             {id: 2, name: 'Discord Account', price: 15000, img: 'https://uxwing.com/wp-content/themes/uxwing/download/brands-and-social-media/discord-round-black-icon.png'},
             {id: 3, name: 'Steam Account', price: 1500, img: 'https://cdn.discordapp.com/attachments/1457989439694311519/1471411679077204113/images_3.png'}
         ];
-        
         let cart = [];
 
         function renderProducts() {
             const grid = document.getElementById('product-grid');
             const adminList = document.getElementById('admin-product-list');
-            grid.innerHTML = '';
-            adminList.innerHTML = '';
-
+            grid.innerHTML = ''; adminList.innerHTML = '';
             products.forEach(p => {
-                // Render Halaman Utama
-                grid.innerHTML += `
-                    <div class="card-discord p-5 rounded-[2.5rem]">
-                        <div class="img-container"><img src="${p.img}"></div>
-                        <h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">${p.name}</h4>
-                        <p class="text-xl font-black text-green-500 mb-4">Rp ${p.price.toLocaleString('id-ID')}</p>
-                        <button onclick="addToCart('${p.name}', ${p.price})" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button>
-                    </div>`;
-                
-                // Render Dashboard Admin
-                adminList.innerHTML += `
-                    <div class="bg-white/5 p-4 rounded-xl border border-white/5 space-y-3">
-                        <div class="flex justify-between items-center text-[10px] font-bold">
-                            <span class="text-green-500 uppercase">${p.name}</span>
-                            <button onclick="deleteProduct(${p.id})" class="text-red-500 hover:scale-110 transition"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                        <div class="space-y-2 text-white">
-                            <label class="text-[8px] uppercase text-slate-500 font-bold">Link Gambar:</label>
-                            <input type="text" value="${p.img}" onchange="updateImg(${p.id}, this.value)" 
-                                class="w-full bg-black border border-white/10 p-2 rounded-lg text-[9px] outline-none text-slate-300">
-                            <label class="text-[8px] uppercase text-slate-500 font-bold">Harga:</label>
-                            <input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" 
-                                class="w-full bg-black border border-white/10 p-2 rounded-lg text-[9px] outline-none text-white">
-                        </div>
-                    </div>`;
+                grid.innerHTML += `<div class="card-discord p-5 rounded-[2.5rem]"><div class="img-container"><img src="${p.img}"></div><h4 class="font-bold text-[10px] mb-4 uppercase text-slate-400 italic">${p.name}</h4><p class="text-xl font-black text-green-500 mb-4">Rp ${p.price.toLocaleString('id-ID')}</p><button onclick="addToCart('${p.name}', ${p.price})" class="btn-green w-full py-3 text-[10px] font-black uppercase text-white">Add To Cart</button></div>`;
+                adminList.innerHTML += `<div class="bg-white/5 p-4 rounded-xl border border-white/5 space-y-3 text-white"><div class="flex justify-between items-center text-[10px] font-bold"><span class="text-green-500">${p.name}</span><button onclick="deleteProduct(${p.id})" class="text-red-500"><i class="fa-solid fa-trash"></i></button></div><input type="text" value="${p.img}" onchange="updateImg(${p.id}, this.value)" class="w-full bg-black border border-white/10 p-2 rounded-lg text-[9px]"><input type="number" value="${p.price}" onchange="updatePrice(${p.id}, this.value)" class="w-full bg-black border border-white/10 p-2 rounded-lg text-[9px]"></div>`;
             });
         }
 
-        // --- FUNGSI ADMIN ---
-        function openAdmin() {
-            if(prompt("Password Admin:") === ADMIN_PASS) {
-                document.getElementById('adminModal').style.display = "block";
-                renderProducts();
-            } else { alert("Salah Boss!"); }
+        function openAdmin() { if(prompt("Password Admin:") === ADMIN_PASS) { document.getElementById('adminModal').style.display = "block"; renderProducts(); } else { alert("Akses Ditolak!"); } }
+        function saveProduct() { 
+            const n = document.getElementById('p-name').value, p = parseInt(document.getElementById('p-price').value), i = document.getElementById('p-img').value;
+            if(n && p && i) { products.push({id: Date.now(), name: n, price: p, img: i}); saveDB(); alert("Produk Ditambah!"); } 
         }
-
-        function saveProduct() {
-            const name = document.getElementById('p-name').value;
-            const price = parseInt(document.getElementById('p-price').value);
-            const img = document.getElementById('p-img').value;
-            if(name && price && img) {
-                products.push({id: Date.now(), name, price, img});
-                saveDB();
-                alert("Produk Berhasil Ditambah!");
-                document.getElementById('p-name').value = '';
-                document.getElementById('p-price').value = '';
-                document.getElementById('p-img').value = '';
-            }
-        }
-
-        function updatePrice(id, newPrice) {
-            const index = products.findIndex(p => p.id === id);
-            products[index].price = parseInt(newPrice);
-            saveDB();
-        }
-
-        function updateImg(id, newImg) {
-            const index = products.findIndex(p => p.id === id);
-            products[index].img = newImg;
-            saveDB();
-        }
-
-        function deleteProduct(id) {
-            if(confirm("Hapus produk ini?")) {
-                products = products.filter(p => p.id !== id);
-                saveDB();
-            }
-        }
-
-        function saveDB() {
-            localStorage.setItem('w4ras_db', JSON.stringify(products));
-            renderProducts();
-        }
-
-        // --- FUNGSI BELANJA ---
-        function addToCart(name, price) {
-            cart.push({name, price});
-            const btn = document.getElementById('cart-nav');
-            btn.classList.remove('hidden');
-            btn.classList.add('flex');
-            document.getElementById('cart-count').innerText = cart.length;
-        }
-
-        function checkout() {
-            let total = cart.reduce((sum, i) => sum + i.price, 0);
-            document.getElementById('totalDisplay').innerText = "Rp " + total.toLocaleString('id-ID');
-            document.getElementById('paymentModal').style.display = "block";
-        }
-
-        function showQRIS() {
-            if(!document.getElementById('buyerEmail').value) return alert("Email Bos!");
-            document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000);
-            document.getElementById('paymentModal').style.display = "none";
-            document.getElementById('qrisModal').style.display = "block";
-        }
-
-        function copyOrderID() {
-            navigator.clipboard.writeText(document.getElementById('orderID').innerText);
-            alert("Order ID Disalin!");
-        }
-
+        function updatePrice(id, v) { products[products.findIndex(p => p.id === id)].price = parseInt(v); saveDB(); }
+        function updateImg(id, v) { products[products.findIndex(p => p.id === id)].img = v; saveDB(); }
+        function deleteProduct(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); saveDB(); } }
+        function saveDB() { localStorage.setItem('w4ras_db', JSON.stringify(products)); renderProducts(); }
+        
+        function addToCart(n, p) { cart.push({name: n, price: p}); document.getElementById('cart-nav').classList.remove('hidden'); document.getElementById('cart-count').innerText = cart.length; }
+        function checkout() { let t = cart.reduce((s, i) => s + i.price, 0); document.getElementById('totalDisplay').innerText = "Rp " + t.toLocaleString('id-ID'); document.getElementById('paymentModal').style.display = "block"; }
+        function showQRIS() { if(!document.getElementById('buyerEmail').value) return alert("Email!"); document.getElementById('orderID').innerText = "ORD-" + Math.floor(Math.random()*900000); document.getElementById('paymentModal').style.display = "none"; document.getElementById('qrisModal').style.display = "block"; }
+        function copyOrderID() { navigator.clipboard.writeText(document.getElementById('orderID').innerText); alert("ID Disalin!"); }
         function closeModal() { document.querySelectorAll('.modal').forEach(m => m.style.display = "none"); }
-        window.onclick = (e) => { if(e.target.className === 'modal') closeModal(); }
         
         renderProducts();
     </script>
