@@ -1,104 +1,10 @@
-<!DOCTYPE html>
-<html lang="id">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | PREMIUM MARKET</title>
-    <script src="https://cdn.tailwindcss.com"></script>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <style>
-        @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700;800&family=Syncopate:wght@700&display=swap');
-
-        body { 
-            background-color: #050505; 
-            color: white; 
-            font-family: 'Plus Jakarta Sans', sans-serif;
-            overflow-x: hidden;
-        }
-
-        .hero-bg {
-            background: linear-gradient(to bottom, rgba(5,5,5,0.8), #050505), 
-                        url('https://images.unsplash.com/photo-1542751371-adc38448a05e?q=80&w=2070&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-        }
-
-        .card-premium {
-            background: rgba(20, 20, 25, 0.8);
-            border: 1px solid rgba(255, 255, 255, 0.05);
-            transition: all 0.4s ease;
-        }
-
-        .card-premium:hover {
-            border-color: #5865F2;
-            transform: translateY(-5px);
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.2);
-        }
-
-        .btn-action {
-            background: linear-gradient(45deg, #5865F2, #4752c4);
-            transition: 0.3s;
-        }
-
-        /* Nav Cart Styling */
-        .cart-nav-btn {
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(255, 255, 255, 0.1);
-            transition: 0.3s;
-        }
-        
-        .cart-nav-btn:hover {
-            background: rgba(88, 101, 242, 0.2);
-            border-color: #5865F2;
-        }
-
-        .font-sync { font-family: 'Syncopate', sans-serif; }
-    </style>
-</head>
-<body>
-
-    <nav class="fixed top-0 w-full z-50 bg-black/50 backdrop-blur-md border-b border-white/5 px-6 py-4 flex justify-between items-center">
-        <div class="flex items-center gap-3">
-            <img src="https://telegra.ph/file/5e128186259048a178972.jpg" class="w-10 h-10 rounded-full border border-[#5865F2]">
-            <span class="font-sync text-lg tracking-tighter italic uppercase">W4RAS <span class="text-[#5865F2]">STORE</span></span>
-        </div>
-        
-        <div class="flex items-center gap-3">
-            <button onclick="checkout()" id="cart-nav" class="cart-nav-btn hidden flex items-center gap-2 px-4 py-2 rounded-xl border border-white/10">
-                <div class="relative">
-                    <i class="fa-solid fa-cart-shopping text-sm"></i>
-                    <span id="cart-count" class="absolute -top-3 -right-3 bg-[#5865F2] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">0</span>
-                </div>
-                <span class="text-[10px] font-bold uppercase tracking-widest hidden sm:block">Checkout</span>
-            </button>
-
-            <a href="https://discord.gg/aB5HqUkNQK" target="_blank" class="btn-action px-5 py-2 rounded-xl text-xs font-bold uppercase tracking-widest">
-                <i class="fa-brands fa-discord mr-1"></i> JOIN
-            </a>
-        </div>
-    </nav>
-
-    <header class="hero-bg pt-48 pb-32 px-6 text-center">
-        <div class="max-w-4xl mx-auto">
-            <div class="inline-block bg-[#5865F2]/10 border border-[#5865F2]/20 px-4 py-1 rounded-full text-[10px] font-bold text-[#5865F2] uppercase tracking-[3px] mb-6">
-                Online Game Store
-            </div>
-            <h1 class="font-sync text-4xl md:text-6xl font-black mb-6 leading-tight tracking-tighter uppercase">
-                ELEVATE YOUR <br> <span class="text-[#5865F2]">GAMING LIFE</span>
-            </h1>
-            <p class="text-gray-400 text-sm md:text-base max-w-xl mx-auto mb-10 leading-relaxed font-medium">
-                Penyedia akun premium tercepat. Pilih produk favoritmu dan selesaikan pembayaran via tiket Discord.
-            </p>
-        </div>
-    </header>
-
-    <main class="max-w-7xl mx-auto px-6 -mt-16 mb-20">
+<main class="max-w-7xl mx-auto px-6 -mt-16 mb-20">
         <div class="flex items-center gap-2 mb-8 ml-2">
             <div class="w-1 h-6 bg-[#5865F2] rounded-full"></div>
-            <h2 class="font-bold text-lg uppercase tracking-widest">Store Inventory</h2>
+            <h2 class="font-bold text-lg uppercase tracking-widest text-white">Store Inventory</h2>
         </div>
 
-        <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
             
             <div class="card-premium p-6 rounded-3xl flex flex-col">
                 <div class="h-32 flex items-center justify-center mb-6 bg-black/40 rounded-2xl">
@@ -142,47 +48,33 @@
                 </div>
             </div>
 
+            <div class="card-premium p-6 rounded-3xl flex flex-col">
+                <div class="h-32 flex items-center justify-center mb-6 bg-black/40 rounded-2xl">
+                    <img src="https://upload.wikimedia.org/wikipedia/commons/e/ef/Youtube_logo.png" class="w-20">
+                </div>
+                <h3 class="font-bold text-[11px] uppercase mb-1">YouTube Premium</h3>
+                <p class="text-[9px] text-gray-500 mb-4 uppercase">No Ads / Family</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="font-extrabold text-sm text-white tracking-tighter">Rp 10.000</span>
+                    <button onclick="addToCart('YouTube Premium', '10.000')" class="btn-action w-9 h-9 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
+            <div class="card-premium p-6 rounded-3xl flex flex-col">
+                <div class="h-32 flex items-center justify-center mb-6 bg-black/40 rounded-2xl">
+                    <img src="https://lah-market.my.id/gambar/steam.png" class="w-20 object-contain">
+                </div>
+                <h3 class="font-bold text-[11px] uppercase mb-1">Steam Account</h3>
+                <p class="text-[9px] text-gray-500 mb-4 uppercase">Wallet / Region</p>
+                <div class="flex items-center justify-between mt-auto">
+                    <span class="font-extrabold text-sm text-white tracking-tighter">Rp 25.000</span>
+                    <button onclick="addToCart('Steam Account', '25.000')" class="btn-action w-9 h-9 rounded-lg flex items-center justify-center text-[10px]">
+                        <i class="fa-solid fa-plus text-xs"></i>
+                    </button>
+                </div>
+            </div>
+
         </div>
     </main>
-
-    <footer class="py-10 border-t border-white/5 text-center text-gray-600 text-[10px] font-bold tracking-[5px] uppercase">
-        W4RAS STORE &copy; 2026 - Crafted for Gamers
-    </footer>
-
-    <script>
-        let cart = [];
-        const discordLink = "https://discord.gg/aB5HqUkNQK";
-
-        function addToCart(name, price) {
-            cart.push({ name, price });
-            updateCartUI();
-        }
-
-        function updateCartUI() {
-            const cartNav = document.getElementById('cart-nav');
-            const cartCount = document.getElementById('cart-count');
-            
-            if (cart.length > 0) {
-                cartNav.classList.remove('hidden');
-                cartCount.innerText = cart.length;
-            }
-        }
-
-        function checkout() {
-            if (cart.length === 0) return;
-
-            let message = "List Belanjaan Saya:\n";
-            cart.forEach((item, index) => {
-                message += `${index + 1}. ${item.name} - Rp ${item.price}\n`;
-            });
-            
-            alert(message + "\nSilakan buka ticket di Discord untuk menyelesaikan pembayaran.");
-            window.open(discordLink, "_blank");
-            
-            // Reset
-            cart = [];
-            document.getElementById('cart-nav').classList.add('hidden');
-        }
-    </script>
-</body>
-</html>
