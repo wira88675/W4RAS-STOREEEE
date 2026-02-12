@@ -10,14 +10,10 @@
         @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap');
         :root { --primary-green: #22c55e; --dark-bg: #080808; }
         body { font-family: 'Plus Jakarta Sans', sans-serif; background-color: var(--dark-bg); color: white; scroll-behavior: smooth; }
-        
         .glass { background: rgba(18, 18, 18, 0.7); backdrop-filter: blur(12px); border: 1px solid rgba(255,255,255,0.05); }
         .btn-primary { background: var(--primary-green); color: black; font-weight: 800; border-radius: 12px; transition: 0.3s; }
         .btn-primary:hover { transform: translateY(-2px); filter: brightness(1.1); }
-        
-        /* INPUT KHUSUS ADMIN - TEKS HITAM JELAS */
         .admin-input { background: #f3f4f6 !important; border: 1px solid #d1d5db !important; color: #111827 !important; font-weight: 600; }
-        
         .modal { display: none; position: fixed; z-index: 100; inset: 0; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px); overflow-y: auto; }
         .modal-content { background: #0f0f0f; margin: 2rem auto; padding: 2rem; border: 1px solid rgba(255,255,255,0.1); width: 95%; max-width: 600px; border-radius: 24px; }
     </style>
@@ -25,7 +21,9 @@
 <body class="pb-20">
 
     <nav class="fixed top-0 w-full z-50 glass px-6 py-4 flex justify-between items-center border-b border-white/5">
-        <div class="text-xl font-black italic">W4RAS<span class="text-green-500">STORE</span></div>
+        <div class="text-xl font-black italic cursor-default select-none">
+            W4RAS<span onclick="secretAdminTrigger()" class="text-green-500 transition-colors duration-300">STORE</span>
+        </div>
         <button onclick="openCart()" class="relative p-3 bg-white/5 rounded-xl hover:bg-green-500 hover:text-black transition">
             <i class="fa-solid fa-cart-shopping"></i>
             <span id="cart-count" class="absolute -top-1 -right-1 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
@@ -57,7 +55,7 @@
                 <span>Total:</span> <span id="cart-total" class="text-green-500">Rp 0</span>
             </div>
             <button onclick="checkout()" class="w-full btn-primary py-4 uppercase mb-2">Checkout (QRIS)</button>
-            <button onclick="closeModal('cartModal')" class="w-full text-slate-500 text-[10px] font-bold">CLOSE</button>
+            <button onclick="closeModal('cartModal')" class="w-full text-slate-500 text-[10px] font-bold">Lanjut Belanja</button>
         </div>
     </div>
 
@@ -69,85 +67,105 @@
                 <button onclick="confirmPayment()" class="w-full btn-primary py-4">SAYA SUDAH BAYAR</button>
             </div>
             <div id="success-step" class="hidden">
-                <h2 class="text-2xl font-black mb-2 text-green-500">PAYMENT SUCCESS!</h2>
-                <p class="text-slate-400 text-xs mb-6 leading-relaxed">Silakan Open Ticket di Discord dan kirim Nomor Order berikut:</p>
+                <div class="flex justify-center mb-4"><i class="fa-solid fa-circle-check text-6xl text-green-500"></i></div>
+                <h2 class="text-2xl font-black mb-2 text-green-500 uppercase">Pesanan Berhasil!</h2>
+                <p class="text-slate-400 text-xs mb-6 leading-relaxed">Silakan screenshot halaman ini dan kirim ke WhatsApp Admin bersama Bukti Bayar.</p>
                 <div class="bg-white/5 p-4 rounded-xl border border-green-500/30 mb-6">
-                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Nomor Order:</p>
-                    <p id="final-order-id" class="text-2xl font-black text-white italic"></p>
+                    <p class="text-[10px] text-slate-500 font-bold uppercase mb-1">Nomor Order Anda:</p>
+                    <p id="final-order-id" class="text-2xl font-black text-white italic tracking-widest"></p>
                 </div>
-                <button onclick="location.reload()" class="w-full btn-primary py-4">KEMBALI KE STORE</button>
+                <button onclick="location.reload()" class="w-full btn-primary py-4">KEMBALI KE BERANDA</button>
             </div>
         </div>
     </div>
 
-    <hr class="opacity-10 my-20">
-
-    <section id="admin-section" class="max-w-6xl mx-auto px-6 pb-40">
-        <div class="flex flex-col items-center mb-10">
-            <button onclick="toggleAdminPanel()" id="btn-admin-access" class="border border-white/20 px-8 py-3 rounded-full text-[10px] font-black tracking-widest uppercase hover:bg-white hover:text-black transition">
-                <i class="fa-solid fa-lock mr-2"></i> Open Admin Control
-            </button>
+    <section id="admin-panel-content" class="hidden max-w-6xl mx-auto px-6 pb-40 border-t border-white/10 mt-20 pt-10">
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-3xl font-black italic text-green-500 uppercase">Admin Control Panel</h2>
+            <button onclick="toggleAdminPanel()" class="text-slate-500 text-xs hover:text-white underline">Logout/Tutup</button>
         </div>
 
-        <div id="admin-panel-content" class="hidden space-y-8">
-            <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
-                <div class="space-y-6">
-                    <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                        <div class="flex justify-between items-center mb-6">
-                            <h3 class="text-green-500 font-black italic uppercase">Financial Dashboard</h3>
-                            <button onclick="resetStats()" class="text-[9px] bg-red-600/20 text-red-500 border border-red-500/50 px-3 py-1 rounded-lg font-black hover:bg-red-600 hover:text-white transition">
-                                <i class="fa-solid fa-rotate-right mr-1"></i> RESET STATS
-                            </button>
-                        </div>
-                        <div class="grid grid-cols-2 gap-4">
-                            <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
-                                <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pemasukan</p>
-                                <p id="total-revenue" class="text-xl font-black text-white">Rp 0</p>
-                            </div>
-                            <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
-                                <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pesanan</p>
-                                <p id="stat-orders" class="text-xl font-black text-white">0</p>
-                            </div>
-                        </div>
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-10">
+            <div class="space-y-6">
+                <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
+                    <div class="flex justify-between items-center mb-6">
+                        <h3 class="text-green-500 font-black italic uppercase">Financial Dashboard</h3>
+                        <button onclick="resetStats()" class="text-[9px] bg-red-600/20 text-red-500 border border-red-500/50 px-3 py-1 rounded-lg font-black hover:bg-red-600 hover:text-white">RESET STATS</button>
                     </div>
-
-                    <div class="bg-blue-600/10 p-8 rounded-3xl border border-blue-500/20">
-                        <h3 class="text-blue-400 font-black italic uppercase mb-4 text-sm">Discord Webhook Integration</h3>
-                        <input type="text" id="webhook-url" placeholder="Paste Discord Webhook URL di sini..." class="admin-input w-full p-4 rounded-xl text-sm outline-none mb-3">
-                        <button onclick="saveWebhook()" class="w-full bg-blue-600 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-blue-500 transition">Simpan Webhook</button>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
+                            <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pemasukan</p>
+                            <p id="total-revenue" class="text-xl font-black">Rp 0</p>
+                        </div>
+                        <div class="bg-black/40 p-4 rounded-2xl border border-white/5 text-center">
+                            <p class="text-[9px] text-slate-500 uppercase font-bold">Total Pesanan</p>
+                            <p id="stat-orders" class="text-xl font-black">0</p>
+                        </div>
                     </div>
                 </div>
-
-                <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                    <h3 class="text-green-500 font-black italic uppercase mb-6">Manage Inventory</h3>
-                    <div class="space-y-4">
-                        <input type="text" id="p-name" placeholder="Nama Gear" class="admin-input w-full p-4 rounded-xl text-sm">
-                        <input type="number" id="p-price" placeholder="Harga" class="admin-input w-full p-4 rounded-xl text-sm">
-                        <input type="text" id="p-img" placeholder="Link Gambar (URL)" class="admin-input w-full p-4 rounded-xl text-sm">
-                        <div class="flex gap-2">
-                            <select id="p-cat-select" class="admin-input flex-1 p-4 rounded-xl text-sm outline-none"></select>
-                            <input type="text" id="p-cat-new" placeholder="Buat Baru?" class="admin-input flex-1 p-4 rounded-xl text-sm">
-                        </div>
-                        <button onclick="saveProduct()" class="w-full btn-primary py-4 text-xs font-black uppercase">Tambah Produk</button>
-                    </div>
+                <div class="bg-blue-600/10 p-8 rounded-3xl border border-blue-500/20">
+                    <h3 class="text-blue-400 font-black italic uppercase mb-4 text-sm">Discord Webhook</h3>
+                    <input type="text" id="webhook-url" placeholder="Webhook URL..." class="admin-input w-full p-4 rounded-xl text-sm mb-3">
+                    <button onclick="saveWebhook()" class="w-full bg-blue-600 py-3 rounded-xl text-[10px] font-black uppercase">Simpan Webhook</button>
                 </div>
             </div>
 
             <div class="bg-white/5 p-8 rounded-3xl border border-white/5">
-                <h3 class="text-slate-500 font-black italic uppercase mb-6 text-sm">Active Inventory & Relocation</h3>
-                <div id="admin-product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 max-h-[500px] overflow-y-auto pr-2"></div>
+                <h3 class="text-green-500 font-black italic uppercase mb-6">Manage Inventory</h3>
+                <div class="space-y-4">
+                    <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input w-full p-4 rounded-xl text-sm">
+                    <input type="number" id="p-price" placeholder="Harga (Contoh: 20000)" class="admin-input w-full p-4 rounded-xl text-sm">
+                    <input type="text" id="p-img" placeholder="URL Link Gambar" class="admin-input w-full p-4 rounded-xl text-sm">
+                    <div class="flex gap-2">
+                        <select id="p-cat-select" class="admin-input flex-1 p-4 rounded-xl text-sm outline-none"></select>
+                        <input type="text" id="p-cat-new" placeholder="Atau Kategori Baru" class="admin-input flex-1 p-4 rounded-xl text-sm">
+                    </div>
+                    <button onclick="saveProduct()" class="w-full btn-primary py-4 text-xs font-black uppercase">SIMPAN PRODUK</button>
+                </div>
             </div>
+        </div>
+
+        <div class="mt-8 bg-white/5 p-8 rounded-3xl border border-white/5">
+            <h3 class="text-slate-500 font-black italic uppercase mb-6 text-sm">Inventory List</h3>
+            <div id="admin-product-list" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4"></div>
         </div>
     </section>
 
     <script>
         const ADMIN_PASS = "Wira123";
+        let clickCount = 0;
+        let lastClickTime = 0;
         let products = JSON.parse(localStorage.getItem('w4ras_db')) || [];
         let categories = JSON.parse(localStorage.getItem('w4ras_cats')) || ['FiveM', 'Cloud Phone', 'PREMIUM'];
         let stats = JSON.parse(localStorage.getItem('w4ras_stats')) || { revenue: 0, orders: 0 };
         let webhook = localStorage.getItem('w4ras_webhook') || "";
         let cart = [];
         let currentCat = 'All';
+
+        // TRIGER TERSEMBUNYI
+        function secretAdminTrigger() {
+            const now = Date.now();
+            if (now - lastClickTime < 500) { clickCount++; } else { clickCount = 1; }
+            lastClickTime = now;
+
+            if (clickCount === 3) {
+                clickCount = 0;
+                toggleAdminPanel();
+            }
+        }
+
+        function toggleAdminPanel() {
+            const panel = document.getElementById('admin-panel-content');
+            if(panel.classList.contains('hidden')) {
+                if(prompt("Enter Admin Key:") === ADMIN_PASS) {
+                    panel.classList.remove('hidden');
+                    renderUI();
+                    window.scrollTo({ top: panel.offsetTop, behavior: 'smooth' });
+                }
+            } else {
+                panel.classList.add('hidden');
+            }
+        }
 
         function renderUI() {
             const grid = document.getElementById('product-grid');
@@ -160,7 +178,7 @@
             document.getElementById('stat-orders').innerText = stats.orders;
             document.getElementById('webhook-url').value = webhook;
 
-            catBar.innerHTML = `<button onclick="setFilter('All')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === 'All' ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">All</button>`;
+            catBar.innerHTML = `<button onclick="setFilter('All')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === 'All' ? 'bg-blue-600' : 'bg-white/5 text-slate-500'} transition">All</button>`;
             categories.forEach(c => {
                 catBar.innerHTML += `<button onclick="setFilter('${c}')" class="px-6 py-2 rounded-full text-[10px] font-black uppercase border border-white/10 ${currentCat === c ? 'bg-blue-600 text-white' : 'bg-white/5 text-slate-500'} transition">${c}</button>`;
             });
@@ -171,89 +189,30 @@
             products.forEach(p => {
                 if((currentCat === 'All' || p.cat === currentCat) && p.name.toLowerCase().includes(search)) {
                     grid.innerHTML += `
-                        <div class="glass rounded-3xl overflow-hidden hover:border-green-500/50 transition duration-500">
-                            <div class="h-44 bg-zinc-900"><img src="${p.img}" class="w-full h-full object-cover"></div>
+                        <div class="glass rounded-3xl overflow-hidden border border-white/5 hover:border-green-500/50 transition">
+                            <img src="${p.img}" class="h-44 w-full object-cover">
                             <div class="p-5 text-center">
-                                <p class="text-[7px] text-slate-600 font-black uppercase tracking-[0.2em] mb-1">${p.cat}</p>
-                                <h4 class="font-bold text-xs mb-3 truncate">${p.name}</h4>
+                                <p class="text-[7px] text-slate-500 font-black uppercase mb-1">${p.cat}</p>
+                                <h4 class="font-bold text-xs mb-3">${p.name}</h4>
                                 <p class="text-lg font-black text-green-500 mb-5">Rp ${parseInt(p.price).toLocaleString('id-ID')}</p>
-                                <button onclick="addToCart(${p.id})" class="w-full py-3 btn-primary text-[9px] uppercase tracking-widest">Add To Cart</button>
+                                <button onclick="addToCart(${p.id})" class="w-full py-3 btn-primary text-[9px] uppercase">Add To Cart</button>
                             </div>
                         </div>`;
                 }
-
                 adminList.innerHTML += `
-                    <div class="bg-black/40 p-4 rounded-2xl border border-white/5 space-y-3">
-                        <div class="flex justify-between items-center">
-                            <span class="text-[10px] font-black text-green-500 uppercase truncate mr-2">${p.name}</span>
-                            <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
-                        </div>
-                        <select onchange="moveCat(${p.id}, this.value)" class="w-full p-2 rounded-lg bg-white text-black text-[9px] font-black uppercase">
-                            ${categories.map(c => `<option value="${c}" ${p.cat === c ? 'selected' : ''}>Pindah ke: ${c}</option>`).join('')}
-                        </select>
+                    <div class="bg-black/40 p-4 rounded-2xl border border-white/5 flex justify-between items-center">
+                        <span class="text-[10px] font-black text-green-500 uppercase">${p.name}</span>
+                        <button onclick="deleteProduct(${p.id})" class="text-red-500 text-xs"><i class="fa-solid fa-trash"></i></button>
                     </div>`;
             });
         }
 
-        function toggleAdminPanel() {
-            if(prompt("Enter Admin Password:") === ADMIN_PASS) {
-                document.getElementById('admin-panel-content').classList.toggle('hidden');
-                document.getElementById('btn-admin-access').innerHTML = document.getElementById('admin-panel-content').classList.contains('hidden') ? '<i class="fa-solid fa-lock mr-2"></i> Open Admin Control' : '<i class="fa-solid fa-unlock mr-2"></i> Close Admin Panel';
-                renderUI();
-                if(!document.getElementById('admin-panel-content').classList.contains('hidden')) window.scrollTo(0, document.body.scrollHeight);
-            }
-        }
-
         function resetStats() {
-            if (confirm("⚠️ Hapus semua statistik pemasukan dan pesanan?")) {
-                if (prompt("Masukkan Password Admin:") === ADMIN_PASS) {
-                    stats = { revenue: 0, orders: 0 };
-                    localStorage.setItem('w4ras_stats', JSON.stringify(stats));
-                    renderUI();
-                    alert("Stats Reset!");
-                } else { alert("Wrong Password!"); }
+            if (confirm("Reset Data Keuangan?") && prompt("Pass:") === ADMIN_PASS) {
+                stats = { revenue: 0, orders: 0 };
+                localStorage.setItem('w4ras_stats', JSON.stringify(stats));
+                renderUI();
             }
-        }
-
-        function setFilter(c) { currentCat = c; renderUI(); }
-        function addToCart(id) { cart.push(products.find(p => p.id === id)); document.getElementById('cart-count').innerText = cart.length; }
-        
-        function openCart() {
-            const list = document.getElementById('cart-items');
-            let total = 0; list.innerHTML = '';
-            cart.forEach((item) => {
-                total += parseInt(item.price);
-                list.innerHTML += `<div class="flex justify-between bg-white/5 p-3 rounded-xl text-xs"><span>${item.name}</span><span class="text-green-500 font-bold">Rp ${parseInt(item.price).toLocaleString('id-ID')}</span></div>`;
-            });
-            document.getElementById('cart-total').innerText = 'Rp ' + total.toLocaleString('id-ID');
-            document.getElementById('cartModal').style.display = 'block';
-        }
-
-        function checkout() {
-            if(cart.length === 0) return;
-            let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
-            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS_PAY_${total}`;
-            document.getElementById('payment-step').classList.remove('hidden');
-            document.getElementById('success-step').classList.add('hidden');
-            document.getElementById('qrisModal').style.display = 'block';
-        }
-
-        async function confirmPayment() {
-            const orderID = `#WRS-${Date.now().toString().slice(-4)}`;
-            let total = cart.reduce((sum, item) => sum + parseInt(item.price), 0);
-            if(webhook) {
-                await fetch(webhook, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({embeds: [{title: "NEW ORDER!", color: 2263894, fields: [{name: "ID", value: orderID}, {name: "Total", value: "Rp "+total.toLocaleString('id-ID')}]}]})
-                });
-            }
-            stats.revenue += total; stats.orders += 1;
-            localStorage.setItem('w4ras_stats', JSON.stringify(stats));
-            document.getElementById('payment-step').classList.add('hidden');
-            document.getElementById('success-step').classList.remove('hidden');
-            document.getElementById('final-order-id').innerText = orderID;
-            cart = []; document.getElementById('cart-count').innerText = 0;
         }
 
         function saveProduct() {
@@ -265,15 +224,45 @@
                 products.push({id: Date.now(), name, price, img, cat: finalCat});
                 localStorage.setItem('w4ras_db', JSON.stringify(products));
                 localStorage.setItem('w4ras_cats', JSON.stringify(categories));
-                renderUI(); alert("Gear Added!");
+                renderUI(); alert("Success!");
             }
         }
 
-        function moveCat(id, newCat) { products = products.map(p => p.id === id ? {...p, cat: newCat} : p); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); }
         function deleteProduct(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); localStorage.setItem('w4ras_db', JSON.stringify(products)); renderUI(); } }
-        function saveWebhook() { webhook = document.getElementById('webhook-url').value; localStorage.setItem('w4ras_webhook', webhook); alert("Webhook Saved!"); }
+        function saveWebhook() { webhook = document.getElementById('webhook-url').value; localStorage.setItem('w4ras_webhook', webhook); alert("Saved!"); }
+        function setFilter(c) { currentCat = c; renderUI(); }
+        function addToCart(id) { cart.push(products.find(p => p.id === id)); document.getElementById('cart-count').innerText = cart.length; }
+        function openCart() { 
+            const list = document.getElementById('cart-items');
+            let t = 0; list.innerHTML = '';
+            cart.forEach(i => { t += parseInt(i.price); list.innerHTML += `<div class='flex justify-between text-xs bg-white/5 p-2 rounded-lg'><span>${i.name}</span><span class='text-green-500'>Rp ${parseInt(i.price).toLocaleString('id-ID')}</span></div>`; });
+            document.getElementById('cart-total').innerText = 'Rp ' + t.toLocaleString('id-ID');
+            document.getElementById('cartModal').style.display = 'block'; 
+        }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         
+        function checkout() {
+            let t = cart.reduce((s, i) => s + parseInt(i.price), 0);
+            document.getElementById('qris-img').src = `https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS_PAY_${t}`;
+            document.getElementById('payment-step').classList.remove('hidden');
+            document.getElementById('success-step').classList.add('hidden');
+            document.getElementById('qrisModal').style.display = 'block';
+        }
+
+        async function confirmPayment() {
+            const oid = `#WRS-${new Date().getFullYear()}-${Math.floor(1000 + Math.random() * 9000)}`;
+            let t = cart.reduce((s, i) => s + parseInt(i.price), 0);
+            if(webhook) {
+                await fetch(webhook, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify({embeds: [{title: "NEW SALES!", color: 2263894, fields: [{name: "Order ID", value: oid}, {name: "Total", value: "Rp "+t.toLocaleString('id-ID')}]}]}) });
+            }
+            stats.revenue += t; stats.orders += 1;
+            localStorage.setItem('w4ras_stats', JSON.stringify(stats));
+            document.getElementById('payment-step').classList.add('hidden');
+            document.getElementById('success-step').classList.remove('hidden');
+            document.getElementById('final-order-id').innerText = oid;
+            cart = []; document.getElementById('cart-count').innerText = 0;
+        }
+
         renderUI();
     </script>
 </body>
