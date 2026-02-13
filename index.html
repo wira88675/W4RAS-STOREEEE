@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | Restock System Edition</title>
+    <title>GEAR STORE | Ultimate Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -12,9 +12,11 @@
         .glass-card { background: #11111a; border: 1px solid #1f1f2e; border-radius: 1.25rem; transition: all 0.3s ease; }
         .btn-buy { background: linear-gradient(90deg, #6366f1, #a855f7); }
         .admin-input { background: #000; border: 1px solid #2d2d3d; padding: 12px; border-radius: 12px; outline: none; width: 100%; color: white; }
-        .category-btn { background: #1c1c27; border: 1px solid #2d2d3d; transition: all 0.3s; color: #9ca3af; }
-        .category-btn.active { background: #5865f2; border-color: #5865f2; color: white; }
         
+        /* Input Number Style - Menghilangkan panah bawaan browser */
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qty-input { background: transparent; border: none; text-align: center; width: 40px; font-weight: 800; color: white; outline: none; }
+
         /* Toast Animation */
         @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .toast-animate { animation: slideIn 0.4s ease-out forwards; }
@@ -26,9 +28,7 @@
 
     <nav class="glass-nav sticky top-0 z-50 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 select-none">
-                <span class="text-2xl font-black text-indigo-500 italic">GEAR</span><span class="text-2xl font-black">STORE</span>
-            </div>
+            <div class="text-2xl font-black italic"><span class="text-indigo-500">GEAR</span>STORE</div>
             <div class="relative cursor-pointer" onclick="toggleCart()">
                 <span class="text-xl">🛒</span>
                 <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
@@ -38,9 +38,8 @@
 
     <div id="shop-container">
         <header class="py-12 text-center">
-            <h1 class="text-5xl font-black mb-4 italic tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Lah Market</h1>
-            <p class="text-gray-500 text-sm italic">Tekan F7 untuk Panel Admin</p>
-        </header>
+            <h1 class="text-5xl font-black italic tracking-tighter uppercase">Lah Market</h1>
+            </header>
         <main class="max-w-7xl mx-auto px-6 pb-20">
             <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
         </main>
@@ -49,31 +48,27 @@
     <main id="admin-page" class="hidden max-w-6xl mx-auto p-10 min-h-screen">
         <div class="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
             <h2 class="text-3xl font-black text-indigo-400 italic">MASTER CONTROL</h2>
-            <button onclick="location.reload()" class="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-bold border border-red-500/20">LOGOUT</button>
+            <button onclick="location.reload()" class="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-bold">LOGOUT</button>
         </div>
 
         <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
             <div class="glass-card p-6 h-fit">
-                <h3 class="font-bold mb-6 text-indigo-400">TAMBAH PRODUK BARU</h3>
+                <h3 class="font-bold mb-6 text-indigo-400 uppercase">Input Produk</h3>
                 <input type="hidden" id="edit-id">
                 <div class="space-y-4">
                     <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input">
                     <input type="number" id="p-price" placeholder="Harga" class="admin-input">
                     <input type="number" id="p-stock" placeholder="Stok Awal" class="admin-input">
                     <input type="text" id="p-img" placeholder="URL Gambar" class="admin-input">
-                    <button onclick="handleSaveProduct()" class="btn-buy w-full py-4 rounded-xl font-black uppercase">Simpan Produk</button>
+                    <button onclick="handleSaveProduct()" class="btn-buy w-full py-4 rounded-xl font-black uppercase">Simpan Data</button>
                 </div>
             </div>
 
             <div class="md:col-span-2">
                 <div class="glass-card overflow-hidden">
                     <table class="w-full text-sm text-left">
-                        <thead class="bg-white/5 text-[10px] uppercase text-gray-500">
-                            <tr>
-                                <th class="p-4">Item</th>
-                                <th class="p-4">Stok Saat Ini</th>
-                                <th class="p-4 text-center">Tindakan</th>
-                            </tr>
+                        <thead class="bg-white/5 text-gray-500 uppercase text-[10px]">
+                            <tr><th class="p-4">Item</th><th class="p-4 text-center">Stok</th><th class="p-4 text-center">Aksi</th></tr>
                         </thead>
                         <tbody id="admin-table-body"></tbody>
                     </table>
@@ -84,74 +79,59 @@
 
     <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-end">
         <div class="bg-[#0d0d12] w-full max-w-sm h-full p-8 border-l border-white/10 flex flex-col">
-            <h2 class="text-2xl font-black mb-8 italic">KERANJANG</h2>
+            <h2 class="text-2xl font-black mb-8 italic uppercase">Keranjang</h2>
             <div id="cart-items" class="flex-1 overflow-y-auto space-y-3"></div>
             <div class="border-t border-white/10 pt-6 mt-4">
                 <div class="flex justify-between text-2xl font-black mb-6">
                     <span>Total:</span><span class="text-indigo-500">Rp <span id="cart-total">0</span></span>
                 </div>
-                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black uppercase italic">Bayar</button>
-                <button onclick="toggleCart()" class="w-full mt-4 text-gray-500 text-xs font-bold uppercase">Tutup</button>
+                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black uppercase italic">Bayar Sekarang</button>
+                <button onclick="toggleCart()" class="w-full mt-4 text-gray-500 text-xs font-bold uppercase">Kembali Belanja</button>
             </div>
         </div>
     </div>
 
     <div id="qris-modal" class="fixed inset-0 bg-black/90 hidden z-[70] flex items-center justify-center p-6 backdrop-blur-md">
         <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full shadow-2xl">
-            <h2 class="text-black font-black text-xl mb-4 italic">SCAN QRIS</h2>
+            <h2 class="text-black font-black text-xl mb-4 italic">PAYMENT QR</h2>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_PAY" class="mx-auto mb-4 w-52 h-52">
-            <p class="text-gray-500 text-xs mb-6 italic italic">Total Tagihan: <br><b class="text-black text-xl font-black" id="qris-total">Rp 0</b></p>
-            <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black">KONFIRMASI</button>
+            <p class="text-gray-500 text-xs mb-6 italic">Total Tagihan: <br><b class="text-black text-xl font-black" id="qris-total">Rp 0</b></p>
+            <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black">KONFIRMASI PEMBAYARAN</button>
         </div>
     </div>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('gear_v8_data')) || [
-            { id: 1, name: "STEAM FRESH", price: 1500, stock: 10, sold: 0, img: "https://via.placeholder.com/300" }
+        // --- DATA SYSTEM ---
+        let products = JSON.parse(localStorage.getItem('gear_v10_data')) || [
+            { id: 1, name: "STEAM FRESH", price: 1500, stock: 44, sold: 255, img: "https://via.placeholder.com/300" }
         ];
         let cart = [];
         const MASTER_PASS = "admin123";
 
-        // TOAST NOTIF
+        // --- NOTIFIKASI KIRI BAWAH ---
         function showToast(msg, type = "success") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
             toast.className = `${type === "success" ? "bg-indigo-600" : "bg-red-600"} text-white px-5 py-3 rounded-2xl shadow-2xl toast-animate border border-white/10 flex justify-between items-center`;
-            toast.innerHTML = `<span class="text-xs font-bold uppercase">${msg}</span><button class="ml-4 opacity-50">✕</button>`;
+            toast.innerHTML = `<span class="text-xs font-bold uppercase tracking-wider">${msg}</span>`;
             container.appendChild(toast);
             setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 5000);
         }
 
-        // F7 SHORTCUT
+        // --- SHORTCUT F7 RAHASIA ---
         window.addEventListener('keydown', (e) => {
             if(e.key === "F7") {
-                const p = prompt("PASSWORD ADMIN:");
+                const p = prompt("MASTER PASSWORD:");
                 if(p === MASTER_PASS) {
                     document.getElementById('shop-container').classList.add('hidden');
                     document.getElementById('admin-page').classList.remove('hidden');
                     renderAdmin();
-                    showToast("Admin Panel Opened");
-                }
+                    showToast("Admin Mode Activated");
+                } else if(p !== null) showToast("Access Denied", "error");
             }
         });
 
-        // SISTEM RESTOK
-        function restockProduct(id) {
-            const product = products.find(p => p.id === id);
-            const addAmount = prompt(`Berapa banyak stok tambahan untuk ${product.name}?`, "0");
-            
-            if (addAmount !== null && !isNaN(addAmount)) {
-                const amount = parseInt(addAmount);
-                if (amount > 0) {
-                    product.stock += amount;
-                    saveData();
-                    renderAdmin();
-                    renderShop();
-                    showToast(`Berhasil menambah ${amount} stok ke ${product.name}`);
-                }
-            }
-        }
-
+        // --- SHOP ENGINE ---
         function renderShop() {
             const list = document.getElementById('product-list');
             list.innerHTML = '';
@@ -163,41 +143,25 @@
                         <h3 class="font-bold text-sm uppercase truncate mb-1">${p.name}</h3>
                         <p class="text-xl font-black text-white mb-4">Rp ${p.price.toLocaleString()}</p>
                         <div class="bg-white/5 p-2 rounded-lg text-center text-[10px] text-gray-400 mb-4 uppercase">Stok: ${p.stock} | Sold: ${p.sold}</div>
-                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800 text-gray-500' : 'btn-buy'} py-3 rounded-xl font-black text-xs uppercase">
-                            ${isOut ? 'Habis' : 'Beli Sekarang'}
+                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800' : 'btn-buy'} py-3 rounded-xl font-black text-[10px] uppercase">
+                            ${isOut ? 'OUT OF STOCK' : 'ADD TO CART'}
                         </button>
                     </div>`;
             });
         }
 
-        function renderAdmin() {
-            const tbody = document.getElementById('admin-table-body');
-            tbody.innerHTML = '';
-            products.forEach(p => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-white/5">
-                        <td class="p-4 uppercase text-[10px] font-bold">${p.name}</td>
-                        <td class="p-4 text-center text-xs ${p.stock <= 5 ? 'text-red-500 animate-pulse' : 'text-indigo-400'}">${p.stock}</td>
-                        <td class="p-4 text-center space-x-2">
-                            <button onclick="restockProduct(${p.id})" class="text-green-400 font-black text-[10px] border border-green-400/30 px-2 py-1 rounded">RESTOK</button>
-                            <button onclick="editP(${p.id})" class="text-blue-400 font-black text-[10px]">EDIT</button>
-                            <button onclick="deleteP(${p.id})" class="text-red-500 font-black text-[10px]">DEL</button>
-                        </td>
-                    </tr>`;
-            });
-        }
-
+        // --- KERANJANG RAMPING + INPUT MANUAL ---
         function addToCart(id) {
             const p = products.find(prod => prod.id === id);
             const cartItem = cart.find(item => item.id === id);
             if(cartItem) {
                 if(cartItem.qty < p.stock) cartItem.qty++;
-                else return showToast("Stok limit!", "error");
+                else return showToast("Stok limit tercapai", "error");
             } else {
                 cart.push({...p, qty: 1});
             }
             updateCartUI();
-            showToast("Item ditambahkan");
+            showToast(`${p.name} ditambahkan`);
         }
 
         function updateCartUI() {
@@ -208,16 +172,33 @@
                 total += (c.price * c.qty);
                 list.innerHTML += `
                     <div class="bg-white/5 p-3 rounded-2xl flex items-center justify-between border border-white/5">
-                        <p class="text-[11px] font-bold uppercase truncate w-24">${c.name}</p>
-                        <div class="flex items-center gap-3 bg-black/40 px-3 py-1 rounded-xl">
-                            <button onclick="changeQty(${idx}, -1)" class="text-indigo-400 font-black">-</button>
-                            <span class="text-xs font-bold">${c.qty}</span>
-                            <button onclick="changeQty(${idx}, 1)" class="text-indigo-400 font-black">+</button>
+                        <p class="text-[11px] font-bold uppercase truncate w-24 text-gray-300">${c.name}</p>
+                        <div class="flex items-center gap-1 bg-black/40 px-2 py-1 rounded-xl border border-white/10">
+                            <button onclick="changeQty(${idx}, -1)" class="text-indigo-400 font-black px-2">-</button>
+                            <input type="number" 
+                                   class="qty-input" 
+                                   value="${c.qty}" 
+                                   onchange="manualQty(${idx}, this.value)"
+                                   onkeyup="manualQty(${idx}, this.value)">
+                            <button onclick="changeQty(${idx}, 1)" class="text-indigo-400 font-black px-2">+</button>
                         </div>
                     </div>`;
             });
             document.getElementById('cart-count').innerText = cart.reduce((a,b) => a + b.qty, 0);
             document.getElementById('cart-total').innerText = total.toLocaleString();
+        }
+
+        function manualQty(idx, val) {
+            const item = cart[idx];
+            const p = products.find(orig => orig.id === item.id);
+            let num = parseInt(val);
+            if (isNaN(num) || num < 1) num = 1;
+            if (num > p.stock) {
+                num = p.stock;
+                showToast("Melebihi stok!", "error");
+            }
+            item.qty = num;
+            updateCartUI();
         }
 
         function changeQty(idx, d) {
@@ -229,57 +210,65 @@
             updateCartUI();
         }
 
+        // --- SISTEM RESTOK ---
+        function renderAdmin() {
+            const tbody = document.getElementById('admin-table-body');
+            tbody.innerHTML = '';
+            products.forEach(p => {
+                tbody.innerHTML += `
+                    <tr class="border-b border-white/5">
+                        <td class="p-4 uppercase text-[10px] font-bold">${p.name}</td>
+                        <td class="p-4 text-center text-xs font-bold ${p.stock <= 5 ? 'text-red-500 animate-pulse' : 'text-indigo-400'}">${p.stock}</td>
+                        <td class="p-4 text-center space-x-2">
+                            <button onclick="restock(${p.id})" class="text-green-400 font-bold text-[10px] border border-green-400/20 px-2 py-1 rounded">RESTOK</button>
+                            <button onclick="deleteP(${p.id})" class="text-red-500 font-bold text-[10px]">HAPUS</button>
+                        </td>
+                    </tr>`;
+            });
+        }
+
+        function restock(id) {
+            const p = products.find(x => x.id === id);
+            const add = prompt(`Tambah berapa stok untuk ${p.name}?`, "0");
+            if (add && !isNaN(add)) {
+                p.stock += parseInt(add);
+                saveData(); renderAdmin(); renderShop();
+                showToast("Stok berhasil ditambah");
+            }
+        }
+
+        function handleSaveProduct() {
+            const data = {
+                id: Date.now(),
+                name: document.getElementById('p-name').value,
+                price: Number(document.getElementById('p-price').value),
+                stock: Number(document.getElementById('p-stock').value),
+                img: document.getElementById('p-img').value || "https://via.placeholder.com/300",
+                sold: 0
+            };
+            if(!data.name || !data.price) return showToast("Data tidak lengkap", "error");
+            products.push(data);
+            saveData(); renderAdmin(); renderShop();
+            showToast("Produk berhasil dibuat");
+            document.getElementById('p-name').value = '';
+            document.getElementById('p-price').value = '';
+            document.getElementById('p-stock').value = '';
+        }
+
+        function deleteP(id) { if(confirm("Hapus produk ini?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); renderShop(); } }
+        function saveData() { localStorage.setItem('gear_v10_data', JSON.stringify(products)); }
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
         function openCheckout() {
             if(!cart.length) return;
             document.getElementById('qris-total').innerText = "Rp " + document.getElementById('cart-total').innerText;
             document.getElementById('qris-modal').classList.remove('hidden');
         }
-
         function finalizePayment() {
-            cart.forEach(c => {
-                const p = products.find(o => o.id === c.id);
-                p.stock -= c.qty; p.sold += c.qty;
-            });
-            saveData();
-            showToast("Pembayaran Berhasil!");
-            cart = []; updateCartUI();
+            cart.forEach(c => { const p = products.find(o => o.id === c.id); p.stock -= c.qty; p.sold += c.qty; });
+            saveData(); showToast("Pembayaran Berhasil!"); cart = []; updateCartUI();
             document.getElementById('qris-modal').classList.add('hidden');
             document.getElementById('cart-modal').classList.add('hidden');
             renderShop();
-        }
-
-        function handleSaveProduct() {
-            const id = document.getElementById('edit-id').value;
-            const data = {
-                id: id ? Number(id) : Date.now(),
-                name: document.getElementById('p-name').value,
-                price: Number(document.getElementById('p-price').value),
-                stock: Number(document.getElementById('p-stock').value),
-                img: document.getElementById('p-img').value || "https://via.placeholder.com/300",
-                sold: id ? products.find(p => p.id == id).sold : 0
-            };
-            if(id) products[products.findIndex(p => p.id == id)] = data;
-            else products.push(data);
-            saveData(); renderAdmin(); renderShop();
-            showToast("Produk Disimpan");
-            document.getElementById('edit-id').value = "";
-        }
-
-        function editP(id) {
-            const p = products.find(prod => prod.id == id);
-            document.getElementById('edit-id').value = p.id;
-            document.getElementById('p-name').value = p.name;
-            document.getElementById('p-price').value = p.price;
-            document.getElementById('p-stock').value = p.stock;
-            document.getElementById('p-img').value = p.img;
-        }
-
-        function deleteP(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); renderShop(); } }
-        function saveData() { localStorage.setItem('gear_v8_data', JSON.stringify(products)); }
-        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
-        function showPage(page) { 
-            document.getElementById('shop-container').classList.toggle('hidden', page !== 'shop');
-            document.getElementById('admin-page').classList.toggle('hidden', page !== 'admin');
         }
 
         renderShop();
