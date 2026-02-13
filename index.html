@@ -3,181 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEAR STORE | Ultimate Marketplace</title>
+    <title>GEAR STORE | Master Admin Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #08080c; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-        .glass-nav { background: rgba(13, 13, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .glass-card { background: #11111a; border: 1px solid #1f1f2e; border-radius: 1.25rem; transition: all 0.3s ease; }
-        .glass-card:hover { border-color: #6366f1; transform: translateY(-8px); }
-        .neon-border { border: 2px solid rgba(34, 197, 94, 0.5); }
-        .category-btn { background: #1c1c27; border: 1px solid #2d2d3d; transition: all 0.3s; color: #9ca3af; }
-        .category-btn.active { background: #5865f2; border-color: #5865f2; box-shadow: 0 0 20px rgba(88, 101, 242, 0.4); color: white; }
+        body { background-color: #08080c; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass-card { background: #11111a; border: 1px solid #1f1f2e; border-radius: 1.25rem; }
         .btn-buy { background: linear-gradient(90deg, #6366f1, #a855f7); }
+        .admin-input { background: #000; border: 1px solid #2d2d3d; padding: 12px; border-radius: 12px; outline: none; width: 100%; }
+        .admin-input:focus { border-color: #6366f1; }
     </style>
 </head>
 <body>
 
-    <nav class="glass-nav sticky top-0 z-50 p-4">
+    <nav class="bg-[#0d0d12]/80 backdrop-blur-md sticky top-0 z-50 p-4 border-b border-white/5">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="flex items-center gap-2 select-none">
-                <span class="text-2xl font-black text-indigo-500">GEAR</span><span class="text-2xl font-black">STORE</span>
-            </div>
-            <div class="flex items-center gap-6">
-                <button onclick="showPage('shop')" class="text-sm font-bold text-gray-400 hover:text-white">Products</button>
-                <div class="relative cursor-pointer" onclick="toggleCart()">
-                    <span class="text-xl">🛒</span>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                </div>
+            <div class="text-2xl font-black italic"><span class="text-indigo-500">GEAR</span>STORE</div>
+            <div class="relative cursor-pointer" onclick="toggleCart()">
+                <span class="text-xl">🛒</span>
+                <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
             </div>
         </div>
     </nav>
 
-    <div id="shop-container">
-        <header class="py-16 text-center">
-            <h1 class="text-6xl md:text-7xl font-black mb-4 tracking-tighter italic">Ready to <span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Play?</span></h1>
-            <p class="text-gray-500 max-w-xl mx-auto">Premium gaming accounts with lightning fast delivery.</p>
-        </header>
-
-        <main class="max-w-7xl mx-auto px-6 pb-20">
-            <div class="flex justify-center gap-4 mb-8">
-                <button onclick="filterCategory('All')" class="category-btn active px-6 py-2.5 rounded-xl text-sm font-bold">All</button>
-                <button onclick="filterCategory('FiveM')" class="category-btn px-6 py-2.5 rounded-xl text-sm font-bold">FiveM</button>
-                <button onclick="filterCategory('Cloud Phone')" class="category-btn px-6 py-2.5 rounded-xl text-sm font-bold">Cloud Phone</button>
-            </div>
-            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
-        </main>
+    <div id="shop-page" class="max-w-7xl mx-auto px-6 py-10">
+        <h1 class="text-5xl font-black text-center mb-10 italic">CATALOG</h1>
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
 
     <main id="admin-page" class="hidden max-w-6xl mx-auto p-10 min-h-screen">
         <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-black text-indigo-400 tracking-tight">MASTER PANEL</h2>
-            <button onclick="showPage('shop')" class="bg-white/5 px-4 py-2 rounded-lg text-sm">Close Dashboard</button>
+            <h2 class="text-3xl font-black text-indigo-400 italic underline">MASTER SETTINGS</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-500 px-6 py-2 rounded-xl font-bold">EXIT ADMIN</button>
         </div>
-        
-        <div class="grid grid-cols-2 gap-6 mb-10">
-            <div class="bg-[#11111a] p-6 rounded-3xl border border-white/5">
-                <p class="text-gray-500 text-xs font-bold uppercase">Revenue</p>
-                <h3 class="text-2xl font-black text-green-400">Rp <span id="val-rev">0</span></h3>
-            </div>
-            <div class="bg-[#11111a] p-6 rounded-3xl border border-white/5">
-                <p class="text-gray-500 text-xs font-bold uppercase">Orders</p>
-                <h3 class="text-2xl font-black" id="val-ord">0</h3>
+
+        <div class="glass-card p-6 mb-10 border-indigo-500/50 border-2">
+            <h3 class="text-xl font-bold mb-4 text-indigo-400">🔗 Discord Webhook Settings</h3>
+            <p class="text-gray-400 text-xs mb-4">Tempelkan URL Webhook Discord kamu di sini agar setiap pembelian otomatis lapor ke Discord.</p>
+            <div class="flex gap-4">
+                <input type="text" id="webhook-url-input" placeholder="https://discord.com/api/webhooks/..." class="admin-input">
+                <button onclick="saveWebhook()" class="bg-indigo-600 px-8 rounded-xl font-bold hover:bg-indigo-500">SIMPAN</button>
             </div>
         </div>
 
-        <div class="glass-card p-8 mb-10">
-            <h3 class="font-bold mb-6 italic">Manage Product</h3>
-            <input type="hidden" id="edit-id">
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-                <input type="text" id="p-name" placeholder="Product Name" class="bg-black border border-white/10 p-3 rounded-xl outline-none focus:border-indigo-500">
-                <select id="p-cat" class="bg-black border border-white/10 p-3 rounded-xl outline-none">
-                    <option value="FiveM">FiveM</option>
-                    <option value="Cloud Phone">Cloud Phone</option>
-                </select>
-                <input type="number" id="p-price" placeholder="Price" class="bg-black border border-white/10 p-3 rounded-xl outline-none">
-                <input type="number" id="p-discount" placeholder="Discount (%)" class="bg-black border border-white/10 p-3 rounded-xl outline-none">
-                <input type="number" id="p-stock" placeholder="Stock" class="bg-black border border-white/10 p-3 rounded-xl outline-none">
-                <input type="text" id="p-img" placeholder="Image URL" class="bg-black border border-white/10 p-3 rounded-xl outline-none">
-                <button onclick="handleSaveProduct()" class="md:col-span-2 btn-buy py-4 rounded-xl font-black tracking-widest uppercase">Save Changes</button>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-10">
+            <div class="glass-card p-8">
+                <h3 class="font-bold mb-6 italic text-xl">Manage Product</h3>
+                <input type="hidden" id="edit-id">
+                <div class="space-y-4">
+                    <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input">
+                    <div class="grid grid-cols-2 gap-4">
+                        <input type="number" id="p-price" placeholder="Harga" class="admin-input">
+                        <input type="number" id="p-discount" placeholder="Diskon %" class="admin-input">
+                    </div>
+                    <input type="number" id="p-stock" placeholder="Stok" class="admin-input">
+                    <input type="text" id="p-img" placeholder="URL Gambar" class="admin-input">
+                    <button onclick="handleSaveProduct()" class="btn-buy w-full py-4 rounded-xl font-black">SIMPAN KE TOKO</button>
+                </div>
             </div>
-        </div>
 
-        <div class="glass-card overflow-hidden">
-            <table class="w-full text-left text-sm">
-                <thead class="bg-white/5">
-                    <tr><th class="p-4">Name</th><th class="p-4">Price (Final)</th><th class="p-4">Stock</th><th class="p-4">Action</th></tr>
-                </thead>
-                <tbody id="admin-table-body"></tbody>
-            </table>
+            <div>
+                <div class="grid grid-cols-2 gap-4 mb-6 text-center">
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <p class="text-xs text-gray-500 uppercase">Revenue</p>
+                        <p class="text-xl font-black text-green-400">Rp <span id="val-rev">0</span></p>
+                    </div>
+                    <div class="bg-white/5 p-4 rounded-2xl border border-white/10">
+                        <p class="text-xs text-gray-500 uppercase">Total Sold</p>
+                        <p class="text-xl font-black" id="val-ord">0</p>
+                    </div>
+                </div>
+                <div class="glass-card overflow-hidden">
+                    <table class="w-full text-sm">
+                        <thead class="bg-white/5">
+                            <tr><th class="p-3 text-left">Item</th><th class="p-3">Stock</th><th class="p-3">Action</th></tr>
+                        </thead>
+                        <tbody id="admin-table-body"></tbody>
+                    </table>
+                </div>
+            </div>
         </div>
     </main>
 
     <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-end">
-        <div class="bg-[#0d0d12] w-full max-w-md h-full p-8 border-l border-white/10 flex flex-col shadow-2xl">
-            <h2 class="text-2xl font-black mb-10 italic">Shopping Cart</h2>
-            <div id="cart-items" class="flex-1 overflow-y-auto"></div>
+        <div class="bg-[#0d0d12] w-96 h-full p-8 border-l border-white/10">
+            <h2 class="text-2xl font-black mb-8 italic">KERANJANG</h2>
+            <div id="cart-items" class="space-y-4 mb-10 overflow-y-auto max-h-[60%]"></div>
             <div class="border-t border-white/10 pt-6">
-                <div class="flex justify-between text-2xl font-black mb-6"><span>Total:</span><span class="text-indigo-500">Rp <span id="cart-total">0</span></span></div>
-                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black tracking-tighter">CONFIRM ORDER</button>
-                <button onclick="toggleCart()" class="w-full mt-4 text-gray-500 text-xs">Close Cart</button>
+                <div class="flex justify-between text-xl font-bold mb-6"><span>Total:</span><span class="text-indigo-400">Rp <span id="cart-total">0</span></span></div>
+                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black">BAYAR SEKARANG</button>
+                <button onclick="toggleCart()" class="w-full mt-4 text-gray-500 text-xs">TUTUP</button>
             </div>
         </div>
     </div>
 
     <div id="qris-modal" class="fixed inset-0 bg-black/90 hidden z-[70] flex items-center justify-center p-6 backdrop-blur-md">
         <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full shadow-2xl">
-            <h2 class="text-black font-black text-xl mb-4 italic italic">Payment QR</h2>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_STORE" class="w-full mb-4">
-            <p class="text-gray-500 text-xs mb-6 text-center italic">Transfer to QR above: <br><b class="text-black text-lg" id="qris-total">Rp 0</b></p>
-            <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black shadow-lg">I'VE PAID</button>
+            <h2 class="text-black font-black text-xl mb-4 italic">SCAN QRIS</h2>
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_PAY" class="mx-auto mb-4">
+            <p class="text-gray-500 text-xs mb-6 italic">Total Tagihan: <br><b class="text-black text-lg" id="qris-total">Rp 0</b></p>
+            <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black shadow-lg">KONFIRMASI PEMBAYARAN</button>
         </div>
     </div>
 
     <script>
-        // --- SETTINGS ---
-        const ADMIN_PASS = "admin123"; 
-        const DISCORD_WEBHOOK = "GANTI_URL_WEBHOOK_DISCORD_KAMU"; 
-
-        let products = JSON.parse(localStorage.getItem('gear_v4_data')) || [
-            { id: 1, name: "LAH STEAM FRESH", cat: "FiveM", price: 1500, discount: 0, stock: 10, sold: 0, img: "https://via.placeholder.com/300" }
+        // --- DATABASE ---
+        let products = JSON.parse(localStorage.getItem('gear_v5_data')) || [
+            { id: 1, name: "STEAM FRESH", price: 1500, discount: 0, stock: 10, img: "https://via.placeholder.com/300" }
         ];
-        let revenue = Number(localStorage.getItem('gear_v4_rev')) || 0;
-        let orders = Number(localStorage.getItem('gear_v4_ord')) || 0;
+        let revenue = Number(localStorage.getItem('gear_v5_rev')) || 0;
+        let orders = Number(localStorage.getItem('gear_v5_ord')) || 0;
+        let webhookUrl = localStorage.getItem('gear_v5_webhook') || "";
         let cart = [];
+        const ADMIN_PASS = "admin123";
 
-        // --- KEYBOARD SHORTCUT F7 ---
-        window.addEventListener('keydown', function(e) {
-            if (e.key === "F7") {
-                e.preventDefault(); 
-                const pass = prompt("Enter Master Password:");
-                if (pass === ADMIN_PASS) {
-                    showPage('admin');
-                } else if (pass !== null) {
-                    alert("Unauthorized Access!");
-                }
+        // --- SHORTCUT F7 ---
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "F7") {
+                const pass = prompt("MASUKKAN PASSWORD ADMIN:");
+                if(pass === ADMIN_PASS) {
+                    document.getElementById('shop-page').classList.add('hidden');
+                    document.getElementById('admin-page').classList.remove('hidden');
+                    renderAdmin();
+                } else if(pass !== null) alert("SALAH!");
             }
         });
 
-        function showPage(page) {
-            document.getElementById('shop-container').classList.toggle('hidden', page !== 'shop');
-            document.getElementById('admin-page').classList.toggle('hidden', page !== 'admin');
-            if(page === 'admin') renderAdmin();
-            else renderShop();
+        // --- WEBHOOK LOGIC ---
+        function saveWebhook() {
+            const url = document.getElementById('webhook-url-input').value;
+            localStorage.setItem('gear_v5_webhook', url);
+            webhookUrl = url;
+            alert("Webhook Tersimpan!");
         }
 
-        function renderShop(data = products) {
+        async function sendToDiscord(itemsText, total) {
+            if(!webhookUrl) return console.log("Webhook belum diisi.");
+            
+            const payload = {
+                embeds: [{
+                    title: "🔔 PESANAN BARU MASUK!",
+                    color: 65280,
+                    fields: [
+                        { name: "List Belanjaan:", value: itemsText },
+                        { name: "Total Bayar:", value: "Rp " + total.toLocaleString() }
+                    ],
+                    footer: { text: "Gear Store Bot • " + new Date().toLocaleString() }
+                }]
+            };
+
+            await fetch(webhookUrl, {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(payload)
+            });
+        }
+
+        // --- SHOP LOGIC ---
+        function renderShop() {
             const list = document.getElementById('product-list');
             list.innerHTML = '';
-            data.forEach(p => {
-                const final = p.price - (p.price * (p.discount / 100));
-                const isOut = p.stock <= 0;
+            products.forEach(p => {
+                const final = p.price - (p.price * p.discount / 100);
                 list.innerHTML += `
                     <div class="glass-card p-4 flex flex-col h-full">
-                        <div class="relative mb-5 rounded-xl overflow-hidden ${!isOut ? 'neon-border' : ''}">
-                            <img src="${p.img}" class="w-full h-44 object-cover">
+                        <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-4">
+                        <h3 class="font-bold text-sm uppercase mb-1">${p.name}</h3>
+                        <p class="text-blue-400 font-black text-xl mb-4">Rp ${final.toLocaleString()}</p>
+                        <div class="flex justify-between text-[10px] text-gray-500 mb-4">
+                            <span>Stok: ${p.stock}</span>
+                            <span>Diskon: ${p.discount}%</span>
                         </div>
-                        <h3 class="font-bold text-sm mb-1 uppercase">${p.name}</h3>
-                        <div class="mb-4">
-                            <p class="text-xl font-black text-blue-400">Rp ${final.toLocaleString()}</p>
-                            ${p.discount > 0 ? `<p class="text-[10px] text-gray-500 line-through italic">Rp ${p.price.toLocaleString()}</p>` : ''}
-                        </div>
-                        <div class="grid grid-cols-2 gap-2 mb-4 text-[9px] font-bold text-gray-500 uppercase">
-                            <div class="bg-black/40 p-2 rounded-lg">Stok: ${p.stock}</div>
-                            <div class="bg-black/40 p-2 rounded-lg">Sold: ${p.sold}</div>
-                        </div>
-                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full btn-buy py-3 rounded-xl font-black text-[10px] tracking-widest uppercase">
-                            ${isOut ? 'SOLD OUT' : 'ADD TO CART'}
+                        <button onclick="addToCart(${p.id})" ${p.stock <= 0 ? 'disabled' : ''} class="w-full btn-buy py-3 rounded-xl font-bold text-xs uppercase">
+                            ${p.stock <= 0 ? 'HABIS' : 'TAMBAH'}
                         </button>
                     </div>`;
             });
         }
 
         function addToCart(id) {
-            const prod = products.find(p => p.id === id);
-            if(prod.stock <= 0) return alert("Out of stock!");
-            cart.push({...prod});
+            const p = products.find(prod => prod.id === id);
+            cart.push({...p});
             updateCartUI();
         }
 
@@ -185,21 +191,20 @@
             const list = document.getElementById('cart-items');
             let total = 0;
             list.innerHTML = '';
-            cart.forEach((item, idx) => {
-                const final = item.price - (item.price * (item.discount / 100));
-                total += final;
-                list.innerHTML += `
-                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl mb-2 border border-white/5">
-                        <p class="font-bold text-[11px] uppercase">${item.name}</p>
-                        <button onclick="cart.splice(${idx},1);updateCartUI()" class="text-red-500">✕</button>
-                    </div>`;
+            cart.forEach((c, idx) => {
+                const f = c.price - (c.price * c.discount / 100);
+                total += f;
+                list.innerHTML += `<div class="bg-white/5 p-3 rounded-xl flex justify-between items-center">
+                    <p class="text-xs font-bold uppercase">${c.name}</p>
+                    <button onclick="cart.splice(${idx},1);updateCartUI()" class="text-red-500 font-bold">✕</button>
+                </div>`;
             });
             document.getElementById('cart-count').innerText = cart.length;
             document.getElementById('cart-total').innerText = total.toLocaleString();
         }
 
         function openCheckout() {
-            if(!cart.length) return alert("Empty Cart!");
+            if(!cart.length) return alert("Keranjang kosong!");
             document.getElementById('qris-total').innerText = "Rp " + document.getElementById('cart-total').innerText;
             document.getElementById('qris-modal').classList.remove('hidden');
         }
@@ -210,76 +215,60 @@
             cart.forEach(c => {
                 const p = products.find(orig => orig.id === c.id);
                 if(p.stock > 0) {
-                    p.stock--; p.sold++;
-                    const final = p.price - (p.price * (p.discount / 100));
+                    p.stock--;
+                    const final = p.price - (p.price * p.discount / 100);
                     totalVal += final;
                     itemsText += `• ${p.name} (Rp ${final.toLocaleString()})\n`;
                 }
             });
-            revenue += totalVal; orders++;
-            saveData();
+            revenue += totalVal;
+            orders++;
             
-            // WEBHOOK
-            if(DISCORD_WEBHOOK.includes("http")) {
-                await fetch(DISCORD_WEBHOOK, {
-                    method: 'POST',
-                    headers: {'Content-Type': 'application/json'},
-                    body: JSON.stringify({
-                        embeds: [{
-                            title: "NEW PURCHASE!",
-                            color: 65280,
-                            fields: [
-                                { name: "Items", value: itemsText },
-                                { name: "Total Revenue", value: "Rp " + totalVal.toLocaleString() }
-                            ],
-                            timestamp: new Date()
-                        }]
-                    })
-                });
-            }
+            // Simpan & Kirim Discord
+            saveData();
+            await sendToDiscord(itemsText, totalVal);
 
-            alert("SUCCESS! Order processed.");
-            cart = []; updateCartUI();
+            alert("PEMBAYARAN SUKSES!");
+            cart = []; 
+            updateCartUI();
             document.getElementById('qris-modal').classList.add('hidden');
-            if(!document.getElementById('cart-modal').classList.contains('hidden')) toggleCart();
+            document.getElementById('cart-modal').classList.add('hidden');
             renderShop();
         }
 
+        // --- ADMIN LOGIC ---
         function handleSaveProduct() {
             const id = document.getElementById('edit-id').value;
             const data = {
                 id: id ? Number(id) : Date.now(),
                 name: document.getElementById('p-name').value,
-                cat: document.getElementById('p-cat').value,
                 price: Number(document.getElementById('p-price').value),
                 discount: Number(document.getElementById('p-discount').value) || 0,
                 stock: Number(document.getElementById('p-stock').value),
-                img: document.getElementById('p-img').value || "https://via.placeholder.com/300",
-                sold: id ? products.find(p => p.id == id).sold : 0
+                img: document.getElementById('p-img').value || "https://via.placeholder.com/300"
             };
             if(id) products[products.findIndex(p => p.id == id)] = data;
             else products.push(data);
-            saveData(); renderAdmin();
-            alert("Updated!");
-            document.getElementById('edit-id').value = "";
+            saveData(); 
+            renderAdmin();
+            alert("Tersimpan!");
         }
 
         function renderAdmin() {
             document.getElementById('val-rev').innerText = revenue.toLocaleString();
             document.getElementById('val-ord').innerText = orders;
+            document.getElementById('webhook-url-input').value = webhookUrl;
             const tbody = document.getElementById('admin-table-body');
             tbody.innerHTML = '';
             products.forEach(p => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-white/5">
-                        <td class="p-4 font-bold uppercase text-[10px]">${p.name}</td>
-                        <td class="p-4 text-indigo-400 font-bold italic">Rp ${(p.price - (p.price * p.discount/100)).toLocaleString()}</td>
-                        <td class="p-4 text-gray-400">${p.stock}</td>
-                        <td class="p-4 space-x-4">
-                            <button onclick="editP(${p.id})" class="text-blue-400 text-[10px] font-black">EDIT</button>
-                            <button onclick="deleteP(${p.id})" class="text-red-500 text-[10px] font-black">DEL</button>
-                        </td>
-                    </tr>`;
+                tbody.innerHTML += `<tr class="border-b border-white/5">
+                    <td class="p-3 uppercase text-[10px] font-bold">${p.name}</td>
+                    <td class="p-3 text-center">${p.stock}</td>
+                    <td class="p-3 text-center space-x-2">
+                        <button onclick="editP(${p.id})" class="text-blue-400">EDIT</button>
+                        <button onclick="deleteP(${p.id})" class="text-red-500">DEL</button>
+                    </td>
+                </tr>`;
             });
         }
 
@@ -293,18 +282,9 @@
             document.getElementById('p-img').value = p.img;
         }
 
-        function deleteP(id) { if(confirm("Remove product?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); } }
-        function saveData() { 
-            localStorage.setItem('gear_v4_data', JSON.stringify(products)); 
-            localStorage.setItem('gear_v4_rev', revenue);
-            localStorage.setItem('gear_v4_ord', orders);
-        }
+        function deleteP(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); } }
+        function saveData() { localStorage.setItem('gear_v5_data', JSON.stringify(products)); localStorage.setItem('gear_v5_rev', revenue); localStorage.setItem('gear_v5_ord', orders); }
         function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
-        function filterCategory(cat) {
-            document.querySelectorAll('.category-btn').forEach(b => b.classList.remove('active'));
-            event.currentTarget.classList.add('active');
-            renderShop(cat === 'All' ? products : products.filter(p => p.cat === cat));
-        }
 
         renderShop();
     </script>
