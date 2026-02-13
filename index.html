@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | Smart Inventory</title>
+    <title>W4RAS STORE | Category Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -16,7 +16,7 @@
         .toast-card { background: rgba(10, 20, 20, 0.95); border-left: 4px solid #10b981; padding: 15px 25px; border-radius: 12px; animation: slideIn 0.5s ease forwards; min-width: 280px; }
         @keyframes slideIn { from { transform: translateX(120%); } to { transform: translateX(0); } }
         .modal-blur { backdrop-filter: blur(10px); background: rgba(0,0,0,0.8); display: none; }
-        .dashboard-header { background: linear-gradient(to right, rgba(16, 185, 129, 0.1), rgba(8, 178, 145, 0.05)); border-radius: 2rem; border: 1px solid rgba(16, 185, 129, 0.2); }
+        .active-cat { background: #10b981 !important; color: white !important; border: none !important; }
     </style>
 </head>
 <body>
@@ -27,21 +27,23 @@
         <div class="text-2xl font-black italic tracking-tighter cursor-pointer" onclick="location.reload()">
             <span class="text-emerald-400">W4RAS</span><span class="text-white">STORE</span>
         </div>
-        <div class="flex items-center gap-6">
-            <div class="relative cursor-pointer" onclick="openModal('cart-modal')">
-                <span class="text-xl">🛒</span>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-emerald-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-            </div>
+        <div class="relative cursor-pointer" onclick="openModal('cart-modal')">
+            <span class="text-xl">🛒</span>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-emerald-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
         </div>
     </nav>
 
     <div id="shop-view" class="max-w-7xl mx-auto px-6 py-8 w-full">
-        <div class="dashboard-header p-8 mb-12 flex flex-col md:flex-row justify-between items-center gap-6">
+        <div class="p-8 mb-8 flex flex-col md:flex-row justify-between items-center gap-6 rounded-[2rem] border border-emerald-500/20 bg-emerald-500/5">
             <div>
-                <h1 class="text-3xl font-extrabold mb-2 uppercase italic tracking-tighter">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
-                <p class="text-gray-400 text-sm">1 Akun 1 Orang. Pengiriman Otomatis.</p>
+                <h1 class="text-3xl font-extrabold mb-1 uppercase italic tracking-tighter">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
+                <p class="text-gray-400 text-sm">Anti-Bug System. Verifikasi Manual Admin.</p>
             </div>
-            <div class="glass px-6 py-3 rounded-2xl border-emerald-500/30 font-black text-[10px] text-emerald-400 uppercase tracking-widest">Status: Ready</div>
+            <div class="glass px-6 py-3 rounded-2xl border-emerald-500/30 font-black text-[10px] text-emerald-400 uppercase tracking-widest">Store: Active</div>
+        </div>
+
+        <div id="category-bar" class="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide">
+            <button onclick="filterCat('All')" class="cat-btn glass px-6 py-2 rounded-full text-[10px] font-bold uppercase active-cat border-white/10">All</button>
         </div>
 
         <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
@@ -49,10 +51,10 @@
 
     <div id="cart-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-white/10">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Keranjang</h2>
-            <div id="cart-items-list" class="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2"></div>
-            <div class="border-t border-white/10 pt-4 mb-6">
-                <div class="flex justify-between font-bold text-lg"><span>Total:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span></div>
+            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Shopping Cart</h2>
+            <div id="cart-items-list" class="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2 text-xs"></div>
+            <div class="border-t border-white/10 pt-4 mb-6 flex justify-between font-bold text-lg">
+                <span>Total:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span>
             </div>
             <div class="flex gap-4">
                 <button onclick="closeModal('cart-modal')" class="flex-1 py-3 bg-white/5 rounded-xl font-bold text-xs uppercase">Batal</button>
@@ -63,63 +65,62 @@
 
     <div id="payment-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[3rem] max-w-sm w-full text-center border-white/10">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Secure Payment</h2>
-            <div class="bg-white p-4 rounded-3xl mb-6 inline-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=W4RAS_STORE" class="w-32 h-32"></div>
-            <div class="mb-8">
-                <div class="text-3xl font-black text-emerald-400" id="total-tagihan">Rp 0</div>
-                <p class="text-[9px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Bayar Pas Sesuai Harga</p>
-            </div>
+            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Konfirmasi Pembayaran</h2>
+            <div class="bg-white p-4 rounded-3xl mb-6 inline-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=W4RAS_QR" class="w-32 h-32"></div>
+            <div class="text-3xl font-black text-emerald-400 mb-2" id="total-tagihan">Rp 0</div>
+            <p class="text-[9px] text-amber-500 font-bold uppercase mb-8">BAYAR SESUAI NOMINAL DI ATAS</p>
             <div id="upload-section" class="space-y-4">
                 <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()"><label for="evidence-file" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400" id="file-label">Upload Bukti Transfer</label>
-                <button onclick="processOrderToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase text-white">Konfirmasi</button>
+                <button onclick="processOrderToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase text-white">SAYA SUDAH BAYAR</button>
                 <button onclick="closeModal('payment-modal')" class="w-full text-gray-500 text-[10px] font-bold mt-2 uppercase">Batal</button>
             </div>
             <div id="status-waiting" class="hidden py-6 text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500 mx-auto mb-4"></div>
-                <p class="text-[10px] text-emerald-400 font-black uppercase">Mengambil Akun Teratas...</p>
+                <p class="text-[10px] text-emerald-400 font-black uppercase">Verifikasi Ke Discord...</p>
             </div>
         </div>
     </div>
 
     <div id="reveal-modal" class="fixed inset-0 z-[110] modal-blur items-center justify-center p-4">
         <div class="glass p-10 rounded-[3rem] max-w-md w-full text-center border-emerald-500/30">
-            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic uppercase">Sukses!</h2>
-            <div id="account-output" class="bg-black/50 p-6 rounded-2xl border border-white/5 font-mono text-emerald-300 break-all mb-8 text-sm text-left whitespace-pre-line"></div>
-            <button onclick="location.reload()" class="w-full py-4 btn-premium rounded-2xl font-bold uppercase text-[10px] text-white">Selesai</button>
+            <div id="account-output"></div>
         </div>
     </div>
 
     <div id="login-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full border-white/10">
-            <h2 class="text-2xl font-black mb-6 text-center italic uppercase text-emerald-400">Master Panel</h2>
+            <h2 class="text-2xl font-black mb-6 text-center text-emerald-400 uppercase">Admin Access</h2>
             <div class="space-y-4">
                 <input type="text" id="adm-user" placeholder="User" class="input-elite">
                 <input type="password" id="adm-pass" placeholder="Pass" class="input-elite">
-                <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-white uppercase text-xs">Login</button>
+                <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-white uppercase text-xs">Authorize</button>
             </div>
         </div>
     </div>
 
     <main id="admin-view" class="hidden max-w-7xl mx-auto p-6 w-full">
         <div class="flex justify-between items-center mb-10">
-            <h2 class="text-3xl font-black italic text-emerald-400 uppercase">W4RAS ADMIN</h2>
-            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase">Logout</button>
+            <h2 class="text-3xl font-black italic text-emerald-400 uppercase">W4RAS PANEL</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-4 py-1 rounded-full text-[10px] font-bold">EXIT</button>
         </div>
         
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="glass p-8 space-y-4 h-fit">
-                <p class="text-[10px] font-bold text-emerald-400 uppercase">Input Produk Baru</p>
+            <div class="glass p-8 space-y-4 h-fit sticky top-6">
                 <input type="text" id="p-name" placeholder="Nama Produk" class="input-elite">
+                <input type="text" id="p-cat" placeholder="Kategori (Misal: App, Games, DLL)" class="input-elite">
                 <input type="text" id="p-price" placeholder="Harga" class="input-elite">
-                <textarea id="p-data" placeholder="Masukkan Akun Per-Baris&#10;Contoh:&#10;user1:pass1&#10;user2:pass2" class="input-elite h-32"></textarea>
-                <input type="text" id="p-img" placeholder="URL Gambar" class="input-elite">
-                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs text-white uppercase">Upload & Hitung Stok</button>
+                <textarea id="p-data" placeholder="Akun Per-Baris" class="input-elite h-32"></textarea>
+                <input type="text" id="p-img" placeholder="Link Gambar" class="input-elite">
+                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs text-white">SAVE PRODUCT</button>
                 <hr class="opacity-10">
-                <input type="text" id="webhook-url" onchange="saveWebhook()" placeholder="Webhook Discord URL" class="input-elite text-[10px]">
+                <input type="text" id="webhook-url" onchange="saveConfig()" placeholder="Discord Webhook" class="input-elite text-[10px]">
+                <input type="text" id="admin-wa" onchange="saveConfig()" placeholder="WhatsApp Admin (62xxx)" class="input-elite text-[10px]">
             </div>
             <div class="lg:col-span-2 glass overflow-hidden">
                 <table class="w-full text-xs text-left">
-                    <thead class="bg-white/5 uppercase text-emerald-400"><tr><th class="p-5">Item</th><th class="p-5 text-center">Stok Baris</th><th class="p-5 text-right">Aksi</th></tr></thead>
+                    <thead class="bg-white/5 uppercase text-emerald-400 font-bold">
+                        <tr><th class="p-5">Produk</th><th class="p-5">Kategori</th><th class="p-5 text-center">Stok</th><th class="p-5 text-right">Aksi</th></tr>
+                    </thead>
                     <tbody id="admin-table-body"></tbody>
                 </table>
             </div>
@@ -127,84 +128,117 @@
     </main>
 
     <footer class="mt-auto py-10 text-center">
-        <p class="opacity-20 text-[10px] font-bold cursor-default" id="secret-trigger">
-            &copy; 2026 W4RAS STORE - ALL SECRET RESERVED
+        <p class="opacity-20 text-[10px] font-bold cursor-default select-none" id="secret-trigger">
+            &copy; 2026 W4RAS STORE - CLICK 5X FOR ADMIN
         </p>
     </footer>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('w4ras_smart_db')) || [];
+        let products = JSON.parse(localStorage.getItem('w4ras_v14_db')) || [];
         let cart = [];
         let activeOrder = null;
+        let currentFilter = 'All';
 
-        // --- SECRET (5 CLICKS) ---
-        let clks = 0; let lastC = 0;
+        // --- SECRET LOGIN ---
+        let clicks = 0; let lastT = 0;
         document.getElementById('secret-trigger').addEventListener('click', () => {
-            if(Date.now() - lastC < 2000) clks++; else clks = 1;
-            lastC = Date.now();
-            if(clks >= 5) openModal('login-modal');
+            if(Date.now() - lastT < 2000) clicks++; else clicks = 1;
+            lastT = Date.now();
+            if(clicks >= 5) openModal('login-modal');
         });
 
         function showToast(msg, type = "success") {
-            const c = document.getElementById('toast-container');
+            const container = document.getElementById('toast-container');
             const t = document.createElement('div');
             t.className = `toast-card ${type==='error'?'border-red-500':'border-emerald-500'}`;
             t.innerHTML = `<p class="text-[11px] font-black uppercase text-white">${msg}</p>`;
-            c.appendChild(t); setTimeout(() => t.remove(), 3000);
+            container.appendChild(t); setTimeout(() => t.remove(), 3000);
         }
 
         function openModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='cart-modal') renderCart(); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- ADMIN SYSTEM ---
+        // --- ADMIN ---
         function processLogin() {
             if(document.getElementById('adm-user').value === "admin" && document.getElementById('adm-pass').value === "admin123") {
                 closeModal('login-modal');
                 document.getElementById('shop-view').classList.add('hidden');
                 document.getElementById('admin-view').classList.remove('hidden');
                 document.getElementById('webhook-url').value = localStorage.getItem('w4ras_wb') || "";
+                document.getElementById('admin-wa').value = localStorage.getItem('w4ras_wa') || "";
                 renderAdmin();
             }
         }
 
-        function saveWebhook() { localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value); showToast("Webhook Saved"); }
+        function saveConfig() {
+            localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value);
+            localStorage.setItem('w4ras_wa', document.getElementById('admin-wa').value);
+            showToast("Config Saved");
+        }
 
         function handleSaveProduct() {
-            const rawData = document.getElementById('p-data').value.trim();
-            const accountArray = rawData.split('\n').filter(line => line.trim() !== "");
-            
+            const accounts = document.getElementById('p-data').value.trim().split('\n').filter(l => l.trim() !== "");
             const p = {
                 id: Date.now(),
                 name: document.getElementById('p-name').value,
+                category: document.getElementById('p-cat').value || "All",
                 price: Number(document.getElementById('p-price').value.replace(/,/g,'')),
-                accounts: accountArray, // Simpan sebagai array
+                accounts: accounts,
                 img: document.getElementById('p-img').value || "https://via.placeholder.com/300"
             };
-            if(!p.name || accountArray.length === 0) return showToast("Isi Nama & Data Akun!", "error");
+            if(!p.name || accounts.length === 0) return showToast("Lengkapi Data!", "error");
             products.push(p); saveDB(); location.reload();
         }
 
         function restockP(id) {
             const p = products.find(x => x.id == id);
-            const currentData = p.accounts.join('\n');
-            const newData = prompt("Edit Data Akun (Per-Baris):", currentData);
+            const newData = prompt("Edit Data Akun (1 Per-Baris):", p.accounts.join('\n'));
             if(newData !== null) {
-                p.accounts = newData.split('\n').filter(line => line.trim() !== "");
-                saveDB(); renderAdmin(); renderShop(); showToast("Stok Terupdate");
+                p.accounts = newData.split('\n').filter(l => l.trim() !== "");
+                saveDB(); renderAdmin(); renderShop(); showToast("Restok Berhasil");
             }
         }
 
         function deleteP(id) { if(confirm("Hapus?")){ products = products.filter(x => x.id != id); saveDB(); renderAdmin(); renderShop(); } }
-        function saveDB() { localStorage.setItem('w4ras_smart_db', JSON.stringify(products)); }
+        function saveDB() { localStorage.setItem('w4ras_v14_db', JSON.stringify(products)); }
 
-        // --- SHOP & LOGIC ---
+        // --- SHOP & FILTERS ---
+        function filterCat(cat) {
+            currentFilter = cat;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active-cat'));
+            event.target.classList.add('active-cat');
+            renderShop();
+        }
+
+        function renderCategories() {
+            const cats = ['All', ...new Set(products.map(p => p.category))];
+            document.getElementById('category-bar').innerHTML = cats.map(c => 
+                `<button onclick="filterCat('${c}')" class="cat-btn glass px-6 py-2 rounded-full text-[10px] font-bold uppercase border-white/10 ${currentFilter===c?'active-cat':''}">${c}</button>`
+            ).join('');
+        }
+
+        function renderShop() {
+            const filtered = currentFilter === 'All' ? products : products.filter(p => p.category === currentFilter);
+            document.getElementById('product-list').innerHTML = filtered.map(p => `
+                <div class="glass p-6 rounded-[2.5rem] flex flex-col h-full">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-2xl mb-4">
+                    <h3 class="font-bold text-[10px] text-gray-500 uppercase">${p.category} | ${p.name}</h3>
+                    <p class="text-xl font-black text-emerald-400 mb-2">Rp ${p.price.toLocaleString()}</p>
+                    <p class="text-[9px] text-emerald-500/50 mb-4 font-black">STOK: ${p.accounts.length}</p>
+                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-bold text-[10px] text-white mt-auto">ADD TO CART</button>
+                </div>
+            `).join('');
+            renderCategories();
+        }
+
+        // --- CART & PAYMENT ---
         function addToCart(id) {
             const p = products.find(x => x.id == id);
             if(p.accounts.length <= 0) return showToast("Stok Habis!", "error");
             const ex = cart.find(i => i.id == id);
-            if(ex) { if(ex.qty < p.accounts.length) ex.qty++; else return showToast("Limit Stok!", "error"); }
+            if(ex) { if(ex.qty < p.accounts.length) ex.qty++; else return showToast("Stok Limit!", "error"); }
             else { cart.push({...p, qty: 1}); }
-            updateCartCount(); showToast("Masuk Keranjang");
+            updateCartCount(); showToast("Item Ditambahkan");
         }
 
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.qty, 0); }
@@ -214,14 +248,14 @@
             document.getElementById('cart-items-list').innerHTML = cart.map((i, idx) => {
                 sub += (i.price * i.qty);
                 return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <div><p class="text-[10px] font-bold text-gray-500 uppercase">${i.name}</p><p class="text-emerald-400 font-black">Rp ${(i.price*i.qty).toLocaleString()}</p></div>
+                    <div><p class="font-bold uppercase text-gray-400">${i.name}</p><p class="text-emerald-400 font-black">Rp ${(i.price*i.qty).toLocaleString()}</p></div>
                     <div class="flex items-center gap-3">
                         <button onclick="chgQty(${idx},-1)" class="w-7 h-7 bg-white/10 rounded-lg">-</button>
-                        <span class="font-bold text-sm">${i.qty}</span>
+                        <span class="font-bold">${i.qty}</span>
                         <button onclick="chgQty(${idx},1)" class="w-7 h-7 bg-white/10 rounded-lg">+</button>
                     </div>
                 </div>`;
-            }).join('') || '<p class="text-center text-xs py-4 text-gray-600">Keranjang Kosong</p>';
+            }).join('') || '<p class="text-center py-4 text-gray-600">Keranjang Kosong</p>';
             document.getElementById('cart-subtotal').innerText = `Rp ${sub.toLocaleString()}`;
         }
 
@@ -242,7 +276,8 @@
         async function processOrderToDiscord() {
             const f = document.getElementById('evidence-file').files[0];
             const wb = localStorage.getItem('w4ras_wb');
-            if(!wb || !f) return showToast("Lengkapi Webhook/Bukti!", "error");
+            const wa = localStorage.getItem('w4ras_wa') || "628xxx";
+            if(!wb || !f) return showToast("Lengkapi Webhook & Bukti!", "error");
 
             document.getElementById('upload-section').classList.add('hidden');
             document.getElementById('status-waiting').classList.remove('hidden');
@@ -250,23 +285,25 @@
             const reader = new FileReader();
             reader.readAsDataURL(f);
             reader.onload = async () => {
-                // Ambil Akun Sesuai Quantity & Hapus dari DB
-                let finalAccountText = "";
+                const orderID = "W4R-" + Math.floor(1000 + Math.random() * 9000);
+                let discordText = "";
+                
                 activeOrder.items.forEach(item => {
                     const p = products.find(x => x.id === item.id);
-                    const taken = p.accounts.splice(0, item.qty); // Ambil baris teratas
-                    finalAccountText += `📦 **${item.name} (x${item.qty})**\n🔑 DATA:\n\`\`\`${taken.join('\n')}\`\`\`\n\n`;
+                    const taken = p.accounts.splice(0, item.qty);
+                    discordText += `📦 **${item.name} (x${item.qty})**\n🔑 AKUN:\n\`\`\`${taken.join('\n')}\`\`\`\n\n`;
                 });
 
                 const fd = new FormData();
                 fd.append('payload_json', JSON.stringify({
                     embeds: [{
-                        title: "🟢 W4RAS ORDER SUCCESS", color: 0x10b981,
+                        title: "⚠️ ORDER MASUK - VERIFIKASI SEKARANG", color: 0xfacc15,
                         fields: [
+                            { name: "Order ID", value: `\`${orderID}\``, inline: true },
                             { name: "Total Bayar", value: `**Rp ${activeOrder.total.toLocaleString()}**`, inline: true },
-                            { name: "Detail Akun Terkirim", value: finalAccountText }
+                            { name: "🔒 DATA AKUN (BERIKAN KE USER SETELAH CEK)", value: discordText }
                         ],
-                        image: { url: 'attachment://bukti.png' }, timestamp: new Date()
+                        image: { url: 'attachment://bukti.png' }
                     }]
                 }));
                 fd.append('file', f, 'bukti.png');
@@ -274,38 +311,35 @@
                 try {
                     const res = await fetch(wb, { method: 'POST', body: fd });
                     if(res.ok) {
-                        document.getElementById('account-output').innerText = finalAccountText.replace(/\*\*/g, "").replace(/```/g, "");
-                        saveDB(); closeModal('payment-modal'); openModal('reveal-modal');
+                        saveDB();
+                        document.getElementById('account-output').innerHTML = `
+                            <h2 class="text-2xl font-black text-emerald-400 mb-6 uppercase">Terima Kasih!</h2>
+                            <p class="text-gray-400 text-xs mb-4">Order ID: <span class="text-white">${orderID}</span></p>
+                            <div class="bg-black/40 p-6 rounded-2xl border border-white/5 mb-8 text-[11px] text-gray-300 italic">
+                                Bukti transfer terkirim. Admin akan memverifikasi mutasi. Klik tombol di bawah untuk ambil akun via WA.
+                            </div>
+                            <a href="https://wa.me/${wa}?text=Halo%20Admin%20W4RAS,%20konfirmasi%20Order%20${orderID}" target="_blank" class="block w-full btn-premium py-4 rounded-2xl font-black text-xs text-white">HUBUNGI ADMIN (WA)</a>
+                        `;
+                        closeModal('payment-modal'); openModal('reveal-modal');
                     }
                 } catch(e) { showToast("Error!", "error"); }
             };
         }
 
-        function renderShop() {
-            document.getElementById('product-list').innerHTML = products.map(p => `
-                <div class="glass p-6 rounded-[2.5rem] flex flex-col h-full">
-                    <img src="${p.img}" class="w-full h-40 object-cover rounded-2xl mb-4">
-                    <h3 class="font-bold text-[10px] text-gray-500 uppercase">${p.name}</h3>
-                    <p class="text-lg font-black text-emerald-400 mb-4">Rp ${p.price.toLocaleString()}</p>
-                    <p class="text-[9px] text-emerald-500/50 mb-4 font-bold uppercase">Stok: ${p.accounts.length} Akun</p>
-                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-bold text-[10px] uppercase text-white mt-auto">Beli</button>
-                </div>
-            `).join('');
-        }
-
         function renderAdmin() {
             document.getElementById('admin-table-body').innerHTML = products.map(p => `
-                <tr class="border-b border-white/5">
-                    <td class="p-5 uppercase font-bold text-gray-400 text-[10px]">${p.name}</td>
+                <tr class="border-b border-white/5 text-[10px]">
+                    <td class="p-5 font-bold uppercase text-gray-400">${p.name}</td>
+                    <td class="p-5 uppercase text-emerald-500">${p.category}</td>
                     <td class="p-5 text-center text-emerald-400 font-black">${p.accounts.length}</td>
                     <td class="p-5 text-right space-x-3">
-                        <button onclick="restockP(${p.id})" class="text-emerald-500 font-bold hover:underline">EDIT/RESTOK</button>
+                        <button onclick="restockP(${p.id})" class="text-emerald-500 font-bold hover:underline">RESTOK</button>
                         <button onclick="deleteP(${p.id})" class="text-red-500 font-bold hover:underline">HAPUS</button>
                     </td>
                 </tr>
             `).join('');
         }
-        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "File Terpilih"; }
+        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "Bukti Dipilih"; }
         renderShop();
     </script>
 </body>
