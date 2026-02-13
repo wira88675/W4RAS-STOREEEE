@@ -3,22 +3,26 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | ULTIMATE V16.0</title>
+    <title>W4RAS STORE | V17.5 FINAL</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         body { background: radial-gradient(circle at top right, #062d24, #050505); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
         .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(15px); }
         .btn-premium { background: linear-gradient(135deg, #08b291 0%, #10b981 100%); transition: 0.3s; cursor: pointer; border: none; }
-        .btn-premium:hover { opacity: 0.8; transform: translateY(-2px); shadow: 0 10px 20px rgba(16, 185, 129, 0.3); }
+        .btn-premium:hover { opacity: 0.8; transform: translateY(-2px); box-shadow: 0 5px 15px rgba(16, 185, 129, 0.4); }
         .input-elite { background: rgba(0,0,0,0.4); border: 1px solid rgba(255,255,255,0.1); padding: 12px; border-radius: 12px; outline: none; width: 100%; color: white; font-size: 12px; }
         .modal-blur { backdrop-filter: blur(10px); background: rgba(0,0,0,0.85); display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px; }
         .active-cat { background: #10b981 !important; color: white !important; }
-        #toast-container { position: fixed; bottom: 80px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
-        .toast-card { background: #0a0a0a; border-left: 4px solid #10b981; padding: 12px 20px; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); animation: slideIn 0.3s ease; }
-        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        /* FORCE TAWK TO LEFT BOTTOM */
-        #tawkchat-container { left: 10px !important; right: auto !important; bottom: 10px !important; }
+        
+        /* NOTIFIKASI KIRI BAWAH */
+        #toast-container { position: fixed; bottom: 100px; left: 20px; z-index: 9999; display: flex; flex-direction: column; gap: 8px; }
+        .toast-card { background: #0a0a0a; border-left: 4px solid #10b981; padding: 12px 20px; border-radius: 10px; animation: slideLeft 0.3s ease; box-shadow: 0 10px 30px rgba(0,0,0,0.5); }
+        @keyframes slideLeft { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+
+        /* TAWK TO LEFT OVERRIDE */
+        #tawkchat-container { left: 20px !important; right: auto !important; bottom: 20px !important; }
+        .scrollbar-hide::-webkit-scrollbar { display: none; }
     </style>
 </head>
 <body class="flex flex-col">
@@ -28,7 +32,7 @@
         <div class="text-2xl font-black italic tracking-tighter cursor-pointer" onclick="location.reload()">
             <span class="text-emerald-400">W4RAS</span>STORE
         </div>
-        <div class="flex items-center gap-5">
+        <div class="flex items-center gap-4">
             <div class="relative cursor-pointer" onclick="openModal('cart-modal')">
                 <span class="text-xl">🛒</span>
                 <span id="cart-count" class="absolute -top-2 -right-2 bg-emerald-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
@@ -37,46 +41,44 @@
     </nav>
 
     <div id="shop-view" class="max-w-7xl mx-auto px-6 py-8 w-full">
-        <div class="p-10 mb-8 rounded-[3rem] border border-emerald-500/20 bg-emerald-500/5 relative overflow-hidden">
-            <div class="relative z-10">
-                <h1 class="text-4xl font-black mb-1 uppercase italic tracking-tighter">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
-                <p class="text-gray-400 text-[10px] font-bold uppercase tracking-[0.3em] opacity-60">Anti-Bug System & Live Support</p>
-            </div>
-            <div class="absolute right-10 top-1/2 -translate-y-1/2 hidden md:block">
-                <div class="glass px-6 py-2 rounded-full border-emerald-500/30 text-[10px] font-bold text-emerald-400 animate-pulse">STATUS: ONLINE</div>
-            </div>
+        <div class="p-8 mb-6 rounded-[2.5rem] border border-emerald-500/20 bg-emerald-500/5 relative">
+            <h1 class="text-3xl font-black italic">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
+            <marquee class="text-[10px] text-emerald-400/50 font-bold tracking-widest mt-2">SELAMAT DATANG DI W4RAS STORE - PRODUK DIGITAL TERBAIK & TERMURAH SE-INDONESIA - STATUS: ONLINE</marquee>
         </div>
 
-        <div id="category-bar" class="flex gap-3 mb-8 overflow-x-auto pb-2 scrollbar-hide"></div>
+        <div class="flex flex-col md:flex-row gap-4 mb-8">
+            <input type="text" id="search-input" oninput="renderShop()" placeholder="Cari produk..." class="input-elite md:w-64">
+            <div id="category-bar" class="flex gap-2 overflow-x-auto scrollbar-hide"></div>
+        </div>
+
         <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
 
     <main id="admin-view" class="hidden max-w-7xl mx-auto p-6 w-full">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-black italic text-emerald-400 uppercase">Master Control</h2>
-            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-5 py-2 rounded-xl text-[10px] font-black uppercase">Logout</button>
+            <h2 class="text-2xl font-black text-emerald-400 italic">MASTER CONTROL</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-6 py-2 rounded-xl text-[10px] font-bold">LOGOUT</button>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="glass p-6 rounded-[2rem] space-y-4 h-fit">
-                <p class="text-[10px] font-black text-emerald-400 uppercase mb-2">Kelola Produk</p>
+                <p class="text-[10px] font-bold text-emerald-400 uppercase">Input Produk Baru</p>
                 <input type="text" id="p-name" placeholder="Nama Produk" class="input-elite">
-                <input type="text" id="p-cat" placeholder="Kategori (Netflix, Steam, dll)" class="input-elite">
-                <input type="number" id="p-price" placeholder="Harga (Angka saja)" class="input-elite">
+                <input type="text" id="p-cat" placeholder="Kategori" class="input-elite">
+                <input type="number" id="p-price" placeholder="Harga" class="input-elite">
                 <textarea id="p-data" placeholder="Stok Akun (User:Pass per baris)" class="input-elite h-32"></textarea>
-                <input type="text" id="p-img" placeholder="Link Gambar/Thumbnail" class="input-elite">
-                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs uppercase">Simpan Produk</button>
+                <input type="text" id="p-img" placeholder="URL Gambar Produk" class="input-elite">
+                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs">SIMPAN PRODUK</button>
                 <hr class="opacity-10 my-4">
-                <p class="text-[10px] font-black text-orange-400 uppercase">Pengaturan Akses</p>
-                <input type="text" id="new-user" placeholder="User Admin Baru" class="input-elite">
-                <input type="password" id="new-pass" placeholder="Password Admin Baru" class="input-elite">
-                <button onclick="updateAuth()" class="w-full bg-orange-500/20 text-orange-400 py-3 rounded-xl font-black text-[10px] border border-orange-500/30 uppercase">Update Login</button>
-                <hr class="opacity-10 my-4 text-white">
-                <input type="text" id="webhook-url" onchange="saveConfig()" placeholder="Discord Webhook URL" class="input-elite">
+                <p class="text-[10px] font-bold text-orange-400 uppercase">Ganti Login Admin</p>
+                <input type="text" id="new-user" placeholder="Username Baru" class="input-elite">
+                <input type="password" id="new-pass" placeholder="Password Baru" class="input-elite">
+                <button onclick="updateAuth()" class="w-full bg-orange-500/20 text-orange-400 py-3 rounded-xl font-bold text-[10px] uppercase">Update Akses</button>
+                <input type="text" id="webhook-url" onchange="saveConfig()" placeholder="Discord Webhook URL" class="input-elite mt-4">
             </div>
             <div class="lg:col-span-2 glass rounded-[2rem] overflow-hidden">
                 <table class="w-full text-[11px] text-left">
-                    <thead class="bg-white/5 uppercase text-emerald-400">
-                        <tr><th class="p-5">Produk</th><th class="p-5">Kategori</th><th class="p-5 text-center">Stok</th><th class="p-5 text-right">Aksi</th></tr>
+                    <thead class="bg-white/5 text-emerald-400 uppercase">
+                        <tr><th class="p-5">Produk</th><th class="p-5">Stok</th><th class="p-5 text-right">Aksi</th></tr>
                     </thead>
                     <tbody id="admin-table-body"></tbody>
                 </table>
@@ -86,64 +88,64 @@
 
     <div id="cart-modal" class="modal-blur">
         <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-white/10">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Keranjang</h2>
-            <div id="cart-items-list" class="space-y-3 max-h-60 overflow-y-auto mb-6 pr-2"></div>
+            <h2 class="text-xl font-black text-emerald-400 mb-6 italic">KERANJANG</h2>
+            <div id="cart-items-list" class="space-y-3 mb-6 max-h-60 overflow-y-auto pr-2"></div>
             <div class="flex justify-between font-black text-xl mb-6 border-t border-white/10 pt-4">
-                <span>Total:</span><span id="cart-subtotal" class="text-emerald-400">Rp 0</span>
+                <span>Total:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span>
             </div>
             <div class="flex gap-3">
-                <button onclick="closeModal('cart-modal')" class="flex-1 py-4 glass rounded-2xl font-bold text-[10px] uppercase">Tutup</button>
-                <button onclick="checkout()" class="flex-[2] btn-premium py-4 rounded-2xl font-black text-[10px] uppercase">Checkout</button>
+                <button onclick="closeModal('cart-modal')" class="flex-1 py-4 glass rounded-2xl font-bold text-[10px]">BATAL</button>
+                <button onclick="checkout()" class="flex-[2] btn-premium py-4 rounded-2xl font-black text-[10px]">CHECKOUT</button>
             </div>
         </div>
     </div>
 
     <div id="payment-modal" class="modal-blur">
         <div class="glass p-8 rounded-[3rem] max-w-sm w-full text-center border-white/10">
-            <h2 class="text-lg font-black mb-6 text-emerald-400 italic uppercase">Konfirmasi Bayar</h2>
-            <div class="bg-white p-2 rounded-2xl mb-4 inline-block overflow-hidden">
-                <img src="https://cdn.discordapp.com/attachments/1471440257814888563/1471866143408001205/Untitled_design.png" class="w-full h-auto max-w-[180px]">
-            </div>
-            <div class="text-3xl font-black text-emerald-400 mb-6" id="total-tagihan">Rp 0</div>
-            <div id="upload-section" class="space-y-4">
-                <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()">
-                <label for="evidence-file" id="file-label" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400 uppercase">Upload Bukti Transfer</label>
-                <button onclick="sendToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase">Kirim Laporan</button>
-            </div>
-            <div id="status-waiting" class="hidden py-4 text-emerald-400 font-black animate-pulse text-[10px]">MENGIRIM...</div>
+            <h2 class="text-lg font-black text-emerald-400 mb-4">QRIS PAYMENT</h2>
+            <img src="https://cdn.discordapp.com/attachments/1471440257814888563/1471866143408001205/Untitled_design.png" class="w-full max-w-[200px] mx-auto mb-4 bg-white p-2 rounded-xl">
+            <div class="text-2xl font-black text-emerald-400 mb-6" id="total-tagihan">Rp 0</div>
+            <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()">
+            <label for="evidence-file" id="file-label" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400 mb-4 uppercase">Upload Bukti Transfer</label>
+            <button onclick="sendToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs">KIRIM BUKTI</button>
         </div>
     </div>
 
     <div id="reveal-modal" class="modal-blur">
         <div class="glass p-10 rounded-[3rem] max-w-md w-full text-center border-emerald-500/30">
-            <div class="w-16 h-16 bg-emerald-500/20 rounded-full flex items-center justify-center mx-auto mb-6 text-emerald-500 text-2xl">✔</div>
-            <h2 class="text-2xl font-black text-emerald-400 mb-4 uppercase">BERHASIL!</h2>
-            <p id="final-status-msg" class="text-[11px] text-gray-400 mb-8 px-4"></p>
-            <button onclick="Tawk_API.maximize()" class="w-full btn-premium py-4 rounded-2xl font-black text-[10px] uppercase mb-3">Ambil Akun via Live Chat</button>
-            <button onclick="location.reload()" class="w-full py-4 glass border-white/10 rounded-2xl font-black text-[10px] uppercase">Kembali Ke Toko</button>
+            <h2 class="text-2xl font-black text-emerald-400 mb-4">LAPORAN DIKIRIM!</h2>
+            <p id="final-status-msg" class="text-[11px] text-gray-400 mb-8"></p>
+            <button onclick="Tawk_API.maximize()" class="w-full btn-premium py-4 rounded-2xl font-black text-[10px] mb-3">HUBUNGI ADMIN (LIVE CHAT)</button>
+            <button onclick="location.reload()" class="w-full py-4 glass border-white/10 rounded-2xl font-bold text-[10px]">SELESAI</button>
         </div>
     </div>
 
     <div id="login-modal" class="modal-blur">
-        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full border-white/10 text-center">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 uppercase">Admin Access</h2>
-            <div class="space-y-4">
-                <input type="text" id="adm-user" placeholder="Username" class="input-elite text-center">
-                <input type="password" id="adm-pass" placeholder="Password" class="input-elite text-center">
-                <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold uppercase text-xs">Verify</button>
-            </div>
+        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center border-white/10">
+            <h2 class="text-xl font-black text-emerald-400 mb-6 uppercase">Admin Access</h2>
+            <input type="text" id="adm-user" placeholder="Username" class="input-elite mb-4 text-center">
+            <input type="password" id="adm-pass" placeholder="Password" class="input-elite mb-6 text-center">
+            <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-xs">VERIFY</button>
         </div>
     </div>
 
     <footer class="mt-auto py-10 text-center">
-        <p class="opacity-20 text-[9px] font-black cursor-pointer tracking-[0.5em]" id="secret-trigger">W4RAS STORE V16.0 FINAL</p>
+        <p class="opacity-20 text-[9px] font-black cursor-pointer tracking-[0.5em]" id="secret-trigger">W4RAS STORE V17.5 FINAL</p>
     </footer>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('w4ras_db_v16')) || [];
-        let cart = []; let activeOrder = null;
+        let products = JSON.parse(localStorage.getItem('w4ras_db_final')) || [];
+        let cart = []; let currentCat = 'All'; let activeOrder = null;
 
-        // AUTH & ADMIN
+        function showToast(m, t="success") {
+            const c = document.getElementById('toast-container');
+            const e = document.createElement('div');
+            e.className = `toast-card ${t==='error'?'border-red-500':'border-emerald-500'}`;
+            e.innerHTML = `<p class="text-[10px] font-black uppercase text-white">${m}</p>`;
+            c.appendChild(e); setTimeout(() => e.remove(), 4000);
+        }
+
+        // --- AUTH & ADMIN ---
         function processLogin() {
             const u = localStorage.getItem('w4ras_u') || "admin";
             const p = localStorage.getItem('w4ras_p') || "admin123";
@@ -156,27 +158,26 @@
         }
 
         function updateAuth() {
-            const nu = document.getElementById('new-user').value;
-            const np = document.getElementById('new-pass').value;
-            if(nu && np) {
-                localStorage.setItem('w4ras_u', nu); localStorage.setItem('w4ras_p', np);
-                showToast("Login Admin Berhasil Diubah!"); setTimeout(() => location.reload(), 1000);
-            }
+            const nu = document.getElementById('new-user').value; const np = document.getElementById('new-pass').value;
+            if(nu && np) { localStorage.setItem('w4ras_u', nu); localStorage.setItem('w4ras_p', np); showToast("Akses Admin Diperbarui!"); setTimeout(()=>location.reload(), 1000); }
         }
 
-        // SHOP LOGIC
+        // --- SHOP SYSTEM ---
         function renderShop() {
             const cats = ['All', ...new Set(products.map(p => p.category))];
             document.getElementById('category-bar').innerHTML = cats.map(c => 
-                `<button onclick="filterCat('${c}')" class="px-6 py-2 rounded-full text-[9px] font-black uppercase glass border-white/10 text-white active:bg-emerald-500">${c}</button>`
+                `<button onclick="filterCat('${c}')" class="px-5 py-2 rounded-full text-[9px] font-bold uppercase glass border-white/10 ${currentCat===c?'active-cat':''}">${c}</button>`
             ).join('');
-            
-            document.getElementById('product-list').innerHTML = products.map(p => `
-                <div class="glass p-5 rounded-[2.5rem] flex flex-col h-full border-white/5">
-                    <img src="${p.img}" class="w-full h-40 object-cover rounded-2xl mb-4">
-                    <h3 class="font-black text-white text-sm mb-1 uppercase">${p.name}</h3>
+
+            const search = document.getElementById('search-input').value.toLowerCase();
+            const filtered = products.filter(p => (currentCat === 'All' || p.category === currentCat) && p.name.toLowerCase().includes(search));
+
+            document.getElementById('product-list').innerHTML = filtered.map(p => `
+                <div class="glass p-5 rounded-[2rem] flex flex-col h-full border-white/5">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-4">
+                    <h3 class="font-black text-sm mb-1 uppercase">${p.name}</h3>
                     <p class="text-lg font-black text-emerald-400 mb-4">Rp ${p.price.toLocaleString()}</p>
-                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-4 rounded-xl font-black text-[10px] text-white mt-auto">BELI SEKARANG</button>
+                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-black text-[10px] uppercase">Beli</button>
                 </div>
             `).join('');
         }
@@ -185,12 +186,13 @@
             const p = products.find(x => x.id == id);
             if(p.accounts.length <= 0) return showToast("Stok Habis!", "error");
             const ex = cart.find(i => i.id == id);
-            if(ex) { if(ex.qty < p.accounts.length) ex.qty++; else return showToast("Maksimal Stok!", "error"); }
+            if(ex) { if(ex.qty < p.accounts.length) ex.qty++; else return showToast("Stok Terbatas!", "error"); }
             else { cart.push({...p, qty: 1}); }
-            updateCartCount(); showToast("Berhasil Ditambah");
+            updateCartCount(); showToast("Produk Ditambahkan");
         }
 
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.qty, 0); }
+        function filterCat(c) { currentCat = c; renderShop(); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='cart-modal') renderCart(); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
@@ -198,15 +200,15 @@
             let sub = 0;
             document.getElementById('cart-items-list').innerHTML = cart.map((i, idx) => {
                 sub += (i.price * i.qty);
-                return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10 text-white">
+                return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/10">
                     <div><p class="font-black text-[11px]">${i.name}</p><p class="text-emerald-400 font-bold text-[10px]">Rp ${(i.price*i.qty).toLocaleString()}</p></div>
                     <div class="flex items-center gap-3">
-                        <button onclick="chgQty(${idx},-1)" class="w-6 h-6 bg-white/10 rounded-md">-</button>
+                        <button onclick="chgQty(${idx},-1)" class="w-6 h-6 bg-white/10 rounded-md font-bold">-</button>
                         <span class="font-bold text-xs">${i.qty}</span>
-                        <button onclick="chgQty(${idx},1)" class="w-6 h-6 bg-white/10 rounded-md">+</button>
+                        <button onclick="chgQty(${idx},1)" class="w-6 h-6 bg-white/10 rounded-md font-bold">+</button>
                     </div>
                 </div>`;
-            }).join('') || '<p class="text-center py-4 text-gray-500 text-[10px]">KERANJANG KOSONG</p>';
+            }).join('') || '<p class="text-center text-gray-500 text-[10px]">KERANJANG KOSONG</p>';
             document.getElementById('cart-subtotal').innerText = `Rp ${sub.toLocaleString()}`;
         }
 
@@ -220,75 +222,62 @@
         function checkout() { if(cart.length>0) { activeOrder = {items:[...cart], total: cart.reduce((a,b)=>a+(b.price*b.qty), 0)}; document.getElementById('total-tagihan').innerText=`Rp ${activeOrder.total.toLocaleString()}`; closeModal('cart-modal'); openModal('payment-modal'); } }
 
         async function sendToDiscord() {
-            const f = document.getElementById('evidence-file').files[0];
-            const wb = localStorage.getItem('w4ras_wb');
-            if(!wb || !f) return showToast("Pilih Bukti & Webhook!", "error");
-            document.getElementById('upload-section').classList.add('hidden');
-            document.getElementById('status-waiting').classList.remove('hidden');
+            const f = document.getElementById('evidence-file').files[0]; const wb = localStorage.getItem('w4ras_wb');
+            if(!wb || !f) return showToast("Lengkapi Bukti & Webhook!", "error");
+            showToast("Mengirim Laporan...");
             const reader = new FileReader(); reader.readAsDataURL(f);
             reader.onload = async () => {
-                const oid = "W4R-" + Math.floor(1000 + Math.random() * 9000);
-                let accData = "";
+                const oid = "W4R-" + Math.floor(1000 + Math.random() * 9000); let accData = "";
                 activeOrder.items.forEach(item => {
                     const p = products.find(x => x.id === item.id);
                     const taken = p.accounts.splice(0, item.qty);
                     accData += `📦 **${item.name}** (x${item.qty})\n\`\`\`${taken.join('\n')}\`\`\`\n`;
                 });
                 const fd = new FormData();
-                fd.append('payload_json', JSON.stringify({ embeds: [{ title: "🟢 PESANAN MASUK", color: 0x10b981, fields: [{name:"Order ID", value:`\`${oid}\``, inline:true}, {name:"Total", value:`**Rp ${activeOrder.total.toLocaleString()}**`, inline:true}, {name:"🔑 DATA AKUN", value:accData}], timestamp: new Date() }] }));
+                fd.append('payload_json', JSON.stringify({ embeds: [{ title: "🟢 PESANAN BARU", color: 0x10b981, fields: [{name:"Order ID", value:`\`${oid}\``, inline:true}, {name:"Total", value:`**Rp ${activeOrder.total.toLocaleString()}**`, inline:true}, {name:"🔑 DATA AKUN", value:accData}], timestamp: new Date() }] }));
                 fd.append('file', f, 'bukti.png');
                 try {
                     const res = await fetch(wb, { method: 'POST', body: fd });
-                    if(res.ok) {
-                        localStorage.setItem('w4ras_db_v16', JSON.stringify(products));
-                        document.getElementById('final-status-msg').innerHTML = `Laporan <b>${oid}</b> terkirim. Hubungi admin via Live Chat untuk ambil akun Anda.`;
-                        closeModal('payment-modal'); openModal('reveal-modal');
-                    }
-                } catch(e) { showToast("Gagal Kirim!", "error"); }
+                    if(res.ok) { localStorage.setItem('w4ras_db_final', JSON.stringify(products)); document.getElementById('final-status-msg').innerHTML = `Laporan ID <b>${oid}</b> berhasil dikirim. Hubungi CS untuk klaim akun!`; closeModal('payment-modal'); openModal('reveal-modal'); }
+                } catch(e) { showToast("Gagal Kirim ke Discord!", "error"); }
             };
         }
 
-        // ADMIN CRUD
+        // --- CRUD ADMIN ---
         function handleSaveProduct() {
             const data = document.getElementById('p-data').value.trim().split('\n').filter(l => l.trim() !== "");
             const p = { id: Date.now(), name: document.getElementById('p-name').value, category: document.getElementById('p-cat').value || "All", price: Number(document.getElementById('p-price').value), accounts: data, img: document.getElementById('p-img').value || "https://via.placeholder.com/300" };
-            if(!p.name || data.length === 0) return showToast("Isi Lengkap!", "error");
-            products.push(p); localStorage.setItem('w4ras_db_v16', JSON.stringify(products)); location.reload();
+            if(!p.name || data.length === 0) return showToast("Data Tidak Lengkap!", "error");
+            products.push(p); localStorage.setItem('w4ras_db_final', JSON.stringify(products)); location.reload();
         }
 
         function renderAdmin() {
             document.getElementById('admin-table-body').innerHTML = products.map(p => `
                 <tr class="border-b border-white/5">
-                    <td class="p-5 font-bold uppercase text-gray-400">${p.name}</td>
-                    <td class="p-5 text-emerald-500 font-black">${p.category}</td>
-                    <td class="p-5 text-center font-bold">${p.accounts.length}</td>
-                    <td class="p-5 text-right space-x-2">
-                        <button onclick="restockP(${p.id})" class="text-emerald-500 font-bold">STOK</button>
-                        <button onclick="deleteP(${p.id})" class="text-red-500 font-bold">HAPUS</button>
-                    </td>
+                    <td class="p-5 font-bold uppercase text-[10px]">${p.name}</td>
+                    <td class="p-5 text-center font-bold text-emerald-400">${p.accounts.length}</td>
+                    <td class="p-5 text-right space-x-2"><button onclick="restockP(${p.id})" class="text-emerald-500 text-[10px] font-bold">STOK</button><button onclick="deleteP(${p.id})" class="text-red-500 text-[10px] font-bold">HAPUS</button></td>
                 </tr>`).join('');
         }
 
-        function deleteP(id) { products = products.filter(x => x.id != id); localStorage.setItem('w4ras_db_v16', JSON.stringify(products)); renderAdmin(); renderShop(); }
-        function restockP(id) { const p = products.find(x => x.id == id); const n = prompt("Data Baru (1 per baris):", p.accounts.join('\n')); if(n) { p.accounts = n.split('\n').filter(l => l.trim() !== ""); localStorage.setItem('w4ras_db_v16', JSON.stringify(products)); renderAdmin(); } }
+        function deleteP(id) { products = products.filter(x => x.id != id); localStorage.setItem('w4ras_db_final', JSON.stringify(products)); renderAdmin(); }
+        function restockP(id) { const p = products.find(x => x.id == id); const n = prompt("Data Baru (per baris):", p.accounts.join('\n')); if(n) { p.accounts = n.split('\n').filter(l => l.trim() !== ""); localStorage.setItem('w4ras_db_final', JSON.stringify(products)); renderAdmin(); } }
         function saveConfig() { localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value); showToast("Webhook Disimpan"); }
-        function showToast(m, t="success") { const c = document.getElementById('toast-container'); const e = document.createElement('div'); e.className = `toast-card ${t==='error'?'border-red-500':'border-emerald-500'}`; e.innerHTML = `<p class="text-[10px] font-black uppercase text-white">${m}</p>`; c.appendChild(e); setTimeout(() => e.remove(), 3000); }
-        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "BUKTI TERPILIH"; }
+        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "BUKTI DIPILIH"; }
 
-        let cc = 0; let cl = 0;
-        document.getElementById('secret-trigger').addEventListener('click', () => { if(Date.now() - cl < 2000) cc++; else cc = 1; cl = Date.now(); if(cc >= 5) openModal('login-modal'); });
+        let sc = 0; let sl = 0;
+        document.getElementById('secret-trigger').addEventListener('click', () => { if(Date.now()-sl < 2000) sc++; else sc=1; sl=Date.now(); if(sc>=5) openModal('login-modal'); });
         renderShop();
     </script>
 
     <script type="text/javascript">
-    var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+    var Tawk_API=Tawk_API||{};
     (function(){
     var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
     s1.async=true; s1.src='https://embed.tawk.to/698f2d257e93ec1c34640c19/default'; 
     s1.charset='UTF-8'; s1.setAttribute('crossorigin','*');
     s0.parentNode.insertBefore(s1,s0);
     })();
-
     Tawk_API.onLoad = function(){
         Tawk_API.setAttributes({ 'x-offset': 20, 'y-offset': 20 }, function(error){});
         const style = document.createElement('style');
