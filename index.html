@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | Ontop  </title>
+    <title>W4RAS STORE | V20.0 FINAL FIX</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -22,8 +22,8 @@
         /* TAWK TO LEFT OVERRIDE */
         #tawkchat-container { left: 20px !important; right: auto !important; bottom: 20px !important; }
 
-        /* UKURAN QRIS 250x250 */
-        .qris-frame { width: 250px; height: 250px; object-fit: cover; margin: 0 auto; background: white; border-radius: 15px; padding: 5px; border: 2px solid #10b981; }
+        /* UKURAN QRIS FIX 250x250 */
+        .qris-frame { width: 250px; height: 250px; object-fit: contain; margin: 0 auto; background: white; border-radius: 15px; padding: 10px; border: 2px solid #10b981; }
     </style>
 </head>
 <body class="flex flex-col">
@@ -42,7 +42,7 @@
     <div id="shop-view" class="max-w-7xl mx-auto px-6 py-8 w-full">
         <div class="p-8 mb-6 rounded-[2.5rem] border border-emerald-500/20 bg-emerald-500/5">
             <h1 class="text-3xl font-black italic uppercase">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
-            <marquee class="text-[10px] text-emerald-400/50 font-bold mt-2">REKAP V19.0: QRIS 250x250 AKTIF - CS & NOTIF KIRI BAWAH - ADMIN PANEL READY</marquee>
+            <marquee class="text-[10px] text-emerald-400/50 font-bold mt-2">V20.0: QRIS 250x250 FIXED - SEMUA FITUR REKAP AKTIF - CS KIRI BAWAH</marquee>
         </div>
 
         <div class="flex flex-col md:flex-row gap-4 mb-8">
@@ -54,27 +54,27 @@
 
     <main id="admin-view" class="hidden max-w-7xl mx-auto p-6 w-full">
         <div class="flex justify-between items-center mb-8">
-            <h2 class="text-2xl font-black text-emerald-400 italic">ADMIN CONTROL</h2>
-            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-6 py-2 rounded-xl text-[10px] font-bold">LOGOUT</button>
+            <h2 class="text-2xl font-black text-emerald-400 italic uppercase">Admin Control Panel</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-6 py-2 rounded-xl text-[10px] font-bold uppercase">Logout</button>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
             <div class="glass p-6 rounded-[2rem] space-y-4">
                 <input type="text" id="p-name" placeholder="Nama Produk" class="input-elite">
                 <input type="text" id="p-cat" placeholder="Kategori" class="input-elite">
                 <input type="number" id="p-price" placeholder="Harga" class="input-elite">
-                <textarea id="p-data" placeholder="Stok Akun (User:Pass per baris)" class="input-elite h-32"></textarea>
+                <textarea id="p-data" placeholder="Data Akun (User:Pass per baris)" class="input-elite h-32"></textarea>
                 <input type="text" id="p-img" placeholder="Link Gambar Produk" class="input-elite">
                 <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs uppercase">Simpan Produk</button>
                 <hr class="opacity-10">
-                <p class="text-[10px] font-bold text-orange-400 uppercase">Akses Login</p>
+                <p class="text-[10px] font-bold text-orange-400 uppercase">Ganti Login Admin</p>
                 <input type="text" id="new-user" placeholder="User Baru" class="input-elite">
                 <input type="password" id="new-pass" placeholder="Pass Baru" class="input-elite">
-                <button onclick="updateAuth()" class="w-full bg-orange-500/20 text-orange-400 py-3 rounded-xl font-bold text-[10px]">UPDATE ADMIN</button>
+                <button onclick="updateAuth()" class="w-full bg-orange-500/20 text-orange-400 py-3 rounded-xl font-bold text-[10px]">GANTI AKSES</button>
                 <input type="text" id="webhook-url" onchange="saveConfig()" placeholder="Discord Webhook URL" class="input-elite mt-2">
             </div>
             <div class="lg:col-span-2 glass rounded-[2rem] overflow-hidden">
                 <table class="w-full text-[11px] text-left">
-                    <thead class="bg-white/5 text-emerald-400 uppercase">
+                    <thead class="bg-white/5 text-emerald-400 uppercase font-black">
                         <tr><th class="p-5">Produk</th><th class="p-5">Stok</th><th class="p-5 text-right">Aksi</th></tr>
                     </thead>
                     <tbody id="admin-table-body"></tbody>
@@ -85,39 +85,39 @@
 
     <div id="payment-modal" class="modal-blur">
         <div class="glass p-8 rounded-[3rem] max-w-sm w-full text-center border-white/10">
-            <h2 class="text-lg font-black text-emerald-400 mb-4 uppercase italic">QRIS Payment</h2>
+            <h2 class="text-lg font-black text-emerald-400 mb-4 uppercase italic">Selesaikan Pembayaran</h2>
             <img src="https://files.catbox.moe/g2unv4.png" class="qris-frame mb-4" alt="QRIS W4RAS">
             <div class="text-3xl font-black text-emerald-400 mb-6" id="total-tagihan">Rp 0</div>
             <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()">
             <label for="evidence-file" id="file-label" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400 mb-4 uppercase">Upload Bukti Transfer</label>
-            <button onclick="sendToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase">Kirim Bukti Ke Admin</button>
-            <button onclick="closeModal('payment-modal')" class="text-[10px] text-gray-500 mt-4 uppercase font-bold">Kembali</button>
+            <button onclick="sendToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase">Konfirmasi Pembayaran</button>
+            <button onclick="closeModal('payment-modal')" class="text-[10px] text-gray-500 mt-4 uppercase font-bold">Batalkan</button>
         </div>
     </div>
 
     <div id="cart-modal" class="modal-blur">
-        <div class="glass p-8 rounded-[2.5rem] max-w-md w-full">
-            <h2 class="text-xl font-black text-emerald-400 mb-6 uppercase">Keranjang Belanja</h2>
+        <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-white/10">
+            <h2 class="text-xl font-black text-emerald-400 mb-6 uppercase italic">Item Keranjang</h2>
             <div id="cart-items-list" class="space-y-3 mb-6"></div>
             <div class="flex justify-between font-black text-xl mb-6 pt-4 border-t border-white/10">
                 <span>Total:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span>
             </div>
-            <button onclick="checkout()" class="w-full btn-premium py-4 rounded-2xl font-black text-[10px] uppercase">Lanjut Bayar</button>
+            <button onclick="checkout()" class="w-full btn-premium py-4 rounded-2xl font-black text-[10px] uppercase">Checkout</button>
             <button onclick="closeModal('cart-modal')" class="w-full mt-2 text-[10px] text-gray-500 uppercase font-bold">Tutup</button>
         </div>
     </div>
 
     <div id="login-modal" class="modal-blur">
-        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center">
-            <h2 class="text-xl font-black text-emerald-400 mb-6 uppercase">Verify Admin</h2>
+        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center border-white/10">
+            <h2 class="text-xl font-black text-emerald-400 mb-6 uppercase">Admin Access</h2>
             <input type="text" id="adm-user" placeholder="Username" class="input-elite mb-4 text-center">
             <input type="password" id="adm-pass" placeholder="Password" class="input-elite mb-6 text-center">
-            <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-xs uppercase">Log In</button>
+            <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-xs uppercase">Verify</button>
         </div>
     </div>
 
     <footer class="mt-auto py-10 text-center">
-        <p class="opacity-20 text-[9px] font-black cursor-pointer tracking-[0.5em]" id="secret-trigger">W4RAS STORE V19.0 FINAL</p>
+        <p class="opacity-20 text-[9px] font-black cursor-pointer tracking-[0.5em]" id="secret-trigger">W4RAS STORE V20.0</p>
     </footer>
 
     <script>
@@ -143,7 +143,7 @@
 
         function updateAuth() {
             const nu = document.getElementById('new-user').value; const np = document.getElementById('new-pass').value;
-            if(nu && np) { localStorage.setItem('w4ras_u', nu); localStorage.setItem('w4ras_p', np); showToast("Login Updated!"); setTimeout(()=>location.reload(), 1000); }
+            if(nu && np) { localStorage.setItem('w4ras_u', nu); localStorage.setItem('w4ras_p', np); showToast("Admin Updated!"); setTimeout(()=>location.reload(), 1000); }
         }
 
         function renderShop() {
@@ -160,7 +160,7 @@
                     <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-4">
                     <h3 class="font-black text-sm mb-1 uppercase">${p.name}</h3>
                     <p class="text-lg font-black text-emerald-400 mb-4">Rp ${p.price.toLocaleString()}</p>
-                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-black text-[10px] uppercase">Beli Sekarang</button>
+                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-black text-[10px] uppercase">Tambah</button>
                 </div>
             `).join('');
         }
@@ -168,7 +168,7 @@
         function addToCart(id) {
             const p = products.find(x => x.id == id);
             if(p.accounts.length <= 0) return showToast("Stok Kosong!", "error");
-            cart.push({...p, qty: 1}); updateCartCount(); showToast("Berhasil Masuk Keranjang");
+            cart.push({...p}); updateCartCount(); showToast("Produk Ditambahkan");
         }
 
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.length; }
@@ -192,7 +192,7 @@
 
         async function sendToDiscord() {
             const f = document.getElementById('evidence-file').files[0]; const wb = localStorage.getItem('w4ras_wb');
-            if(!wb || !f) return showToast("Pilih Bukti & Setting Webhook!", "error");
+            if(!wb || !f) return showToast("Lengkapi Bukti Transfer!", "error");
             const reader = new FileReader(); reader.readAsDataURL(f);
             reader.onload = async () => {
                 const oid = "W4R-" + Math.floor(Math.random()*9000); let accData = "";
@@ -205,7 +205,7 @@
                 fd.append('payload_json', JSON.stringify({ embeds: [{ title: "🟢 PESANAN BARU", color: 0x10b981, fields: [{name:"Order ID", value:`\`${oid}\``}, {name:"🔑 DATA AKUN", value:accData}] }] }));
                 fd.append('file', f, 'bukti.png');
                 await fetch(wb, { method: 'POST', body: fd });
-                localStorage.setItem('w4ras_db_final', JSON.stringify(products)); showToast("Bukti Terkirim!"); location.reload();
+                localStorage.setItem('w4ras_db_final', JSON.stringify(products)); showToast("Konfirmasi Berhasil!"); location.reload();
             };
         }
 
@@ -225,11 +225,11 @@
         }
 
         function deleteP(id) { products = products.filter(x => x.id != id); localStorage.setItem('w4ras_db_final', JSON.stringify(products)); renderAdmin(); }
-        function saveConfig() { localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value); showToast("Webhook Saved!"); }
+        function saveConfig() { localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value); showToast("Webhook Disimpan!"); }
         function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "BUKTI DIPILIH"; }
 
         let sc = 0;
-        document.getElementById('secret-trigger').addEventListener('click', () => { sc++; if(sc>=5) openModal('login-modal'); });
+        document.getElementById('secret-trigger').aadddEventListener('click', () => { sc++; if(sc>=5) openModal('login-modal'); });
         renderShop();
     </script>
 
