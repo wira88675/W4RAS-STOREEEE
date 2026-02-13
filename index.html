@@ -3,233 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEAR STORE | Emerald Automation</title>
+    <title>GEAR STORE | Secure Automation</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@3/dist/email.min.js"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary-glow: #06b6d4; --secondary-glow: #10b981; }
-        body { background: radial-gradient(circle at top right, #06262d, #050505); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; }
-        .glass-nav { background: rgba(10, 20, 20, 0.7); backdrop-filter: blur(20px); border-bottom: 1px solid rgba(6, 182, 212, 0.2); }
-        .glass-card { background: rgba(20, 30, 30, 0.4); border: 1px solid rgba(6, 182, 212, 0.1); border-radius: 1.5rem; transition: 0.4s; overflow: hidden; }
-        .btn-luxury { background: linear-gradient(135deg, #0891b2 0%, #10b981 100%); transition: 0.3s; }
-        .btn-luxury:hover { box-shadow: 0 0 25px rgba(6, 182, 212, 0.5); filter: brightness(1.1); }
-        .admin-input { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(6, 182, 212, 0.2); padding: 14px; border-radius: 14px; outline: none; width: 100%; color: white; }
-        .qty-input { background: transparent; border: none; text-align: center; width: 40px; font-weight: 800; color: #22d3ee; }
-        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
-        .toast-animate { animation: slideIn 0.4s ease-out forwards; }
+        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
+        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
+        .btn-emerald { background: linear-gradient(135deg, #06b6d4, #10b981); }
+        .loader { border-top-color: #10b981; animation: spinner 1.5s linear infinite; }
+        @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body>
+<body class="p-6">
 
-    <div id="toast-container" class="fixed bottom-6 left-6 z-[100] flex flex-col gap-3 w-72"></div>
-
-    <nav class="glass-nav sticky top-0 z-50 p-5">
-        <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black italic tracking-widest cursor-pointer" onclick="location.reload()">
-                <span class="text-cyan-400">GEAR</span><span class="text-emerald-400">STORE</span>
-            </div>
-            <div onclick="toggleCart()" class="relative cursor-pointer group">
-                <span class="text-2xl">🛒</span>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-cyan-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-            </div>
-        </div>
-    </nav>
-
-    <div id="shop-container">
-        <header class="py-12 text-center">
-            <h1 class="text-5xl font-black italic mb-8 text-white uppercase tracking-tighter">AUTOMATED GEAR</h1>
-            <div class="flex justify-center gap-4 mb-8">
-                <button onclick="filterCat('all')" class="category-btn active px-6 py-2 rounded-xl border border-cyan-500/30">SEMUA</button>
-                <button onclick="filterCat('FiveM')" class="category-btn px-6 py-2 rounded-xl border border-white/5">FIVEM</button>
-            </div>
-        </header>
-        <main class="max-w-7xl mx-auto px-6 pb-24 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8" id="product-list"></main>
+    <div id="shop-view" class="max-w-4xl mx-auto">
+        <h1 class="text-4xl font-black mb-10 text-center italic tracking-tighter">GEAR<span class="text-emerald-500">STORE</span></h1>
+        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
     </div>
 
-    <main id="admin-page" class="hidden max-w-6xl mx-auto p-10">
-        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-6">
-            <h2 class="text-2xl font-bold text-cyan-400">SYSTEM CONTROL</h2>
-            <button onclick="location.reload()" class="text-red-500 font-bold uppercase text-xs">Keluar</button>
-        </div>
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-card p-6 space-y-4">
-                <h3 class="text-emerald-400 font-bold text-xs uppercase">Input Produk & Data Akun</h3>
-                <input type="hidden" id="edit-id">
-                <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input text-sm">
-                <input type="number" id="p-price" placeholder="Harga" class="admin-input text-sm">
-                <input type="number" id="p-stock" placeholder="Stok" class="admin-input text-sm">
-                <textarea id="p-data" placeholder="DATA AKUN (Akan dikirim ke email pembeli)" class="admin-input text-sm h-24"></textarea>
-                <input type="text" id="p-img" placeholder="URL Gambar" class="admin-input text-sm">
-                <button onclick="handleSaveProduct()" class="btn-luxury w-full py-3 rounded-xl font-bold uppercase text-xs">Simpan Data</button>
+    <div id="payment-modal" class="fixed inset-0 bg-black/98 hidden z-50 flex items-center justify-center p-4">
+        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center border-white/10 border">
+            <h2 class="text-xl font-bold mb-2">PROSES PEMBAYARAN</h2>
+            <p class="text-xs text-gray-500 mb-6 uppercase tracking-widest">Gunakan Nominal Presisi</p>
+            
+            <div class="bg-white p-4 rounded-2xl mb-6 inline-block">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=YOUR_QRIS_HERE" id="qris-img" class="w-48 h-48">
             </div>
-            <div class="md:col-span-2 glass-card p-4">
-                <table class="w-full text-xs">
-                    <thead><tr class="text-cyan-400 border-b border-white/10"><th class="p-3 text-left">PRODUK</th><th class="p-3">STOK</th><th class="p-3 text-right">AKSI</th></tr></thead>
-                    <tbody id="admin-table-body"></tbody>
-                </table>
-            </div>
-        </div>
-    </main>
 
-    <div id="cart-modal" class="fixed inset-0 bg-black/90 hidden z-[60] flex justify-end backdrop-blur-sm">
-        <div class="bg-[#050a0a] w-full max-w-md h-full p-10 flex flex-col border-l border-white/10">
-            <h2 class="text-2xl font-black mb-8 text-cyan-400 italic">CHECKOUT</h2>
-            <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 mb-6"></div>
-            <div class="space-y-4 border-t border-white/10 pt-6">
-                <input type="email" id="buyer-email" placeholder="Masukkan Email Anda (Untuk Kirim Akun)" class="admin-input" required>
-                <div class="flex justify-between text-2xl font-black italic text-emerald-400">
-                    <span class="text-gray-500">Total:</span><span>Rp <span id="cart-total">0</span></span>
+            <div class="mb-6">
+                <p class="text-sm text-gray-400">Total yang harus dibayar:</p>
+                <div class="text-3xl font-black text-emerald-400" id="total-tagihan">Rp 0</div>
+                <p class="text-[10px] text-amber-500 mt-2 font-bold uppercase">*Sistem mendeteksi berdasarkan kode unik</p>
+            </div>
+
+            <div id="status-waiting" class="space-y-4">
+                <div class="flex justify-center">
+                    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-800 h-10 w-10"></div>
                 </div>
-                <button onclick="openCheckout()" class="btn-luxury w-full py-4 rounded-xl font-black uppercase italic">Bayar Sekarang</button>
+                <p class="text-sm animate-pulse text-cyan-400">Menunggu Verifikasi Admin...</p>
+                <p class="text-[9px] text-gray-500">Pembayaran akan terdeteksi otomatis setelah admin mengonfirmasi mutasi.</p>
             </div>
+
+            <button id="btn-claim" onclick="showData()" class="hidden w-full btn-emerald py-4 rounded-xl font-black uppercase shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                AMBIL DATA AKUN
+            </button>
         </div>
     </div>
 
-    <div id="qris-modal" class="fixed inset-0 bg-black/95 hidden z-[70] flex items-center justify-center p-6">
-        <div class="bg-white p-8 rounded-[2rem] text-center max-w-sm w-full">
-            <h2 class="text-black font-black text-xl mb-6">SCAN QRIS</h2>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_AUTO" class="mx-auto mb-6">
-            <p class="text-gray-500 text-xs mb-6 uppercase font-bold">Otomatis kirim akun setelah klik konfirmasi</p>
-            <button onclick="finalizePayment()" class="w-full bg-emerald-500 text-white py-4 rounded-xl font-black shadow-lg">KONFIRMASI BAYAR</button>
+    <div id="reveal-modal" class="fixed inset-0 bg-black hidden z-[60] flex items-center justify-center p-4">
+        <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-emerald-500 border text-center">
+            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic">AKUN BERHASIL DIKIRIM!</h2>
+            <div id="account-output" class="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/30 font-mono text-emerald-300 break-all mb-8 shadow-inner text-lg"></div>
+            <button onclick="location.reload()" class="w-full py-4 bg-white/5 rounded-xl font-bold">Tutup & Selesai</button>
+        </div>
+    </div>
+
+    <div id="admin-view" class="hidden max-w-2xl mx-auto">
+        <div class="flex justify-between items-center mb-6">
+            <h2 class="text-2xl font-bold text-cyan-400">MASTER PANEL</h2>
+            <button onclick="location.reload()" class="text-xs text-gray-500">Kembali</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="glass p-6 rounded-2xl space-y-4">
+                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/50 p-3 rounded-xl border border-white/10">
+                <textarea id="p-data" placeholder="Data Akun (User:Pass)" class="w-full bg-black/50 p-3 rounded-xl border border-white/10 h-20"></textarea>
+                <input type="number" id="p-price" placeholder="Harga Dasar" class="w-full bg-black/50 p-3 rounded-xl border border-white/10">
+                <button onclick="saveProduct()" class="w-full btn-emerald py-3 rounded-xl font-bold">Tambah Produk</button>
+            </div>
+
+            <div class="glass p-6 rounded-2xl">
+                <h3 class="text-xs font-bold text-amber-500 mb-4 uppercase">Verifikasi Masuk</h3>
+                <div id="pending-list" class="space-y-3">
+                    <p class="text-[10px] text-gray-500">Belum ada pembayaran masuk...</p>
+                </div>
+            </div>
         </div>
     </div>
 
     <script>
-        // Inisialisasi EmailJS (Dapatkan Public Key di emailjs.com)
-        // emailjs.init("USER_ID_ANDA"); 
+        let products = JSON.parse(localStorage.getItem('gear_v19')) || [];
+        let activeOrder = null;
 
-        let products = JSON.parse(localStorage.getItem('gear_v17_data')) || [];
-        let cart = [];
-
-        function showToast(msg, type = "success") {
-            const container = document.getElementById('toast-container');
-            const toast = document.createElement('div');
-            toast.className = `${type === "success" ? "bg-cyan-600" : "bg-red-600"} text-white px-6 py-4 rounded-xl toast-animate border border-white/10 text-xs font-bold`;
-            toast.innerText = msg;
-            container.appendChild(toast);
-            setTimeout(() => toast.remove(), 4000);
-        }
-
-        // --- SISTEM AUTO KIRIM ---
-        async function sendAutoEmail(email, items) {
-            // Catatan: Anda perlu mengatur template di EmailJS dengan variabel {{buyer_email}} dan {{account_data}}
-            console.log("Mengirim data akun ke: " + email);
-            console.log("Data Akun: ", items);
-            
-            // Contoh simulasi kirim
-            showToast("Sistem: Data akun sedang dikirim ke " + email);
-            
-            /* Kode Asli EmailJS:
-            emailjs.send("service_id", "template_id", {
-                buyer_email: email,
-                account_data: items.map(i => `${i.name}: ${i.data}`).join('\n')
-            });
-            */
-        }
-
-        function finalizePayment() {
-            const email = document.getElementById('buyer-email').value;
-            if(!email.includes('@')) return showToast("Masukkan Email Valid!", "error");
-
-            const itemsWithData = cart.map(c => {
-                const p = products.find(o => o.id === c.id);
-                return { name: p.name, data: p.data || "Data Belum Diisi Admin", qty: c.qty };
-            });
-
-            // Jalankan Auto Kirim
-            sendAutoEmail(email, itemsWithData);
-
-            // Kurangi Stok
-            cart.forEach(c => {
-                const p = products.find(o => o.id === c.id);
-                p.stock -= c.qty;
-                p.sold += (p.sold || 0) + c.qty;
-            });
-
-            saveData();
-            alert("SUKSES! Data akun telah dikirim ke email: " + email);
-            cart = []; updateCartUI();
-            document.getElementById('qris-modal').classList.add('hidden');
-            document.getElementById('cart-modal').classList.add('hidden');
-            renderShop();
-        }
-
-        // --- SISTEM ADMIN & TOKO ---
-        function handleSaveProduct() {
-            const id = document.getElementById('edit-id').value;
-            const data = {
-                id: id ? Number(id) : Date.now(),
+        function saveProduct() {
+            const p = {
+                id: Date.now(),
                 name: document.getElementById('p-name').value,
-                price: Number(document.getElementById('p-price').value),
-                stock: Number(document.getElementById('p-stock').value),
-                data: document.getElementById('p-data').value, // Data Akun
-                img: document.getElementById('p-img').value || "https://via.placeholder.com/400"
+                data: document.getElementById('p-data').value,
+                price: document.getElementById('p-price').value
             };
-            if(id) products[products.findIndex(p => p.id == id)] = data;
-            else products.push(data);
-            saveData(); clearForm(); renderAdmin(); renderShop();
-            showToast("Produk Berhasil Disimpan");
+            products.push(p);
+            localStorage.setItem('gear_v19', JSON.stringify(products));
+            location.reload();
         }
 
         function renderShop() {
-            const list = document.getElementById('product-list');
-            list.innerHTML = '';
-            products.forEach(p => {
-                list.innerHTML += `
-                    <div class="glass-card p-5 flex flex-col h-full group">
-                        <img src="${p.img}" class="w-full h-48 object-cover rounded-xl mb-4 group-hover:scale-105 transition">
-                        <h3 class="font-bold text-sm uppercase">${p.name}</h3>
-                        <p class="text-xl font-black text-cyan-400 mb-4">Rp ${p.price.toLocaleString()}</p>
-                        <button onclick="addToCart(${p.id})" class="btn-luxury w-full py-3 rounded-xl font-bold text-[10px] uppercase">TAMBAH</button>
-                    </div>`;
-            });
+            const grid = document.getElementById('product-grid');
+            grid.innerHTML = products.map(p => `
+                <div class="glass p-6 rounded-3xl group hover:border-emerald-500/50 transition">
+                    <h3 class="font-bold mb-1 uppercase text-xs text-gray-400">${p.name}</h3>
+                    <div class="text-2xl font-black mb-6 italic">Rp ${Number(p.price).toLocaleString()}</div>
+                    <button onclick="buyProcess(${p.id})" class="w-full btn-emerald py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest shadow-lg">Beli Sekarang</button>
+                </div>
+            `).join('');
         }
 
-        function renderAdmin() {
-            const tbody = document.getElementById('admin-table-body');
-            tbody.innerHTML = '';
-            products.forEach(p => {
-                tbody.innerHTML += `
-                    <tr class="border-b border-white/5">
-                        <td class="p-3 font-bold uppercase">${p.name}</td>
-                        <td class="p-3 text-center">${p.stock}</td>
-                        <td class="p-3 text-right space-x-2">
-                            <button onclick="editProduct(${p.id})" class="text-cyan-400">EDIT</button>
-                            <button onclick="deleteP(${p.id})" class="text-red-500">HAPUS</button>
-                        </td>
-                    </tr>`;
-            });
-        }
-
-        function addToCart(id) {
+        function buyProcess(id) {
             const p = products.find(prod => prod.id === id);
-            if(p.stock <= 0) return showToast("Stok Habis!", "error");
-            const item = cart.find(i => i.id === id);
-            if(item) item.qty++; else cart.push({...p, qty: 1});
-            updateCartUI();
+            const kodeUnik = Math.floor(Math.random() * 900) + 100; // 100 - 999
+            const total = parseInt(p.price) + kodeUnik;
+            
+            activeOrder = { ...p, total: total, kodeUnik: kodeUnik };
+            
+            document.getElementById('total-tagihan').innerText = `Rp ${total.toLocaleString()}`;
+            document.getElementById('payment-modal').classList.remove('hidden');
+
+            // Simpan ke "Pending" untuk dilihat Admin di Panel sebelah
+            addPendingToAdmin(activeOrder);
         }
 
-        function updateCartUI() {
-            const list = document.getElementById('cart-items');
-            let total = 0; list.innerHTML = '';
-            cart.forEach(c => {
-                total += (c.price * c.qty);
-                list.innerHTML += `<div class="bg-white/5 p-3 rounded-xl flex justify-between"><span>${c.name} (x${c.qty})</span><span>Rp ${(c.price * c.qty).toLocaleString()}</span></div>`;
-            });
-            document.getElementById('cart-total').innerText = total.toLocaleString();
-            document.getElementById('cart-count').innerText = cart.length;
+        // FUNGSI INI ADALAH "DETEKSI" OLEH ADMIN
+        function addPendingToAdmin(order) {
+            const list = document.getElementById('pending-list');
+            if(list.querySelector('p')) list.innerHTML = '';
+            
+            const div = document.createElement('div');
+            div.className = "bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center";
+            div.innerHTML = `
+                <div class="text-[10px]">
+                    <span class="block font-bold text-white">${order.name}</span>
+                    <span class="text-emerald-400">Rp ${order.total.toLocaleString()}</span>
+                </div>
+                <button onclick="approveOrder('${order.id}')" class="bg-emerald-500 text-[8px] px-2 py-1 rounded font-black text-white">KONFIRMASI</button>
+            `;
+            list.appendChild(div);
         }
 
-        window.addEventListener('keydown', (e) => { if(e.key === "F7") { if(prompt("PASS:") === "admin123") { document.getElementById('shop-container').classList.add('hidden'); document.getElementById('admin-page').classList.remove('hidden'); renderAdmin(); } } });
-        function editProduct(id) { const p = products.find(o => o.id === id); document.getElementById('edit-id').value = p.id; document.getElementById('p-name').value = p.name; document.getElementById('p-price').value = p.price; document.getElementById('p-stock').value = p.stock; document.getElementById('p-data').value = p.data; document.getElementById('p-img').value = p.img; }
-        function deleteP(id) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); renderShop(); }
-        function clearForm() { document.getElementById('edit-id').value = ""; document.getElementById('p-name').value = ""; document.getElementById('p-price').value = ""; document.getElementById('p-stock').value = ""; document.getElementById('p-data').value = ""; document.getElementById('p-img').value = ""; }
-        function saveData() { localStorage.setItem('gear_v17_data', JSON.stringify(products)); }
-        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
-        function openCheckout() { if(cart.length) document.getElementById('qris-modal').classList.remove('hidden'); }
+        function approveOrder(id) {
+            // Logika: Admin klik konfirmasi, maka browser pembeli akan "terbuka"
+            // Karena ini LocalStorage, kita gunakan sistem cek berkala (Polling)
+            localStorage.setItem('payment_status_' + activeOrder.total, 'SUCCESS');
+            alert("Pembayaran Terkonfirmasi! Layanan pembeli akan otomatis terbuka.");
+            updateClientStatus();
+        }
+
+        // Browser pembeli mengecek terus menerus apakah admin sudah konfirmasi
+        function updateClientStatus() {
+            const check = setInterval(() => {
+                if(activeOrder && localStorage.getItem('payment_status_' + activeOrder.total) === 'SUCCESS') {
+                    document.getElementById('status-waiting').classList.add('hidden');
+                    document.getElementById('btn-claim').classList.remove('hidden');
+                    clearInterval(check);
+                }
+            }, 2000);
+        }
+
+        function showData() {
+            document.getElementById('account-output').innerText = activeOrder.data;
+            document.getElementById('payment-modal').classList.add('hidden');
+            document.getElementById('reveal-modal').classList.remove('hidden');
+            localStorage.removeItem('payment_status_' + activeOrder.total);
+        }
+
+        window.addEventListener('keydown', (e) => {
+            if(e.key === "F7") {
+                document.getElementById('shop-view').classList.toggle('hidden');
+                document.getElementById('admin-view').classList.toggle('hidden');
+            }
+        });
 
         renderShop();
+        updateClientStatus();
     </script>
 </body>
 </html>
