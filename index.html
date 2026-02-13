@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | Fixed Price Edition</title>
+    <title>W4RAS STORE | Smart Inventory</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -36,100 +36,90 @@
     </nav>
 
     <div id="shop-view" class="max-w-7xl mx-auto px-6 py-8 w-full">
-        <div class="dashboard-header p-8 mb-12 flex flex-col md:flex-row justify-between items-center gap-6 text-center md:text-left">
+        <div class="dashboard-header p-8 mb-12 flex flex-col md:flex-row justify-between items-center gap-6">
             <div>
                 <h1 class="text-3xl font-extrabold mb-2 uppercase italic tracking-tighter">W4RAS <span class="text-emerald-400">DASHBOARD</span></h1>
-                <p class="text-gray-400 text-sm">Belanja Digital Aman & Pengiriman Instan Otomatis.</p>
+                <p class="text-gray-400 text-sm">1 Akun 1 Orang. Pengiriman Otomatis.</p>
             </div>
-            <div class="flex gap-4">
-                <div class="glass px-6 py-3 rounded-2xl border-emerald-500/30 font-black text-[10px] text-emerald-400 uppercase tracking-widest">Store: Online</div>
-            </div>
+            <div class="glass px-6 py-3 rounded-2xl border-emerald-500/30 font-black text-[10px] text-emerald-400 uppercase tracking-widest">Status: Ready</div>
         </div>
 
-        <div class="mb-6 flex items-center gap-3">
-            <div class="h-1 w-8 bg-emerald-500 rounded-full"></div>
-            <h2 class="text-lg font-black uppercase tracking-widest">Katalog Item</h2>
-        </div>
         <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </div>
 
     <div id="cart-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-white/10">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Daftar Belanja</h2>
+            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Keranjang</h2>
             <div id="cart-items-list" class="space-y-4 max-h-80 overflow-y-auto mb-6 pr-2"></div>
             <div class="border-t border-white/10 pt-4 mb-6">
-                <div class="flex justify-between font-bold text-lg"><span>Total Harga:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span></div>
+                <div class="flex justify-between font-bold text-lg"><span>Total:</span> <span id="cart-subtotal" class="text-emerald-400">Rp 0</span></div>
             </div>
             <div class="flex gap-4">
                 <button onclick="closeModal('cart-modal')" class="flex-1 py-3 bg-white/5 rounded-xl font-bold text-xs uppercase">Batal</button>
-                <button onclick="checkout()" class="flex-[2] btn-premium py-3 rounded-xl font-black text-xs uppercase text-white">Beli Sekarang</button>
+                <button onclick="checkout()" class="flex-[2] btn-premium py-3 rounded-xl font-black text-xs uppercase text-white">Lanjut Bayar</button>
             </div>
         </div>
     </div>
 
     <div id="payment-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[3rem] max-w-sm w-full text-center border-white/10">
-            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Pembayaran</h2>
+            <h2 class="text-xl font-black mb-6 text-emerald-400 italic uppercase">Secure Payment</h2>
             <div class="bg-white p-4 rounded-3xl mb-6 inline-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=W4RAS_STORE" class="w-32 h-32"></div>
             <div class="mb-8">
                 <div class="text-3xl font-black text-emerald-400" id="total-tagihan">Rp 0</div>
-                <p class="text-[9px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Silakan bayar sesuai nominal di atas</p>
+                <p class="text-[9px] text-gray-500 mt-2 font-bold uppercase tracking-widest">Bayar Pas Sesuai Harga</p>
             </div>
             <div id="upload-section" class="space-y-4">
-                <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()"><label for="evidence-file" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400" id="file-label">Lampirkan Bukti Transfer</label>
-                <button onclick="processOrderToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase text-white">Konfirmasi Pembayaran</button>
+                <input type="file" id="evidence-file" class="hidden" onchange="updateFileName()"><label for="evidence-file" class="cursor-pointer block p-4 border-2 border-dashed border-white/10 rounded-2xl text-[10px] text-gray-400" id="file-label">Upload Bukti Transfer</label>
+                <button onclick="processOrderToDiscord()" class="w-full btn-premium py-4 rounded-2xl font-black text-xs uppercase text-white">Konfirmasi</button>
                 <button onclick="closeModal('payment-modal')" class="w-full text-gray-500 text-[10px] font-bold mt-2 uppercase">Batal</button>
             </div>
             <div id="status-waiting" class="hidden py-6 text-center">
                 <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-emerald-500 mx-auto mb-4"></div>
-                <p class="text-[10px] text-emerald-400 font-black uppercase">Memproses Data Akun...</p>
+                <p class="text-[10px] text-emerald-400 font-black uppercase">Mengambil Akun Teratas...</p>
             </div>
         </div>
     </div>
 
     <div id="reveal-modal" class="fixed inset-0 z-[110] modal-blur items-center justify-center p-4">
         <div class="glass p-10 rounded-[3rem] max-w-md w-full text-center border-emerald-500/30">
-            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic uppercase">Pengiriman Sukses</h2>
-            <div id="account-output" class="bg-black/50 p-6 rounded-2xl border border-white/5 font-mono text-emerald-300 break-all mb-8 text-sm text-left whitespace-pre-line leading-relaxed"></div>
-            <button onclick="location.reload()" class="w-full py-4 btn-premium rounded-2xl font-bold uppercase text-[10px] text-white">Kembali ke Toko</button>
+            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic uppercase">Sukses!</h2>
+            <div id="account-output" class="bg-black/50 p-6 rounded-2xl border border-white/5 font-mono text-emerald-300 break-all mb-8 text-sm text-left whitespace-pre-line"></div>
+            <button onclick="location.reload()" class="w-full py-4 btn-premium rounded-2xl font-bold uppercase text-[10px] text-white">Selesai</button>
         </div>
     </div>
 
     <div id="login-modal" class="fixed inset-0 z-[100] modal-blur items-center justify-center p-4">
         <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full border-white/10">
-            <h2 class="text-2xl font-black mb-6 text-center italic uppercase text-emerald-400 tracking-tighter">Control Center</h2>
+            <h2 class="text-2xl font-black mb-6 text-center italic uppercase text-emerald-400">Master Panel</h2>
             <div class="space-y-4">
-                <input type="text" id="adm-user" placeholder="Username" class="input-elite">
-                <input type="password" id="adm-pass" placeholder="Password" class="input-elite">
-                <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold uppercase text-xs text-white">Authorize</button>
-                <button onclick="closeModal('login-modal')" class="w-full text-gray-500 text-[10px] font-bold mt-2 uppercase">Batal</button>
+                <input type="text" id="adm-user" placeholder="User" class="input-elite">
+                <input type="password" id="adm-pass" placeholder="Pass" class="input-elite">
+                <button onclick="processLogin()" class="w-full btn-premium py-4 rounded-xl font-bold text-white uppercase text-xs">Login</button>
             </div>
         </div>
     </div>
 
     <main id="admin-view" class="hidden max-w-7xl mx-auto p-6 w-full">
-        <div class="flex flex-col md:flex-row justify-between items-center mb-10 gap-6">
-            <div>
-                <h2 class="text-3xl font-black italic text-emerald-400 uppercase">W4RAS Admin</h2>
-                <button onclick="exitAdmin()" class="bg-red-500/20 text-red-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase mt-2 hover:bg-red-500 hover:text-white transition">Logout</button>
-            </div>
-            <div class="w-full md:w-96">
-                <p class="text-[9px] text-emerald-400 font-black uppercase mb-2">Discord Webhook URL</p>
-                <input type="text" id="webhook-url" onchange="saveWebhook()" placeholder="Paste Webhook Disini" class="input-elite text-[10px]">
-            </div>
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-3xl font-black italic text-emerald-400 uppercase">W4RAS ADMIN</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-400 px-4 py-1 rounded-full text-[10px] font-bold uppercase">Logout</button>
         </div>
+        
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
-            <div class="glass p-8 space-y-4 h-fit sticky top-6">
+            <div class="glass p-8 space-y-4 h-fit">
+                <p class="text-[10px] font-bold text-emerald-400 uppercase">Input Produk Baru</p>
                 <input type="text" id="p-name" placeholder="Nama Produk" class="input-elite">
-                <input type="text" id="p-price" placeholder="Harga Jual" class="input-elite">
-                <input type="number" id="p-stock" placeholder="Jumlah Stok" class="input-elite">
-                <textarea id="p-data" placeholder="Username:Password" class="input-elite h-24"></textarea>
-                <input type="text" id="p-img" placeholder="Link Foto (URL)" class="input-elite">
-                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs uppercase text-white">Simpan Produk</button>
+                <input type="text" id="p-price" placeholder="Harga" class="input-elite">
+                <textarea id="p-data" placeholder="Masukkan Akun Per-Baris&#10;Contoh:&#10;user1:pass1&#10;user2:pass2" class="input-elite h-32"></textarea>
+                <input type="text" id="p-img" placeholder="URL Gambar" class="input-elite">
+                <button onclick="handleSaveProduct()" class="w-full btn-premium py-4 rounded-xl font-black text-xs text-white uppercase">Upload & Hitung Stok</button>
+                <hr class="opacity-10">
+                <input type="text" id="webhook-url" onchange="saveWebhook()" placeholder="Webhook Discord URL" class="input-elite text-[10px]">
             </div>
             <div class="lg:col-span-2 glass overflow-hidden">
                 <table class="w-full text-xs text-left">
-                    <thead class="bg-white/5 uppercase text-emerald-400 font-bold"><tr><th class="p-5">Produk</th><th class="p-5 text-center">Stok</th><th class="p-5 text-right">Aksi</th></tr></thead>
+                    <thead class="bg-white/5 uppercase text-emerald-400"><tr><th class="p-5">Item</th><th class="p-5 text-center">Stok Baris</th><th class="p-5 text-right">Aksi</th></tr></thead>
                     <tbody id="admin-table-body"></tbody>
                 </table>
             </div>
@@ -137,23 +127,22 @@
     </main>
 
     <footer class="mt-auto py-10 text-center">
-        <p class="opacity-20 text-[10px] font-bold cursor-default select-none transition active:scale-90" id="secret-trigger">
+        <p class="opacity-20 text-[10px] font-bold cursor-default" id="secret-trigger">
             &copy; 2026 W4RAS STORE - ALL SECRET RESERVED
         </p>
     </footer>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('w4ras_v11_db')) || [];
+        let products = JSON.parse(localStorage.getItem('w4ras_smart_db')) || [];
         let cart = [];
         let activeOrder = null;
 
-        // --- SECRET ACCESS (CLICK 5X) ---
-        let clicks = 0; let lastT = 0;
+        // --- SECRET (5 CLICKS) ---
+        let clks = 0; let lastC = 0;
         document.getElementById('secret-trigger').addEventListener('click', () => {
-            const now = Date.now();
-            if(now - lastT < 2000) clicks++; else clicks = 1;
-            lastT = now;
-            if(clicks >= 5) { openModal('login-modal'); clicks = 0; }
+            if(Date.now() - lastC < 2000) clks++; else clks = 1;
+            lastC = Date.now();
+            if(clks >= 5) openModal('login-modal');
         });
 
         function showToast(msg, type = "success") {
@@ -167,52 +156,55 @@
         function openModal(id) { document.getElementById(id).style.display = 'flex'; if(id==='cart-modal') renderCart(); }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
 
-        // --- ADMIN ---
+        // --- ADMIN SYSTEM ---
         function processLogin() {
             if(document.getElementById('adm-user').value === "admin" && document.getElementById('adm-pass').value === "admin123") {
                 closeModal('login-modal');
                 document.getElementById('shop-view').classList.add('hidden');
-                document.querySelector('footer').classList.add('hidden');
                 document.getElementById('admin-view').classList.remove('hidden');
-                document.getElementById('webhook-url').value = localStorage.getItem('w4ras_wb_v11') || "";
+                document.getElementById('webhook-url').value = localStorage.getItem('w4ras_wb') || "";
                 renderAdmin();
-                showToast("Access Granted");
-            } else { showToast("Wrong Auth!", "error"); }
+            }
         }
 
-        function exitAdmin() { location.reload(); }
-        function saveWebhook() { localStorage.setItem('w4ras_wb_v11', document.getElementById('webhook-url').value); showToast("Webhook Saved"); }
+        function saveWebhook() { localStorage.setItem('w4ras_wb', document.getElementById('webhook-url').value); showToast("Webhook Saved"); }
 
         function handleSaveProduct() {
+            const rawData = document.getElementById('p-data').value.trim();
+            const accountArray = rawData.split('\n').filter(line => line.trim() !== "");
+            
             const p = {
                 id: Date.now(),
                 name: document.getElementById('p-name').value,
                 price: Number(document.getElementById('p-price').value.replace(/,/g,'')),
-                stock: Number(document.getElementById('p-stock').value),
-                data: document.getElementById('p-data').value,
+                accounts: accountArray, // Simpan sebagai array
                 img: document.getElementById('p-img').value || "https://via.placeholder.com/300"
             };
-            if(!p.name || !p.data) return showToast("Data Incomplete", "error");
+            if(!p.name || accountArray.length === 0) return showToast("Isi Nama & Data Akun!", "error");
             products.push(p); saveDB(); location.reload();
         }
 
         function restockP(id) {
             const p = products.find(x => x.id == id);
-            const v = prompt("New Stock for " + p.name + ":", p.stock);
-            if(v != null) { p.stock = Number(v); saveDB(); renderAdmin(); showToast("Stock Updated"); }
+            const currentData = p.accounts.join('\n');
+            const newData = prompt("Edit Data Akun (Per-Baris):", currentData);
+            if(newData !== null) {
+                p.accounts = newData.split('\n').filter(line => line.trim() !== "");
+                saveDB(); renderAdmin(); renderShop(); showToast("Stok Terupdate");
+            }
         }
 
-        function deleteP(id) { if(confirm("Delete product?")){ products = products.filter(x => x.id != id); saveDB(); renderAdmin(); } }
-        function saveDB() { localStorage.setItem('w4ras_v11_db', JSON.stringify(products)); }
+        function deleteP(id) { if(confirm("Hapus?")){ products = products.filter(x => x.id != id); saveDB(); renderAdmin(); renderShop(); } }
+        function saveDB() { localStorage.setItem('w4ras_smart_db', JSON.stringify(products)); }
 
-        // --- SHOP & CART ---
+        // --- SHOP & LOGIC ---
         function addToCart(id) {
             const p = products.find(x => x.id == id);
-            if(p.stock <= 0) return showToast("Out of Stock!", "error");
+            if(p.accounts.length <= 0) return showToast("Stok Habis!", "error");
             const ex = cart.find(i => i.id == id);
-            if(ex) { if(ex.qty < p.stock) ex.qty++; else return showToast("Max Stock reached", "error"); }
+            if(ex) { if(ex.qty < p.accounts.length) ex.qty++; else return showToast("Limit Stok!", "error"); }
             else { cart.push({...p, qty: 1}); }
-            updateCartCount(); showToast("Added to Cart");
+            updateCartCount(); showToast("Masuk Keranjang");
         }
 
         function updateCartCount() { document.getElementById('cart-count').innerText = cart.reduce((a,b)=>a+b.qty, 0); }
@@ -222,38 +214,35 @@
             document.getElementById('cart-items-list').innerHTML = cart.map((i, idx) => {
                 sub += (i.price * i.qty);
                 return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-2xl border border-white/10">
-                    <div><p class="text-[10px] font-bold text-gray-400 uppercase">${i.name}</p><p class="text-emerald-400 font-black">Rp ${(i.price*i.qty).toLocaleString()}</p></div>
+                    <div><p class="text-[10px] font-bold text-gray-500 uppercase">${i.name}</p><p class="text-emerald-400 font-black">Rp ${(i.price*i.qty).toLocaleString()}</p></div>
                     <div class="flex items-center gap-3">
                         <button onclick="chgQty(${idx},-1)" class="w-7 h-7 bg-white/10 rounded-lg">-</button>
                         <span class="font-bold text-sm">${i.qty}</span>
                         <button onclick="chgQty(${idx},1)" class="w-7 h-7 bg-white/10 rounded-lg">+</button>
                     </div>
                 </div>`;
-            }).join('') || '<p class="text-center text-xs text-gray-500 py-4 italic">Keranjang Kosong</p>';
+            }).join('') || '<p class="text-center text-xs py-4 text-gray-600">Keranjang Kosong</p>';
             document.getElementById('cart-subtotal').innerText = `Rp ${sub.toLocaleString()}`;
         }
 
         function chgQty(idx, d) {
             const i = cart[idx]; const p = products.find(x=>x.id==i.id);
-            if(i.qty + d > 0 && i.qty + d <= p.stock) i.qty += d;
+            if(i.qty + d > 0 && i.qty + d <= p.accounts.length) i.qty += d;
             else if(i.qty + d <= 0) cart.splice(idx, 1);
             renderCart(); updateCartCount();
         }
 
-        // --- HARGA PAS (NO KODE UNIK) ---
         function checkout() {
             if(cart.length === 0) return;
-            const sub = cart.reduce((a,b)=>a+(b.price*b.qty), 0);
-            activeOrder = { items: [...cart], total: sub }; // TOTAL TANPA KODE UNIK
+            activeOrder = { items: [...cart], total: cart.reduce((a,b)=>a+(b.price*b.qty), 0) };
             document.getElementById('total-tagihan').innerText = `Rp ${activeOrder.total.toLocaleString()}`;
             closeModal('cart-modal'); openModal('payment-modal');
         }
 
-        // --- DISCORD SYNC ---
         async function processOrderToDiscord() {
             const f = document.getElementById('evidence-file').files[0];
-            const wb = localStorage.getItem('w4ras_wb_v11');
-            if(!wb || !f) return showToast("Upload Proof & Set Webhook!", "error");
+            const wb = localStorage.getItem('w4ras_wb');
+            if(!wb || !f) return showToast("Lengkapi Webhook/Bukti!", "error");
 
             document.getElementById('upload-section').classList.add('hidden');
             document.getElementById('status-waiting').classList.remove('hidden');
@@ -261,15 +250,21 @@
             const reader = new FileReader();
             reader.readAsDataURL(f);
             reader.onload = async () => {
-                const dataText = activeOrder.items.map(i => `📦 **PRODUK:** ${i.name} (x${i.qty})\n🔑 **DATA AKUN:** \`\`\`${i.data}\`\`\``).join('\n\n');
+                // Ambil Akun Sesuai Quantity & Hapus dari DB
+                let finalAccountText = "";
+                activeOrder.items.forEach(item => {
+                    const p = products.find(x => x.id === item.id);
+                    const taken = p.accounts.splice(0, item.qty); // Ambil baris teratas
+                    finalAccountText += `📦 **${item.name} (x${item.qty})**\n🔑 DATA:\n\`\`\`${taken.join('\n')}\`\`\`\n\n`;
+                });
+
                 const fd = new FormData();
                 fd.append('payload_json', JSON.stringify({
                     embeds: [{
-                        title: "🟢 W4RAS STORE - NEW ORDER SUCCESS", color: 0x10b981,
+                        title: "🟢 W4RAS ORDER SUCCESS", color: 0x10b981,
                         fields: [
-                            { name: "Total Pembayaran", value: `**Rp ${activeOrder.total.toLocaleString()}**`, inline: true },
-                            { name: "Status", value: "✅ LUNAS", inline: true },
-                            { name: "📝 Data Dikirim ke User", value: dataText }
+                            { name: "Total Bayar", value: `**Rp ${activeOrder.total.toLocaleString()}**`, inline: true },
+                            { name: "Detail Akun Terkirim", value: finalAccountText }
                         ],
                         image: { url: 'attachment://bukti.png' }, timestamp: new Date()
                     }]
@@ -278,30 +273,22 @@
 
                 try {
                     const res = await fetch(wb, { method: 'POST', body: fd });
-                    if(res.ok) finalize(); else throw new Error();
-                } catch(e) { 
-                    showToast("Discord Error!", "error"); 
-                    document.getElementById('upload-section').classList.remove('hidden');
-                    document.getElementById('status-waiting').classList.add('hidden');
-                }
+                    if(res.ok) {
+                        document.getElementById('account-output').innerText = finalAccountText.replace(/\*\*/g, "").replace(/```/g, "");
+                        saveDB(); closeModal('payment-modal'); openModal('reveal-modal');
+                    }
+                } catch(e) { showToast("Error!", "error"); }
             };
-        }
-
-        function finalize() {
-            const txt = activeOrder.items.map(i => `[${i.name} x${i.qty}]\n${i.data}`).join('\n\n---\n\n');
-            document.getElementById('account-output').innerText = txt;
-            closeModal('payment-modal'); openModal('reveal-modal');
-            activeOrder.items.forEach(i => { const p = products.find(x=>x.id==i.id); if(p) p.stock -= i.qty; });
-            saveDB();
         }
 
         function renderShop() {
             document.getElementById('product-list').innerHTML = products.map(p => `
-                <div class="glass p-6 rounded-[2.5rem] flex flex-col h-full hover:border-emerald-500/50 transition-all duration-500">
-                    <img src="${p.img}" class="w-full h-44 object-cover rounded-2xl mb-6">
-                    <h3 class="font-bold text-[10px] uppercase text-gray-500">${p.name}</h3>
-                    <p class="text-xl font-black text-emerald-400 mb-6 italic">Rp ${p.price.toLocaleString()}</p>
-                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-4 rounded-2xl font-black text-[10px] uppercase text-white mt-auto">Beli Instan</button>
+                <div class="glass p-6 rounded-[2.5rem] flex flex-col h-full">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-2xl mb-4">
+                    <h3 class="font-bold text-[10px] text-gray-500 uppercase">${p.name}</h3>
+                    <p class="text-lg font-black text-emerald-400 mb-4">Rp ${p.price.toLocaleString()}</p>
+                    <p class="text-[9px] text-emerald-500/50 mb-4 font-bold uppercase">Stok: ${p.accounts.length} Akun</p>
+                    <button onclick="addToCart(${p.id})" class="w-full btn-premium py-3 rounded-xl font-bold text-[10px] uppercase text-white mt-auto">Beli</button>
                 </div>
             `).join('');
         }
@@ -310,15 +297,15 @@
             document.getElementById('admin-table-body').innerHTML = products.map(p => `
                 <tr class="border-b border-white/5">
                     <td class="p-5 uppercase font-bold text-gray-400 text-[10px]">${p.name}</td>
-                    <td class="p-5 text-center text-emerald-400 font-black">${p.stock}</td>
+                    <td class="p-5 text-center text-emerald-400 font-black">${p.accounts.length}</td>
                     <td class="p-5 text-right space-x-3">
-                        <button onclick="restockP(${p.id})" class="text-emerald-500 font-bold hover:underline uppercase">Restok</button>
-                        <button onclick="deleteP(${p.id})" class="text-red-500 font-bold hover:underline uppercase">Hapus</button>
+                        <button onclick="restockP(${p.id})" class="text-emerald-500 font-bold hover:underline">EDIT/RESTOK</button>
+                        <button onclick="deleteP(${p.id})" class="text-red-500 font-bold hover:underline">HAPUS</button>
                     </td>
                 </tr>
             `).join('');
         }
-        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "Lampirkan Bukti"; }
+        function updateFileName() { const f = document.getElementById('evidence-file').files[0]; document.getElementById('file-label').innerText = f ? f.name : "File Terpilih"; }
         renderShop();
     </script>
 </body>
