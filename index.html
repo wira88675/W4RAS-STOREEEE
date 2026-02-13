@@ -3,89 +3,159 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEAR STORE | Final Edition</title>
+    <title>GEAR STORE | Emerald Luxury Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #08080c; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
-        .glass-nav { background: rgba(13, 13, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
-        .glass-card { background: #11111a; border: 1px solid #1f1f2e; border-radius: 1.25rem; transition: all 0.3s ease; }
-        .btn-buy { background: linear-gradient(90deg, #6366f1, #a855f7); }
-        .admin-input { background: #000; border: 1px solid #2d2d3d; padding: 12px; border-radius: 12px; outline: none; width: 100%; color: white; }
-        .category-btn { background: #1c1c27; border: 1px solid #2d2d3d; transition: all 0.3s; color: #9ca3af; font-size: 12px; font-weight: 700; padding: 10px 20px; border-radius: 12px; }
-        .category-btn.active { background: #5865f2; border-color: #5865f2; color: white; box-shadow: 0 0 15px rgba(88, 101, 242, 0.4); }
-        
-        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
-        .qty-input { background: transparent; border: none; text-align: center; width: 40px; font-weight: 800; color: white; outline: none; }
+        :root {
+            --primary-glow: #06b6d4; /* Cyan/Teal */
+            --secondary-glow: #10b981; /* Emerald */
+        }
 
+        body { 
+            background: radial-gradient(circle at top right, #06262d, #050505); 
+            color: #fff; 
+            font-family: 'Plus Jakarta Sans', sans-serif; 
+            overflow-x: hidden; 
+            min-height: 100vh;
+        }
+
+        /* SHINY EFFECT & GLASSMORPHISM */
+        .glass-nav { 
+            background: rgba(10, 20, 20, 0.7); 
+            backdrop-filter: blur(20px); 
+            border-bottom: 1px solid rgba(6, 182, 212, 0.2); 
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.5);
+        }
+
+        .glass-card { 
+            background: rgba(20, 30, 30, 0.4); 
+            border: 1px solid rgba(6, 182, 212, 0.1); 
+            border-radius: 1.5rem; 
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-card:hover {
+            border-color: rgba(6, 182, 212, 0.5);
+            transform: translateY(-8px);
+            box-shadow: 0 10px 40px rgba(6, 182, 212, 0.15);
+        }
+
+        /* EMERALD SHINY BUTTON */
+        .btn-luxury { 
+            background: linear-gradient(135deg, #0891b2 0%, #10b981 100%); 
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+            transition: all 0.3s ease;
+        }
+        
+        .btn-luxury:hover {
+            box-shadow: 0 0 25px rgba(6, 182, 212, 0.5);
+            filter: brightness(1.1);
+        }
+
+        .category-btn { 
+            background: rgba(255, 255, 255, 0.03); 
+            border: 1px solid rgba(255, 255, 255, 0.05); 
+            transition: 0.3s; color: #94a3b8; font-weight: 700; 
+            padding: 12px 24px; border-radius: 14px; 
+        }
+
+        .category-btn.active { 
+            background: rgba(6, 182, 212, 0.15); 
+            border-color: #06b6d4; 
+            color: #22d3ee;
+            box-shadow: inset 0 0 10px rgba(6, 182, 212, 0.2);
+        }
+
+        .admin-input { 
+            background: rgba(0, 0, 0, 0.4); 
+            border: 1px solid rgba(6, 182, 212, 0.2); 
+            padding: 14px; border-radius: 14px; outline: none; width: 100%; color: white; 
+        }
+
+        /* TEXT SHINY */
+        .shiny-text {
+            background: linear-gradient(to right, #fff 20%, #22d3ee 50%, #fff 80%);
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-size: 200% auto;
+            animation: shine 4s linear infinite;
+        }
+
+        @keyframes shine { to { background-position: 200% center; } }
         @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
         .toast-animate { animation: slideIn 0.4s ease-out forwards; }
+        
+        input::-webkit-outer-spin-button, input::-webkit-inner-spin-button { -webkit-appearance: none; margin: 0; }
+        .qty-input { background: transparent; border: none; text-align: center; width: 45px; font-weight: 800; color: #22d3ee; outline: none; }
     </style>
 </head>
 <body>
 
     <div id="toast-container" class="fixed bottom-6 left-6 z-[100] flex flex-col gap-3 w-72"></div>
 
-    <nav class="glass-nav sticky top-0 z-50 p-4">
+    <nav class="glass-nav sticky top-0 z-50 p-5">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
-            <div class="text-2xl font-black italic select-none cursor-pointer" onclick="location.reload()">
-                <span class="text-indigo-500">GEAR</span>STORE
+            <div class="text-2xl font-black italic tracking-widest cursor-pointer" onclick="location.reload()">
+                <span class="text-cyan-400">GEAR</span><span class="text-emerald-400">STORE</span>
             </div>
             <div class="flex items-center gap-6">
-                <a href="https://discord.gg/yourlink" class="hidden md:flex items-center gap-2 bg-[#5865f2] px-4 py-2 rounded-lg font-bold text-xs uppercase"><img src="https://cdn-icons-png.flaticon.com/512/5968/5968756.png" class="w-4"> Discord</a>
-                <div class="relative cursor-pointer" onclick="toggleCart()">
-                    <span class="text-xl">🛒</span>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                <div class="relative cursor-pointer group" onclick="toggleCart()">
+                    <span class="text-2xl group-hover:scale-110 transition inline-block">🛒</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-cyan-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold border border-black">0</span>
                 </div>
             </div>
         </div>
     </nav>
 
     <div id="shop-container">
-        <header class="py-12 text-center">
-            <h1 class="text-5xl font-black italic tracking-tighter uppercase mb-8">Lah Market</h1>
+        <header class="py-16 text-center">
+            <h1 class="text-6xl font-black italic tracking-tighter uppercase mb-8 shiny-text">LAH MARKET</h1>
             
-            <div class="flex justify-center gap-3 mb-10">
-                <button onclick="filterCat('all')" id="cat-all" class="category-btn active">Semua</button>
-                <button onclick="filterCat('FiveM')" id="cat-FiveM" class="category-btn">🎮 FiveM</button>
-                <button onclick="filterCat('Cloud Phone')" id="cat-Cloud" class="category-btn">📱 Cloud Phone</button>
+            <div class="flex justify-center flex-wrap gap-4 mb-12">
+                <button onclick="filterCat('all')" id="cat-all" class="category-btn active">ALL ITEMS</button>
+                <button onclick="filterCat('FiveM')" id="cat-FiveM" class="category-btn">🎮 FIVEM</button>
+                <button onclick="filterCat('Cloud Phone')" id="cat-Cloud" class="category-btn">📱 CLOUD PHONE</button>
             </div>
 
-            <div class="max-w-md mx-auto px-6">
-                <input type="text" id="search-input" oninput="renderShop()" placeholder="Cari produk..." class="admin-input text-center text-sm border-white/10">
+            <div class="max-w-lg mx-auto px-6">
+                <input type="text" id="search-input" oninput="renderShop()" placeholder="Search premium gear..." class="admin-input text-center text-sm border-cyan-500/20 focus:border-cyan-400 transition">
             </div>
         </header>
 
-        <main class="max-w-7xl mx-auto px-6 pb-20">
-            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
+        <main class="max-w-7xl mx-auto px-6 pb-24">
+            <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
         </main>
     </div>
 
     <main id="admin-page" class="hidden max-w-6xl mx-auto p-10 min-h-screen">
-        <div class="flex justify-between items-center mb-10 border-b border-white/5 pb-6">
-            <h2 class="text-3xl font-black text-indigo-400 italic">MASTER CONTROL</h2>
+        <div class="flex justify-between items-center mb-10 border-b border-cyan-500/20 pb-8">
+            <h2 class="text-3xl font-black text-cyan-400 italic">MASTER CONTROL</h2>
             <div class="flex gap-4">
-                <input type="password" id="webhook-url" placeholder="Paste Discord Webhook URL" class="admin-input text-xs w-64 border-indigo-500/30">
-                <button onclick="location.reload()" class="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-bold border border-red-500/20">LOGOUT</button>
+                <input type="password" id="webhook-url" placeholder="Discord Webhook URL" class="admin-input text-xs w-64">
+                <button onclick="location.reload()" class="bg-red-500/10 text-red-500 px-6 py-2 rounded-xl font-bold border border-red-500/20 hover:bg-red-500 hover:text-white transition">EXIT</button>
             </div>
         </div>
 
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div class="glass-card p-6 h-fit sticky top-24">
-                <h3 id="form-title" class="font-bold mb-6 text-indigo-400 uppercase text-sm">Tambah Produk</h3>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-10">
+            <div class="glass-card p-8 h-fit sticky top-28">
+                <h3 id="form-title" class="font-bold mb-8 text-emerald-400 uppercase text-xs tracking-[0.2em]">Product Management</h3>
                 <input type="hidden" id="edit-id">
-                <div class="space-y-4">
-                    <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input">
+                <div class="space-y-5">
+                    <input type="text" id="p-name" placeholder="Product Name" class="admin-input">
                     <select id="p-cat" class="admin-input">
                         <option value="FiveM">FiveM</option>
                         <option value="Cloud Phone">Cloud Phone</option>
                     </select>
-                    <input type="number" id="p-price" placeholder="Harga" class="admin-input">
-                    <input type="number" id="p-stock" placeholder="Stok" class="admin-input">
-                    <input type="text" id="p-img" placeholder="URL Gambar" class="admin-input">
-                    <div class="flex gap-2">
-                        <button id="btn-save" onclick="handleSaveProduct()" class="btn-buy flex-1 py-4 rounded-xl font-black uppercase text-xs">Simpan</button>
-                        <button id="btn-cancel" onclick="clearForm()" class="hidden bg-gray-800 px-4 rounded-xl">X</button>
+                    <input type="number" id="p-price" placeholder="Price (Rp)" class="admin-input">
+                    <input type="number" id="p-stock" placeholder="Initial Stock" class="admin-input">
+                    <input type="text" id="p-img" placeholder="Image URL" class="admin-input">
+                    <div class="flex gap-3">
+                        <button id="btn-save" onclick="handleSaveProduct()" class="btn-luxury flex-1 py-4 rounded-xl font-black uppercase text-xs tracking-wider">Save Product</button>
+                        <button id="btn-cancel" onclick="clearForm()" class="hidden bg-slate-800 px-5 rounded-xl text-white">X</button>
                     </div>
                 </div>
             </div>
@@ -93,8 +163,8 @@
             <div class="md:col-span-2">
                 <div class="glass-card overflow-hidden">
                     <table class="w-full text-sm text-left">
-                        <thead class="bg-white/5 text-gray-500 uppercase text-[10px]">
-                            <tr><th class="p-4">Item</th><th class="p-4 text-center">Stok</th><th class="p-4 text-right">Aksi</th></tr>
+                        <thead class="bg-cyan-500/10 text-cyan-400 uppercase text-[10px] tracking-widest">
+                            <tr><th class="p-5">Product Info</th><th class="p-5 text-center">Stock</th><th class="p-5 text-right">Actions</th></tr>
                         </thead>
                         <tbody id="admin-table-body"></tbody>
                     </table>
@@ -103,30 +173,36 @@
         </div>
     </main>
 
-    <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-end">
-        <div class="bg-[#0d0d12] w-full max-w-sm h-full p-8 border-l border-white/10 flex flex-col">
-            <h2 class="text-2xl font-black mb-8 italic uppercase">Keranjang</h2>
-            <div id="cart-items" class="flex-1 overflow-y-auto space-y-3"></div>
-            <div class="border-t border-white/10 pt-6 mt-4">
-                <div class="flex justify-between text-2xl font-black mb-6">
-                    <span>Total:</span><span class="text-indigo-500">Rp <span id="cart-total">0</span></span>
+    <div id="cart-modal" class="fixed inset-0 bg-black/90 hidden z-[60] flex justify-end backdrop-blur-sm">
+        <div class="bg-[#050a0a] w-full max-w-md h-full p-10 border-l border-cyan-500/20 flex flex-col shadow-2xl">
+            <h2 class="text-3xl font-black mb-10 italic uppercase tracking-tighter text-cyan-400">Cart</h2>
+            <div id="cart-items" class="flex-1 overflow-y-auto space-y-4 pr-2"></div>
+            <div class="border-t border-cyan-500/20 pt-8 mt-6">
+                <div class="flex justify-between text-3xl font-black mb-8 italic">
+                    <span class="text-gray-500">Total:</span><span class="text-emerald-400">Rp <span id="cart-total">0</span></span>
                 </div>
-                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black uppercase italic">Bayar</button>
+                <button onclick="openCheckout()" class="btn-luxury w-full py-5 rounded-2xl font-black uppercase italic tracking-widest text-lg">Checkout Now</button>
+                <button onclick="toggleCart()" class="w-full mt-6 text-gray-500 text-xs font-bold uppercase tracking-widest hover:text-white transition">Continue Shopping</button>
             </div>
         </div>
     </div>
 
-    <div id="qris-modal" class="fixed inset-0 bg-black/90 hidden z-[70] flex items-center justify-center p-6 backdrop-blur-md">
-        <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full">
-            <h2 class="text-black font-black text-xl mb-4 italic">PAYMENT QR</h2>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=LAHMKT_PAY" class="mx-auto mb-4 w-52 h-52">
-            <p class="text-gray-500 text-xs mb-6 font-bold">Total: <br><b class="text-black text-xl font-black" id="qris-total">Rp 0</b></p>
-            <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black shadow-lg">KONFIRMASI</button>
+    <div id="qris-modal" class="fixed inset-0 bg-black/95 hidden z-[70] flex items-center justify-center p-6 backdrop-blur-md">
+        <div class="bg-[#f8fafc] p-10 rounded-[2.5rem] text-center max-w-sm w-full shadow-[0_0_50px_rgba(6,182,212,0.3)]">
+            <h2 class="text-slate-900 font-black text-2xl mb-2 italic">SCAN TO PAY</h2>
+            <p class="text-slate-400 text-[10px] font-bold uppercase tracking-[0.2em] mb-8">Secure Transaction</p>
+            <div class="bg-white p-4 rounded-3xl mb-8 inline-block shadow-inner border border-slate-100">
+                <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_EMERALD_PAY" class="w-56 h-56">
+            </div>
+            <p class="text-slate-500 text-xs mb-8">Amount Due: <br><b class="text-slate-900 text-2xl font-black" id="qris-total">Rp 0</b></p>
+            <button onclick="finalizePayment()" class="w-full bg-[#10b981] text-white py-5 rounded-2xl font-black shadow-xl hover:scale-[1.02] transition active:scale-95">CONFIRM PAYMENT</button>
         </div>
     </div>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('gear_v12_data')) || [];
+        let products = JSON.parse(localStorage.getItem('gear_v13_data')) || [
+            { id: 1, name: "EMERALD STEAM", category: "FiveM", price: 15000, stock: 50, sold: 12, img: "https://via.placeholder.com/400" }
+        ];
         let cart = [];
         let currentCat = 'all';
         const MASTER_PASS = "admin123";
@@ -134,19 +210,20 @@
         function showToast(msg, type = "success") {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = `${type === "success" ? "bg-indigo-600" : "bg-red-600"} text-white px-5 py-3 rounded-2xl shadow-2xl toast-animate border border-white/10`;
-            toast.innerHTML = `<span class="text-[10px] font-bold uppercase">${msg}</span>`;
+            toast.className = `${type === "success" ? "bg-cyan-600 shadow-[0_0_20px_rgba(6,182,212,0.4)]" : "bg-red-600"} text-white px-6 py-4 rounded-2xl toast-animate border border-white/10 flex items-center gap-3`;
+            toast.innerHTML = `<span class="text-[10px] font-black uppercase tracking-widest">${msg}</span>`;
             container.appendChild(toast);
             setTimeout(() => { toast.style.opacity = "0"; setTimeout(() => toast.remove(), 400); }, 4000);
         }
 
         window.addEventListener('keydown', (e) => {
             if(e.key === "F7") {
-                const p = prompt("ADMIN PASS:");
+                const p = prompt("ACCESS TOKEN:");
                 if(p === MASTER_PASS) {
                     document.getElementById('shop-container').classList.add('hidden');
                     document.getElementById('admin-page').classList.remove('hidden');
                     renderAdmin();
+                    showToast("Master Control Unlocked");
                 }
             }
         });
@@ -154,9 +231,7 @@
         function filterCat(cat) {
             currentCat = cat;
             document.querySelectorAll('.category-btn').forEach(btn => btn.classList.remove('active'));
-            if(cat === 'all') document.getElementById('cat-all').classList.add('active');
-            else if(cat === 'FiveM') document.getElementById('cat-FiveM').classList.add('active');
-            else document.getElementById('cat-Cloud').classList.add('active');
+            document.getElementById(cat === 'all' ? 'cat-all' : (cat === 'FiveM' ? 'cat-FiveM' : 'cat-Cloud')).classList.add('active');
             renderShop();
         }
 
@@ -174,62 +249,42 @@
             filtered.forEach(p => {
                 const isOut = p.stock <= 0;
                 list.innerHTML += `
-                    <div class="glass-card p-4 flex flex-col h-full relative">
-                        <div class="absolute top-6 right-6 bg-black/60 backdrop-blur px-2 py-1 rounded text-[8px] font-bold uppercase z-10">${p.category}</div>
-                        <img src="${p.img}" class="w-full h-44 object-cover rounded-xl mb-4">
-                        <h3 class="font-bold text-sm uppercase truncate mb-1">${p.name}</h3>
-                        <p class="text-xl font-black text-white mb-4">Rp ${p.price.toLocaleString()}</p>
-                        <div class="flex justify-between items-center mb-4 bg-white/5 p-2 rounded-lg">
-                            <span class="text-[9px] text-gray-500 font-bold uppercase">Stok: ${p.stock}</span>
-                            <span class="text-[9px] text-indigo-400 font-bold uppercase">Sold: ${p.sold}</span>
+                    <div class="glass-card p-5 flex flex-col h-full group">
+                        <div class="relative overflow-hidden rounded-2xl mb-6">
+                            <div class="absolute top-4 right-4 bg-cyan-500/80 backdrop-blur px-3 py-1 rounded-full text-[8px] font-black uppercase z-10 border border-white/20">${p.category}</div>
+                            <img src="${p.img}" class="w-full h-52 object-cover group-hover:scale-110 transition duration-700">
                         </div>
-                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800' : 'btn-buy'} py-3 rounded-xl font-black text-[10px] uppercase">
-                            ${isOut ? 'OUT OF STOCK' : 'ADD TO CART'}
+                        <h3 class="font-extrabold text-sm uppercase truncate mb-1 tracking-tight">${p.name}</h3>
+                        <p class="text-2xl font-black text-cyan-400 mb-6 italic">Rp ${p.price.toLocaleString()}</p>
+                        <div class="flex justify-between items-center mb-6 bg-white/[0.03] p-3 rounded-xl border border-white/5">
+                            <span class="text-[9px] text-gray-500 font-bold uppercase">Stock: ${p.stock}</span>
+                            <span class="text-[9px] text-emerald-400 font-bold uppercase">Sold: ${p.sold}</span>
+                        </div>
+                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800 cursor-not-allowed text-gray-500' : 'btn-luxury'} py-4 rounded-xl font-black text-[10px] uppercase tracking-widest italic transition">
+                            ${isOut ? 'OUT OF STOCK' : 'ADD TO GEAR'}
                         </button>
                     </div>`;
             });
         }
 
-        // WEBHOOK LOGIC
         async function sendWebhook(cartItems, total) {
             const url = document.getElementById('webhook-url').value;
             if(!url) return;
-
-            const fields = cartItems.map(item => ({
-                name: item.name,
-                value: `Qty: ${item.qty} | Price: Rp ${item.price.toLocaleString()}`,
-                inline: true
-            }));
-
             const payload = {
-                username: "LAHS STORE BOT",
+                username: "GEAR STORE ALERTS",
                 embeds: [{
-                    title: "🛒 NEW ORDER RECEIVED!",
-                    color: 0x6366f1,
-                    fields: [...fields, { name: "Total Payment", value: `**Rp ${total.toLocaleString()}**` }],
+                    title: "💎 LUXURY ORDER CONFIRMED",
+                    color: 0x06b6d4,
+                    fields: [
+                        { name: "Order Details", value: cartItems.map(i => `• ${i.name} (x${i.qty})`).join('\n') },
+                        { name: "Total Revenue", value: `**Rp ${total.toLocaleString()}**` }
+                    ],
                     timestamp: new Date()
                 }]
             };
-
-            await fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+            fetch(url, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
         }
 
-        function finalizePayment() {
-            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
-            sendWebhook(cart, total);
-
-            cart.forEach(c => {
-                const p = products.find(o => o.id === c.id);
-                p.stock -= c.qty; p.sold += c.qty;
-            });
-            
-            saveData(); showToast("Pembayaran Berhasil & Webhook Dikirim!"); cart = []; updateCartUI();
-            document.getElementById('qris-modal').classList.add('hidden');
-            document.getElementById('cart-modal').classList.add('hidden');
-            renderShop();
-        }
-
-        // --- SISTEM CRUD (EDIT/SAVE/RESTOCK) ---
         function handleSaveProduct() {
             const id = document.getElementById('edit-id').value;
             const data = {
@@ -238,15 +293,13 @@
                 category: document.getElementById('p-cat').value,
                 price: Number(document.getElementById('p-price').value),
                 stock: Number(document.getElementById('p-stock').value),
-                img: document.getElementById('p-img').value || "https://via.placeholder.com/300",
+                img: document.getElementById('p-img').value || "https://via.placeholder.com/400",
                 sold: id ? products.find(p => p.id == id).sold : 0
             };
-
             if(id) products[products.findIndex(p => p.id == id)] = data;
             else products.push(data);
-
             saveData(); clearForm(); renderAdmin(); renderShop();
-            showToast("Produk Berhasil Disimpan");
+            showToast("Vault Updated Successfully");
         }
 
         function editProduct(id) {
@@ -257,14 +310,14 @@
             document.getElementById('p-price').value = p.price;
             document.getElementById('p-stock').value = p.stock;
             document.getElementById('p-img').value = p.img;
-            document.getElementById('form-title').innerText = "Edit Produk";
+            document.getElementById('form-title').innerText = "Update Gear Info";
             document.getElementById('btn-cancel').classList.remove('hidden');
         }
 
         function restock(id) {
             const p = products.find(x => x.id === id);
-            const add = prompt(`Tambah stok ${p.name}:`, "0");
-            if (add) { p.stock += parseInt(add); saveData(); renderAdmin(); renderShop(); showToast("Stok Ditambah"); }
+            const add = prompt(`Add stock for ${p.name}:`, "0");
+            if (add) { p.stock += parseInt(add); saveData(); renderAdmin(); renderShop(); showToast("Supply Replenished"); }
         }
 
         function clearForm() {
@@ -273,7 +326,7 @@
             document.getElementById('p-price').value = "";
             document.getElementById('p-stock').value = "";
             document.getElementById('p-img').value = "";
-            document.getElementById('form-title').innerText = "Tambah Produk";
+            document.getElementById('form-title').innerText = "Product Management";
             document.getElementById('btn-cancel').classList.add('hidden');
         }
 
@@ -282,27 +335,28 @@
             tbody.innerHTML = '';
             products.forEach(p => {
                 tbody.innerHTML += `
-                    <tr class="border-b border-white/5">
-                        <td class="p-4 uppercase text-[10px] font-bold">${p.name} <br> <span class="text-indigo-500 text-[8px]">${p.category}</span></td>
-                        <td class="p-4 text-center text-xs font-bold text-indigo-400">${p.stock}</td>
-                        <td class="p-4 text-right space-x-2">
-                            <button onclick="restock(${p.id})" class="text-green-500 font-bold text-[9px]">RESTOK</button>
-                            <button onclick="editProduct(${p.id})" class="text-blue-400 font-bold text-[9px]">EDIT</button>
-                            <button onclick="deleteP(${p.id})" class="text-red-500 font-bold text-[9px]">HAPUS</button>
+                    <tr class="border-b border-white/5 hover:bg-cyan-500/[0.02] transition">
+                        <td class="p-5 uppercase font-extrabold text-xs text-slate-300">
+                            ${p.name} <br> <span class="text-cyan-500 text-[8px] tracking-[0.2em] font-black italic">${p.category}</span>
+                        </td>
+                        <td class="p-5 text-center text-xs font-black text-emerald-400 italic">${p.stock}</td>
+                        <td class="p-5 text-right space-x-4">
+                            <button onclick="restock(${p.id})" class="text-emerald-400 font-black text-[9px] hover:scale-110 transition">REPLENISH</button>
+                            <button onclick="editProduct(${p.id})" class="text-cyan-400 font-black text-[9px] hover:scale-110 transition">MOD</button>
+                            <button onclick="deleteP(${p.id})" class="text-red-500 font-black text-[9px] hover:scale-110 transition">PURGE</button>
                         </td>
                     </tr>`;
             });
         }
 
-        // --- KERANJANG UI & LAINNYA ---
         function addToCart(id) {
             const p = products.find(prod => prod.id === id);
-            const cartItem = cart.find(item => item.id === id);
-            if(cartItem) {
-                if(cartItem.qty < p.stock) cartItem.qty++;
-                else return showToast("Stok limit!", "error");
+            const item = cart.find(i => i.id === id);
+            if(item) {
+                if(item.qty < p.stock) item.qty++;
+                else return showToast("Limited supply reached", "error");
             } else { cart.push({...p, qty: 1}); }
-            updateCartUI(); showToast("Ditambahkan");
+            updateCartUI(); showToast("Gear Added to Cart");
         }
 
         function updateCartUI() {
@@ -312,12 +366,12 @@
             cart.forEach((c, idx) => {
                 total += (c.price * c.qty);
                 list.innerHTML += `
-                    <div class="bg-white/5 p-3 rounded-2xl flex items-center justify-between">
-                        <p class="text-[11px] font-bold uppercase truncate w-24">${c.name}</p>
-                        <div class="flex items-center gap-1 bg-black/40 px-2 py-1 rounded-xl">
-                            <button onclick="changeQty(${idx}, -1)" class="text-indigo-400 font-black px-2">-</button>
+                    <div class="bg-white/5 p-4 rounded-2xl flex items-center justify-between border border-white/5">
+                        <p class="text-[11px] font-black uppercase truncate w-32 tracking-tight">${c.name}</p>
+                        <div class="flex items-center gap-2 bg-black/40 px-3 py-1 rounded-xl border border-cyan-500/30">
+                            <button onclick="changeQty(${idx}, -1)" class="text-cyan-400 font-black">-</button>
                             <input type="number" class="qty-input" value="${c.qty}" onchange="manualQty(${idx}, this.value)">
-                            <button onclick="changeQty(${idx}, 1)" class="text-indigo-400 font-black px-2">+</button>
+                            <button onclick="changeQty(${idx}, 1)" class="text-cyan-400 font-black">+</button>
                         </div>
                     </div>`;
             });
@@ -343,14 +397,25 @@
             updateCartUI();
         }
 
-        function deleteP(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); renderShop(); } }
-        function saveData() { localStorage.setItem('gear_v12_data', JSON.stringify(products)); }
-        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
         function openCheckout() {
             if(!cart.length) return;
             document.getElementById('qris-total').innerText = "Rp " + document.getElementById('cart-total').innerText;
             document.getElementById('qris-modal').classList.remove('hidden');
         }
+
+        function finalizePayment() {
+            const total = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            sendWebhook(cart, total);
+            cart.forEach(c => { const p = products.find(o => o.id === c.id); p.stock -= c.qty; p.sold += c.qty; });
+            saveData(); showToast("Gear Delivered Successfully!"); cart = []; updateCartUI();
+            document.getElementById('qris-modal').classList.add('hidden');
+            document.getElementById('cart-modal').classList.add('hidden');
+            renderShop();
+        }
+
+        function deleteP(id) { if(confirm("Purge this gear?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); renderShop(); } }
+        function saveData() { localStorage.setItem('gear_v13_data', JSON.stringify(products)); }
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
 
         renderShop();
     </script>
