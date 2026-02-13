@@ -3,209 +3,288 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lah Market Clone</title>
+    <title>GEAR STORE | Gaming Marketplace</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background-color: #0d0d12; color: #ffffff; font-family: 'Inter', sans-serif; }
+        body { background-color: #08080c; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        .glass-nav { background: rgba(13, 13, 18, 0.8); backdrop-filter: blur(12px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        .hero-glow { background: radial-gradient(circle at 50% 50%, rgba(99, 102, 241, 0.15) 0%, transparent 50%); }
+        .glass-card { background: #11111a; border: 1px solid #1f1f2e; transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .glass-card:hover { border-color: #6366f1; transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .neon-text { text-shadow: 0 0 10px rgba(99, 102, 241, 0.5); }
+        .btn-gradient { background: linear-gradient(90deg, #6366f1, #a855f7); }
+        .qris-modal { background: rgba(0,0,0,0.9); backdrop-filter: blur(10px); }
         
-        /* Glassmorphism Card */
-        .glass-card {
-            background: #16161f;
-            border: 1px solid #2d2d3d;
-            border-radius: 1.25rem;
-            transition: all 0.3s ease;
-        }
-        .glass-card:hover { border-color: #6366f1; transform: translateY(-4px); }
-
-        /* Neon Border untuk Gambar */
-        .neon-border {
-            border: 2px solid rgba(34, 197, 94, 0.5);
-            box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
-        }
-
-        /* Button Gradient & Glow */
-        .btn-buy {
-            background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
-            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
-        }
-
-        .category-btn {
-            background: #1c1c27;
-            border: 1px solid #2d2d3d;
-            transition: all 0.3s;
-        }
-        .category-btn.active {
-            background: #5865f2;
-            border-color: #5865f2;
-            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
-        }
-
-        .discord-float {
-            position: fixed; bottom: 20px; left: 20px;
-            background: #5865f2; color: white;
-            padding: 10px 20px; border-radius: 12px;
-            font-weight: bold; z-index: 100;
-            display: flex; align-items: center; gap: 8px;
-        }
+        /* Discord Floating Button */
+        .discord-btn { position: fixed; bottom: 20px; left: 20px; background: #5865F2; padding: 12px 24px; border-radius: 12px; font-weight: 800; z-index: 50; box-shadow: 0 10px 20px rgba(88, 101, 242, 0.3); }
     </style>
 </head>
 <body>
 
-    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
-        <div class="flex items-center gap-2">
-            <div class="bg-indigo-600 p-2 rounded-lg">🛒</div>
-            <span class="text-xl font-bold tracking-tight">Lah Market</span>
-        </div>
-        <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
-            <a href="#" class="text-white">Home</a>
-            <a href="#" onclick="showPage('shop')">Products</a>
-            <a href="#">History</a>
-            <button onclick="showPage('admin')" class="text-indigo-400 font-bold border border-indigo-400/30 px-3 py-1 rounded">Admin</button>
-        </div>
-        <div class="flex gap-3">
-            <button class="bg-[#5865f2] px-5 py-2 rounded-lg text-sm font-bold">Discord</button>
-            <button class="bg-indigo-600 px-5 py-2 rounded-lg text-sm font-bold">Login</button>
+    <nav class="glass-nav sticky top-0 z-50 p-4">
+        <div class="max-w-7xl mx-auto flex justify-between items-center">
+            <div class="flex items-center gap-2 cursor-pointer select-none" onclick="secretAdminAccess()">
+                <span id="admin-logo" class="text-2xl font-black tracking-tighter text-indigo-500">GEAR</span>
+                <span class="text-2xl font-black tracking-tighter">STORE</span>
+            </div>
+            <div class="hidden md:flex gap-8 font-semibold text-sm text-gray-400">
+                <a href="#" onclick="showPage('shop')" class="hover:text-white">Products</a>
+                <a href="#" class="hover:text-white">Testimonials</a>
+                <a href="#" class="hover:text-white">Tutorial</a>
+            </div>
+            <div class="flex items-center gap-4">
+                <div class="relative cursor-pointer" onclick="toggleCart()">
+                    <span class="text-xl">🛒</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+                </div>
+                <button class="bg-white/5 border border-white/10 px-4 py-2 rounded-lg font-bold text-sm">Login</button>
+            </div>
         </div>
     </nav>
 
-    <main id="shop-page" class="max-w-7xl mx-auto p-6">
+    <header id="hero" class="hero-glow py-20 px-6 text-center">
+        <h1 class="text-6xl md:text-8xl font-black mb-6 tracking-tight leading-none">
+            Looking for <br><span class="text-transparent bg-clip-text bg-gradient-to-r from-indigo-500 to-purple-500">Gaming Accounts?</span>
+        </h1>
+        <p class="text-gray-400 text-lg md:text-xl max-w-2xl mx-auto mb-10">
+            The most trusted marketplace for premium gaming assets. Instant delivery, lifetime warranty, and 24/7 support.
+        </p>
         
-        <div class="flex justify-center gap-4 mb-6">
-            <button onclick="filterCategory('All')" class="category-btn active px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold" id="cat-all">
-                🌐 All
-            </button>
-            <button onclick="filterCategory('FiveM')" class="category-btn px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold text-gray-400" id="cat-fivem">
-                🎮 FiveM
-            </button>
-            <button onclick="filterCategory('Cloud Phone')" class="category-btn px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold text-gray-400" id="cat-cloud">
-                📱 Cloud Phone
-            </button>
+        <div class="grid grid-cols-2 md:grid-cols-3 gap-8 max-w-4xl mx-auto mt-16 border-t border-white/5 pt-10">
+            <div><h4 class="text-3xl font-black text-white">10K+</h4><p class="text-gray-500 text-sm">Products Sold</p></div>
+            <div><h4 class="text-3xl font-black text-white" id="stat-total">0</h4><p class="text-gray-500 text-sm">Total Products</p></div>
+            <div class="hidden md:block"><h4 class="text-3xl font-black text-white">4.9/5</h4><p class="text-gray-500 text-sm">Average Rating</p></div>
+        </div>
+    </header>
+
+    <main id="shop-page" class="max-w-7xl mx-auto px-6 pb-20">
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-20">
+            <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                <div class="text-3xl">🛡️</div>
+                <div><h5 class="font-bold">Guaranteed Quality</h5><p class="text-xs text-gray-500">Manual checked accounts</p></div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                <div class="text-3xl">⚡</div>
+                <div><h5 class="font-bold">Instant Delivery</h5><p class="text-xs text-gray-500">Automated system process</p></div>
+            </div>
+            <div class="glass-card p-6 rounded-2xl flex items-center gap-4">
+                <div class="text-3xl">💬</div>
+                <div><h5 class="font-bold">Live Support</h5><p class="text-xs text-gray-500">Ready to help 24/7</p></div>
+            </div>
         </div>
 
-        <div class="relative max-w-2xl mx-auto mb-12">
-            <span class="absolute inset-y-0 left-4 flex items-center text-gray-500 text-xl">🔍</span>
-            <input type="text" placeholder="Cari produk..." class="w-full bg-[#16161f] border border-[#2d2d3d] rounded-2xl py-4 pl-12 pr-4 focus:border-indigo-500 outline-none text-sm transition-all">
+        <div class="mb-10 flex flex-col md:flex-row justify-between items-center gap-4">
+            <h2 class="text-3xl font-black">Trending Now</h2>
+            <div class="relative w-full md:w-96">
+                <input type="text" id="search-input" onkeyup="searchProduct()" placeholder="Search product name..." class="w-full bg-[#11111a] border border-white/5 p-3 rounded-xl outline-none focus:border-indigo-500">
+            </div>
         </div>
 
         <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
     </main>
 
-    <main id="admin-page" class="hidden max-w-4xl mx-auto p-10">
-        <div class="bg-[#16161f] p-8 rounded-3xl border border-[#2d2d3d]">
-            <h2 class="text-2xl font-bold mb-6">Tambah Katalog Produk</h2>
-            <div class="grid grid-cols-1 gap-4">
-                <input type="text" id="adm-name" placeholder="Nama Produk" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
+    <main id="admin-page" class="hidden max-w-4xl mx-auto p-10 min-h-screen">
+        <div class="flex justify-between items-center mb-8">
+            <h2 class="text-4xl font-black">Master Dashboard</h2>
+            <button onclick="showPage('shop')" class="text-red-500 font-bold">Exit Dashboard</button>
+        </div>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="bg-indigo-600/20 border border-indigo-500 p-6 rounded-3xl">
+                <p class="text-indigo-400 text-sm font-bold">Total Revenue</p>
+                <h3 class="text-4xl font-black" id="adm-revenue">Rp 0</h3>
+            </div>
+            <div class="bg-purple-600/20 border border-purple-500 p-6 rounded-3xl">
+                <p class="text-purple-400 text-sm font-bold">Orders Processed</p>
+                <h3 class="text-4xl font-black" id="adm-orders">0</h3>
+            </div>
+        </div>
+
+        <div class="glass-card p-8 rounded-3xl mb-10">
+            <h3 class="text-xl font-bold mb-6">Create New Catalog</h3>
+            <div class="grid gap-4">
+                <input type="text" id="new-name" placeholder="Product Name" class="bg-black/50 border border-white/10 p-3 rounded-xl outline-none">
                 <div class="grid grid-cols-2 gap-4">
-                    <input type="number" id="adm-price" placeholder="Harga" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
-                    <input type="number" id="adm-reseller" placeholder="Harga Reseller" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
+                    <input type="number" id="new-price" placeholder="Price (Rp)" class="bg-black/50 border border-white/10 p-3 rounded-xl outline-none">
+                    <input type="number" id="new-stock" placeholder="Initial Stock" class="bg-black/50 border border-white/10 p-3 rounded-xl outline-none">
                 </div>
-                <select id="adm-cat" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none text-gray-400">
-                    <option value="FiveM">Kategori: FiveM</option>
-                    <option value="Cloud Phone">Kategori: Cloud Phone</option>
-                </select>
-                <div class="grid grid-cols-2 gap-4">
-                    <input type="number" id="adm-stock" placeholder="Stok" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
-                    <input type="text" id="adm-img" placeholder="URL Gambar" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
-                </div>
-                <button onclick="addProduct()" class="bg-indigo-600 py-4 rounded-xl font-bold mt-4">Simpan Produk</button>
+                <input type="text" id="new-img" placeholder="Image URL" class="bg-black/50 border border-white/10 p-3 rounded-xl outline-none">
+                <button onclick="saveNewProduct()" class="btn-gradient py-4 rounded-xl font-black uppercase tracking-widest">Publish Product</button>
             </div>
         </div>
     </main>
 
-    <a href="https://discord.gg/xyz" class="discord-float">
-        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" width="20">
-        CS Discord
+    <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-end">
+        <div class="bg-[#0d0d12] w-full max-w-md h-full p-8 border-l border-white/10 flex flex-col">
+            <div class="flex justify-between items-center mb-10">
+                <h2 class="text-2xl font-black">Your Cart</h2>
+                <button onclick="toggleCart()" class="text-3xl">&times;</button>
+            </div>
+            <div id="cart-items" class="flex-1 space-y-4 overflow-y-auto px-2"></div>
+            <div class="border-t border-white/10 pt-6 mt-6">
+                <div class="flex justify-between text-2xl font-black mb-6 italic">
+                    <span>Total:</span>
+                    <span class="text-indigo-500">Rp <span id="cart-total">0</span></span>
+                </div>
+                <button onclick="simulasiCheckout()" class="btn-gradient w-full py-4 rounded-2xl font-black text-lg shadow-lg shadow-indigo-500/20">PROCEED TO CHECKOUT</button>
+            </div>
+        </div>
+    </div>
+
+    <div id="qris-modal" class="qris-modal fixed inset-0 hidden z-[70] flex items-center justify-center p-6">
+        <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full shadow-2xl">
+            <h2 class="text-black font-black text-xl mb-4">Scan QRIS to Pay</h2>
+            <img src="https://upload.wikimedia.org/wikipedia/commons/d/d0/QR_code_for_mobile_English_Wikipedia.svg" class="w-full mb-4">
+            <p class="text-gray-500 text-xs mb-6">Total Tagihan: <br><b class="text-black text-lg" id="qris-total">Rp 0</b></p>
+            <button onclick="confirmPayment()" class="w-full bg-green-500 text-white py-3 rounded-xl font-bold">Saya Sudah Bayar</button>
+            <button onclick="closeQRIS()" class="w-full mt-2 text-gray-400 text-xs font-bold">Batalkan</button>
+        </div>
+    </div>
+
+    <a href="https://discord.gg/yourlink" target="_blank" class="discord-btn">
+        <span>💬</span> DISCORD SUPPORT
     </a>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('lahProducts')) || [
-            { id: 1, name: "LAH STEAM FRESH", cat: "FiveM", price: 1500, reseller: 900, stock: 44, sold: 255, img: "https://via.placeholder.com/300/101015/00FF00" },
-            { id: 2, name: "Bundle For Fivem", cat: "FiveM", price: 25000, reseller: 18000, stock: 0, sold: 100, img: "https://via.placeholder.com/300/101015/00FF00" }
+        let products = JSON.parse(localStorage.getItem('gearPro_products')) || [
+            { id: 1, name: "GTA V Premium Account", price: 45000, stock: 12, img: "https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=300" },
+            { id: 2, name: "Valorant Radiant Smurf", price: 120000, stock: 5, img: "https://images.unsplash.com/photo-1542751371-adc38448a05e?auto=format&fit=crop&w=300" }
         ];
+
+        let revenue = Number(localStorage.getItem('gearPro_rev')) || 0;
+        let orders = Number(localStorage.getItem('gearPro_ord')) || 0;
+        let cart = [];
+        let clickCount = 0;
+
+        function secretAdminAccess() {
+            clickCount++;
+            if (clickCount >= 3) {
+                showPage('admin');
+                clickCount = 0;
+                alert("Welcome, Boss. Panel Admin Terbuka!");
+            }
+            setTimeout(() => { if(clickCount < 3) clickCount = 0; }, 2000);
+        }
 
         function showPage(page) {
             document.getElementById('shop-page').classList.toggle('hidden', page !== 'shop');
+            document.getElementById('hero').classList.toggle('hidden', page !== 'shop');
             document.getElementById('admin-page').classList.toggle('hidden', page !== 'admin');
+            if(page === 'admin') renderAdmin();
         }
 
-        function filterCategory(cat) {
-            // Update UI Button
-            document.querySelectorAll('.category-btn').forEach(btn => {
-                btn.classList.remove('active', 'text-white');
-                btn.classList.add('text-gray-400');
-            });
-            event.currentTarget.classList.add('active', 'text-white');
-            
-            renderShop(cat);
-        }
-
-        function renderShop(filter = 'All') {
+        function renderShop(data = products) {
             const list = document.getElementById('product-list');
+            document.getElementById('stat-total').innerText = products.length;
             list.innerHTML = '';
-
-            const filtered = filter === 'All' ? products : products.filter(p => p.cat === filter);
-
-            filtered.forEach(p => {
+            data.forEach(p => {
                 const isOut = p.stock <= 0;
                 list.innerHTML += `
-                    <div class="glass-card p-4 flex flex-col">
-                        <div class="relative mb-5 rounded-xl overflow-hidden neon-border">
-                            <img src="${p.img}" class="w-full h-48 object-cover">
-                            <div class="absolute top-3 right-3">
-                                ${isOut ? 
-                                    `<span class="bg-red-500/20 text-red-500 border border-red-500 text-[9px] px-2 py-1 rounded font-bold">× OUT OF STOCK</span>` : 
-                                    `<span class="bg-green-500/20 text-green-500 border border-green-500 text-[9px] px-2 py-1 rounded font-bold">✓ IN STOCK</span>`
-                                }
-                            </div>
+                    <div class="glass-card p-4 rounded-2xl flex flex-col h-full group">
+                        <div class="relative overflow-hidden rounded-xl mb-4">
+                            <img src="${p.img}" class="w-full h-48 object-cover group-hover:scale-110 transition duration-500">
+                            ${isOut ? `<div class="absolute inset-0 bg-black/80 flex items-center justify-center font-black text-red-500 rotate-12">SOLD OUT</div>` : ''}
                         </div>
-
-                        <h3 class="font-bold text-md mb-1 uppercase tracking-tight">${p.name}</h3>
-                        <p class="text-[10px] text-indigo-400 font-mono mb-4 italic">Code: ${p.name.split(' ')[0]}</p>
-                        
-                        <div class="mb-4">
-                            <p class="text-2xl font-black text-blue-400">Rp ${p.price.toLocaleString()}</p>
-                            <p class="text-[11px] text-green-400 font-bold">Reseller: Rp ${p.reseller.toLocaleString()}</p>
+                        <h3 class="font-bold text-lg mb-1">${p.name}</h3>
+                        <p class="text-indigo-400 font-black text-xl mb-4">Rp ${p.price.toLocaleString()}</p>
+                        <div class="flex justify-between items-center text-[10px] text-gray-500 mb-4 bg-black/30 p-2 rounded-lg">
+                            <span>📦 Stock: ${p.stock}</span>
+                            <span>✅ Official</span>
                         </div>
-
-                        <div class="grid grid-cols-2 gap-2 mb-4">
-                            <div class="bg-[#0d0d12] p-2 rounded-lg border border-[#2d2d3d] flex items-center gap-2 text-[10px]">
-                                <span class="text-green-500">●</span> Stock: ${p.stock}
-                            </div>
-                            <div class="bg-[#0d0d12] p-2 rounded-lg border border-[#2d2d3d] flex items-center gap-2 text-[10px]">
-                                <span class="text-indigo-500">🛒</span> Sold: ${p.sold}
-                            </div>
-                        </div>
-
-                        ${isOut ? 
-                            `<button class="w-full bg-[#1c1c27] text-gray-500 py-3 rounded-xl font-bold text-sm cursor-not-allowed border border-gray-800">🚫 Unavailable</button>` : 
-                            `<button class="w-full btn-buy text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
-                                🛒 Buy Now
-                            </button>`
-                        }
+                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800' : 'btn-gradient'} py-3 rounded-xl font-bold text-sm">
+                            ${isOut ? 'UNAVAILABLE' : '🛒 ADD TO CART'}
+                        </button>
                     </div>
                 `;
             });
         }
 
-        function addProduct() {
-            const name = document.getElementById('adm-name').value;
-            const price = Number(document.getElementById('adm-price').value);
-            const reseller = Number(document.getElementById('adm-reseller').value);
-            const cat = document.getElementById('adm-cat').value;
-            const stock = Number(document.getElementById('adm-stock').value);
-            const img = document.getElementById('adm-img').value || "https://via.placeholder.com/300/16161f/00FF00";
+        function searchProduct() {
+            const val = document.getElementById('search-input').value.toLowerCase();
+            const filtered = products.filter(p => p.name.toLowerCase().includes(val));
+            renderShop(filtered);
+        }
 
-            if(!name || !price) return alert("Isi data dengan lengkap!");
+        function addToCart(id) {
+            const prod = products.find(p => p.id === id);
+            cart.push(prod);
+            updateCartUI();
+        }
 
-            products.push({ id: Date.now(), name, cat, price, reseller, stock, sold: 0, img });
-            localStorage.setItem('lahProducts', JSON.stringify(products));
-            alert("Produk Berhasil Ditambah!");
-            showPage('shop');
+        function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
+
+        function updateCartUI() {
+            const list = document.getElementById('cart-items');
+            let total = 0;
+            list.innerHTML = '';
+            cart.forEach((item, idx) => {
+                total += item.price;
+                list.innerHTML += `
+                    <div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
+                        <div><p class="font-bold text-sm">${item.name}</p><p class="text-xs text-indigo-400">Rp ${item.price.toLocaleString()}</p></div>
+                        <button onclick="removeFromCart(${idx})" class="text-red-500">&times;</button>
+                    </div>
+                `;
+            });
+            document.getElementById('cart-count').innerText = cart.length;
+            document.getElementById('cart-total').innerText = total.toLocaleString();
+        }
+
+        function removeFromCart(idx) { cart.splice(idx, 1); updateCartUI(); }
+
+        function simulasiCheckout() {
+            if(cart.length === 0) return alert("Cart is empty!");
+            const total = document.getElementById('cart-total').innerText;
+            document.getElementById('qris-total').innerText = "Rp " + total;
+            document.getElementById('qris-modal').classList.remove('hidden');
+        }
+
+        function confirmPayment() {
+            cart.forEach(item => {
+                const p = products.find(prod => prod.id === item.id);
+                if(p.stock > 0) {
+                    p.stock -= 1;
+                    revenue += p.price;
+                }
+            });
+            orders += 1;
+            localStorage.setItem('gearPro_products', JSON.stringify(products));
+            localStorage.setItem('gearPro_rev', revenue);
+            localStorage.setItem('gearPro_ord', orders);
+            
+            alert("Payment Confirmed! Your account details sent to email/discord.");
+            cart = [];
+            updateCartUI();
+            closeQRIS();
+            toggleCart();
             renderShop();
         }
 
-        // Inisialisasi
+        function closeQRIS() { document.getElementById('qris-modal').classList.add('hidden'); }
+
+        // ADMIN LOGIC
+        function saveNewProduct() {
+            const name = document.getElementById('new-name').value;
+            const price = Number(document.getElementById('new-price').value);
+            const stock = Number(document.getElementById('new-stock').value);
+            const img = document.getElementById('new-img').value || "https://via.placeholder.com/300";
+
+            if(name && price) {
+                products.push({ id: Date.now(), name, price, stock, img });
+                localStorage.setItem('gearPro_products', JSON.stringify(products));
+                renderAdmin();
+                alert("Product Added!");
+            }
+        }
+
+        function renderAdmin() {
+            document.getElementById('adm-revenue').innerText = "Rp " + revenue.toLocaleString();
+            document.getElementById('adm-orders').innerText = orders;
+        }
+
+        // INIT
         renderShop();
     </script>
 </body>
