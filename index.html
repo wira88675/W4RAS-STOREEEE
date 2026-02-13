@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEAR STORE | Master System v6</title>
+    <title>GEAR STORE | Professional Edition</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -13,12 +13,17 @@
         .glass-card:hover { border-color: #6366f1; transform: translateY(-5px); }
         .btn-buy { background: linear-gradient(90deg, #6366f1, #a855f7); }
         .admin-input { background: #000; border: 1px solid #2d2d3d; padding: 12px; border-radius: 12px; outline: none; width: 100%; color: white; }
-        .admin-input:focus { border-color: #6366f1; }
         .category-btn { background: #1c1c27; border: 1px solid #2d2d3d; transition: all 0.3s; color: #9ca3af; }
         .category-btn.active { background: #5865f2; border-color: #5865f2; color: white; box-shadow: 0 0 15px rgba(88, 101, 242, 0.3); }
+        
+        /* Toast Animation */
+        @keyframes slideIn { from { transform: translateX(-100%); opacity: 0; } to { transform: translateX(0); opacity: 1; } }
+        .toast-animate { animation: slideIn 0.4s ease-out forwards; }
     </style>
 </head>
 <body>
+
+    <div id="toast-container" class="fixed bottom-6 left-6 z-[100] flex flex-col gap-3 w-72"></div>
 
     <nav class="glass-nav sticky top-0 z-50 p-4">
         <div class="max-w-7xl mx-auto flex justify-between items-center">
@@ -29,7 +34,7 @@
                 <button onclick="showPage('shop')" class="text-sm font-bold text-gray-400 hover:text-white">Products</button>
                 <div class="relative cursor-pointer" onclick="toggleCart()">
                     <span class="text-xl">🛒</span>
-                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold text-white">0</span>
+                    <span id="cart-count" class="absolute -top-2 -right-2 bg-indigo-600 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
                 </div>
             </div>
         </div>
@@ -37,8 +42,8 @@
 
     <div id="shop-container">
         <header class="py-12 text-center">
-            <h1 class="text-5xl font-black mb-4 italic tracking-tighter">PREMIUM <span class="text-indigo-500">MARKET</span></h1>
-            <p class="text-gray-500 text-sm">Tekan F7 untuk masuk ke Panel Admin.</p>
+            <h1 class="text-5xl font-black mb-4 italic tracking-tighter uppercase text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-500">Lah Market</h1>
+            <p class="text-gray-500 text-sm italic">Tekan F7 untuk masuk ke Panel Admin.</p>
         </header>
 
         <main class="max-w-7xl mx-auto px-6 pb-20">
@@ -79,18 +84,18 @@
                     <input type="number" id="p-discount" placeholder="Discount %" class="admin-input">
                     <input type="number" id="p-stock" placeholder="Stock" class="admin-input">
                     <input type="text" id="p-img" placeholder="Image URL" class="admin-input">
-                    <button onclick="handleSaveProduct()" class="btn-buy w-full py-4 rounded-xl font-black mt-4">PUBLISH ITEM</button>
+                    <button onclick="handleSaveProduct()" class="btn-buy w-full py-4 rounded-xl font-black mt-4 uppercase">Publish Item</button>
                 </div>
             </div>
 
             <div class="md:col-span-2">
                 <div class="grid grid-cols-2 gap-4 mb-6 text-center">
-                    <div class="bg-indigo-500/10 p-4 rounded-2xl border border-indigo-500/20">
-                        <p class="text-[10px] text-gray-400 uppercase">Revenue</p>
-                        <p class="text-xl font-black text-indigo-400">Rp <span id="val-rev">0</span></p>
+                    <div class="bg-indigo-500/10 p-4 rounded-2xl border border-indigo-500/20 text-indigo-400">
+                        <p class="text-[10px] text-gray-500 uppercase">Revenue</p>
+                        <p class="text-xl font-black">Rp <span id="val-rev">0</span></p>
                     </div>
                     <div class="bg-white/5 p-4 rounded-2xl">
-                        <p class="text-[10px] text-gray-400 uppercase">Total Sold</p>
+                        <p class="text-[10px] text-gray-500 uppercase">Total Sold</p>
                         <p class="text-xl font-black" id="val-ord">0</p>
                     </div>
                 </div>
@@ -108,37 +113,58 @@
 
     <div id="cart-modal" class="fixed inset-0 bg-black/80 hidden z-[60] flex justify-end">
         <div class="bg-[#0d0d12] w-full max-w-sm h-full p-8 border-l border-white/10 flex flex-col">
-            <h2 class="text-2xl font-black mb-8 italic italic">MY CART</h2>
+            <h2 class="text-2xl font-black mb-8 italic">MY CART</h2>
             <div id="cart-items" class="flex-1 overflow-y-auto space-y-3"></div>
             <div class="border-t border-white/10 pt-6 mt-4">
                 <div class="flex justify-between text-2xl font-black mb-6 italic">
                     <span>Total:</span><span class="text-indigo-500">Rp <span id="cart-total">0</span></span>
                 </div>
-                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black tracking-widest uppercase">Checkout Now</button>
+                <button onclick="openCheckout()" class="btn-buy w-full py-4 rounded-2xl font-black tracking-widest uppercase italic">Checkout Now</button>
                 <button onclick="toggleCart()" class="w-full mt-4 text-gray-500 text-xs font-bold uppercase">Back to Shopping</button>
             </div>
         </div>
     </div>
 
     <div id="qris-modal" class="fixed inset-0 bg-black/90 hidden z-[70] flex items-center justify-center p-6 backdrop-blur-md">
-        <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full shadow-2xl animate-bounce-in">
-            <h2 class="text-black font-black text-xl mb-4 italic italic">PAYMENT QR</h2>
+        <div class="bg-white p-8 rounded-3xl text-center max-w-xs w-full shadow-2xl">
+            <h2 class="text-black font-black text-xl mb-4 italic">PAYMENT QR</h2>
             <img src="https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=GEAR_PAY" class="mx-auto mb-4 w-52 h-52">
-            <p class="text-gray-500 text-xs mb-6">Total Tagihan: <br><b class="text-black text-xl font-black" id="qris-total">Rp 0</b></p>
+            <p class="text-gray-500 text-xs mb-6 italic">Total Tagihan: <br><b class="text-black text-xl font-black" id="qris-total">Rp 0</b></p>
             <button onclick="finalizePayment()" class="w-full bg-green-500 text-white py-4 rounded-2xl font-black shadow-lg">KONFIRMASI PEMBAYARAN</button>
         </div>
     </div>
 
     <script>
         // --- DATA SYSTEM ---
-        let products = JSON.parse(localStorage.getItem('gear_v6_data')) || [
-            { id: 1, name: "STEAM FRESH", cat: "FiveM", price: 1500, discount: 0, stock: 10, sold: 0, img: "https://via.placeholder.com/300" }
+        let products = JSON.parse(localStorage.getItem('gear_v7_data')) || [
+            { id: 1, name: "LAH STEAM FRESH", cat: "FiveM", price: 1500, discount: 0, stock: 44, sold: 255, img: "https://via.placeholder.com/300" }
         ];
-        let revenue = Number(localStorage.getItem('gear_v6_rev')) || 0;
-        let orders = Number(localStorage.getItem('gear_v6_ord')) || 0;
-        let webhookUrl = localStorage.getItem('gear_v6_webhook') || "";
+        let revenue = Number(localStorage.getItem('gear_v7_rev')) || 0;
+        let orders = Number(localStorage.getItem('gear_v7_ord')) || 0;
+        let webhookUrl = localStorage.getItem('gear_v7_webhook') || "";
         let cart = [];
         const MASTER_PASS = "admin123";
+
+        // --- NOTIFICATION SYSTEM (TOAST) ---
+        function showToast(msg, type = "success") {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            const bgColor = type === "success" ? "bg-indigo-600" : "bg-red-600";
+            
+            toast.className = `${bgColor} text-white px-5 py-3 rounded-2xl shadow-2xl flex items-center justify-between toast-animate border border-white/10`;
+            toast.innerHTML = `
+                <span class="text-xs font-bold uppercase tracking-wider">${msg}</span>
+                <button class="ml-4 opacity-50">✕</button>
+            `;
+            
+            container.appendChild(toast);
+            setTimeout(() => {
+                toast.style.transform = "translateX(-100%)";
+                toast.style.opacity = "0";
+                toast.style.transition = "0.4s ease";
+                setTimeout(() => toast.remove(), 400);
+            }, 5000); // 5 Detik Durasi
+        }
 
         // --- SHORTCUT F7 ---
         window.addEventListener('keydown', (e) => {
@@ -148,16 +174,17 @@
                     document.getElementById('shop-container').classList.add('hidden');
                     document.getElementById('admin-page').classList.remove('hidden');
                     renderAdmin();
-                } else if(p !== null) alert("ACCESS DENIED!");
+                    showToast("Admin Mode Activated");
+                } else if(p !== null) showToast("Access Denied", "error");
             }
         });
 
         // --- WEBHOOK CONTROL ---
         function saveWebhook() {
             const val = document.getElementById('webhook-input').value;
-            localStorage.setItem('gear_v6_webhook', val);
+            localStorage.setItem('gear_v7_webhook', val);
             webhookUrl = val;
-            alert("Webhook Saved!");
+            showToast("Webhook URL Updated");
         }
 
         async function sendToDiscord(itemsText, total) {
@@ -165,15 +192,16 @@
             const payload = {
                 embeds: [{
                     title: "🚀 NEW ORDER RECEIVED!",
-                    color: 65280,
+                    color: 5814783,
                     fields: [
                         { name: "Items Ordered", value: itemsText },
                         { name: "Total Revenue", value: "Rp " + total.toLocaleString() }
                     ],
-                    footer: { text: "Gear Store Bot • " + new Date().toLocaleString() }
+                    footer: { text: "Gear Store Bot" },
+                    timestamp: new Date()
                 }]
             };
-            await fetch(webhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) });
+            try { await fetch(webhookUrl, { method: 'POST', headers: {'Content-Type': 'application/json'}, body: JSON.stringify(payload) }); } catch(e) {}
         }
 
         // --- SHOP LOGIC ---
@@ -190,32 +218,32 @@
                         <p class="text-indigo-400 text-[10px] font-bold mb-4 italic">Category: ${p.cat}</p>
                         <div class="mb-4">
                             <p class="text-xl font-black text-white">Rp ${final.toLocaleString()}</p>
-                            ${p.discount > 0 ? `<p class="text-[10px] text-gray-500 line-through italic">Rp ${p.price.toLocaleString()} (-${p.discount}%)</p>` : ''}
+                            ${p.discount > 0 ? `<p class="text-[10px] text-gray-500 line-through italic">Rp ${p.price.toLocaleString()}</p>` : ''}
                         </div>
                         <div class="grid grid-cols-2 gap-2 mb-4 text-[9px] font-bold text-gray-500 uppercase">
                             <div class="bg-white/5 p-2 rounded-lg text-center">Stok: ${p.stock}</div>
                             <div class="bg-white/5 p-2 rounded-lg text-center text-green-500">Sold: ${p.sold}</div>
                         </div>
-                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800 text-gray-500' : 'btn-buy'} py-3 rounded-xl font-bold text-xs uppercase">
+                        <button onclick="addToCart(${p.id})" ${isOut ? 'disabled' : ''} class="w-full ${isOut ? 'bg-gray-800 text-gray-500' : 'btn-buy'} py-3 rounded-xl font-black text-xs uppercase tracking-tighter">
                             ${isOut ? 'Out of Stock' : 'Add to Cart'}
                         </button>
                     </div>`;
             });
         }
 
-        // --- CART LOGIC (RAMPING) ---
         function addToCart(id) {
             const p = products.find(prod => prod.id === id);
-            if(p.stock <= 0) return alert("Habis!");
+            if(p.stock <= 0) return showToast("Out of stock", "error");
             
             const cartItem = cart.find(item => item.id === id);
             if(cartItem) {
                 if(cartItem.qty < p.stock) cartItem.qty++;
-                else alert("Limit stok!");
+                else return showToast("Stok tidak mencukupi", "error");
             } else {
                 cart.push({...p, qty: 1});
             }
             updateCartUI();
+            showToast(`${p.name} added to cart`);
         }
 
         function updateCartUI() {
@@ -229,12 +257,12 @@
                     <div class="bg-white/5 p-3 rounded-2xl flex items-center justify-between border border-white/5">
                         <div class="flex-1">
                             <p class="text-[11px] font-bold uppercase truncate w-24">${c.name}</p>
-                            <p class="text-[10px] text-indigo-400 font-bold">Rp ${f.toLocaleString()}</p>
+                            <p class="text-[10px] text-indigo-400 font-bold italic">Rp ${f.toLocaleString()}</p>
                         </div>
                         <div class="flex items-center gap-3 bg-black/40 px-3 py-1 rounded-xl">
-                            <button onclick="changeQty(${idx}, -1)" class="text-indigo-400 font-black">-</button>
+                            <button onclick="changeQty(${idx}, -1)" class="text-indigo-400 font-black text-lg">-</button>
                             <span class="text-xs font-bold">${c.qty}</span>
-                            <button onclick="changeQty(${idx}, 1)" class="text-indigo-400 font-black">+</button>
+                            <button onclick="changeQty(${idx}, 1)" class="text-indigo-400 font-black text-lg">+</button>
                         </div>
                     </div>`;
             });
@@ -252,7 +280,7 @@
         }
 
         function openCheckout() {
-            if(!cart.length) return alert("Kosong!");
+            if(!cart.length) return showToast("Cart is empty", "error");
             document.getElementById('qris-total').innerText = "Rp " + document.getElementById('cart-total').innerText;
             document.getElementById('qris-modal').classList.remove('hidden');
         }
@@ -273,14 +301,13 @@
             saveData();
             await sendToDiscord(itemsT, totalV);
 
-            alert("SUCCESS!");
+            showToast("Payment Processed Successfully!");
             cart = []; updateCartUI();
             document.getElementById('qris-modal').classList.add('hidden');
             document.getElementById('cart-modal').classList.add('hidden');
             renderShop();
         }
 
-        // --- ADMIN SYSTEM ---
         function handleSaveProduct() {
             const id = document.getElementById('edit-id').value;
             const data = {
@@ -296,7 +323,7 @@
             if(id) products[products.findIndex(p => p.id == id)] = data;
             else products.push(data);
             saveData(); renderAdmin();
-            alert("Updated!");
+            showToast("Database Updated");
             document.getElementById('edit-id').value = "";
         }
 
@@ -310,9 +337,9 @@
                 tbody.innerHTML += `
                     <tr class="border-b border-white/5">
                         <td class="p-4 uppercase text-[10px] font-bold">${p.name}</td>
-                        <td class="p-4 text-center text-xs">${p.stock}</td>
+                        <td class="p-4 text-center text-xs text-indigo-400">${p.stock}</td>
                         <td class="p-4 text-center space-x-3">
-                            <button onclick="editP(${p.id})" class="text-indigo-400 font-black">EDIT</button>
+                            <button onclick="editP(${p.id})" class="text-blue-400 font-black">EDIT</button>
                             <button onclick="deleteP(${p.id})" class="text-red-500 font-black">DEL</button>
                         </td>
                     </tr>`;
@@ -330,11 +357,11 @@
             document.getElementById('p-img').value = p.img;
         }
 
-        function deleteP(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); } }
+        function deleteP(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id != id); saveData(); renderAdmin(); showToast("Item Deleted"); } }
         function saveData() { 
-            localStorage.setItem('gear_v6_data', JSON.stringify(products)); 
-            localStorage.setItem('gear_v6_rev', revenue);
-            localStorage.setItem('gear_v6_ord', orders);
+            localStorage.setItem('gear_v7_data', JSON.stringify(products)); 
+            localStorage.setItem('gear_v7_rev', revenue);
+            localStorage.setItem('gear_v7_ord', orders);
         }
         function toggleCart() { document.getElementById('cart-modal').classList.toggle('hidden'); }
         function showPage(page) { 
