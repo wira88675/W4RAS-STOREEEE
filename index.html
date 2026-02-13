@@ -3,146 +3,120 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | LUXURY EDITION</title>
+    <title>W4RAS STORE | EPIC V27.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #10b981; --bg: #030303; }
-        body { background: var(--bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        :root { --emerald: #10b981; --dark: #030303; }
+        body { background: var(--dark); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; overflow-x: hidden; }
+        .glow-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, #10b98115, transparent 50%); z-index: -1; }
         
-        /* Animasi Background & Glow */
-        .glow-bg { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: radial-gradient(circle at 50% -20%, #10b98122, transparent 50%); z-index: -1; }
+        /* Dashboard & Card Style */
+        .epic-card { background: rgba(255,255,255,0.02); border: 1px solid rgba(255,255,255,0.08); border-radius: 24px; transition: 0.4s; }
+        .epic-card:hover { transform: translateY(-8px); border-color: var(--emerald); box-shadow: 0 15px 30px rgba(16, 185, 129, 0.1); }
         
-        /* Card Epic Style */
-        .epic-card { 
-            background: linear-gradient(145deg, rgba(255,255,255,0.05) 0%, rgba(255,255,255,0.01) 100%);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 32px;
-            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .epic-card:hover {
-            transform: translateY(-10px) scale(1.02);
-            border-color: var(--primary);
-            box-shadow: 0 20px 40px rgba(16, 185, 129, 0.15);
-        }
-
-        /* Button Luxury */
-        .btn-luxury {
-            background: linear-gradient(90deg, #10b981, #059669);
-            color: #000;
-            font-weight: 800;
-            letter-spacing: 1px;
-            transition: 0.3s;
-            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
-        }
-        .btn-luxury:hover {
-            box-shadow: 0 8px 25px rgba(16, 185, 129, 0.5);
-            transform: translateY(-2px);
-        }
-
-        /* Marquee Elegant */
-        .marquee-box { background: #10b981; color: #000; padding: 10px 0; font-weight: 900; font-size: 11px; letter-spacing: 2px; }
+        /* Running Text */
+        .marquee-box { background: var(--emerald); color: #000; padding: 10px 0; font-weight: 900; font-size: 11px; text-transform: uppercase; letter-spacing: 1px; }
         
-        /* Glassmorphism */
-        .glass-nav { background: rgba(3, 3, 3, 0.7); backdrop-filter: blur(15px); border-bottom: 1px solid rgba(255,255,255,0.05); }
+        /* Modern Cart Style */
+        .cart-container { background: #0c0c0c; border: 1px solid rgba(255,255,255,0.1); border-radius: 35px; padding: 35px; width: 100%; max-width: 420px; }
+        .btn-pay { background: var(--emerald); color: #000; font-weight: 900; border-radius: 18px; padding: 18px; width: 100%; text-transform: uppercase; transition: 0.3s; }
+        
         .modal-blur { backdrop-filter: blur(25px); background: rgba(0,0,0,0.85); display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px; }
-        
-        .input-dark { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); outline: none; color: white; transition: 0.3s; }
-        .input-dark:focus { border-color: var(--primary); background: rgba(255,255,255,0.05); }
+        .input-dark { background: rgba(255,255,255,0.03); border: 1px solid rgba(255,255,255,0.1); outline: none; transition: 0.3s; color: white; }
+        .input-dark:focus { border-color: var(--emerald); }
     </style>
 </head>
-<body class="min-h-screen">
+<body>
     <div class="glow-bg"></div>
 
-    <div class="marquee-box uppercase">
-        <marquee id="marquee-text" scrollamount="8">W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • 24/7 SUPPORT</marquee>
+    <div class="marquee-box">
+        <marquee id="marquee-view" scrollamount="7">SELAMAT DATANG DI W4RAS STORE - TEMPAT AKUN PREMIUM TERBAIK</marquee>
     </div>
 
-    <nav class="sticky top-0 z-50 glass-nav">
-        <div class="max-w-6xl mx-auto flex justify-between items-center p-6">
-            <div class="text-3xl font-black italic tracking-tighter cursor-pointer" onclick="location.reload()">W4RAS<span class="text-emerald-500">.</span></div>
-            <div class="flex gap-4">
-                <button onclick="openModal('cart-modal')" class="relative p-3 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition">
-                    🛒 <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold text-black shadow-lg">0</span>
-                </button>
-                <button onclick="openModal('login-modal')" class="p-3 bg-white/5 rounded-2xl border border-white/10 hover:bg-white/10 transition">🔒</button>
-            </div>
+    <nav class="max-w-6xl mx-auto flex justify-between items-center p-8">
+        <div class="text-3xl font-black italic tracking-tighter" onclick="location.reload()">W4RAS<span class="text-emerald-500">.</span></div>
+        <div class="flex gap-4">
+            <button onclick="openModal('cart-modal')" class="bg-white/5 p-4 rounded-2xl relative border border-white/10">
+                🛒 <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-500 text-black text-[10px] w-6 h-6 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
+            <button onclick="openModal('login-modal')" class="bg-white/5 p-4 rounded-2xl border border-white/10">🔒</button>
         </div>
     </nav>
 
-    <main id="shop-view" class="max-w-6xl mx-auto p-6 mt-10">
+    <main id="shop-view" class="max-w-6xl mx-auto p-6">
         <div class="mb-16 text-center">
-            <h2 class="text-emerald-500 font-bold tracking-[0.3em] uppercase text-xs mb-4">The Best Account Marketplace</h2>
-            <h1 class="text-5xl md:text-7xl font-black mb-6 italic tracking-tight uppercase">Elevate Your <span class="text-emerald-500">Gaming.</span></h1>
-            <p class="text-gray-400 max-w-xl mx-auto text-sm leading-relaxed">Dapatkan akses akun premium dengan jaminan keamanan terbaik dan proses otomatis secepat kilat.</p>
+            <h1 class="text-5xl md:text-6xl font-black mb-4 italic uppercase">Elite <span class="text-emerald-500">Access.</span></h1>
+            <p class="text-gray-500 text-sm tracking-widest uppercase">Premium Quality • Instant Delivery • 24/7 Support</p>
         </div>
-        
         <div id="product-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8"></div>
     </main>
 
     <main id="admin-view" class="hidden max-w-7xl mx-auto p-10">
-        <div class="flex justify-between items-center mb-10 border-b border-white/10 pb-8">
-            <h2 class="text-2xl font-black text-emerald-500 uppercase italic tracking-widest">Master Dashboard</h2>
-            <button onclick="location.reload()" class="bg-red-500/10 text-red-500 border border-red-500/20 px-6 py-2 rounded-xl text-xs font-bold uppercase hover:bg-red-500 hover:text-white transition">Logout</button>
+        <div class="flex justify-between items-center mb-10">
+            <h2 class="text-2xl font-black text-emerald-500 italic uppercase">System Control</h2>
+            <button onclick="location.reload()" class="bg-red-500/20 text-red-500 px-6 py-2 rounded-xl font-bold text-xs">EXIT</button>
         </div>
         <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
-            <div class="epic-card p-8 space-y-5">
-                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest">Configuration</p>
-                <input type="text" id="config-marquee" placeholder="Running Text..." class="input-dark w-full p-4 rounded-2xl text-sm">
-                <input type="text" id="config-qris" placeholder="QRIS Image URL..." class="input-dark w-full p-4 rounded-2xl text-sm">
-                <input type="text" id="webhook-url" placeholder="Discord Webhook..." class="input-dark w-full p-4 rounded-2xl text-xs">
-                <button onclick="updateConfig()" class="w-full btn-luxury py-4 rounded-2xl text-xs uppercase">Save Config</button>
-                
-                <hr class="opacity-10 my-6">
-                <p class="text-xs font-bold text-emerald-500 uppercase tracking-widest">New Product</p>
-                <input type="text" id="p-name" placeholder="Name" class="input-dark w-full p-4 rounded-2xl text-sm">
-                <input type="number" id="p-price" placeholder="Price" class="input-dark w-full p-4 rounded-2xl text-sm">
-                <textarea id="p-data" placeholder="Account Data..." class="input-dark w-full p-4 rounded-2xl text-sm h-32"></textarea>
-                <input type="text" id="p-img" placeholder="Image URL" class="input-dark w-full p-4 rounded-2xl text-sm">
-                <button onclick="saveProduct()" class="w-full btn-luxury py-4 rounded-2xl text-xs uppercase">Publish Product</button>
+            <div class="epic-card p-8 space-y-4">
+                <p class="text-xs font-black text-emerald-500 uppercase mb-2">Global Config</p>
+                <input type="text" id="run-text-input" placeholder="Update Running Text..." class="input-dark w-full p-4 rounded-xl text-sm" onchange="saveConfig()">
+                <input type="text" id="qris-url-input" placeholder="URL QRIS Image..." class="input-dark w-full p-4 rounded-xl text-sm" onchange="saveConfig()">
+                <hr class="opacity-10 my-4">
+                <p class="text-xs font-black text-emerald-500 uppercase mb-2">Product Manager</p>
+                <input type="text" id="p-name" placeholder="Name" class="input-dark w-full p-4 rounded-xl text-sm">
+                <input type="number" id="p-price" placeholder="Price" class="input-dark w-full p-4 rounded-xl text-sm">
+                <textarea id="p-data" placeholder="Account Data (User:Pass) - New Line Each" class="input-dark w-full p-4 rounded-xl text-sm h-32"></textarea>
+                <input type="text" id="p-img" placeholder="Image URL" class="input-dark w-full p-4 rounded-xl text-sm">
+                <button onclick="saveProduct()" class="w-full bg-emerald-500 text-black p-4 rounded-xl font-black uppercase text-xs">Add Product</button>
             </div>
             <div class="lg:col-span-2 epic-card overflow-hidden">
-                <table class="w-full text-left">
-                    <thead class="bg-emerald-500 text-black uppercase text-[10px] font-black tracking-widest">
+                <table class="w-full text-left text-sm">
+                    <thead class="bg-white/5 uppercase font-black text-emerald-500 text-[10px]">
                         <tr><th class="p-6">Product</th><th class="p-6 text-center">Stock</th><th class="p-6 text-right">Action</th></tr>
                     </thead>
-                    <tbody id="admin-table" class="text-sm"></tbody>
+                    <tbody id="admin-table"></tbody>
                 </table>
             </div>
         </div>
     </main>
 
     <div id="cart-modal" class="modal-blur">
-        <div class="epic-card p-10 max-w-sm w-full border-emerald-500/30">
-            <h3 class="text-emerald-500 font-black mb-8 uppercase text-xl italic tracking-tighter">Your Bag</h3>
-            <div id="cart-list" class="space-y-4 mb-8 text-sm"></div>
-            <div class="flex justify-between items-center mb-8 pt-4 border-t border-white/10">
-                <span class="text-gray-400">Grand Total:</span>
-                <span id="pay-total" class="text-2xl font-black text-emerald-500">Rp 0</span>
+        <div class="cart-container">
+            <h2 class="text-emerald-500 font-black text-2xl italic mb-8 uppercase">Keranjang</h2>
+            <div id="cart-list" class="space-y-4 max-h-60 overflow-y-auto mb-6 pr-2"></div>
+            <div class="flex justify-between items-center pt-6 border-t border-white/10 mb-8">
+                <span class="text-lg font-bold">Total:</span>
+                <span id="cart-total" class="text-2xl font-black text-emerald-500">Rp 0</span>
             </div>
-            <button onclick="openPay()" class="w-full btn-luxury py-5 rounded-[2rem] text-sm">PROCEED TO CHECKOUT</button>
-            <button onclick="closeModal('cart-modal')" class="w-full mt-4 text-[10px] text-gray-500 font-bold uppercase tracking-widest">Close</button>
+            <button onclick="checkout()" class="btn-pay">Bayar Sekarang</button>
+            <button onclick="closeModal('cart-modal')" class="w-full mt-4 text-[10px] text-gray-500 font-bold uppercase">Tutup</button>
         </div>
     </div>
 
     <div id="pay-modal" class="modal-blur">
-        <div class="epic-card p-10 max-w-sm w-full text-center border-emerald-500/30">
-            <h3 class="text-emerald-500 font-black mb-6 uppercase italic">Quick Scan</h3>
-            <div class="bg-white p-4 rounded-[2rem] mb-6">
-                <img id="qris-img" src="" class="w-full aspect-square object-contain">
-            </div>
-            <p class="text-gray-400 text-xs mb-8">Silakan scan dan upload bukti transfer di Discord / Webhook.</p>
-            <input type="file" id="pay-proof" class="hidden" onchange="confirmPay()">
-            <label for="pay-proof" class="cursor-pointer block btn-luxury py-5 rounded-[2rem] text-sm uppercase">Upload Proof</label>
-            <button onclick="closeModal('pay-modal')" class="mt-4 text-[10px] text-gray-500 font-bold uppercase">Cancel</button>
+        <div class="epic-card p-10 max-w-sm w-full text-center">
+            <h3 class="text-emerald-500 font-black mb-6 uppercase italic">Scan Payment</h3>
+            <img id="qris-view" src="" class="w-full aspect-square bg-white p-4 rounded-3xl mb-6 shadow-2xl shadow-emerald-500/10">
+            <div id="final-total" class="text-3xl font-black mb-8"></div>
+            <button onclick="alert('Bukti disimpan! Segera kami proses.')" class="w-full bg-emerald-500 text-black p-5 rounded-2xl font-black uppercase text-xs">Konfirmasi Pembayaran</button>
+            <button onclick="closeModal('pay-modal')" class="mt-4 text-[10px] text-gray-500 font-bold uppercase">Batal</button>
+        </div>
+    </div>
+
+    <div id="cs-btn" onclick="Tawk_API.toggle()" class="fixed bottom-8 right-8 z-[99] cursor-pointer group">
+        <div class="absolute inset-0 bg-emerald-500 blur-xl opacity-30 group-hover:opacity-60 transition"></div>
+        <div class="relative bg-emerald-500 text-black p-4 rounded-2xl flex items-center gap-3 font-black text-xs uppercase shadow-2xl">
+            <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"></path></svg>
+            <span class="hidden sm:inline">Support Chat</span>
         </div>
     </div>
 
     <div id="login-modal" class="modal-blur">
-        <div class="epic-card p-12 max-w-sm w-full text-center border-emerald-500/30">
-            <h3 class="text-emerald-400 font-black mb-10 uppercase italic text-2xl tracking-tighter">Admin Vault</h3>
-            <input type="password" id="adm-pass" placeholder="System Password" class="input-dark w-full p-5 rounded-3xl text-center mb-8 text-lg">
-            <button onclick="doLogin()" class="w-full btn-luxury py-5 rounded-[2rem] text-sm">UNLOCK ACCESS</button>
+        <div class="epic-card p-12 max-w-sm w-full text-center">
+            <h3 class="text-emerald-400 font-black mb-8 uppercase italic text-xl">Admin Login</h3>
+            <input type="password" id="adm-pass" placeholder="Password" class="input-dark w-full p-5 rounded-2xl text-center mb-6">
+            <button onclick="doLogin()" class="w-full bg-emerald-500 text-black p-5 rounded-2xl font-black uppercase">Masuk</button>
         </div>
     </div>
 
@@ -150,33 +124,27 @@
         let db = JSON.parse(localStorage.getItem('w4_db')) || [];
         let cart = [];
 
-        function loadConfig() {
-            const mText = localStorage.getItem('w4_marquee') || "W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • 24/7 SUPPORT";
-            const qUrl = localStorage.getItem('w4_qris_url') || "https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS_PAY";
-            document.getElementById('marquee-text').innerText = mText;
-            document.getElementById('qris-img').src = qUrl;
-            document.getElementById('config-marquee').value = mText;
-            document.getElementById('config-qris').value = qUrl;
+        function init() {
+            const runText = localStorage.getItem('w4_run') || "SELAMAT DATANG DI W4RAS STORE - PROSES OTOMATIS & CEPAT";
+            document.getElementById('marquee-view').innerText = runText;
+            renderShop();
         }
 
-        function updateConfig() {
-            localStorage.setItem('w4_marquee', document.getElementById('config-marquee').value);
-            localStorage.setItem('w4_qris_url', document.getElementById('config-qris').value);
-            loadConfig();
-            alert("Configuration Saved!");
+        function saveConfig() {
+            localStorage.setItem('w4_run', document.getElementById('run-text-input').value);
+            localStorage.setItem('w4_qris', document.getElementById('qris-url-input').value);
+            document.getElementById('marquee-view').innerText = document.getElementById('run-text-input').value;
         }
 
         function renderShop() {
             document.getElementById('product-grid').innerHTML = db.map(p => `
-                <div class="epic-card p-7 relative ${p.accounts.length === 0 ? 'opacity-40 grayscale' : ''}">
-                    <div class="absolute -top-3 -right-3 bg-emerald-500 text-black text-[9px] px-4 py-2 rounded-full font-black shadow-xl z-10">STOK: ${p.accounts.length}</div>
-                    <div class="overflow-hidden rounded-2xl mb-6">
-                        <img src="${p.img}" class="w-full h-40 object-cover hover:scale-110 transition duration-500">
-                    </div>
-                    <h3 class="font-black text-xs uppercase tracking-widest text-gray-400 mb-2">${p.name}</h3>
-                    <p class="text-3xl font-black text-white mb-6 tracking-tighter">Rp ${p.price.toLocaleString()}</p>
-                    <button onclick="addToCart(${p.id})" class="w-full btn-luxury py-4 rounded-2xl text-[10px] uppercase" ${p.accounts.length === 0 ? 'disabled' : ''}>
-                        ${p.accounts.length === 0 ? 'Sold Out' : 'Grab It Now'}
+                <div class="epic-card p-6 relative ${p.accounts.length === 0 ? 'opacity-40 grayscale' : ''}">
+                    <span class="absolute -top-2 -right-2 bg-emerald-500 text-black text-[9px] px-3 py-1 rounded-full font-black shadow-lg">STOK: ${p.accounts.length}</span>
+                    <img src="${p.img}" class="w-full h-36 object-cover rounded-2xl mb-6 shadow-xl">
+                    <h3 class="font-black text-xs uppercase italic text-gray-400 mb-1">${p.name}</h3>
+                    <p class="text-2xl font-black text-white mb-6">Rp ${p.price.toLocaleString()}</p>
+                    <button onclick="addToCart(${p.id})" class="w-full bg-emerald-500 text-black py-4 rounded-xl font-black text-[10px] uppercase tracking-widest" ${p.accounts.length === 0 ? 'disabled' : ''}>
+                        ${p.accounts.length === 0 ? 'HABIS' : 'AMBIL SEKARANG'}
                     </button>
                 </div>`).join('');
         }
@@ -192,11 +160,12 @@
             let total = 0;
             document.getElementById('cart-list').innerHTML = cart.map(item => {
                 total += item.price;
-                return `<div class="flex justify-between items-center py-2 border-b border-white/5 font-bold uppercase text-[10px] tracking-widest text-gray-400">
-                    <span>${item.name}</span><span class="text-white">Rp ${item.price.toLocaleString()}</span>
+                return `<div class="flex justify-between items-center bg-white/5 p-4 rounded-xl border border-white/5">
+                    <span class="text-[10px] font-black uppercase text-emerald-500 italic">${item.name}</span>
+                    <span class="font-bold">Rp ${item.price.toLocaleString()}</span>
                 </div>`;
-            }).join('') || "<p class='text-center text-gray-600 font-bold'>EMPTY BAG</p>";
-            document.getElementById('pay-total').innerText = "Rp " + total.toLocaleString();
+            }).join('') || '<p class="text-center py-10 text-gray-600 font-bold uppercase text-[10px]">Bag is empty</p>';
+            document.getElementById('cart-total').innerText = `Rp ${total.toLocaleString()}`;
         }
 
         function saveProduct() {
@@ -204,29 +173,26 @@
             db.push({ id: Date.now(), name: document.getElementById('p-name').value, price: Number(document.getElementById('p-price').value), accounts: accs, img: document.getElementById('p-img').value });
             localStorage.setItem('w4_db', JSON.stringify(db));
             renderShop(); renderAdmin();
-            alert("Product Published!");
         }
 
         function renderAdmin() {
             document.getElementById('admin-table').innerHTML = db.map(p => `
-                <tr class="border-b border-white/5 hover:bg-white/[0.02]">
-                    <td class="p-6 font-black uppercase text-gray-300 tracking-tighter">${p.name}</td>
-                    <td class="p-6 text-center text-emerald-500 font-black italic">${p.accounts.length} UNT</td>
-                    <td class="p-6 text-right"><button onclick="deleteP(${p.id})" class="text-red-500 font-black uppercase text-[9px] tracking-widest hover:underline">Revoke</button></td>
+                <tr class="border-b border-white/5 hover:bg-white/[0.01]">
+                    <td class="p-6 font-black uppercase italic tracking-tighter">${p.name}</td>
+                    <td class="p-6 text-center font-black text-emerald-500">${p.accounts.length}</td>
+                    <td class="p-6 text-right"><button onclick="deleteP(${p.id})" class="text-red-500 font-black text-[9px] uppercase hover:underline">Hapus</button></td>
                 </tr>`).join('');
-            document.getElementById('webhook-url').value = localStorage.getItem('w4_webhook') || "";
-            loadConfig();
+            document.getElementById('run-text-input').value = localStorage.getItem('w4_run') || "";
+            document.getElementById('qris-url-input').value = localStorage.getItem('w4_qris') || "";
         }
 
         function deleteP(id) { db = db.filter(x => x.id != id); localStorage.setItem('w4_db', JSON.stringify(db)); renderAdmin(); renderShop(); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
-        function openPay() { if(cart.length > 0) { closeModal('cart-modal'); openModal('pay-modal'); } }
-        function confirmPay() { const wb = localStorage.getItem('w4_webhook'); if(!wb) return alert('Webhook Error!'); alert('Success! Checking payment status...'); location.reload(); }
+        function checkout() { if(cart.length === 0) return; document.getElementById('qris-view').src = localStorage.getItem('w4_qris') || 'https://api.qrserver.com/v1/create-qr-code/?size=300x300&data=W4RAS'; document.getElementById('final-total').innerText = document.getElementById('cart-total').innerText; closeModal('cart-modal'); openModal('pay-modal'); }
         function doLogin() { if(document.getElementById('adm-pass').value === 'admin123') { closeModal('login-modal'); document.getElementById('shop-view').classList.add('hidden'); document.getElementById('admin-view').classList.remove('hidden'); renderAdmin(); } }
 
-        loadConfig();
-        renderShop();
+        init();
     </script>
 </body>
 </html>
