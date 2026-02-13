@@ -3,177 +3,240 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>GEAR STORE | Secure Automation</title>
+    <title>GEAR STORE | Ultimate Automation + Evidence</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
-        body { background: #050505; color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; }
-        .glass { background: rgba(255, 255, 255, 0.03); border: 1px solid rgba(255, 255, 255, 0.1); backdrop-filter: blur(10px); }
-        .btn-emerald { background: linear-gradient(135deg, #06b6d4, #10b981); }
+        :root { --primary-glow: #06b6d4; --secondary-glow: #10b981; }
+        body { background: radial-gradient(circle at top right, #06262d, #050505); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; }
+        .glass { background: rgba(20, 30, 30, 0.4); border: 1px solid rgba(6, 182, 212, 0.1); backdrop-filter: blur(20px); border-radius: 1.5rem; }
+        .btn-luxury { background: linear-gradient(135deg, #0891b2 0%, #10b981 100%); transition: 0.3s; }
+        .btn-luxury:hover { box-shadow: 0 0 20px rgba(6, 182, 212, 0.5); filter: brightness(1.1); }
+        .admin-input { background: rgba(0, 0, 0, 0.4); border: 1px solid rgba(6, 182, 212, 0.2); padding: 12px; border-radius: 12px; outline: none; width: 100%; color: white; font-size: 0.875rem; }
         .loader { border-top-color: #10b981; animation: spinner 1.5s linear infinite; }
         @keyframes spinner { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
     </style>
 </head>
-<body class="p-6">
+<body class="p-4">
 
-    <div id="shop-view" class="max-w-4xl mx-auto">
-        <h1 class="text-4xl font-black mb-10 text-center italic tracking-tighter">GEAR<span class="text-emerald-500">STORE</span></h1>
-        <div id="product-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6"></div>
+    <nav class="max-w-7xl mx-auto flex justify-between items-center p-6 mb-10 glass">
+        <div class="text-2xl font-black italic tracking-widest cursor-pointer" onclick="location.reload()">
+            <span class="text-cyan-400">GEAR</span><span class="text-emerald-400">STORE</span>
+        </div>
+        <div class="relative cursor-pointer" onclick="toggleCart()">
+            <span class="text-2xl">🛒</span>
+            <span id="cart-count" class="absolute -top-2 -right-2 bg-cyan-500 text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+        </div>
+    </nav>
+
+    <div id="shop-container" class="max-w-7xl mx-auto">
+        <div class="flex justify-center gap-4 mb-10 overflow-x-auto pb-2">
+            <button onclick="filterCat('all')" id="cat-all" class="px-6 py-2 rounded-xl glass border-cyan-500/50 text-xs font-bold">SEMUA</button>
+            <button onclick="filterCat('FiveM')" id="cat-FiveM" class="px-6 py-2 rounded-xl glass text-xs font-bold text-gray-400">FIVEM</button>
+            <button onclick="filterCat('Cloud Phone')" id="cat-Cloud" class="px-6 py-2 rounded-xl glass text-xs font-bold text-gray-400">CLOUD PHONE</button>
+        </div>
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></div>
     </div>
 
     <div id="payment-modal" class="fixed inset-0 bg-black/98 hidden z-50 flex items-center justify-center p-4">
-        <div class="glass p-8 rounded-[2.5rem] max-w-sm w-full text-center border-white/10 border">
-            <h2 class="text-xl font-bold mb-2">PROSES PEMBAYARAN</h2>
-            <p class="text-xs text-gray-500 mb-6 uppercase tracking-widest">Gunakan Nominal Presisi</p>
+        <div class="glass p-8 max-w-sm w-full text-center border-white/10 border bg-black/50">
+            <h2 class="text-xl font-black mb-4 italic text-emerald-400 uppercase">Verifikasi Pembayaran</h2>
+            <div class="bg-white p-3 rounded-xl mb-4 inline-block"><img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=GEAR_PAY" class="w-32 h-32"></div>
             
-            <div class="bg-white p-4 rounded-2xl mb-6 inline-block">
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=YOUR_QRIS_HERE" id="qris-img" class="w-48 h-48">
-            </div>
-
             <div class="mb-6">
-                <p class="text-sm text-gray-400">Total yang harus dibayar:</p>
-                <div class="text-3xl font-black text-emerald-400" id="total-tagihan">Rp 0</div>
-                <p class="text-[10px] text-amber-500 mt-2 font-bold uppercase">*Sistem mendeteksi berdasarkan kode unik</p>
+                <p class="text-[10px] text-gray-500 font-bold uppercase">Total Tagihan:</p>
+                <div class="text-3xl font-black text-cyan-400" id="total-tagihan">Rp 0</div>
             </div>
 
-            <div id="status-waiting" class="space-y-4">
-                <div class="flex justify-center">
-                    <div class="loader ease-linear rounded-full border-4 border-t-4 border-gray-800 h-10 w-10"></div>
-                </div>
-                <p class="text-sm animate-pulse text-cyan-400">Menunggu Verifikasi Admin...</p>
-                <p class="text-[9px] text-gray-500">Pembayaran akan terdeteksi otomatis setelah admin mengonfirmasi mutasi.</p>
+            <div id="upload-section" class="space-y-4">
+                <p class="text-[10px] text-amber-500 font-bold">Wajib Upload Bukti Transfer:</p>
+                <input type="file" id="evidence-file" accept="image/*" class="text-xs text-gray-400 block w-full">
+                <button onclick="sendEvidence()" id="btn-send-evidence" class="w-full btn-luxury py-3 rounded-xl font-black text-xs uppercase">Kirim Bukti & Cek Otomatis</button>
             </div>
 
-            <button id="btn-claim" onclick="showData()" class="hidden w-full btn-emerald py-4 rounded-xl font-black uppercase shadow-[0_0_30px_rgba(16,185,129,0.3)]">
-                AMBIL DATA AKUN
-            </button>
+            <div id="status-waiting" class="hidden mt-6 space-y-4">
+                <div class="flex justify-center"><div class="loader rounded-full border-2 border-gray-800 h-6 w-6"></div></div>
+                <p class="text-[10px] animate-pulse text-cyan-400 font-bold uppercase">Admin sedang mengecek mutasi...</p>
+            </div>
+
+            <button id="btn-claim" onclick="showFinalData()" class="hidden w-full btn-luxury py-4 rounded-xl font-black uppercase mt-4">AMBIL DATA AKUN</button>
         </div>
     </div>
 
-    <div id="reveal-modal" class="fixed inset-0 bg-black hidden z-[60] flex items-center justify-center p-4">
-        <div class="glass p-8 rounded-[2.5rem] max-w-md w-full border-emerald-500 border text-center">
-            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic">AKUN BERHASIL DIKIRIM!</h2>
-            <div id="account-output" class="bg-emerald-500/10 p-6 rounded-2xl border border-emerald-500/30 font-mono text-emerald-300 break-all mb-8 shadow-inner text-lg"></div>
-            <button onclick="location.reload()" class="w-full py-4 bg-white/5 rounded-xl font-bold">Tutup & Selesai</button>
+    <main id="admin-page" class="hidden max-w-6xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+            <h2 class="text-2xl font-black text-cyan-400 italic uppercase">Admin Master</h2>
+            <input type="password" id="webhook-url" placeholder="Masukkan Discord Webhook URL" class="admin-input w-64 text-[10px]">
         </div>
-    </div>
-
-    <div id="admin-view" class="hidden max-w-2xl mx-auto">
-        <div class="flex justify-between items-center mb-6">
-            <h2 class="text-2xl font-bold text-cyan-400">MASTER PANEL</h2>
-            <button onclick="location.reload()" class="text-xs text-gray-500">Kembali</button>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <div class="glass p-6 space-y-4 h-fit">
+                <h3 class="text-xs font-bold text-emerald-400 uppercase">Input Produk</h3>
+                <input type="hidden" id="edit-id">
+                <input type="text" id="p-name" placeholder="Nama Produk" class="admin-input">
+                <select id="p-cat" class="admin-input"><option value="FiveM">FiveM</option><option value="Cloud Phone">Cloud Phone</option></select>
+                <input type="number" id="p-price" placeholder="Harga" class="admin-input">
+                <input type="number" id="p-stock" placeholder="Stok" class="admin-input">
+                <textarea id="p-data" placeholder="DATA AKUN (User:Pass)" class="admin-input h-20"></textarea>
+                <input type="text" id="p-img" placeholder="URL Gambar" class="admin-input">
+                <button onclick="handleSaveProduct()" class="w-full btn-luxury py-3 rounded-xl font-bold uppercase text-xs">Simpan</button>
+            </div>
+            <div class="lg:col-span-2 space-y-6">
+                <div class="glass p-4"><h3 class="text-xs font-bold text-amber-500 uppercase mb-4">Persetujuan Bayar</h3><div id="pending-list" class="space-y-2 text-xs"></div></div>
+                <div class="glass overflow-x-auto"><table class="w-full text-xs text-left">
+                    <thead class="bg-white/5 uppercase font-bold text-cyan-400"><tr><th class="p-4">Produk</th><th class="p-4">Stok</th><th class="p-4 text-right">Aksi</th></tr></thead>
+                    <tbody id="admin-table-body"></tbody>
+                </table></div>
+            </div>
         </div>
-        
-        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-            <div class="glass p-6 rounded-2xl space-y-4">
-                <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/50 p-3 rounded-xl border border-white/10">
-                <textarea id="p-data" placeholder="Data Akun (User:Pass)" class="w-full bg-black/50 p-3 rounded-xl border border-white/10 h-20"></textarea>
-                <input type="number" id="p-price" placeholder="Harga Dasar" class="w-full bg-black/50 p-3 rounded-xl border border-white/10">
-                <button onclick="saveProduct()" class="w-full btn-emerald py-3 rounded-xl font-bold">Tambah Produk</button>
-            </div>
+    </main>
 
-            <div class="glass p-6 rounded-2xl">
-                <h3 class="text-xs font-bold text-amber-500 mb-4 uppercase">Verifikasi Masuk</h3>
-                <div id="pending-list" class="space-y-3">
-                    <p class="text-[10px] text-gray-500">Belum ada pembayaran masuk...</p>
-                </div>
-            </div>
+    <div id="reveal-modal" class="fixed inset-0 bg-black hidden z-[100] flex items-center justify-center p-4">
+        <div class="glass p-8 max-w-md w-full text-center border-emerald-500 border-2">
+            <h2 class="text-2xl font-black text-emerald-400 mb-6 italic uppercase">Akses Berhasil!</h2>
+            <div id="account-output" class="bg-black p-6 rounded-xl border border-white/10 font-mono text-emerald-300 break-all mb-6"></div>
+            <button onclick="location.reload()" class="w-full py-3 bg-white/5 rounded-xl font-bold uppercase text-xs">Selesai</button>
         </div>
     </div>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('gear_v19')) || [];
+        let products = JSON.parse(localStorage.getItem('gear_v_final_secure')) || [];
+        let cart = [];
         let activeOrder = null;
 
-        function saveProduct() {
-            const p = {
-                id: Date.now(),
-                name: document.getElementById('p-name').value,
-                data: document.getElementById('p-data').value,
-                price: document.getElementById('p-price').value
+        // --- WEBHOOK EVIDENCE SYSTEM ---
+        async function sendEvidence() {
+            const fileInput = document.getElementById('evidence-file');
+            const webhook = document.getElementById('webhook-url').value;
+            
+            if (!fileInput.files[0]) return alert("Pilih foto bukti transfer dulu!");
+            if (!webhook) return alert("Admin belum setting Webhook!");
+
+            document.getElementById('upload-section').classList.add('hidden');
+            document.getElementById('status-waiting').classList.remove('hidden');
+
+            const reader = new FileReader();
+            reader.readAsDataURL(fileInput.files[0]);
+            reader.onload = async () => {
+                const base64 = reader.result.split(',')[1];
+                const itemsStr = activeOrder.items.map(i => `${i.name} (x${i.qty})`).join(', ');
+
+                // Kirim Notifikasi & Bukti ke Discord
+                const payload = {
+                    embeds: [{
+                        title: "📸 BUKTI PEMBAYARAN BARU",
+                        color: 0x10b981,
+                        description: `Pembeli mengklaim pembayaran sebesar **Rp ${activeOrder.total.toLocaleString()}**`,
+                        fields: [
+                            { name: "Pesanan", value: itemsStr },
+                            { name: "Kode Unik", value: activeOrder.kode.toString() }
+                        ],
+                        image: { url: `attachment://bukti.png` }
+                    }]
+                };
+
+                // Catatan: Mengirim file via webhook murni JS membutuhkan FormData
+                const formData = new FormData();
+                formData.append('payload_json', JSON.stringify(payload));
+                formData.append('file', fileInput.files[0], 'bukti.png');
+
+                await fetch(webhook, { method: 'POST', body: formData });
+                startPolling(); // Mulai deteksi otomatis
             };
-            products.push(p);
-            localStorage.setItem('gear_v19', JSON.stringify(products));
+        }
+
+        // --- CORE LOGIC (RETAINED FEATURES) ---
+        function handleSaveProduct() {
+            const id = document.getElementById('edit-id').value;
+            const p = {
+                id: id ? Number(id) : Date.now(),
+                name: document.getElementById('p-name').value,
+                category: document.getElementById('p-cat').value,
+                price: Number(document.getElementById('p-price').value),
+                stock: Number(document.getElementById('p-stock').value),
+                data: document.getElementById('p-data').value,
+                img: document.getElementById('p-img').value || "https://via.placeholder.com/200",
+                sold: id ? products.find(x => x.id == id).sold : 0
+            };
+            if(id) products[products.findIndex(x => x.id == id)] = p;
+            else products.push(p);
+            localStorage.setItem('gear_v_final_secure', JSON.stringify(products));
             location.reload();
         }
 
         function renderShop() {
-            const grid = document.getElementById('product-grid');
-            grid.innerHTML = products.map(p => `
-                <div class="glass p-6 rounded-3xl group hover:border-emerald-500/50 transition">
-                    <h3 class="font-bold mb-1 uppercase text-xs text-gray-400">${p.name}</h3>
-                    <div class="text-2xl font-black mb-6 italic">Rp ${Number(p.price).toLocaleString()}</div>
-                    <button onclick="buyProcess(${p.id})" class="w-full btn-emerald py-3 rounded-xl font-bold text-[10px] uppercase tracking-widest shadow-lg">Beli Sekarang</button>
+            const list = document.getElementById('product-list');
+            list.innerHTML = products.map(p => `
+                <div class="glass p-5 flex flex-col h-full group">
+                    <img src="${p.img}" class="w-full h-40 object-cover rounded-xl mb-4 group-hover:scale-105 transition">
+                    <h3 class="font-bold text-xs uppercase mb-1">${p.name}</h3>
+                    <p class="text-xl font-black text-cyan-400 mb-4">Rp ${p.price.toLocaleString()}</p>
+                    <button onclick="addToCart(${p.id})" class="w-full btn-luxury py-3 rounded-xl font-bold text-[10px] uppercase">Beli</button>
                 </div>
             `).join('');
         }
 
-        function buyProcess(id) {
-            const p = products.find(prod => prod.id === id);
-            const kodeUnik = Math.floor(Math.random() * 900) + 100; // 100 - 999
-            const total = parseInt(p.price) + kodeUnik;
-            
-            activeOrder = { ...p, total: total, kodeUnik: kodeUnik };
-            
-            document.getElementById('total-tagihan').innerText = `Rp ${total.toLocaleString()}`;
-            document.getElementById('payment-modal').classList.remove('hidden');
-
-            // Simpan ke "Pending" untuk dilihat Admin di Panel sebelah
-            addPendingToAdmin(activeOrder);
+        function addToCart(id) {
+            const p = products.find(x => x.id === id);
+            const item = cart.find(i => i.id === id);
+            if(item) item.qty++; else cart.push({...p, qty: 1});
+            document.getElementById('cart-count').innerText = cart.length;
+            alert("Masuk Keranjang!");
         }
 
-        // FUNGSI INI ADALAH "DETEKSI" OLEH ADMIN
-        function addPendingToAdmin(order) {
+        function openCheckout() {
+            const base = cart.reduce((a, b) => a + (b.price * b.qty), 0);
+            const kode = Math.floor(Math.random() * 899) + 100;
+            activeOrder = { items: [...cart], total: base + kode, kode: kode };
+            document.getElementById('total-tagihan').innerText = `Rp ${activeOrder.total.toLocaleString()}`;
+            document.getElementById('payment-modal').classList.remove('hidden');
+            addToAdminPending(activeOrder);
+        }
+
+        function addToAdminPending(order) {
             const list = document.getElementById('pending-list');
-            if(list.querySelector('p')) list.innerHTML = '';
-            
             const div = document.createElement('div');
-            div.className = "bg-white/5 p-3 rounded-xl border border-white/5 flex justify-between items-center";
-            div.innerHTML = `
-                <div class="text-[10px]">
-                    <span class="block font-bold text-white">${order.name}</span>
-                    <span class="text-emerald-400">Rp ${order.total.toLocaleString()}</span>
-                </div>
-                <button onclick="approveOrder('${order.id}')" class="bg-emerald-500 text-[8px] px-2 py-1 rounded font-black text-white">KONFIRMASI</button>
-            `;
+            div.className = "bg-white/5 p-3 rounded-lg flex justify-between items-center border border-white/5";
+            div.innerHTML = `<span>Rp ${order.total.toLocaleString()}</span>
+                             <button onclick="approveOrder('${order.total}')" class="bg-emerald-500 px-2 py-1 rounded text-[8px] font-bold">KONFIRMASI</button>`;
             list.appendChild(div);
         }
 
-        function approveOrder(id) {
-            // Logika: Admin klik konfirmasi, maka browser pembeli akan "terbuka"
-            // Karena ini LocalStorage, kita gunakan sistem cek berkala (Polling)
-            localStorage.setItem('payment_status_' + activeOrder.total, 'SUCCESS');
-            alert("Pembayaran Terkonfirmasi! Layanan pembeli akan otomatis terbuka.");
-            updateClientStatus();
+        function approveOrder(total) {
+            localStorage.setItem(`pay_${total}`, 'OK');
+            alert("Dikonfirmasi!");
         }
 
-        // Browser pembeli mengecek terus menerus apakah admin sudah konfirmasi
-        function updateClientStatus() {
-            const check = setInterval(() => {
-                if(activeOrder && localStorage.getItem('payment_status_' + activeOrder.total) === 'SUCCESS') {
+        function startPolling() {
+            const itv = setInterval(() => {
+                if(localStorage.getItem(`pay_${activeOrder.total}`) === 'OK') {
                     document.getElementById('status-waiting').classList.add('hidden');
                     document.getElementById('btn-claim').classList.remove('hidden');
-                    clearInterval(check);
+                    clearInterval(itv);
                 }
             }, 2000);
         }
 
-        function showData() {
-            document.getElementById('account-output').innerText = activeOrder.data;
-            document.getElementById('payment-modal').classList.add('hidden');
+        function showFinalData() {
+            const str = activeOrder.items.map(i => `${i.name}: ${i.data}`).join('\n');
+            document.getElementById('account-output').innerText = str;
             document.getElementById('reveal-modal').classList.remove('hidden');
-            localStorage.removeItem('payment_status_' + activeOrder.total);
+            // Update Stok
+            activeOrder.items.forEach(i => {
+                const p = products.find(x => x.id === i.id);
+                p.stock -= i.qty; p.sold = (p.sold || 0) + i.qty;
+            });
+            localStorage.setItem('gear_v_final_secure', JSON.stringify(products));
         }
 
-        window.addEventListener('keydown', (e) => {
-            if(e.key === "F7") {
-                document.getElementById('shop-view').classList.toggle('hidden');
-                document.getElementById('admin-view').classList.toggle('hidden');
-            }
-        });
-
+        window.addEventListener('keydown', e => { if(e.key === "F7") { if(prompt("PASS:") === "admin123") { document.getElementById('shop-container').classList.add('hidden'); document.getElementById('admin-page').classList.remove('hidden'); renderAdmin(); } } });
+        function renderAdmin() {
+            const tb = document.getElementById('admin-table-body');
+            tb.innerHTML = products.map(p => `<tr><td class="p-4 font-bold">${p.name}</td><td class="p-4">${p.stock}</td><td class="p-4 text-right"><button onclick="deleteP(${p.id})" class="text-red-500">Hapus</button></td></tr>`).join('');
+        }
+        function deleteP(id) { products = products.filter(x => x.id != id); localStorage.setItem('gear_v_final_secure', JSON.stringify(products)); renderAdmin(); }
+        function toggleCart() { if(cart.length) openCheckout(); else alert("Keranjang Kosong!"); }
+        
         renderShop();
-        updateClientStatus();
     </script>
 </body>
 </html>
