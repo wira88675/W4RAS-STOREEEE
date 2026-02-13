@@ -3,189 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>ProAdmin E-Commerce</title>
+    <title>Lah Market Clone</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
-        .discord-btn { position: fixed; bottom: 20px; left: 20px; background: #5865F2; color: white; padding: 10px 20px; border-radius: 30px; z-index: 1000; display: flex; align-items: center; gap: 8px; font-weight: bold; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-        .sidebar-link:hover { background: #374151; transition: 0.3s; }
+        body { background-color: #0d0d12; color: #ffffff; font-family: 'Inter', sans-serif; }
+        
+        /* Glassmorphism Card */
+        .glass-card {
+            background: #16161f;
+            border: 1px solid #2d2d3d;
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover { border-color: #6366f1; transform: translateY(-4px); }
+
+        /* Neon Border untuk Gambar */
+        .neon-border {
+            border: 2px solid rgba(34, 197, 94, 0.5);
+            box-shadow: 0 0 15px rgba(34, 197, 94, 0.1);
+        }
+
+        /* Button Gradient & Glow */
+        .btn-buy {
+            background: linear-gradient(90deg, #6366f1 0%, #a855f7 100%);
+            box-shadow: 0 4px 15px rgba(99, 102, 241, 0.3);
+        }
+
+        .category-btn {
+            background: #1c1c27;
+            border: 1px solid #2d2d3d;
+            transition: all 0.3s;
+        }
+        .category-btn.active {
+            background: #5865f2;
+            border-color: #5865f2;
+            box-shadow: 0 0 20px rgba(88, 101, 242, 0.4);
+        }
+
+        .discord-float {
+            position: fixed; bottom: 20px; left: 20px;
+            background: #5865f2; color: white;
+            padding: 10px 20px; border-radius: 12px;
+            font-weight: bold; z-index: 100;
+            display: flex; align-items: center; gap: 8px;
+        }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800">
+<body>
 
-    <nav class="bg-white shadow-sm p-4 flex justify-between items-center sticky top-0 z-40">
-        <div class="flex items-center gap-4">
-            <h1 class="text-2xl font-black text-indigo-600 tracking-tighter">TOKOKU.</h1>
+    <nav class="p-6 flex justify-between items-center max-w-7xl mx-auto">
+        <div class="flex items-center gap-2">
+            <div class="bg-indigo-600 p-2 rounded-lg">🛒</div>
+            <span class="text-xl font-bold tracking-tight">Lah Market</span>
         </div>
-        <div class="flex items-center gap-6">
-            <button onclick="showPage('shop')" class="font-medium hover:text-indigo-600">Lihat Toko</button>
-            <button onclick="showPage('admin')" class="bg-indigo-600 text-white px-5 py-2 rounded-full text-sm font-bold shadow-lg hover:bg-indigo-700">Admin Dashboard</button>
-            <div class="relative cursor-pointer" onclick="toggleCart()">
-                <span class="text-2xl">🛒</span>
-                <span id="cart-count" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] w-5 h-5 flex items-center justify-center rounded-full font-bold">0</span>
-            </div>
+        <div class="hidden md:flex gap-8 text-sm font-medium text-gray-400">
+            <a href="#" class="text-white">Home</a>
+            <a href="#" onclick="showPage('shop')">Products</a>
+            <a href="#">History</a>
+            <button onclick="showPage('admin')" class="text-indigo-400 font-bold border border-indigo-400/30 px-3 py-1 rounded">Admin</button>
+        </div>
+        <div class="flex gap-3">
+            <button class="bg-[#5865f2] px-5 py-2 rounded-lg text-sm font-bold">Discord</button>
+            <button class="bg-indigo-600 px-5 py-2 rounded-lg text-sm font-bold">Login</button>
         </div>
     </nav>
 
-    <main id="shop-page" class="container mx-auto p-8">
-        <div class="flex justify-between items-end mb-8">
-            <div>
-                <h2 class="text-4xl font-bold">Katalog Produk</h2>
-                <p class="text-gray-500">Temukan barang impianmu di sini.</p>
-            </div>
+    <main id="shop-page" class="max-w-7xl mx-auto p-6">
+        
+        <div class="flex justify-center gap-4 mb-6">
+            <button onclick="filterCategory('All')" class="category-btn active px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold" id="cat-all">
+                🌐 All
+            </button>
+            <button onclick="filterCategory('FiveM')" class="category-btn px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold text-gray-400" id="cat-fivem">
+                🎮 FiveM
+            </button>
+            <button onclick="filterCategory('Cloud Phone')" class="category-btn px-6 py-2.5 rounded-xl flex items-center gap-2 text-sm font-bold text-gray-400" id="cat-cloud">
+                📱 Cloud Phone
+            </button>
         </div>
-        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
+
+        <div class="relative max-w-2xl mx-auto mb-12">
+            <span class="absolute inset-y-0 left-4 flex items-center text-gray-500 text-xl">🔍</span>
+            <input type="text" placeholder="Cari produk..." class="w-full bg-[#16161f] border border-[#2d2d3d] rounded-2xl py-4 pl-12 pr-4 focus:border-indigo-500 outline-none text-sm transition-all">
+        </div>
+
+        <div id="product-list" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
             </div>
     </main>
 
-    <main id="admin-page" class="hidden min-h-screen flex">
-        <aside class="w-64 bg-gray-900 text-white p-6 hidden md:block">
-            <h3 class="text-xl font-bold mb-8 text-indigo-400 text-center">Admin Panel</h3>
-            <nav class="space-y-2">
-                <a href="#" class="block p-3 rounded sidebar-link bg-gray-800">📊 Statistik</a>
-                <a href="#" class="block p-3 rounded sidebar-link">📦 Produk</a>
-                <a href="#" class="block p-3 rounded sidebar-link">💰 Penjualan</a>
-            </nav>
-        </aside>
-
-        <section class="flex-1 p-8">
-            <h2 class="text-3xl font-bold mb-8">Ringkasan Bisnis</h2>
-            
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <p class="text-gray-500 text-sm font-medium">Total Pendapatan</p>
-                    <h3 class="text-2xl font-bold text-green-600">Rp <span id="stat-revenue">0</span></h3>
+    <main id="admin-page" class="hidden max-w-4xl mx-auto p-10">
+        <div class="bg-[#16161f] p-8 rounded-3xl border border-[#2d2d3d]">
+            <h2 class="text-2xl font-bold mb-6">Tambah Katalog Produk</h2>
+            <div class="grid grid-cols-1 gap-4">
+                <input type="text" id="adm-name" placeholder="Nama Produk" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="number" id="adm-price" placeholder="Harga" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
+                    <input type="number" id="adm-reseller" placeholder="Harga Reseller" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <p class="text-gray-500 text-sm font-medium">Produk Terjual</p>
-                    <h3 class="text-2xl font-bold text-blue-600"><span id="stat-sold">0</span> Unit</h3>
+                <select id="adm-cat" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none text-gray-400">
+                    <option value="FiveM">Kategori: FiveM</option>
+                    <option value="Cloud Phone">Kategori: Cloud Phone</option>
+                </select>
+                <div class="grid grid-cols-2 gap-4">
+                    <input type="number" id="adm-stock" placeholder="Stok" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
+                    <input type="text" id="adm-img" placeholder="URL Gambar" class="bg-[#0d0d12] border border-[#2d2d3d] p-3 rounded-xl outline-none">
                 </div>
-                <div class="bg-white p-6 rounded-xl shadow-sm border border-gray-100">
-                    <p class="text-gray-500 text-sm font-medium">Total Katalog</p>
-                    <h3 class="text-2xl font-bold text-purple-600" id="stat-total-prod">0</h3>
-                </div>
-            </div>
-
-            <div class="bg-white p-8 rounded-xl shadow-sm mb-10 border border-gray-100">
-                <h3 class="text-xl font-bold mb-6">Tambah Katalog Baru</h3>
-                <div class="grid grid-cols-1 md:grid-cols-4 gap-4">
-                    <input type="text" id="adm-name" placeholder="Nama Produk" class="border p-3 rounded-lg outline-none focus:ring-2 focus:ring-indigo-500">
-                    <input type="number" id="adm-price" placeholder="Harga Dasar (Rp)" class="border p-3 rounded-lg outline-none">
-                    <input type="number" id="adm-discount" placeholder="Diskon (%)" class="border p-3 rounded-lg outline-none">
-                    <input type="text" id="adm-img" placeholder="Link Gambar (URL)" class="border p-3 rounded-lg outline-none">
-                    <button onclick="addProduct()" class="md:col-span-4 bg-indigo-600 text-white font-bold py-3 rounded-lg hover:bg-indigo-700 transition">PUBLIKASIKAN PRODUK</button>
-                </div>
-            </div>
-
-            <div class="bg-white rounded-xl shadow-sm overflow-hidden border border-gray-100">
-                <table class="w-full text-left">
-                    <thead class="bg-gray-50 border-b">
-                        <tr>
-                            <th class="p-4 font-bold">Produk</th>
-                            <th class="p-4 font-bold">Harga Final</th>
-                            <th class="p-4 font-bold">Diskon</th>
-                            <th class="p-4 font-bold text-center">Aksi</th>
-                        </tr>
-                    </thead>
-                    <tbody id="admin-product-table">
-                        </tbody>
-                </table>
-            </div>
-        </section>
-    </main>
-
-    <div id="cart-modal" class="fixed inset-0 bg-black/60 hidden z-50 flex justify-end">
-        <div class="bg-white w-full max-w-md h-full p-8 shadow-2xl flex flex-col">
-            <div class="flex justify-between items-center mb-8">
-                <h2 class="text-2xl font-bold">Keranjang Belanja</h2>
-                <button onclick="toggleCart()" class="text-3xl">&times;</button>
-            </div>
-            <div id="cart-items" class="flex-1 space-y-4 overflow-y-auto">
-                </div>
-            <div class="border-t pt-6 mt-6">
-                <div class="flex justify-between text-xl font-bold mb-6">
-                    <span>Total Bayar:</span>
-                    <span class="text-indigo-600">Rp <span id="cart-total">0</span></span>
-                </div>
-                <button onclick="checkout()" class="w-full bg-indigo-600 text-white py-4 rounded-xl font-bold text-lg hover:bg-indigo-700 shadow-lg">Selesaikan Pembelian</button>
+                <button onclick="addProduct()" class="bg-indigo-600 py-4 rounded-xl font-bold mt-4">Simpan Produk</button>
             </div>
         </div>
-    </div>
+    </main>
 
-    <a href="https://discord.gg/invite-code" target="_blank" class="discord-btn">
-        <svg width="20" height="20" fill="currentColor" viewBox="0 0 16 16"><path d="M13.545 2.907a13.227 13.227 0 0 0-3.257-1.011.05.05 0 0 0-.052.025c-.141.25-.297.577-.406.833a12.19 12.19 0 0 0-3.658 0 8.258 8.258 0 0 0-.412-.833.051.051 0 0 0-.052-.025c-1.125.194-2.22.534-3.257 1.011a.041.041 0 0 0-.021.018C.356 6.024-.213 9.047.066 12.032c.001.014.01.028.021.037a13.276 13.276 0 0 0 3.995 2.02.05.05 0 0 0 .056-.019c.308-.42.582-.863.818-1.329a.05.05 0 0 0-.01-.059.051.051 0 0 0-.018-.011 8.875 8.875 0 0 1-1.248-.595.05.05 0 0 1-.02-.066.051.051 0 0 1 .015-.019c.084-.063.168-.129.248-.195a.05.05 0 0 1 .051-.007c2.619 1.196 5.454 1.196 8.041 0a.052.052 0 0 1 .053.007c.08.066.164.132.248.195a.051.051 0 0 1-.004.085 8.254 8.254 0 0 1-1.248.595.05.05 0 0 0-.023.07c.24.467.513.91.819 1.329a.05.05 0 0 0 .056.019 13.235 13.235 0 0 0 4.001-2.02.049.049 0 0 0 .021-.037c.334-3.451-.559-6.449-2.366-9.106a.034.034 0 0 0-.02-.019Zm-8.198 7.307c-.789 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.45.73 1.438 1.613 0 .888-.637 1.612-1.438 1.612Zm5.316 0c-.788 0-1.438-.724-1.438-1.612 0-.889.637-1.613 1.438-1.613.807 0 1.451.73 1.438 1.613 0 .888-.631 1.612-1.438 1.612Z"/></svg>
-        Chat CS Discord
+    <a href="https://discord.gg/xyz" class="discord-float">
+        <img src="https://cdn-icons-png.flaticon.com/512/3670/3670157.png" width="20">
+        CS Discord
     </a>
 
     <script>
-        // Data Global (Load dari LocalStorage jika ada)
-        let products = JSON.parse(localStorage.getItem('myProducts')) || [
-            { id: 1, name: "Hoodie White Edition", price: 350000, discount: 15, img: "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=300" },
-            { id: 2, name: "T-Shirt Summer", price: 120000, discount: 0, img: "https://images.unsplash.com/photo-1521572267360-ee0c2909d518?auto=format&fit=crop&w=300" }
+        let products = JSON.parse(localStorage.getItem('lahProducts')) || [
+            { id: 1, name: "LAH STEAM FRESH", cat: "FiveM", price: 1500, reseller: 900, stock: 44, sold: 255, img: "https://via.placeholder.com/300/101015/00FF00" },
+            { id: 2, name: "Bundle For Fivem", cat: "FiveM", price: 25000, reseller: 18000, stock: 0, sold: 100, img: "https://via.placeholder.com/300/101015/00FF00" }
         ];
 
-        let stats = JSON.parse(localStorage.getItem('myStats')) || { revenue: 0, sold: 0 };
-        let cart = [];
-
-        function saveToStorage() {
-            localStorage.setItem('myProducts', JSON.stringify(products));
-            localStorage.setItem('myStats', JSON.stringify(stats));
-        }
-
         function showPage(page) {
-            document.getElementById('shop-page').classList.add('hidden');
-            document.getElementById('admin-page').classList.add('hidden');
-            document.getElementById(page + '-page').classList.remove('hidden');
-            if(page === 'admin') renderAdmin();
-            if(page === 'shop') renderShop();
+            document.getElementById('shop-page').classList.toggle('hidden', page !== 'shop');
+            document.getElementById('admin-page').classList.toggle('hidden', page !== 'admin');
         }
 
-        // --- SISTEM TOKO ---
-        function renderShop() {
+        function filterCategory(cat) {
+            // Update UI Button
+            document.querySelectorAll('.category-btn').forEach(btn => {
+                btn.classList.remove('active', 'text-white');
+                btn.classList.add('text-gray-400');
+            });
+            event.currentTarget.classList.add('active', 'text-white');
+            
+            renderShop(cat);
+        }
+
+        function renderShop(filter = 'All') {
             const list = document.getElementById('product-list');
             list.innerHTML = '';
-            products.forEach(p => {
-                const finalPrice = p.price - (p.price * p.discount / 100);
+
+            const filtered = filter === 'All' ? products : products.filter(p => p.cat === filter);
+
+            filtered.forEach(p => {
+                const isOut = p.stock <= 0;
                 list.innerHTML += `
-                    <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 hover:shadow-xl transition-all duration-300 group">
-                        <div class="relative overflow-hidden rounded-xl mb-4">
-                            <img src="${p.img}" class="w-full h-64 object-cover group-hover:scale-110 transition">
-                            ${p.discount > 0 ? `<span class="absolute top-2 left-2 bg-red-500 text-white px-3 py-1 rounded-full text-xs font-bold">-${p.discount}%</span>` : ''}
+                    <div class="glass-card p-4 flex flex-col">
+                        <div class="relative mb-5 rounded-xl overflow-hidden neon-border">
+                            <img src="${p.img}" class="w-full h-48 object-cover">
+                            <div class="absolute top-3 right-3">
+                                ${isOut ? 
+                                    `<span class="bg-red-500/20 text-red-500 border border-red-500 text-[9px] px-2 py-1 rounded font-bold">× OUT OF STOCK</span>` : 
+                                    `<span class="bg-green-500/20 text-green-500 border border-green-500 text-[9px] px-2 py-1 rounded font-bold">✓ IN STOCK</span>`
+                                }
+                            </div>
                         </div>
-                        <h3 class="font-bold text-lg mb-1">${p.name}</h3>
-                        <div class="flex items-center gap-2 mb-4">
-                            <span class="text-indigo-600 font-black text-xl">Rp ${finalPrice.toLocaleString()}</span>
-                            ${p.discount > 0 ? `<span class="text-gray-400 line-through text-sm">Rp ${p.price.toLocaleString()}</span>` : ''}
+
+                        <h3 class="font-bold text-md mb-1 uppercase tracking-tight">${p.name}</h3>
+                        <p class="text-[10px] text-indigo-400 font-mono mb-4 italic">Code: ${p.name.split(' ')[0]}</p>
+                        
+                        <div class="mb-4">
+                            <p class="text-2xl font-black text-blue-400">Rp ${p.price.toLocaleString()}</p>
+                            <p class="text-[11px] text-green-400 font-bold">Reseller: Rp ${p.reseller.toLocaleString()}</p>
                         </div>
-                        <button onclick="addToCart(${p.id})" class="w-full bg-gray-100 text-gray-800 py-3 rounded-xl font-bold hover:bg-indigo-600 hover:text-white transition">Tambah</button>
+
+                        <div class="grid grid-cols-2 gap-2 mb-4">
+                            <div class="bg-[#0d0d12] p-2 rounded-lg border border-[#2d2d3d] flex items-center gap-2 text-[10px]">
+                                <span class="text-green-500">●</span> Stock: ${p.stock}
+                            </div>
+                            <div class="bg-[#0d0d12] p-2 rounded-lg border border-[#2d2d3d] flex items-center gap-2 text-[10px]">
+                                <span class="text-indigo-500">🛒</span> Sold: ${p.sold}
+                            </div>
+                        </div>
+
+                        ${isOut ? 
+                            `<button class="w-full bg-[#1c1c27] text-gray-500 py-3 rounded-xl font-bold text-sm cursor-not-allowed border border-gray-800">🚫 Unavailable</button>` : 
+                            `<button class="w-full btn-buy text-white py-3 rounded-xl font-bold text-sm flex items-center justify-center gap-2">
+                                🛒 Buy Now
+                            </button>`
+                        }
                     </div>
-                `;
-            });
-        }
-
-        // --- SISTEM ADMIN ---
-        function renderAdmin() {
-            // Update Stat Cards
-            document.getElementById('stat-revenue').innerText = stats.revenue.toLocaleString();
-            document.getElementById('stat-sold').innerText = stats.sold;
-            document.getElementById('stat-total-prod').innerText = products.length;
-
-            // Update Table
-            const tableBody = document.getElementById('admin-product-table');
-            tableBody.innerHTML = '';
-            products.forEach((p, index) => {
-                const finalPrice = p.price - (p.price * p.discount / 100);
-                tableBody.innerHTML += `
-                    <tr class="border-b hover:bg-gray-50">
-                        <td class="p-4 flex items-center gap-3">
-                            <img src="${p.img}" class="w-10 h-10 rounded shadow-sm">
-                            <span class="font-medium">${p.name}</span>
-                        </td>
-                        <td class="p-4 text-indigo-600 font-bold">Rp ${finalPrice.toLocaleString()}</td>
-                        <td class="p-4"><span class="bg-red-100 text-red-600 px-2 py-1 rounded text-xs font-bold">${p.discount}%</span></td>
-                        <td class="p-4 text-center">
-                            <button onclick="deleteProduct(${index})" class="text-red-500 hover:underline">Hapus</button>
-                        </td>
-                    </tr>
                 `;
             });
         }
@@ -193,96 +191,21 @@
         function addProduct() {
             const name = document.getElementById('adm-name').value;
             const price = Number(document.getElementById('adm-price').value);
-            const discount = Number(document.getElementById('adm-discount').value) || 0;
-            const img = document.getElementById('adm-img').value || "https://via.placeholder.com/300";
+            const reseller = Number(document.getElementById('adm-reseller').value);
+            const cat = document.getElementById('adm-cat').value;
+            const stock = Number(document.getElementById('adm-stock').value);
+            const img = document.getElementById('adm-img').value || "https://via.placeholder.com/300/16161f/00FF00";
 
-            if(!name || !price) return alert("Nama dan Harga harus diisi!");
+            if(!name || !price) return alert("Isi data dengan lengkap!");
 
-            products.push({ id: Date.now(), name, price, discount, img });
-            saveToStorage();
-            renderAdmin();
-            alert("Produk Berhasil Ditambahkan ke Katalog!");
-            
-            // Clear inputs
-            document.getElementById('adm-name').value = '';
-            document.getElementById('adm-price').value = '';
-            document.getElementById('adm-discount').value = '';
-            document.getElementById('adm-img').value = '';
+            products.push({ id: Date.now(), name, cat, price, reseller, stock, sold: 0, img });
+            localStorage.setItem('lahProducts', JSON.stringify(products));
+            alert("Produk Berhasil Ditambah!");
+            showPage('shop');
+            renderShop();
         }
 
-        function deleteProduct(index) {
-            if(confirm("Hapus produk ini dari katalog?")) {
-                products.splice(index, 1);
-                saveToStorage();
-                renderAdmin();
-            }
-        }
-
-        // --- SISTEM KERANJANG & CHECKOUT ---
-        function addToCart(id) {
-            const item = products.find(p => p.id === id);
-            cart.push(item);
-            updateCartUI();
-        }
-
-        function toggleCart() {
-            document.getElementById('cart-modal').classList.toggle('hidden');
-        }
-
-        function updateCartUI() {
-            const cartList = document.getElementById('cart-items');
-            const cartCount = document.getElementById('cart-count');
-            const cartTotal = document.getElementById('cart-total');
-            
-            cartCount.innerText = cart.length;
-            cartList.innerHTML = '';
-            let total = 0;
-
-            cart.forEach((item, index) => {
-                const price = item.price - (item.price * item.discount / 100);
-                total += price;
-                cartList.innerHTML += `
-                    <div class="flex justify-between items-center bg-gray-50 p-4 rounded-xl">
-                        <div class="flex items-center gap-3">
-                            <img src="${item.img}" class="w-12 h-12 rounded object-cover">
-                            <div>
-                                <p class="font-bold text-sm">${item.name}</p>
-                                <p class="text-indigo-600 text-xs">Rp ${price.toLocaleString()}</p>
-                            </div>
-                        </div>
-                        <button onclick="removeFromCart(${index})" class="text-red-500 text-xl font-bold">&times;</button>
-                    </div>
-                `;
-            });
-            cartTotal.innerText = total.toLocaleString();
-        }
-
-        function removeFromCart(index) {
-            cart.splice(index, 1);
-            updateCartUI();
-        }
-
-        function checkout() {
-            if(cart.length === 0) return alert("Keranjang masih kosong!");
-            
-            // Hitung total belanjaan ini
-            let subtotal = 0;
-            cart.forEach(item => {
-                subtotal += (item.price - (item.price * item.discount / 100));
-            });
-
-            // Update Statistik Admin (Simulasi)
-            stats.revenue += subtotal;
-            stats.sold += cart.length;
-            saveToStorage();
-
-            alert(`Checkout Berhasil! Total: Rp ${subtotal.toLocaleString()}\nStatistik Admin Telah Diperbarui.`);
-            cart = [];
-            updateCartUI();
-            toggleCart();
-        }
-
-        // Init
+        // Inisialisasi
         renderShop();
     </script>
 </body>
