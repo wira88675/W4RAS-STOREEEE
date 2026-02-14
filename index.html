@@ -16,290 +16,249 @@
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* --- RUNNING TEXT --- */
-        .marquee-container { background: rgba(124, 58, 237, 0.1); border-bottom: 1px solid var(--glass-border); padding: 12px 0; overflow: hidden; }
+        /* --- MARQUEE --- */
+        .top-bar { background: rgba(124, 58, 237, 0.1); border-bottom: 1px solid var(--glass-border); padding: 12px 0; overflow: hidden; }
         .marquee { display: flex; white-space: nowrap; animation: move 30s linear infinite; }
         .marquee span { padding: 0 50px; font-size: 0.8rem; font-weight: 800; color: var(--purple); letter-spacing: 1px; }
         @keyframes move { 0% { transform: translateX(0); } 100% { transform: translateX(-50%); } }
 
         /* --- HEADER --- */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(5,6,11,0.8); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glass-border); }
-        .logo { font-size: 1.5rem; font-weight: 800; text-decoration: none; color: white; }
+        .logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }
         .logo span { color: var(--purple); text-shadow: 0 0 15px var(--purple-glow); }
         .admin-btn { background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
         .admin-btn:hover { background: var(--purple); box-shadow: 0 0 20px var(--purple-glow); }
 
-        /* --- HERO --- */
-        .hero { text-align: center; padding: 80px 5% 40px; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 10px; }
-        .hero p { color: var(--muted); font-size: 1.1rem; margin-bottom: 30px; }
-        .gradient-text { background: linear-gradient(to right, #fff, var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        /* --- EPIC HERO GALAXY --- */
+        .hero-container { padding: 80px 8% 40px; display: flex; justify-content: center; background: radial-gradient(circle at top, rgba(124, 58, 237, 0.1) 0%, transparent 70%); }
+        .hero-glass { 
+            background: rgba(15, 17, 26, 0.6); backdrop-filter: blur(20px); border: 2px solid var(--purple);
+            border-radius: 40px; padding: 60px; width: 100%; max-width: 900px; text-align: center;
+            box-shadow: 0 0 50px rgba(124, 58, 237, 0.15);
+        }
+        .hero-glass h1 { font-size: 4rem; font-weight: 900; margin: 15px 0; letter-spacing: -2px; }
+        .stats-row { display: flex; justify-content: center; gap: 50px; margin-top: 30px; }
+        .stat-box b { display: block; font-size: 2.5rem; color: var(--purple); }
+        .stat-box span { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
 
-        /* --- STATS BOX --- */
-        .stats-container { display: flex; justify-content: center; gap: 40px; margin-bottom: 50px; }
-        .stat-item h2 { font-size: 2.5rem; color: var(--purple); }
-        .stat-item p { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+        /* --- CATEGORY & GRID --- */
+        .nav-cat { display: flex; justify-content: center; gap: 12px; margin: 40px 0; padding: 0 8%; flex-wrap: wrap; }
+        .btn-cat { padding: 12px 24px; border-radius: 50px; background: var(--card); border: 1px solid var(--glass-border); color: white; cursor: pointer; transition: 0.3s; font-weight: 600; }
+        .btn-cat.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 15px var(--purple-glow); }
 
-        /* --- FEATURES --- */
-        .features-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 25px; padding: 20px 8%; }
-        .f-card { background: var(--card); padding: 40px; border-radius: 24px; border: 1px solid var(--glass-border); text-align: center; transition: 0.4s; }
-        .f-icon { width: 60px; height: 60px; background: var(--purple); border-radius: 18px; display: flex; align-items: center; justify-content: center; margin: 0 auto 25px; font-size: 1.5rem; box-shadow: 0 10px 20px var(--purple-glow); }
-
-        /* --- PRODUCT GRID --- */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 60px 8%; }
-        .p-card { background: var(--card); border-radius: 28px; padding: 20px; border: 1px solid var(--glass-border); transition: 0.5s; }
-        .p-card:hover { transform: translateY(-12px); border-color: var(--purple); box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
-        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 20px; object-fit: cover; margin-bottom: 20px; border: 1px solid var(--glass-border); }
-        .badge-stock { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 5px 12px; border-radius: 8px; font-size: 0.7rem; font-weight: 800; display: inline-block; margin-bottom: 10px; }
-        .p-price { font-size: 1.8rem; font-weight: 800; color: var(--purple); margin: 10px 0; }
-        .buy-btn { width: 100%; background: #1a1d29; border: 1px solid var(--glass-border); color: white; padding: 15px; border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
-        .p-card:hover .buy-btn { background: var(--purple); box-shadow: 0 10px 20px var(--purple-glow); border-color: transparent; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 80px; }
+        .p-card { background: var(--card); border-radius: 28px; padding: 20px; border: 1px solid var(--glass-border); transition: 0.4s; }
+        .p-card:hover { transform: translateY(-10px); border-color: var(--purple); }
+        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 20px; object-fit: cover; margin-bottom: 15px; background: #000; }
+        .p-badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; }
+        .p-price { font-size: 1.6rem; font-weight: 800; color: var(--purple); margin: 12px 0; }
+        .buy-btn { width: 100%; background: #1a1d29; border: 1px solid var(--glass-border); color: white; padding: 14px; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; }
+        .p-card:hover .buy-btn { background: var(--purple); }
 
         /* --- MODALS --- */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.95); display:none; align-items:center; justify-content:center; z-index:2000; padding: 20px; }
-        .modal-content { background:var(--card); width:100%; max-width:450px; padding:35px; border-radius:30px; border:1px solid var(--glass-border); position: relative; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-size: 0.8rem; color: var(--muted); }
-        .input-group input { width:100%; padding:14px; background:#05060b; border:1px solid #222; color:white; border-radius:12px; outline: none; transition: 0.3s; }
-        .input-group input:focus { border-color: var(--purple); }
-        
-        /* --- ADMIN PANEL EPIC --- */
-        #adminPanel { display:none; padding:60px 8%; background: linear-gradient(to bottom, #0a0c14, #05060b); border-top: 2px solid var(--purple); }
-        .admin-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px; }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
-        .admin-box { background: rgba(255,255,255,0.02); padding: 30px; border-radius: 24px; border: 1px solid var(--glass-border); backdrop-filter: blur(10px); }
-        .adm-table { width: 100%; border-collapse: collapse; margin-top: 30px; }
-        .adm-table th { text-align: left; color: var(--muted); padding: 15px; border-bottom: 1px solid #222; }
-        .adm-table td { padding: 15px; border-bottom: 1px solid #111; }
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:2000; padding:20px; }
+        .modal-content { background:var(--card); width:100%; max-width:400px; padding:30px; border-radius:24px; border:1px solid var(--glass-border); }
+        input, select { width:100%; padding:12px; background:#05060b; border:1px solid #222; color:white; border-radius:10px; margin-top:8px; margin-bottom:15px; }
 
-        /* --- FOOTER & TAWK.TO --- */
-        footer { padding: 40px 8%; text-align: center; border-top: 1px solid var(--glass-border); color: var(--muted); font-size: 0.9rem; }
+        /* --- ADMIN PANEL --- */
+        #adminArea { display:none; padding:40px 8%; background:#0a0c14; border-top:2px solid var(--purple); }
+        .adm-card { background:var(--card); padding:25px; border-radius:20px; border:1px solid var(--glass-border); margin-bottom:20px; }
+
+        /* --- CS FLOATING --- */
+        .cs-info { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--purple); padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 0 20px var(--purple-glow); display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
 
-    <div class="marquee-container">
-        <div class="marquee"><span id="runText">WELCOME TO W4RAS STORE • BEST QUALITY ACCOUNTS • INSTANT DELIVERY • 24/7 SUPPORT • </span><span id="runText2">WELCOME TO W4RAS STORE • BEST QUALITY ACCOUNTS • INSTANT DELIVERY • 24/7 SUPPORT • </span></div>
+    <div class="top-bar">
+        <div class="marquee"><span id="mq1">WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span><span id="mq2">WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span></div>
     </div>
 
     <header>
         <a href="#" class="logo">W4RAS <span>STORE</span></a>
-        <div>
-            <button class="admin-btn" onclick="askAdmin()">Admin Mode</button>
-        </div>
+        <button class="admin-btn" onclick="openAdmin()">Admin Mode</button>
     </header>
 
-    <div class="hero">
-        <p>Looking for Gaming Accounts?</p>
-        <h1>Premium <span class="gradient-text">Gaming Hub.</span></h1>
-        <div class="stats-container">
-            <div class="stat-item"><h2 id="soldCount">1,139</h2><p>Sold</p></div>
-            <div class="stat-item"><h2 id="prodCount">2</h2><p>Products</p></div>
+    <section class="hero-container">
+        <div class="hero-glass">
+            <p>Ready to upgrade your game?</p>
+            <h1>Premium <span style="color:var(--purple)">Gaming Hub.</span></h1>
+            <div class="stats-row">
+                <div class="stat-box"><b>1,139</b><span>Sold</span></div>
+                <div class="stat-box"><b id="countP">0</b><span>Products</span></div>
+                <div class="stat-box"><b>24/7</b><span>Support</span></div>
+            </div>
         </div>
+    </section>
+
+    <div class="nav-cat" id="navCat">
+        <button class="btn-cat active" onclick="setFilter('All')">All</button>
     </div>
 
-    <div class="features-grid">
-        <div class="f-card"><div class="f-icon">🛡️</div><h3>Guaranteed Quality</h3><p style="color:var(--muted); font-size:0.9rem; margin-top:10px;">Highest quality accounts and software. Trust us to deliver the best.</p></div>
-        <div class="f-card"><div class="f-icon">⚡</div><h3>Instant Delivery</h3><p style="color:var(--muted); font-size:0.9rem; margin-top:10px;">Get your products delivered instantly after payment. No waiting time.</p></div>
-        <div class="f-card"><div class="f-icon">🎧</div><h3>Live Support</h3><p style="color:var(--muted); font-size:0.9rem; margin-top:10px;">Our support is available 24/7. Need help? Contact us via chat.</p></div>
-    </div>
-
-    <div class="product-grid" id="pGrid"></div>
+    <div class="product-grid" id="productGrid"></div>
 
     <div class="modal" id="orderModal">
         <div class="modal-content">
-            <h2 style="margin-bottom:25px; display:flex; align-items:center; gap:10px;">🛒 Checkout</h2>
-            <div class="input-group"><label>Product Name</label><input type="text" id="mName" readonly></div>
-            <div class="input-group"><label>Recipient Email</label><input type="email" id="mEmail" placeholder="yourname@email.com"></div>
-            <div class="qty-ctrl">
-                <button class="btn-q" onclick="changeQty(-1)">-</button>
-                <b id="mQty" style="font-size: 1.2rem;">1</b>
-                <button class="btn-q" onclick="changeQty(1)">+</button>
+            <h2 id="orderTitle" style="margin-bottom:15px;">Checkout</h2>
+            <label style="font-size:0.8rem; color:var(--muted)">Email Penerima:</label>
+            <input type="email" id="userEmail" placeholder="nama@email.com">
+            <div style="background:rgba(124,58,237,0.1); padding:20px; border-radius:15px; margin-bottom:15px; text-align:center;">
+                <p style="font-size:0.8rem; color:var(--muted)">Total Pembayaran:</p>
+                <h2 id="orderPrice" style="color:var(--purple)">Rp0</h2>
             </div>
-            <div style="padding:25px; background:rgba(124,58,237,0.1); border-radius:20px; margin:20px 0; border:1px solid var(--purple);">
-                <p style="font-size:0.8rem; color:var(--muted); margin-bottom:5px;">Total Price:</p>
-                <h2 id="mTotal" style="color:var(--purple); font-size:2rem;">Rp0</h2>
-            </div>
-            <button class="buy-btn" style="background:var(--purple); border:none;" onclick="openQRIS()">Bayar (QRIS)</button>
-            <button class="buy-btn" style="background:transparent; border:none; margin-top:10px; color:var(--muted);" onclick="closeM()">Batal</button>
+            <button class="buy-btn" style="background:var(--purple)" onclick="toQRIS()">Bayar Sekarang (QRIS)</button>
+            <button class="buy-btn" style="background:transparent; border:none; margin-top:5px;" onclick="closeM()">Batal</button>
         </div>
     </div>
 
     <div class="modal" id="qrisModal">
-        <div class="modal-content" style="text-align: center;">
-            <div style="background: #1a1d29; padding: 15px; border-radius: 15px; margin-bottom: 20px; text-align: left;">
-                <p style="font-size: 0.7rem; color: var(--muted);">Order ID: <span id="qrisOrderId" style="color:white; float:right;">ORD7710682...</span></p>
-                <h3 style="margin-top:5px;">Total: <span id="qrisTotal" style="color:var(--purple);">Rp0</span></h3>
+        <div class="modal-content" style="text-align:center">
+            <h3 style="margin-bottom:15px;">Scan QRIS</h3>
+            <div style="background:white; padding:10px; border-radius:15px; display:inline-block; margin-bottom:15px;">
+                <img id="qrisImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=W4RAS_STORE" width="200">
             </div>
-            <img src="https://api.qrserver.com/v1/create-qr-code/?size=250x250&data=W4RAS_STORE_PAYMENT" style="width: 200px; padding: 10px; background: white; border-radius: 15px; margin-bottom: 20px;">
-            <p style="font-size: 0.8rem; color: var(--muted); margin-bottom: 20px;">Scan QR Code di atas menggunakan aplikasi mobile banking atau e-wallet Anda.</p>
-            <button class="buy-btn" onclick="showNota()">Konfirmasi Sudah Bayar</button>
-            <button class="buy-btn" style="background:transparent; border:none; margin-top:10px;" onclick="closeQRIS()">Tutup</button>
+            <p style="font-size:0.8rem; color:var(--muted)">Silakan selesaikan pembayaran sesuai nominal.</p>
+            <button class="buy-btn" style="margin-top:20px; background:var(--success)" onclick="toNota()">Konfirmasi Sudah Bayar</button>
         </div>
     </div>
 
     <div class="modal" id="notaModal">
         <div class="modal-content">
-            <h2 style="color:var(--success); text-align:center;">✅ Pembayaran Berhasil</h2>
-            <div style="margin: 25px 0; font-size: 0.9rem; line-height: 1.8;">
-                <p><strong>Item:</strong> <span id="invItem"></span></p>
-                <p><strong>Jumlah:</strong> <span id="invQty"></span></p>
-                <p><strong>Total Bayar:</strong> <span id="invTotal"></span></p>
-                <p><strong>Status:</strong> <span style="color:var(--success);">PAID</span></p>
+            <h2 style="color:var(--success); text-align:center;">✓ PEMBAYARAN BERHASIL</h2>
+            <div id="notaDetail" style="margin:20px 0; font-size:0.9rem; line-height:1.8; border-top:1px dashed #333; padding-top:15px;"></div>
+            <div style="background:rgba(16,185,129,0.1); padding:15px; border-radius:12px; border:1px solid var(--success); font-size:0.8rem; text-align:center;">
+                <b>PENTING:</b> Silakan hubungi admin di Tawk.to (Kiri Bawah) untuk pengiriman akun!
             </div>
-            <div style="background:rgba(16, 185, 129, 0.1); padding: 15px; border-radius: 15px; border: 1px solid var(--success);">
-                <p style="font-size: 0.8rem; text-align: center;">
-                    <strong>NOTE:</strong> Silakan hubungi admin melalui Live Chat (Tawk.to) di pojok bawah untuk proses pengiriman akun!
-                </p>
-            </div>
-            <button class="buy-btn" style="background:var(--success); border:none; margin-top:20px;" onclick="window.location.reload()">Selesai</button>
+            <button class="buy-btn" style="margin-top:20px" onclick="location.reload()">Selesai</button>
         </div>
     </div>
 
-    <div id="adminPanel">
-        <div class="admin-header">
-            <h2>🛠️ Epic Owner Dashboard</h2>
-            <button class="admin-btn" onclick="location.reload()" style="background: #f43f5e;">Logout Admin</button>
-        </div>
-        
-        <div class="admin-grid">
-            <div class="admin-box">
-                <h3 style="margin-bottom:20px;">Add New Product</h3>
-                <div class="input-group"><label>Product Name</label><input type="text" id="admN" placeholder="Ex: LAH STEAM FRESH"></div>
-                <div class="input-group"><label>Price (Rp)</label><input type="number" id="admH" placeholder="1500"></div>
-                <div class="input-group"><label>Stock</label><input type="number" id="admS" placeholder="50"></div>
-                <div class="input-group"><label>Image Link (URL)</label><input type="text" id="admI" placeholder="https://image-link.com/img.jpg"></div>
-                <button class="buy-btn" style="background:var(--purple); border:none;" onclick="addItem()">Simpan Produk</button>
+    <div id="adminArea">
+        <h2 style="margin-bottom:30px;">🛠 Dashboard Owner</h2>
+        <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
+            <div class="adm-card">
+                <h3>Tambah Produk Baru</h3>
+                <input type="text" id="addName" placeholder="Nama Produk">
+                <input type="number" id="addPrice" placeholder="Harga (Angka)">
+                <input type="number" id="addStock" placeholder="Jumlah Stok">
+                <select id="addCatSel"></select>
+                <input type="text" id="addImg" placeholder="URL Link Gambar (Opsional)">
+                <button class="admin-btn" style="width:100%" onclick="saveProduct()">Simpan Produk</button>
             </div>
-            <div class="admin-box">
-                <h3 style="margin-bottom:20px;">Global Settings</h3>
-                <div class="input-group"><label>Running Text</label><input type="text" id="admT" placeholder="Update marquee message..."></div>
-                <button class="buy-btn" onclick="upMarquee()">Update Marquee</button>
+            <div class="adm-card">
+                <h3>Kelola Kategori</h3>
+                <input type="text" id="newCatInput" placeholder="Nama Kategori Baru">
+                <button class="admin-btn" style="width:100%" onclick="saveCat()">Tambah Kategori</button>
             </div>
         </div>
-
-        <div class="admin-box" style="margin-top:30px;">
-            <h3>Product Inventory</h3>
-            <table class="adm-table">
-                <thead><tr><th>Product</th><th>Price</th><th>Stock</th><th>Action</th></tr></thead>
-                <tbody id="admList"></tbody>
-            </table>
+        <div class="adm-card" style="margin-top:20px;">
+            <h3>List Produk & Hapus</h3>
+            <div id="admProdList"></div>
         </div>
     </div>
 
-    <footer>
-        <p>© 2026 W4RAS STORE. All rights reserved.</p>
-        <p style="margin-top:10px; font-size:0.7rem;">Hubungi admin di pojok kiri bawah jika ada kendala.</p>
-    </footer>
+    <div class="cs-info">
+        <span>🎧 Need Help? Chat Admin (Tawk.to)</span>
+    </div>
 
     <script>
-        let db = JSON.parse(localStorage.getItem('w4_db')) || [
-            {id:1, name:'LAH STEAM FRESH', price:1500, stock:43, img:'https://via.placeholder.com/400/0f111a/7c3aed?text=Steam+Fresh'},
-            {id:2, name:'LAH ROCKSTAR PRIVATE', price:13000, stock:14, img:'https://via.placeholder.com/400/0f111a/7c3aed?text=Rockstar+Private'}
-        ];
-        let curP = 0, curQ = 1, curId = 0;
+        // DATA PERSISTENCE
+        let products = JSON.parse(localStorage.getItem('w4_products')) || [];
+        let categories = JSON.parse(localStorage.getItem('w4_categories')) || ['Steam', 'Rockstar', 'Cloud Phone'];
+        let filter = 'All';
+        let selectedProduct = null;
 
         function render() {
-            const grid = document.getElementById('pGrid');
-            const list = document.getElementById('admList');
-            const txt = localStorage.getItem('w4_txt') || "WELCOME TO W4RAS STORE • BEST QUALITY ACCOUNTS • INSTANT DELIVERY • ";
+            const grid = document.getElementById('productGrid');
+            const nav = document.getElementById('navCat');
+            const selCat = document.getElementById('addCatSel');
+            const admList = document.getElementById('admProdList');
             
-            document.getElementById('runText').innerText = txt;
-            document.getElementById('runText2').innerText = txt;
-            document.getElementById('prodCount').innerText = db.length;
-            
-            grid.innerHTML = ''; list.innerHTML = '';
-            db.forEach(item => {
+            // Render Nav
+            nav.innerHTML = `<button class="btn-cat ${filter==='All'?'active':''}" onclick="setFilter('All')">All Products</button>`;
+            selCat.innerHTML = '';
+            categories.forEach(c => {
+                nav.innerHTML += `<button class="btn-cat ${filter===c?'active':''}" onclick="setFilter('${c}')">${c}</button>`;
+                selCat.innerHTML += `<option value="${c}">${c}</option>`;
+            });
+
+            // Render Products
+            grid.innerHTML = ''; admList.innerHTML = '';
+            const filtered = filter === 'All' ? products : products.filter(p => p.category === filter);
+            document.getElementById('countP').innerText = products.length;
+
+            filtered.forEach(p => {
                 grid.innerHTML += `
                 <div class="p-card">
-                    <span class="badge-stock">✓ IN STOCK</span>
-                    <img src="${item.img}" class="p-img">
-                    <h3 style="font-weight:700;">${item.name}</h3>
-                    <div class="p-price">Rp${item.price.toLocaleString()}</div>
-                    <p style="color:var(--muted); font-size:0.8rem; margin-bottom:15px;">Stok: ${item.stock}</p>
-                    <button class="buy-btn" onclick="openO(${item.id})">🛒 Buy Now</button>
+                    <span class="p-badge">IN STOCK</span>
+                    <img src="${p.img || 'https://via.placeholder.com/300/0f111a/7c3aed?text=No+Image'}" class="p-img">
+                    <h3>${p.name}</h3>
+                    <p style="color:var(--muted); font-size:0.7rem; margin-top:5px;">${p.category} • Stok: ${p.stock}</p>
+                    <div class="p-price">Rp${p.price.toLocaleString()}</div>
+                    <button class="buy-btn" onclick="openCheckout(${p.id})">🛒 Buy Now</button>
                 </div>`;
                 
-                list.innerHTML += `
-                <tr>
-                    <td>${item.name}</td>
-                    <td>Rp${item.price.toLocaleString()}</td>
-                    <td>${item.stock}</td>
-                    <td><button onclick="del(${item.id})" style="color:#f43f5e; background:none; border:none; cursor:pointer; font-weight:700;">Hapus</button></td>
-                </tr>`;
+                admList.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222">${p.name} (${p.category}) - Rp${p.price} <button onclick="deleteProd(${p.id})" style="color:#f43f5e; float:right; background:none; border:none; cursor:pointer;">Hapus</button></div>`;
             });
         }
 
-        // --- PEMBAYARAN FLOW ---
-        function openO(id) {
-            const item = db.find(x => x.id === id);
-            curId = id; curP = item.price; curQ = 1;
-            document.getElementById('mName').value = item.name;
-            document.getElementById('mQty').innerText = curQ;
-            document.getElementById('mTotal').innerText = "Rp" + (curP * curQ).toLocaleString();
+        // --- CORE FUNCTIONS ---
+        function setFilter(c) { filter = c; render(); }
+
+        function openCheckout(id) {
+            selectedProduct = products.find(p => p.id === id);
+            document.getElementById('orderTitle').innerText = selectedProduct.name;
+            document.getElementById('orderPrice').innerText = "Rp" + selectedProduct.price.toLocaleString();
             document.getElementById('orderModal').style.display = 'flex';
         }
 
-        function openQRIS() {
-            const email = document.getElementById('mEmail').value;
-            if(!email) return alert("Silakan masukkan email Anda!");
+        function toQRIS() {
+            if(!document.getElementById('userEmail').value) return alert("Email harus diisi!");
             document.getElementById('orderModal').style.display = 'none';
-            document.getElementById('qrisTotal').innerText = document.getElementById('mTotal').innerText;
-            document.getElementById('qrisOrderId').innerText = "ORD" + Math.floor(Math.random()*10000000);
             document.getElementById('qrisModal').style.display = 'flex';
         }
 
-        function showNota() {
-            const item = db.find(x => x.id === curId);
-            item.stock -= curQ;
-            save();
+        function toNota() {
+            // POTONG STOK
+            selectedProduct.stock -= 1;
+            saveDB();
+            
             document.getElementById('qrisModal').style.display = 'none';
-            document.getElementById('invItem').innerText = item.name;
-            document.getElementById('invQty').innerText = curQ;
-            document.getElementById('invTotal').innerText = "Rp" + (curP * curQ).toLocaleString();
+            document.getElementById('notaDetail').innerHTML = `
+                <b>Item:</b> ${selectedProduct.name}<br>
+                <b>Email:</b> ${document.getElementById('userEmail').value}<br>
+                <b>Total:</b> Rp${selectedProduct.price.toLocaleString()}<br>
+                <b>Order ID:</b> ORD-${Math.floor(Math.random()*999999)}
+            `;
             document.getElementById('notaModal').style.display = 'flex';
         }
 
-        function changeQty(n) {
-            curQ += n; if(curQ < 1) curQ = 1;
-            document.getElementById('mQty').innerText = curQ;
-            document.getElementById('mTotal').innerText = "Rp" + (curP * curQ).toLocaleString();
-        }
-
         // --- ADMIN FUNCTIONS ---
-        function askAdmin() { if(prompt("Password Admin:") === "admin123") { document.getElementById('adminPanel').style.display='block'; window.scrollTo(0, document.body.scrollHeight); } }
-        
-        function addItem() {
-            const name = document.getElementById('admN').value;
-            const price = document.getElementById('admH').value;
-            const stock = document.getElementById('admS').value;
-            const img = document.getElementById('admI').value || 'https://via.placeholder.com/400/0f111a/7c3aed?text=Product';
+        function openAdmin() { if(prompt("Password Owner:") === "wira123") document.getElementById('adminArea').style.display='block'; }
+
+        function saveProduct() {
+            const n = document.getElementById('addName').value;
+            const p = document.getElementById('addPrice').value;
+            const s = document.getElementById('addStock').value;
+            const c = document.getElementById('addCatSel').value;
+            const i = document.getElementById('addImg').value;
+            if(!n || !p) return alert("Nama & Harga wajib!");
             
-            if(!name || !price) return alert("Nama dan Harga wajib diisi!");
-            
-            db.push({id:Date.now(), name, price:parseInt(price), stock:parseInt(stock), img});
-            save();
-            alert("Produk Berhasil Ditambah!");
+            products.push({ id: Date.now(), name: n, price: parseInt(p), stock: parseInt(s), category: c, img: i });
+            saveDB(); alert("Produk Disimpan!");
         }
 
-        function del(id) { if(confirm("Hapus produk ini?")) { db = db.filter(x => x.id !== id); save(); } }
-        function upMarquee() { localStorage.setItem('w4_txt', document.getElementById('admT').value + " • "); render(); }
-        function save() { localStorage.setItem('w4_db', JSON.stringify(db)); render(); }
-        function closeM() { document.getElementById('orderModal').style.display='none'; }
-        function closeQRIS() { document.getElementById('qrisModal').style.display='none'; }
+        function saveCat() {
+            const val = document.getElementById('newCatInput').value;
+            if(val) { categories.push(val); localStorage.setItem('w4_categories', JSON.stringify(categories)); render(); }
+        }
+
+        function deleteProd(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); saveDB(); } }
+        function saveDB() { localStorage.setItem('w4_products', JSON.stringify(products)); render(); }
+        function closeM() { document.getElementById('orderModal').style.display = 'none'; }
 
         render();
-
-        // --- TAWK.TO INTEGRATION ---
-        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-        (function(){
-        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
-        s1.async=true;
-        s1.src='https://embed.tawk.to/https://dashboard/698f4abfcf39cf1c38c19b82/default'; // GANTI DENGAN ID TAWK.TO KAMU
-        s1.charset='UTF-8';
-        s1.setAttribute('crossorigin','*');
-        s0.parentNode.insertBefore(s1,s0);
-        })();
     </script>
-</body>
+
+    </body>
 </html>
