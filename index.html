@@ -3,34 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | V32.0 FINAL ELITE</title>
+    <title>🛒W4RAS STOR | #1 ONTOP DI INDO</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
         :root { --emerald: #10b981; --dark-bg: #020617; }
         body { background: var(--dark-bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
-
-        /* MATRIX BG ANIMATION */
+        
+        /* BACKGROUND & GRID ANIMATION */
         .bg-matrix { position: fixed; inset: 0; z-index: -1; background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
         .grid-overlay { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(var(--emerald) 1px, transparent 1px), linear-gradient(90deg, var(--emerald) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.05; animation: moveGrid 20s linear infinite; }
         @keyframes moveGrid { from { transform: translateY(0); } to { transform: translateY(50px); } }
 
-        /* GLASS UI PERSIS FOTO */
+        /* GLASS UI COMPONENTS */
         .glass-box { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 40px; }
         .hero-banner { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 0, 0, 0.4)); border-radius: 50px; padding: 60px; position: relative; border: 1px solid rgba(16, 185, 129, 0.2); overflow: hidden; }
-        .btn-emerald { background: var(--emerald); color: #000; font-weight: 800; border-radius: 12px; transition: 0.3s; }
+        .btn-emerald { background: var(--emerald); color: #000; font-weight: 800; border-radius: 12px; transition: 0.3s; cursor: pointer; }
         
-        /* FULL RUNNING TEXT 1 BARIS */
+        /* MARQUEE RUNNING TEXT */
         .marquee-container { position: absolute; bottom: 30px; left: 0; width: 100%; overflow: hidden; }
         .marquee-text { color: var(--emerald); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4em; white-space: nowrap; }
 
-        /* QUANTITY CONTROLS */
-        .qty-btn { background: rgba(255,255,255,0.1); width: 28px; height: 28px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-weight: 800; transition: 0.2s; }
-        .qty-btn:hover { background: var(--emerald); color: #000; }
-
         .modal-blur { backdrop-filter: blur(30px); background: rgba(0,0,0,0.85); display: none; position: fixed; inset: 0; z-index: 100; align-items: center; justify-content: center; padding: 20px; }
         #toast-container { position: fixed; bottom: 100px; left: 30px; z-index: 999; }
-        .toast-epic { background: #000; border: 1px solid var(--emerald); padding: 15px 25px; border-radius: 12px; font-weight: 800; animation: toastIn 0.3s forwards; box-shadow: 0 0 20px rgba(16, 185, 129, 0.2); }
+        .toast-epic { background: #000; border: 1px solid var(--emerald); padding: 15px 25px; border-radius: 12px; font-weight: 800; animation: toastIn 0.3s forwards; }
         @keyframes toastIn { from { opacity: 0; transform: translateX(-20px); } to { opacity: 1; transform: translateX(0); } }
     </style>
 </head>
@@ -43,47 +39,58 @@
     <div class="max-w-7xl mx-auto p-6 md:p-12 space-y-8 relative">
         
         <header class="glass-box flex justify-between items-center p-6 px-10">
-            <h1 class="text-2xl font-black italic uppercase tracking-tighter">W4RAS<span class="text-emerald-500 text-3xl">STORE</span></h1>
-            <div class="flex items-center gap-6">
-                <div class="text-[10px] font-bold text-gray-400 bg-emerald-500/10 px-5 py-2 rounded-full border border-emerald-500/20 uppercase tracking-widest">
-                    TOTAL TERJUAL: <span id="sold-count" class="text-emerald-500 font-black">0</span>
-                </div>
-                <button onclick="openModal('cart-modal')" class="bg-white/5 p-4 rounded-2xl border border-white/10 relative hover:bg-emerald-500 transition duration-500 group">
-                    <span class="group-hover:scale-110 inline-block">🛒</span>
-                    <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-500 text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
-                </button>
+            <div class="flex items-center gap-4">
+                <div class="w-3 h-3 bg-emerald-500 rounded-full animate-pulse shadow-[0_0_15px_#10b981]"></div>
+                <h1 class="text-xl md:text-2xl font-black italic uppercase tracking-tighter">
+                    🛒W4RAS STOR | <span class="text-emerald-500">#1 ONTOP DI INDO</span>
+                </h1>
             </div>
+            <button onclick="openModal('cart-modal')" class="bg-white/5 p-4 rounded-2xl border border-white/10 relative hover:bg-emerald-500 transition duration-500 group">
+                <span class="group-hover:scale-110 block">🛒</span>
+                <span id="cart-count" class="absolute -top-1 -right-1 bg-emerald-500 text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-bold">0</span>
+            </button>
         </header>
 
         <section class="hero-banner">
             <h2 class="text-5xl font-black italic text-white uppercase tracking-tighter mb-4">W4RAS <span class="text-emerald-500">ULTIMATE</span></h2>
             <div class="marquee-container">
-                <marquee id="banner-text" class="marquee-text" scrollamount="6">SILAHKAN PILIH PRODUK TERBAIK KAMI — DISCORD NITRO ONLINE — PROSES INSTAN 24 JAM — </marquee>
+                <marquee id="banner-text" class="marquee-text" scrollamount="6">LOADING SYSTEM... — SILAHKAN BELANJA — PROSES INSTAN 24/7 — </marquee>
             </div>
         </section>
 
-        <div class="flex items-center gap-4">
-            <input type="text" id="search-box" placeholder="Cari item..." class="bg-black/40 border border-white/10 rounded-xl p-4 w-80 outline-none focus:border-emerald-500 transition font-bold text-sm" onkeyup="filterProducts()">
-            <button class="btn-emerald px-10 py-4 text-xs uppercase italic">ALL</button>
+        <div class="flex flex-wrap items-center gap-4">
+            <input type="text" id="search-box" placeholder="Cari item..." class="bg-black/40 border border-white/10 rounded-xl p-4 w-full md:w-80 outline-none focus:border-emerald-500 transition font-bold text-sm" onkeyup="filterProducts()">
+            <div id="category-list" class="flex flex-wrap gap-2">
+                </div>
         </div>
 
         <main id="shop-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 pt-4"></main>
 
         <main id="admin-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
-            <aside class="lg:col-span-4 glass-box p-8 space-y-4 border-emerald-500/20">
-                <h3 class="text-emerald-500 font-black uppercase mb-6 italic text-xl">Master Admin</h3>
-                <label class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Banner Running Text</label>
-                <input type="text" id="conf-run" placeholder="Teks Berjalan Full" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
-                <input type="text" id="conf-qris" placeholder="URL Gambar QRIS" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
-                <input type="text" id="conf-webhook" placeholder="Discord Webhook URL" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-[10px]">
-                <button onclick="updateGlobal()" class="btn-emerald w-full py-4 mt-2 uppercase text-xs italic">Update System</button>
-                <hr class="opacity-10 my-8">
-                <label class="text-[9px] font-bold text-gray-500 uppercase tracking-widest">Tambah Produk</label>
+            <aside class="lg:col-span-4 glass-box p-8 space-y-4">
+                <h3 class="text-emerald-500 font-black uppercase mb-4 italic text-xl">Master Admin</h3>
+                
+                <div class="p-4 bg-white/5 rounded-2xl border border-white/10 space-y-2">
+                    <p class="text-[9px] font-bold text-gray-500 uppercase">Pengaturan Login Admin</p>
+                    <input type="text" id="new-adm-user" placeholder="Username Baru" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs">
+                    <input type="text" id="new-adm-pass" placeholder="Password Baru" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs">
+                    <button onclick="updateAdminAccount()" class="btn-emerald w-full py-2 text-[10px]">SAVE LOGIN</button>
+                </div>
+
+                <input type="text" id="conf-run" placeholder="Teks Berjalan" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
+                <input type="text" id="conf-qris" placeholder="URL QRIS" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
+                <input type="text" id="conf-webhook" placeholder="Discord Webhook" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-[10px]">
+                <button onclick="updateGlobal()" class="btn-emerald w-full py-4 text-xs">SAVE CONFIG</button>
+
+                <hr class="opacity-10 my-6">
+                
+                <h4 class="text-xs font-black uppercase text-gray-500 italic">Produk & Stok</h4>
+                <input type="text" id="p-category" placeholder="Kategori (Contoh: DISCORD)" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
                 <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
                 <input type="number" id="p-price" placeholder="Harga" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
-                <textarea id="p-data" placeholder="Stok Akun (User:Pass)" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm h-24"></textarea>
+                <textarea id="p-data" placeholder="Stok Akun (1 Akun 1 Baris)" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm h-24"></textarea>
                 <input type="text" id="p-img" placeholder="URL Gambar" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
-                <button onclick="addProduct()" class="btn-emerald w-full py-4 uppercase text-xs">Simpan Produk</button>
+                <button onclick="addProduct()" class="btn-emerald w-full py-4 text-xs">SIMPAN / RESTOK</button>
             </aside>
             <div class="lg:col-span-8 glass-box overflow-hidden">
                 <table class="w-full text-left text-[11px]"><tbody id="admin-table"></tbody></table>
@@ -91,76 +98,101 @@
         </main>
     </div>
 
-    <button onclick="openModal('login-modal')" class="fixed bottom-6 left-6 z-50 glass-box p-4 border-white/10 hover:border-emerald-500 hover:text-emerald-500 transition shadow-2xl">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
-    </button>
-
     <div id="cart-modal" class="modal-blur">
         <div class="glass-box p-10 max-w-md w-full">
-            <h3 class="text-emerald-500 font-black mb-8 uppercase italic text-center text-xl">Keranjang Anda</h3>
-            <div id="cart-list" class="space-y-5 mb-8 max-h-72 overflow-y-auto pr-2"></div>
-            <div class="flex justify-between font-black text-2xl mb-8 pt-6 border-t border-white/10 text-emerald-500 italic">
+            <h3 class="text-emerald-500 font-black mb-8 uppercase italic text-center">Keranjang</h3>
+            <div id="cart-list" class="space-y-4 mb-8"></div>
+            <div class="flex justify-between font-black text-2xl mb-8 pt-4 border-t border-white/10 text-emerald-500">
                 <span>TOTAL</span><span id="cart-total">Rp 0</span>
             </div>
-            <button onclick="checkout()" class="btn-emerald w-full py-5 uppercase text-xs italic shadow-lg shadow-emerald-500/20">Lanjut Pembayaran</button>
-            <button onclick="closeModal('cart-modal')" class="w-full text-[10px] text-gray-500 font-black mt-6 uppercase tracking-[0.3em]">Kembali Belanja</button>
+            <button onclick="checkout()" class="btn-emerald w-full py-5 uppercase text-xs italic">Bayar Sekarang</button>
+            <button onclick="closeModal('cart-modal')" class="w-full text-[10px] text-gray-500 font-black mt-4 uppercase text-center block">Kembali</button>
+        </div>
+    </div>
+
+    <div id="pay-modal" class="modal-blur">
+        <div class="glass-box p-10 max-w-sm w-full text-center">
+            <h3 class="text-emerald-500 font-black mb-4 uppercase italic">Scan QRIS</h3>
+            <img id="qris-img" src="" class="w-full bg-white p-4 rounded-[2.5rem] mb-6 shadow-2xl">
+            <div class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl mb-6">
+                <p class="text-[10px] font-black uppercase text-emerald-500 italic">⚠ SUDAH BAYAR? HUBUNGI CS <br>UNTUK AMBIL AKUN ANDA!</p>
+            </div>
+            <input type="file" id="proof-upload" class="hidden" onchange="showToast('BUKTI TERPILIH!')">
+            <button onclick="document.getElementById('proof-upload').click()" class="w-full bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] mb-4 uppercase font-bold text-gray-400">Pilih Bukti Pembayaran</button>
+            <button id="btn-confirm" onclick="sendToDiscord()" class="btn-emerald w-full py-4 uppercase text-[10px]">Kirim ke Discord</button>
         </div>
     </div>
 
     <div id="login-modal" class="modal-blur">
         <div class="glass-box p-10 max-w-sm w-full text-center">
-            <h3 class="text-emerald-500 font-black mb-8 uppercase italic tracking-widest">Master Login</h3>
-            <input type="text" id="adm-user" placeholder="Username" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-4 outline-none">
-            <input type="password" id="adm-pass" placeholder="Password" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-8 outline-none">
-            <button onclick="doLogin()" class="btn-emerald w-full py-4 text-xs uppercase">Unlock System</button>
+            <h3 class="text-emerald-500 font-black mb-8 uppercase italic">Unlock System</h3>
+            <input type="text" id="adm-user" placeholder="Username" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-4">
+            <input type="password" id="adm-pass" placeholder="Password" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-8">
+            <button onclick="doLogin()" class="btn-emerald w-full py-4 text-xs uppercase">Unlock</button>
         </div>
     </div>
 
-    <div id="pay-modal" class="modal-blur">
-        <div class="glass-box p-10 max-w-sm w-full text-center border-emerald-500/20">
-            <h3 class="text-emerald-500 font-black mb-6 uppercase italic">Scan QRIS</h3>
-            <img id="qris-img" src="" class="w-full bg-white p-5 rounded-[2.5rem] mb-8 shadow-2xl shadow-emerald-500/20">
-            <button onclick="sendToDiscord()" class="btn-emerald w-full py-4 uppercase text-[10px]">Konfirmasi Sudah Bayar</button>
-        </div>
-    </div>
+    <button onclick="openModal('login-modal')" class="fixed bottom-6 left-6 z-50 glass-box p-4 border-white/10 hover:border-emerald-500 transition">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+    </button>
+
+    <script type="text/javascript">
+        var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
+        (function(){
+        var s1=document.createElement("script"),s0=document.getElementsByTagName("script")[0];
+        s1.async=true; s1.src='https://embed.tawk.to/YOUR_ID/default';
+        s1.charset='UTF-8'; s1.setAttribute('crossorigin','*');
+        s0.parentNode.insertBefore(s1,s0);
+        })();
+    </script>
 
     <script>
         let db = JSON.parse(localStorage.getItem('w4_db')) || [];
         let cart = [];
 
+        // FUNCTION: TOAST NOTIF
         function showToast(msg) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
-            toast.className = "toast-epic";
-            toast.innerText = msg;
+            toast.className = "toast-epic"; toast.innerText = msg;
             container.appendChild(toast);
             setTimeout(() => toast.remove(), 3000);
         }
 
-        function renderShop() {
-            document.getElementById('shop-view').innerHTML = db.map(p => `
+        // FUNCTION: RENDER SHOP DENGAN FILTER KATEGORI
+        function renderShop(cat = 'ALL') {
+            const displayDb = cat === 'ALL' ? db : db.filter(p => p.category === cat);
+            document.getElementById('shop-view').innerHTML = displayDb.map(p => `
                 <div class="glass-box p-6 border-white/5 hover:border-emerald-500 transition duration-500 group">
-                    <div class="relative mb-6 rounded-3xl overflow-hidden">
+                    <div class="relative mb-6 rounded-2xl overflow-hidden">
                         <img src="${p.img}" class="w-full h-44 object-cover group-hover:scale-110 transition duration-700">
-                        <span class="absolute top-3 right-3 bg-black/90 text-emerald-500 text-[9px] font-black px-3 py-1 rounded-lg border border-emerald-500/30">STOCK: ${p.accounts.length}</span>
+                        <span class="absolute top-3 right-3 bg-black/80 text-emerald-500 text-[9px] font-black px-3 py-1 rounded-lg uppercase">${p.category}</span>
+                        <span class="absolute bottom-3 left-3 bg-emerald-500 text-black text-[8px] font-black px-2 py-1 rounded-md">STOCK: ${p.accounts.length}</span>
                     </div>
-                    <h3 class="text-[10px] font-bold text-gray-500 uppercase tracking-widest mb-1 italic">${p.name}</h3>
-                    <p class="text-2xl font-black mb-6 tracking-tighter text-white italic">Rp ${p.price.toLocaleString()}</p>
+                    <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 italic">${p.name}</h3>
+                    <p class="text-2xl font-black mb-6 italic">Rp ${p.price.toLocaleString()}</p>
                     <button onclick="addToCart(${p.id})" class="btn-emerald w-full py-4 text-[10px] uppercase italic">Add to Cart</button>
                 </div>`).join('');
+            renderCategories();
         }
 
+        // FUNCTION: RENDER BUTTON KATEGORI
+        function renderCategories() {
+            const cats = [...new Set(db.map(p => p.category))];
+            document.getElementById('category-list').innerHTML = `
+                <button onclick="renderShop('ALL')" class="bg-white/5 border border-white/10 px-6 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-emerald-500 hover:text-black transition">ALL</button>
+                ` + cats.map(c => `<button onclick="renderShop('${c}')" class="bg-white/5 border border-white/10 px-6 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-emerald-500 hover:text-black transition">${c}</button>`).join('');
+        }
+
+        // FUNCTION: KERANJANG & QUANTITY
         function addToCart(id) {
             const item = db.find(x => x.id == id);
             const inCart = cart.find(x => x.id == id);
             if(inCart) {
                 if(inCart.qty < item.accounts.length) inCart.qty++;
-                else return showToast("STOK TIDAK CUKUP!");
-            } else {
-                cart.push({...item, qty: 1});
-            }
-            updateCartUI();
-            showToast("ITEM DITAMBAHKAN!");
+                else return showToast("STOK MAKSIMAL!");
+            } else { cart.push({...item, qty: 1}); }
+            updateCartUI(); showToast("DITAMBAHKAN!");
         }
 
         function updateQty(id, delta) {
@@ -169,28 +201,21 @@
             if(item) {
                 item.qty += delta;
                 if(item.qty <= 0) cart = cart.filter(x => x.id !== id);
-                if(item.qty > product.accounts.length) {
-                    item.qty = product.accounts.length;
-                    showToast("STOK MAKSIMAL TERPASANG!");
-                }
+                if(item.qty > product.accounts.length) item.qty = product.accounts.length;
             }
             updateCartUI();
         }
 
         function updateCartUI() {
             let total = 0;
-            document.getElementById('cart-list').innerHTML = cart.map(item => {
-                total += (item.price * item.qty);
-                return `
-                <div class="flex justify-between items-center py-4 border-b border-white/5">
-                    <div class="text-[11px] font-black uppercase tracking-tighter">
-                        <div class="text-white">${item.name}</div>
-                        <div class="text-emerald-500">Rp ${item.price.toLocaleString()}</div>
-                    </div>
-                    <div class="flex items-center gap-4 bg-white/5 p-2 rounded-xl">
-                        <button onclick="updateQty(${item.id}, -1)" class="qty-btn">-</button>
-                        <span class="text-sm font-black w-6 text-center">${item.qty}</span>
-                        <button onclick="updateQty(${item.id}, 1)" class="qty-btn">+</button>
+            document.getElementById('cart-list').innerHTML = cart.map(i => {
+                total += (i.price * i.qty);
+                return `<div class="flex justify-between items-center py-2 border-b border-white/5">
+                    <div class="text-[11px] font-black uppercase">${i.name}</div>
+                    <div class="flex items-center gap-3">
+                        <button onclick="updateQty(${i.id}, -1)" class="w-6 h-6 bg-white/10 rounded font-bold hover:bg-emerald-500 hover:text-black">-</button>
+                        <span class="text-sm font-bold w-4 text-center">${i.qty}</span>
+                        <button onclick="updateQty(${i.id}, 1)" class="w-6 h-6 bg-white/10 rounded font-bold hover:bg-emerald-500 hover:text-black">+</button>
                     </div>
                 </div>`;
             }).join('');
@@ -198,6 +223,83 @@
             document.getElementById('cart-count').innerText = cart.length;
         }
 
+        // WEBHOOK FORMAT PREMIUM (SESUAI FOTO)
+        async function sendToDiscord() {
+            const webhookUrl = localStorage.getItem('w4_webhook');
+            const proof = document.getElementById('proof-upload').files[0];
+            const btn = document.getElementById('btn-confirm');
+            if(!webhookUrl || !proof) return showToast("LENGKAPI DATA!");
+
+            btn.innerText = "MENGIRIM..."; btn.disabled = true;
+            const orderID = "W4R-" + Math.floor(1000 + Math.random() * 9000);
+            const items = cart.map(i => `📦 **${i.name} (x${i.qty})**`).join('\n');
+
+            const formData = new FormData();
+            formData.append("payload_json", JSON.stringify({
+                embeds: [{
+                    title: "⚠ ORDER BARU - VERIFIKASI SEKARANG",
+                    color: 16763904,
+                    fields: [
+                        { name: "Order ID", value: `\`${orderID}\``, inline: true },
+                        { name: "Total Bayar", value: `**${document.getElementById('cart-total').innerText}**`, inline: true },
+                        { name: "🔒 ITEM PESANAN", value: items },
+                        { name: "🔑 AKUN", value: "```MINTA ADMIN```" }
+                    ],
+                    image: { url: "attachment://proof.png" },
+                    footer: { text: "W4RAS STORE | #1 ONTOP DI INDO" }
+                }]
+            }));
+            formData.append("file1", proof, "proof.png");
+
+            try {
+                await fetch(webhookUrl, { method: 'POST', body: formData });
+                showToast("PESANAN TERKIRIM!"); setTimeout(() => location.reload(), 2000);
+            } catch (e) { showToast("GAGAL!"); btn.disabled = false; btn.innerText = "KIRIM KE DISCORD"; }
+        }
+
+        // ADMIN FUNCTIONS
+        function updateAdminAccount() {
+            localStorage.setItem('adm_user', document.getElementById('new-adm-user').value);
+            localStorage.setItem('adm_pass', document.getElementById('new-adm-pass').value);
+            showToast("AKUN ADMIN DIUPDATE!");
+        }
+
+        function doLogin() {
+            const u = localStorage.getItem('adm_user') || 'admin';
+            const p = localStorage.getItem('adm_pass') || 'admin123';
+            if(document.getElementById('adm-user').value === u && document.getElementById('adm-pass').value === p) {
+                document.getElementById('admin-view').classList.remove('hidden');
+                document.getElementById('shop-view').classList.add('hidden');
+                closeModal('login-modal'); renderAdmin();
+            } else { showToast("LOGIN GAGAL!"); }
+        }
+
+        function addProduct() {
+            const name = document.getElementById('p-name').value;
+            const category = document.getElementById('p-category').value.toUpperCase();
+            const newAccs = document.getElementById('p-data').value.trim().split('\n').filter(l => l);
+            const existing = db.find(p => p.name === name);
+            if(existing) {
+                existing.accounts = [...existing.accounts, ...newAccs];
+                showToast("STOK DITAMBAHKAN!");
+            } else {
+                db.push({ id: Date.now(), category: category, name: name, price: Number(document.getElementById('p-price').value), accounts: newAccs, img: document.getElementById('p-img').value });
+                showToast("PRODUK BARU DISIMPAN!");
+            }
+            localStorage.setItem('w4_db', JSON.stringify(db)); renderShop(); renderAdmin();
+        }
+
+        function renderAdmin() {
+            document.getElementById('admin-table').innerHTML = db.map(p => `
+                <tr class="border-b border-white/5">
+                    <td class="p-4 uppercase font-black italic text-emerald-500">[${p.category}]</td>
+                    <td class="p-4 uppercase font-black italic">${p.name}</td>
+                    <td class="p-4 text-gray-500 font-bold">${p.accounts.length} STOK</td>
+                    <td class="p-4 text-right"><button onclick="deleteProduct(${p.id})" class="text-red-500 font-bold uppercase text-[9px]">Hapus</button></td>
+                </tr>`).join('');
+        }
+
+        function deleteProduct(id) { db = db.filter(p => p.id !== id); localStorage.setItem('w4_db', JSON.stringify(db)); renderAdmin(); renderShop(); }
         function updateGlobal() {
             localStorage.setItem('w4_marquee', document.getElementById('conf-run').value);
             localStorage.setItem('w4_qris', document.getElementById('conf-qris').value);
@@ -205,52 +307,16 @@
             location.reload();
         }
 
-        function addProduct() {
-            const accs = document.getElementById('p-data').value.trim().split('\n').filter(l => l);
-            db.push({ id: Date.now(), name: document.getElementById('p-name').value, price: Number(document.getElementById('p-price').value), accounts: accs, img: document.getElementById('p-img').value });
-            localStorage.setItem('w4_db', JSON.stringify(db));
-            renderShop(); renderAdmin(); showToast("PRODUK BARU DISIMPAN!");
-        }
-
-        function doLogin() {
-            if(document.getElementById('adm-user').value === 'admin' && document.getElementById('adm-pass').value === 'admin123') {
-                document.getElementById('admin-view').classList.remove('hidden');
-                document.getElementById('shop-view').classList.add('hidden');
-                document.querySelector('.hero-banner').classList.add('hidden');
-                closeModal('login-modal');
-                renderAdmin();
-            } else { showToast("PASSWORD SALAH!"); }
-        }
-
-        async function sendToDiscord() {
-            const webhookUrl = localStorage.getItem('w4_webhook');
-            if(!webhookUrl) return showToast("WEBHOOK ERROR!");
-            const content = cart.map(i => `📦 ${i.name} (x${i.qty})`).join('\n');
-            await fetch(webhookUrl, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ content: `🚀 ORDERAN BARU MASUK!\n${content}\n💰 TOTAL BAYAR: ${document.getElementById('cart-total').innerText}` })});
-            showToast("PESANAN TERKIRIM!");
-            location.reload();
-        }
-
-        function renderAdmin() {
-            document.getElementById('admin-table').innerHTML = db.map(p => `<tr class="border-b border-white/5"><td class="p-4 font-black uppercase italic">${p.name}</td><td class="p-4 text-emerald-500 font-black">${p.accounts.length} STOCK</td><td class="p-4 text-right"><button onclick="deleteProduct(${p.id})" class="text-red-500 font-bold uppercase text-[9px]">Hapus</button></td></tr>`).join('');
-        }
-
-        function filterProducts() {
-            const val = document.getElementById('search-box').value.toLowerCase();
-            document.querySelectorAll('#shop-view > div').forEach(c => {
-                c.style.display = c.querySelector('h3').innerText.toLowerCase().includes(val) ? 'block' : 'none';
-            });
-        }
-
-        function deleteProduct(id) { db = db.filter(p => p.id !== id); localStorage.setItem('w4_db', JSON.stringify(db)); renderAdmin(); renderShop(); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
         function checkout() { if(cart.length > 0) { closeModal('cart-modal'); document.getElementById('qris-img').src = localStorage.getItem('w4_qris'); openModal('pay-modal'); } }
+        function filterProducts() {
+            const val = document.getElementById('search-box').value.toLowerCase();
+            document.querySelectorAll('#shop-view > div').forEach(c => c.style.display = c.innerText.toLowerCase().includes(val) ? 'block' : 'none');
+        }
 
-        // Load Config on Start
-        const savedText = localStorage.getItem('w4_marquee');
-        if(savedText) document.getElementById('banner-text').innerText = savedText + " — " + savedText + " — ";
-        document.getElementById('conf-run').value = savedText || "";
+        // INITIAL LOAD
+        document.getElementById('banner-text').innerText = localStorage.getItem('w4_marquee') || "SELAMAT DATANG DI W4RAS STORE — #1 ONTOP DI INDO —";
         renderShop();
     </script>
 </body>
