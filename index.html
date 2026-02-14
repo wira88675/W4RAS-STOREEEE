@@ -1,258 +1,220 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🛒 W4RAS STORE | Premium Gaming</title>
+    <title>W4RAS STORE | Admin & Shop</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
             --bg: #0b0d14;
-            --card: #161925;
+            --card: #12141c;
             --purple: #7c3aed;
-            --accent: #a855f7;
+            --accent: #4f46e5;
+            --green: #22c55e;
+            --red: #ef4444;
             --text: #f3f4f6;
             --muted: #9ca3af;
-            --green: #22c55e;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text); line-height: 1.6; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
+        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
 
-        /* --- NAVBAR & FLOATING CART --- */
-        header {
-            display: flex; justify-content: space-between; align-items: center;
-            padding: 20px 5%; background: rgba(15, 18, 32, 0.8);
-            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 100;
-            border-bottom: 1px solid rgba(255,255,255,0.05);
-        }
-        .keranjang-melayang {
-            position: fixed; bottom: 30px; right: 30px;
-            background: linear-gradient(135deg, var(--purple), var(--accent));
-            color: white; padding: 15px 25px; border-radius: 50px;
-            text-decoration: none; font-weight: bold; z-index: 1000;
-            box-shadow: 0 10px 20px rgba(124, 58, 237, 0.3);
-            transition: 0.3s;
-        }
-        .keranjang-melayang:hover { transform: scale(1.1); }
+        /* --- NAV & HERO --- */
+        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(11, 13, 20, 0.9); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #222; }
+        .logo { font-size: 1.5rem; font-weight: 800; }
+        .logo span { color: var(--purple); }
+        nav a { color: var(--muted); text-decoration: none; margin-left: 25px; font-weight: 600; cursor: pointer; }
 
-        /* --- HERO & STATS --- */
-        .hero { text-align: center; padding: 80px 5%; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; margin-bottom: 10px; }
-        .gradient-text { background: linear-gradient(90deg, var(--purple), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .stats { display: flex; justify-content: center; gap: 40px; margin-top: 40px; flex-wrap: wrap; }
-        .stat-item h2 { color: var(--purple); font-size: 2.5rem; }
+        .hero { text-align: center; padding: 40px 5%; }
+        .stats-container { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
+        .stat-item h2 { color: var(--purple); font-size: 2.2rem; }
 
-        /* --- FEATURE CARDS --- */
-        .features { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; padding: 50px 5%; }
-        .kartu { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid rgba(255,255,255,0.05); text-align: center; transition: 0.3s; }
-        .kartu:hover { border-color: var(--purple); transform: translateY(-5px); }
-        .ikon-ungu { background: var(--purple); width: 60px; height: 60px; border-radius: 15px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
+        /* --- CATEGORY SELECTOR --- */
+        .cat-filter { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
+        .cat-btn { background: #1c1f2a; border: 1px solid #333; color: white; padding: 8px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
+        .cat-btn.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 15px rgba(124, 58, 237, 0.4); }
 
-        /* --- MODERN PRODUCT GRID --- */
-        .products { padding: 50px 5%; text-align: center; }
-        .product-grid-modern { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 30px; }
-        .p-card-modern { background: #11141d; border-radius: 15px; padding: 15px; border: 1px solid #222; transition: 0.3s; text-align: left; }
-        .p-card-modern:hover { border-color: var(--green); transform: translateY(-5px); }
-        .p-image-box { position: relative; width: 100%; height: 180px; background: #050505; border-radius: 10px; border: 2px solid var(--green); display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        .badge-stok { position: absolute; top: 10px; right: 10px; padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; }
-        .in-stock { background: rgba(34, 197, 94, 0.2); color: var(--green); border: 1px solid var(--green); }
-        .out-stock { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
-        .p-info { margin-top: 15px; }
-        .p-code { color: var(--purple); font-size: 12px; font-weight: bold; text-transform: uppercase; }
-        .p-title { font-weight: 800; font-size: 18px; margin: 5px 0; }
-        .p-price-main { color: var(--accent); font-size: 24px; font-weight: 900; margin: 5px 0; }
-        .p-price-reseller { color: var(--green); font-size: 14px; font-weight: bold; }
-        .p-stock-count { background: #1a1a1a; padding: 8px; border-radius: 8px; font-size: 12px; margin-top: 15px; display: block; }
-        .btn-buy { width: 100%; background: var(--purple); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
-        .btn-buy:hover { background: var(--accent); }
+        /* --- PRODUCT GRID --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; padding: 0 8% 40px; }
+        .p-card { background: var(--card); border-radius: 18px; padding: 15px; border: 1px solid #222; position: relative; }
+        .p-image-box img { width: 100%; border: 2px solid var(--green); border-radius: 12px; }
+        .p-price { font-size: 24px; font-weight: 800; color: #8b5cf6; }
+        .p-old-price { font-size: 14px; color: var(--red); text-decoration: line-through; margin-left: 10px; }
+        .stock-box { background: #1c1f2a; padding: 10px; border-radius: 10px; font-size: 12px; margin: 15px 0; display: flex; align-items: center; gap: 8px; }
+        
+        /* --- ADMIN PANEL --- */
+        #admin { padding: 60px 8%; background: #050505; border-top: 1px solid #333; }
+        .admin-card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; }
+        .admin-input { width: 100%; padding: 12px; background: #161925; border: 1px solid #333; color: white; border-radius: 8px; margin-bottom: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
+        th { text-align: left; color: var(--muted); padding: 10px; border-bottom: 1px solid #333; }
+        td { padding: 10px; border-bottom: 1px solid #111; }
 
-        /* --- MODAL STYLES (DIPERLUKAN) --- */
-        .modal-overlay {
-            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000;
-        }
-        .modal-content {
-            background: #0f121d; width: 95%; max-width: 450px; border-radius: 20px;
-            padding: 25px; border: 1px solid #222; position: relative;
-        }
-        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
-        .btn-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
-        .input-group { margin-bottom: 20px; }
-        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
-        .input-group input { width: 100%; background: #161925; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; outline: none; }
-        .qty-control { display: flex; align-items: center; gap: 15px; background: #161925; padding: 10px; border-radius: 10px; width: fit-content; }
-        .btn-qty { background: #2d3142; border: none; color: white; width: 35px; height: 35px; border-radius: 8px; cursor: pointer; font-size: 18px; }
-        .total-box { background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-top: 15px; }
-        .total-box h2 { color: var(--accent); font-size: 24px; font-weight: 800; }
+        .btn-action { background: var(--purple); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
+        .btn-sm { padding: 5px 10px; font-size: 12px; width: auto; }
 
-        /* --- CHECKOUT & ADMIN --- */
-        #checkout { padding: 80px 5%; background: #0f1220; border-radius: 30px 30px 0 0; margin-top: 50px; }
-        .qris-box { max-width: 500px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 20px; text-align: center; }
-        .qris-img { background: white; padding: 10px; border-radius: 10px; margin: 20px 0; width: 200px; }
-        #admin { padding: 50px 5%; background: #050505; border-top: 2px solid var(--purple); }
+        /* --- MODAL --- */
+        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: #0f121d; padding: 30px; border-radius: 20px; width: 400px; border: 1px solid #222; }
     </style>
 </head>
-<body>
+<body onload="renderProducts()">
 
     <header>
-        <div style="font-size: 1.5rem; font-weight: 800;">🛒 W4RAS <span class="gradient-text">STORE</span></div>
+        <div class="logo">🛒 W4RAS <span>STORE</span></div>
         <nav>
-            <a href="#" style="color: white; text-decoration: none; margin-left: 20px;">Home</a>
-            <a href="#checkout" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Checkout</a>
-            <a href="#admin" style="color: var(--muted); text-decoration: none; margin-left: 20px;">Admin</a>
+            <a href="#">Home</a>
+            <a href="#admin">Admin</a>
         </nav>
     </header>
 
-    <a href="#checkout" class="keranjang-melayang">
-        🛒 Keranjang (<span id="count">0</span>)
-    </a>
-
     <section class="hero">
-        <h1>Looking for <br><span class="gradient-text">Premium Gaming Accounts?</span></h1>
-        <div class="stats">
-            <div class="stat-item"><h2>1139</h2><p>PRODUCTS SOLD</p></div>
-            <div class="stat-item"><h2>5</h2><p>TOTAL PRODUCTS</p></div>
-            <div class="stat-item"><h2>4.99</h2><p>RATING</p></div>
+        <h1>Premium Gaming <span class="gradient-text">Accounts?</span></h1>
+        <div class="stats-container">
+            <div class="stat-item"><h2 id="countSold">1139</h2><p>Sold</p></div>
+            <div class="stat-item"><h2 id="countTotal">0</h2><p>Products</p></div>
         </div>
     </section>
 
-    <section class="features">
-        <div class="kartu">
-            <div class="ikon-ungu">🛡️</div>
-            <h3>Guaranteed Quality</h3>
-            <p>Kami menyediakan akun dan software kualitas terbaik.</p>
-        </div>
-        <div class="kartu" style="border: 2px solid var(--purple);">
-            <div class="ikon-ungu">⚡</div>
-            <h3>Instant Delivery</h3>
-            <p>Produk dikirim instan setelah pembayaran terproses otomatis.</p>
-        </div>
-        <div class="kartu">
-            <div class="ikon-ungu">🎧</div>
-            <h3>Live Support</h3>
-            <p>Bantuan 24/7. Hubungi kami melalui Discord kapan saja.</p>
-        </div>
-    </section>
-
-    <section class="products">
-        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Explore our products</h2>
-        <p style="color: var(--muted);">Pick a category to refine your search.</p>
-        
-        <div class="product-grid-modern">
-            <div class="p-card-modern">
-                <div class="p-image-box">
-                    <div class="badge-stok in-stock">✓ IN STOCK</div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" width="60">
-                </div>
-                <div class="p-info">
-                    <span class="p-code">Code: STEAM</span>
-                    <h4 class="p-title">LAH STEAM FRESH</h4>
-                    <div class="p-price-main">Rp1.500</div>
-                    <div class="p-price-reseller">Reseller: <span>Rp900</span></div>
-                    <span class="p-stock-count">🟢 Stock: 43</span>
-                    <button class="btn-buy" onclick="bukaModal('LAH STEAM FRESH', 1500)">Tambah Ke Keranjang</button>
-                </div>
-            </div>
-
-            <div class="p-card-modern">
-                <div class="p-image-box">
-                    <div class="badge-stok in-stock">✓ IN STOCK</div>
-                    <img src="https://cdn-icons-png.flaticon.com/512/5969/5969244.png" width="60">
-                </div>
-                <div class="p-info">
-                    <span class="p-code">Code: ROCKSTAR</span>
-                    <h4 class="p-title">LAH ROCKSTAR FRESH PRIVATE</h4>
-                    <div class="p-price-main">Rp13.000</div>
-                    <div class="p-price-reseller">Reseller: <span>Rp8.000</span></div>
-                    <span class="p-stock-count">🟢 Stock: 12</span>
-                    <button class="btn-buy" onclick="bukaModal('LAH ROCKSTAR FRESH PRIVATE', 13000)">Tambah Ke Keranjang</button>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <section id="checkout">
-        <div class="qris-box">
-            <h2>💳 Pembayaran QRIS</h2>
-            <center>
-                <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WARAS-STORE-QRIS" class="qris-img" alt="QRIS">
-            </center>
-            <p style="color:yellow; font-weight:bold;">NOTE: Hubungi CS Untuk Mengambil Akun Anda</p>
-        </div>
-    </section>
-
-    <div class="modal-overlay" id="orderModal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 style="display: flex; align-items: center; gap: 10px;">🛒 Beli Produk</h2>
-                <button class="btn-close" onclick="tutupModal()">×</button>
-            </div>
-            <div class="input-group">
-                <label>📦 Produk</label>
-                <input type="text" id="modalNamaProduk" readonly>
-            </div>
-            <div class="input-group">
-                <label>📧 Email Penerima Akun</label>
-                <input type="email" id="userEmail" placeholder="Email untuk menerima akun">
-            </div>
-            <div class="input-group">
-                <label># Jumlah</label>
-                <div class="qty-control">
-                    <button class="btn-qty" onclick="ubahQty(-1)">-</button>
-                    <b id="displayQty">1</b>
-                    <button class="btn-qty" onclick="ubahQty(1)">+</button>
-                </div>
-            </div>
-            <div class="total-box">
-                <div style="background: var(--purple); padding: 10px; border-radius: 10px;">💳</div>
-                <h2 id="modalTotalHarga">Rp0</h2>
-            </div>
-            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
-                <button onclick="tutupModal()" style="background: #222; color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer;">✕ Batal</button>
-                <button onclick="lanjutBayar()" style="background: var(--purple); color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold;">✓ Lanjutkan</button>
-            </div>
-        </div>
+    <div class="cat-filter" id="catList">
+        <button class="cat-btn active" onclick="filterCat('All')">All</button>
+        <button class="cat-btn" onclick="filterCat('FiveM')">🎮 FiveM</button>
+        <button class="cat-btn" onclick="filterCat('Cloud Phone')">📱 Cloud Phone</button>
     </div>
 
+    <div class="product-grid" id="shopGrid">
+        </div>
+
+    <section id="admin">
+        <div id="loginArea">
+            <h2>🔐 Admin Login</h2>
+            <div class="admin-card" style="max-width: 400px;">
+                <input type="text" id="userA" class="admin-input" placeholder="Username">
+                <input type="password" id="passA" class="admin-input" placeholder="Password">
+                <button class="btn-action" onclick="login()">Login</button>
+            </div>
+        </div>
+
+        <div id="dashArea" style="display: none;">
+            <h2>🛠️ Dashboard Admin</h2>
+            
+            <div class="admin-card">
+                <h4>➕ Tambah Produk & Diskon</h4>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
+                    <input type="text" id="pName" class="admin-input" placeholder="Nama Produk">
+                    <input type="number" id="pPrice" class="admin-input" placeholder="Harga (Rp)">
+                    <input type="number" id="pOldPrice" class="admin-input" placeholder="Harga Coret (Opsional)">
+                    <select id="pCat" class="admin-input">
+                        <option value="FiveM">FiveM</option>
+                        <option value="Cloud Phone">Cloud Phone</option>
+                    </select>
+                    <input type="number" id="pStock" class="admin-input" placeholder="Stok Awal">
+                    <input type="text" id="pImg" class="admin-input" placeholder="URL Gambar">
+                </div>
+                <button class="btn-action" onclick="addProduct()">Simpan Produk</button>
+            </div>
+
+            <div class="admin-card">
+                <h4>📦 Manajemen Stok (Restok)</h4>
+                <table id="stockTable">
+                    <thead>
+                        <tr><th>Produk</th><th>Stok</th><th>Aksi</th></tr>
+                    </thead>
+                    <tbody id="adminStockBody"></tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+
     <script>
-        let count = 0;
-        let currentPrice = 0;
-        let currentQty = 1;
+        // DATA AWAL
+        let products = JSON.parse(localStorage.getItem('w_prod')) || [
+            { id: 1, name: "LAH STEAM FRESH", price: 1500, oldPrice: 2000, cat: "FiveM", stock: 43, img: "https://via.placeholder.com/300/000000/22c55e?text=Steam" },
+            { id: 2, name: "LAH ROCKSTAR PRIVATE", price: 13000, oldPrice: 0, cat: "FiveM", stock: 14, img: "https://via.placeholder.com/300/000000/22c55e?text=Rockstar" }
+        ];
 
-        function bukaModal(nama, harga) {
-            currentPrice = harga;
-            currentQty = 1;
-            document.getElementById('modalNamaProduk').value = nama;
-            document.getElementById('displayQty').innerText = currentQty;
-            updateTotal();
-            document.getElementById('orderModal').style.display = 'flex';
+        function renderProducts(filter = 'All') {
+            const grid = document.getElementById('shopGrid');
+            grid.innerHTML = "";
+            let count = 0;
+
+            products.forEach((p, index) => {
+                if (filter === 'All' || p.cat === filter) {
+                    count++;
+                    grid.innerHTML += `
+                        <div class="p-card">
+                            <div class="p-image-box">
+                                <img src="${p.img}">
+                                <div class="badge-status">${p.stock > 0 ? '✓ IN STOCK' : '× OUT'}</div>
+                            </div>
+                            <h4>${p.name}</h4>
+                            <div class="p-price">Rp${p.price.toLocaleString()}${p.oldPrice > 0 ? `<span class="p-old-price">Rp${p.oldPrice.toLocaleString()}</span>` : ''}</div>
+                            <div class="stock-box"><div class="dot"></div> Stok: ${p.stock}</div>
+                            <button class="btn-action" ${p.stock <= 0 ? 'disabled' : ''}>${p.stock > 0 ? '🛒 Buy Now' : '🚫 Habis'}</button>
+                        </div>
+                    `;
+                }
+            });
+            document.getElementById('countTotal').innerText = products.length;
+            renderAdminTable();
         }
 
-        function tutupModal() {
-            document.getElementById('orderModal').style.display = 'none';
+        // FUNGSI ADMIN
+        function login() {
+            if(document.getElementById('userA').value === "Admin123" && document.getElementById('passA').value === "admin123") {
+                document.getElementById('loginArea').style.display = 'none';
+                document.getElementById('dashArea').style.display = 'block';
+            } else { alert("Login Gagal!"); }
         }
 
-        function ubahQty(val) {
-            currentQty += val;
-            if (currentQty < 1) currentQty = 1;
-            document.getElementById('displayQty').innerText = currentQty;
-            updateTotal();
+        function addProduct() {
+            const newP = {
+                id: Date.now(),
+                name: document.getElementById('pName').value,
+                price: parseInt(document.getElementById('pPrice').value),
+                oldPrice: parseInt(document.getElementById('pOldPrice').value) || 0,
+                cat: document.getElementById('pCat').value,
+                stock: parseInt(document.getElementById('pStock').value),
+                img: document.getElementById('pImg').value || "https://via.placeholder.com/300"
+            };
+            products.push(newP);
+            save();
+            alert("Produk Berhasil Ditambah!");
         }
 
-        function updateTotal() {
-            let total = currentPrice * currentQty;
-            document.getElementById('modalTotalHarga').innerText = "Rp" + total.toLocaleString('id-ID');
+        function restock(id) {
+            const amt = prompt("Masukkan jumlah stok tambahan:");
+            if(amt) {
+                const p = products.find(x => x.id === id);
+                p.stock += parseInt(amt);
+                save();
+            }
         }
 
-        function lanjutBayar() {
-            let email = document.getElementById('userEmail').value;
-            if(!email) return alert("Masukkan email penerima akun!");
-            count++;
-            document.getElementById('count').innerText = count;
-            tutupModal();
-            window.location.href = "#checkout";
-            alert("Pesanan dicatat! Silakan selesaikan pembayaran QRIS.");
+        function renderAdminTable() {
+            const body = document.getElementById('adminStockBody');
+            body.innerHTML = "";
+            products.forEach(p => {
+                body.innerHTML += `
+                    <tr>
+                        <td>${p.name}</td>
+                        <td><b>${p.stock}</b></td>
+                        <td><button class="btn-action btn-sm" onclick="restock(${p.id})">Restok</button></td>
+                    </tr>
+                `;
+            });
+        }
+
+        function filterCat(c) {
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderProducts(c);
+        }
+
+        function save() {
+            localStorage.setItem('w_prod', JSON.stringify(products));
+            renderProducts();
         }
     </script>
 </body>
