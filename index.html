@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🛒W4RAS STOR | ULTIMATE V62.1</title>
+    <title>🛒W4RAS STOR | ULTIMATE V63.0</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800&display=swap" rel="stylesheet">
     <style>
@@ -12,6 +12,7 @@
         .bg-matrix { position: fixed; inset: 0; z-index: -1; background: linear-gradient(rgba(2,6,23,0.97), rgba(2,6,23,0.97)), url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
         .glass-box { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.08); border-radius: 30px; }
         
+        /* Ikon Gradasi */
         .icon-box { background: linear-gradient(135deg, #6366f1 0%, #a855f7 100%); width: 60px; height: 60px; border-radius: 18px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3); }
         
         .btn-emerald { background: var(--emerald); color: #000; font-weight: 800; border-radius: 12px; transition: 0.3s; cursor: pointer; border: none; }
@@ -23,29 +24,21 @@
         .toast-epic { background: #000; border: 1px solid var(--emerald); padding: 15px 25px; border-radius: 12px; font-weight: 800; color: var(--emerald); font-size: 11px; animation: slideIn 0.3s ease-out; }
         
         @keyframes slideIn { from { transform: translateX(100%); } to { transform: translateX(0); } }
-        
-        /* FIX: Tulisan Admin Jadi Hitam Bold */
+
+        /* FIX: TULISAN ADMIN HITAM BOLD */
         .input-admin { 
-            background: rgba(255, 255, 255, 0.9); /* Background lebih terang supaya teks hitam terlihat */
+            background: rgba(255, 255, 255, 0.95) !important; 
             border: 2px solid transparent; 
             padding: 15px; 
             border-radius: 15px; 
             font-size: 13px; 
             width: 100%; 
             outline: none; 
-            color: #000 !important; /* Paksa warna Hitam */
-            font-weight: 800 !important; /* Paksa Bold */
-            transition: 0.3s; 
+            color: #000 !important; 
+            font-weight: 800 !important; 
         }
-        .input-admin:focus { border-color: var(--emerald); background: #fff; }
-        .input-admin::placeholder { color: #666; font-weight: 600; }
-        
-        /* Fix untuk Dropdown Select agar teks pilihannya hitam */
-        select.input-admin option {
-            color: #000;
-            font-weight: 800;
-            background: #fff;
-        }
+        .input-admin:focus { border-color: var(--emerald); }
+        .input-admin::placeholder { color: #555; font-weight: 600; }
 
         .cat-btn.active { background: var(--emerald); color: black; box-shadow: 0 0 15px rgba(16, 185, 129, 0.4); }
     </style>
@@ -60,15 +53,13 @@
             <header class="glass-box p-4 flex flex-col gap-4">
                 <div class="flex justify-between items-center px-4">
                     <h1 class="text-2xl font-black italic uppercase tracking-tighter cursor-pointer" onclick="location.reload()">🛒W4RAS <span class="text-emerald-500">STOR</span></h1>
-                    <div class="flex gap-3">
-                        <button onclick="openModal('cart-modal')" class="bg-emerald-500 p-3 rounded-2xl relative shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:scale-105 transition">
-                            <span class="text-black text-xl">🛒</span>
-                            <span id="cart-count" class="absolute -top-1 -right-1 bg-white text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black">0</span>
-                        </button>
-                    </div>
+                    <button onclick="openModal('cart-modal')" class="bg-emerald-500 p-3 rounded-2xl relative shadow-[0_0_20px_rgba(16,185,129,0.4)] hover:scale-105 transition">
+                        <span class="text-black text-xl">🛒</span>
+                        <span id="cart-count" class="absolute -top-1 -right-1 bg-white text-black text-[10px] w-5 h-5 rounded-full flex items-center justify-center font-black">0</span>
+                    </button>
                 </div>
                 <div class="overflow-hidden bg-black/50 border border-white/5 py-2 rounded-xl">
-                    <marquee id="banner-text" class="text-emerald-500 text-[10px] font-black uppercase tracking-widest">PROSES INSTAN 24/7 - #1 ONTOP DI INDONESIA</marquee>
+                    <marquee id="banner-text" class="text-emerald-500 text-[10px] font-black uppercase tracking-widest italic">PROSES INSTAN 24/7 - WELCOME TO W4RAS STOR</marquee>
                 </div>
             </header>
         </div>
@@ -76,19 +67,15 @@
 
     <div class="max-w-6xl mx-auto p-4 md:p-8 space-y-12">
         <div id="user-view">
-            <section class="glass-box p-12 md:p-20 text-center flex flex-col justify-center items-center border-emerald-500/10 mb-12">
-                <h2 class="text-5xl md:text-7xl font-black mb-6 italic tracking-tighter leading-tight">Looking for <br><span class="text-emerald-500 italic">Gaming Accounts?</span></h2>
-                <p class="text-gray-500 text-sm md:text-base max-w-xl mb-10 leading-relaxed italic opacity-80">Premium destination for high-quality accounts, software & instant delivery.</p>
-                <button onclick="document.getElementById('shop-section').scrollIntoView({behavior:'smooth'})" class="btn-emerald px-16 py-5 text-xs uppercase italic tracking-[0.2em]">Explore Products</button>
+            <section class="glass-box p-12 md:p-20 text-center flex flex-col justify-center items-center mb-12 border-emerald-500/10">
+                <h2 class="text-5xl md:text-7xl font-black mb-6 italic tracking-tighter leading-tight">Premium <br><span class="text-emerald-500">Accounts.</span></h2>
+                <button onclick="document.getElementById('shop-section').scrollIntoView({behavior:'smooth'})" class="btn-emerald px-16 py-5 text-xs uppercase italic tracking-[0.2em]">Start Shopping</button>
             </section>
 
             <div id="shop-section" class="space-y-8 scroll-mt-32">
-                <div class="text-center">
-                    <h3 class="text-emerald-500 font-black italic uppercase text-sm mb-6">Store Inventory</h3>
-                    <div id="category-container" class="flex flex-wrap gap-3 justify-center">
-                        <button onclick="filterCat('All')" id="btn-all" class="cat-btn bg-white/5 text-gray-500 px-8 py-3 rounded-xl text-[10px] font-black uppercase transition active">All Categories</button>
-                        <div id="cat-list-ui" class="flex flex-wrap gap-3"></div>
-                    </div>
+                <div id="category-container" class="flex flex-wrap gap-3 justify-center">
+                    <button onclick="filterCat('All')" id="btn-all" class="cat-btn bg-white/5 text-gray-500 px-8 py-3 rounded-xl text-[10px] font-black uppercase transition active">All</button>
+                    <div id="cat-list-ui" class="flex flex-wrap gap-3"></div>
                 </div>
                 <main id="shop-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"></main>
             </div>
@@ -96,8 +83,15 @@
 
         <main id="admin-view" class="hidden space-y-8">
             <div class="flex justify-between items-center">
-                <h2 class="text-2xl font-black italic text-emerald-500 uppercase tracking-tighter">System Administrator</h2>
-                <button onclick="location.reload()" class="bg-red-500 text-white px-6 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-red-600 transition">Logout</button>
+                <h2 class="text-2xl font-black italic text-emerald-500 uppercase">Administrator</h2>
+                <button onclick="location.reload()" class="bg-red-500 text-white px-6 py-3 rounded-xl text-[10px] font-black uppercase">Logout</button>
+            </div>
+
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="glass-box p-6 border-emerald-500/20"><p class="text-[9px] text-gray-500 font-black uppercase">Items</p><h4 id="stat-prod" class="text-3xl font-black text-emerald-500 mt-1">0</h4></div>
+                <div class="glass-box p-6 border-emerald-500/20"><p class="text-[9px] text-gray-500 font-black uppercase">Categories</p><h4 id="stat-cat" class="text-3xl font-black text-white mt-1">0</h4></div>
+                <div class="glass-box p-6 border-emerald-500/20"><p class="text-[9px] text-gray-500 font-black uppercase">QRIS</p><div id="stat-qris" class="mt-1 font-bold text-xs uppercase">Missing</div></div>
+                <div class="glass-box p-6 border-emerald-500/20"><p class="text-[9px] text-gray-500 font-black uppercase">Webhook</p><div id="stat-webhook" class="mt-1 font-bold text-xs uppercase">Offline</div></div>
             </div>
 
             <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
@@ -107,8 +101,18 @@
                         <input type="text" id="conf-run" placeholder="Running Text..." class="input-admin">
                         <input type="text" id="conf-qris" placeholder="QRIS Image Link" class="input-admin">
                         <input type="text" id="conf-webhook" placeholder="Discord Webhook URL" class="input-admin">
-                        <button onclick="updateGlobal()" class="btn-emerald w-full py-4 text-[10px] uppercase">Save System Settings</button>
+                        <button onclick="updateGlobal()" class="btn-emerald w-full py-4 text-[10px] uppercase">Save System</button>
                     </div>
+
+                    <div class="glass-box p-6 space-y-4">
+                        <p class="text-emerald-500 font-black text-[10px] uppercase">Manage Categories</p>
+                        <div class="flex gap-2">
+                            <input type="text" id="new-cat-name" placeholder="Category Name" class="input-admin">
+                            <button onclick="addCategory()" class="btn-emerald px-4">ADD</button>
+                        </div>
+                        <div id="admin-cat-list" class="space-y-2 mt-4 max-h-40 overflow-y-auto"></div>
+                    </div>
+
                     <div class="glass-box p-6 space-y-4">
                         <p class="text-emerald-500 font-black text-[10px] uppercase">Item Editor</p>
                         <input type="hidden" id="edit-id">
@@ -117,19 +121,21 @@
                         <input type="number" id="p-price" placeholder="Price (Rp)" class="input-admin">
                         <textarea id="p-data" placeholder="Accounts (Line by Line)" class="input-admin h-32"></textarea>
                         <div class="flex gap-2">
-                            <button id="btn-publish" onclick="addProduct()" class="btn-emerald flex-1 py-4 text-[10px] uppercase">Publish Item</button>
-                            <button id="btn-cancel-edit" onclick="cancelEdit()" class="hidden bg-red-500 text-white px-4 rounded-xl font-black">✕</button>
+                            <button id="btn-publish" onclick="addProduct()" class="btn-emerald flex-1 py-4 text-[10px] uppercase">Publish</button>
+                            <button id="btn-cancel-edit" onclick="cancelEdit()" class="hidden bg-red-500 text-white px-4 rounded-xl">✕</button>
                         </div>
                     </div>
                 </aside>
 
-                <div class="lg:col-span-8 glass-box overflow-hidden flex flex-col">
+                <div class="lg:col-span-8 glass-box overflow-hidden flex flex-col h-fit">
                     <div class="p-6 bg-white/5 flex justify-between items-center">
-                        <h3 class="font-black italic uppercase text-xs">Live Inventory</h3>
-                        <input type="text" id="admin-search" oninput="renderAdmin()" placeholder="Search Products..." class="bg-white text-black font-bold border-none px-4 py-2 rounded-lg text-[10px] outline-none">
+                        <h3 class="font-black italic uppercase text-xs">Inventory</h3>
+                        <input type="text" id="admin-search" oninput="renderAdmin()" placeholder="Search..." class="bg-white text-black font-black px-4 py-2 rounded-lg text-[10px] outline-none w-1/2">
                     </div>
                     <table class="w-full text-left text-[11px]">
-                        <thead class="bg-white/5 text-emerald-500 uppercase"><tr><th class="p-5">Name</th><th class="p-5">Cat</th><th class="p-5">Stock</th><th class="p-5 text-right">Action</th></tr></thead>
+                        <thead class="bg-white/5 text-emerald-500 uppercase">
+                            <tr><th class="p-5">Name</th><th class="p-5">Cat</th><th class="p-5">Stock</th><th class="p-5 text-right">Action</th></tr>
+                        </thead>
                         <tbody id="admin-table"></tbody>
                     </table>
                 </div>
@@ -141,31 +147,79 @@
         <div class="glass-box p-12 max-w-sm w-full text-center">
             <h3 class="text-emerald-500 font-black mb-10 uppercase italic text-2xl">Admin Login</h3>
             <input type="password" id="adm-pass" placeholder="Password Admin" class="input-admin text-center mb-6">
-            <button onclick="doLogin()" class="btn-emerald w-full py-5 text-xs uppercase italic mb-4">Unlock</button>
-            <button onclick="closeModal('login-modal')" class="w-full text-[10px] text-gray-600 font-black uppercase">Back to Shop</button>
+            <button onclick="doLogin()" class="btn-emerald w-full py-5 text-xs uppercase mb-4">Unlock</button>
+            <button onclick="closeModal('login-modal')" class="w-full text-[10px] text-gray-600 font-black uppercase">Close</button>
         </div>
     </div>
-
-    <div id="cart-modal" class="modal-blur">...</div>
-    <div id="pay-modal" class="modal-blur">...</div>
 
     <button onclick="openModal('login-modal')" class="fixed bottom-8 left-8 z-50 glass-box p-5 border-white/10 opacity-20 hover:opacity-100 hover:border-emerald-500 transition-all">🔑</button>
 
     <script>
-        // Logika JavaScript tetap sama seperti V62.0, hanya fokus perbaikan UI CSS di atas
         let db = JSON.parse(localStorage.getItem('w4_db')) || [];
-        let cats = JSON.parse(localStorage.getItem('w4_cats')) || ['Game', 'Social', 'FIVEM'];
+        let cats = JSON.parse(localStorage.getItem('w4_cats')) || ['Game', 'Social'];
         let cart = [];
         let currentFilter = 'All';
 
-        function init() { renderShop(); renderCats(); }
-        function showToast(msg) { const container = document.getElementById('toast-container'); const toast = document.createElement('div'); toast.className = "toast-epic"; toast.innerText = msg; container.appendChild(toast); setTimeout(() => { toast.remove(); }, 3000); }
-        
-        function renderCats() {
-            document.getElementById('cat-list-ui').innerHTML = cats.map(c => `<button onclick="filterCat('${c}')" class="cat-btn px-6 py-3 rounded-xl text-[10px] font-black uppercase transition ${currentFilter === c ? 'active' : 'bg-white/5 text-gray-500'}">${c}</button>`).join('');
-            document.getElementById('p-cat').innerHTML = `<option value="">Select Category</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+        function init() {
+            renderShop();
+            renderCats();
+            if(localStorage.getItem('w4_marquee')) {
+                document.getElementById('banner-text').innerText = localStorage.getItem('w4_marquee');
+                document.getElementById('conf-run').value = localStorage.getItem('w4_marquee');
+            }
+            document.getElementById('conf-qris').value = localStorage.getItem('w4_qris') || '';
+            document.getElementById('conf-webhook').value = localStorage.getItem('w4_webhook') || '';
+            updateStats();
         }
 
+        function showToast(msg) {
+            const container = document.getElementById('toast-container');
+            const toast = document.createElement('div');
+            toast.className = "toast-epic";
+            toast.innerText = msg;
+            container.appendChild(toast);
+            setTimeout(() => toast.remove(), 3000);
+        }
+
+        // --- CATEGORY ENGINE ---
+        function renderCats() {
+            document.getElementById('cat-list-ui').innerHTML = cats.map(c => 
+                `<button onclick="filterCat('${c}')" class="cat-btn px-6 py-3 rounded-xl text-[10px] font-black uppercase transition ${currentFilter === c ? 'active' : 'bg-white/5 text-gray-500'}">${c}</button>`
+            ).join('');
+            
+            document.getElementById('p-cat').innerHTML = `<option value="">Select Category</option>` + cats.map(c => `<option value="${c}">${c}</option>`).join('');
+            
+            document.getElementById('admin-cat-list').innerHTML = cats.map(c => `
+                <div class="flex justify-between items-center bg-white p-3 rounded-xl mb-2">
+                    <span class="text-black font-black text-[11px] uppercase">${c}</span>
+                    <button onclick="deleteCategory('${c}')" class="bg-red-500 text-white text-[8px] px-2 py-1 rounded-md font-black">DEL</button>
+                </div>
+            `).join('');
+            updateStats();
+        }
+
+        function addCategory() {
+            const v = document.getElementById('new-cat-name').value.trim();
+            if(v && !cats.includes(v)) {
+                cats.push(v);
+                localStorage.setItem('w4_cats', JSON.stringify(cats));
+                renderCats();
+                document.getElementById('new-cat-name').value = "";
+                showToast("CAT ADDED");
+            }
+        }
+
+        function deleteCategory(c) {
+            if(confirm("Delete category?")) {
+                cats = cats.filter(x => x !== c);
+                db.forEach(p => { if(p.category === c) p.category = 'Uncategorized'; });
+                localStorage.setItem('w4_cats', JSON.stringify(cats));
+                localStorage.setItem('w4_db', JSON.stringify(db));
+                renderCats(); renderAdmin(); renderShop();
+            }
+        }
+
+        // --- SHOP ENGINE ---
         function filterCat(c) { currentFilter = c; renderShop(); renderCats(); }
         
         function renderShop() {
@@ -174,15 +228,29 @@
                 <div class="glass-box p-8 border-white/5 hover:border-emerald-500/50 transition-all flex flex-col justify-between">
                     <div>
                         <span class="text-[8px] bg-emerald-500/10 text-emerald-500 px-3 py-1 rounded-full uppercase font-black">${p.category}</span>
-                        <h3 class="text-xs font-black text-white uppercase mt-4 italic">${p.name}</h3>
+                        <h3 class="text-xs font-black text-white/70 uppercase mt-4 italic">${p.name}</h3>
                         <p class="text-2xl font-black mb-6 text-emerald-500 italic">Rp ${Number(p.price).toLocaleString()}</p>
+                        <p class="text-[9px] text-gray-600 mb-4 font-bold">Stok: ${p.accounts.length}</p>
                     </div>
-                    <button onclick="showToast('Added!')" class="btn-emerald w-full py-4 text-[10px] uppercase italic">Add To Cart</button>
+                    <button onclick="addToCart(${p.id})" class="btn-emerald w-full py-4 text-[10px] uppercase italic">Add To Cart</button>
                 </div>`).join('');
         }
 
+        // --- ADMIN ENGINE ---
         function renderAdmin() {
-            document.getElementById('admin-table').innerHTML = db.map(p => `<tr class='border-b border-white/5'><td class='p-5 font-bold uppercase'>${p.name}</td><td class='p-5'>${p.category}</td><td class='p-5 text-emerald-500'>${p.accounts.length}</td><td class='p-5 text-right'><button onclick='editProduct(${p.id})' class='text-emerald-500 mr-2'>EDIT</button><button onclick='deleteProduct(${p.id})' class='text-red-500'>DEL</button></td></tr>`).join('');
+            const search = document.getElementById('admin-search').value.toLowerCase();
+            const f = db.filter(p => p.name.toLowerCase().includes(search));
+            document.getElementById('admin-table').innerHTML = f.map(p => `
+                <tr class='border-b border-white/5'>
+                    <td class='p-5 font-bold uppercase italic text-white'>${p.name}</td>
+                    <td class='p-5 opacity-50'>${p.category}</td>
+                    <td class='p-5 text-emerald-500 font-black'>${p.accounts.length}</td>
+                    <td class='p-5 text-right'>
+                        <button onclick='editProduct(${p.id})' class='text-emerald-500 mr-3 font-black'>EDIT</button>
+                        <button onclick='deleteProduct(${p.id})' class='text-red-500 font-black'>DEL</button>
+                    </td>
+                </tr>`).join('');
+            updateStats();
         }
 
         function addProduct() {
@@ -190,16 +258,68 @@
             const p = document.getElementById('p-price').value;
             const c = document.getElementById('p-cat').value;
             const a = document.getElementById('p-data').value.split('\n').filter(l => l);
-            if(!n || !p || !c) return showToast("Lengkapi Data!");
-            db.push({ id: Date.now(), name: n, price: p, category: c, accounts: a });
+            const eid = document.getElementById('edit-id').value;
+
+            if(!n || !p || !c || a.length === 0) return showToast("Lengkapi Data!");
+
+            if(eid) {
+                const i = db.findIndex(x => x.id == eid);
+                db[i] = { ...db[i], name: n, price: p, category: c, accounts: a };
+            } else {
+                db.push({ id: Date.now(), name: n, price: p, category: c, accounts: a });
+            }
+
             localStorage.setItem('w4_db', JSON.stringify(db));
-            showToast("Produk Ditambah!");
-            renderAdmin(); renderShop();
+            cancelEdit(); renderAdmin(); renderShop();
+            showToast("Success!");
         }
 
-        function doLogin() { if(document.getElementById('adm-pass').value === 'admin123') { document.getElementById('admin-view').classList.remove('hidden'); document.getElementById('user-view').classList.add('hidden'); closeModal('login-modal'); renderAdmin(); } else showToast("Wrong Pass!"); }
+        function editProduct(id) {
+            const p = db.find(x => x.id == id);
+            document.getElementById('edit-id').value = p.id;
+            document.getElementById('p-name').value = p.name;
+            document.getElementById('p-price').value = p.price;
+            document.getElementById('p-cat').value = p.category;
+            document.getElementById('p-data').value = p.accounts.join('\n');
+            document.getElementById('btn-publish').innerText = "Update";
+            document.getElementById('btn-cancel-edit').classList.remove('hidden');
+        }
+
+        function cancelEdit() {
+            document.getElementById('edit-id').value = "";
+            document.getElementById('p-name').value = "";
+            document.getElementById('p-price').value = "";
+            document.getElementById('p-data').value = "";
+            document.getElementById('btn-publish').innerText = "Publish";
+            document.getElementById('btn-cancel-edit').classList.add('hidden');
+        }
+
+        function deleteProduct(id) { if(confirm("Hapus produk?")) { db = db.filter(x => x.id !== id); localStorage.setItem('w4_db', JSON.stringify(db)); renderAdmin(); renderShop(); } }
+
+        function updateGlobal() {
+            localStorage.setItem('w4_marquee', document.getElementById('conf-run').value);
+            localStorage.setItem('w4_qris', document.getElementById('conf-qris').value);
+            localStorage.setItem('w4_webhook', document.getElementById('conf-webhook').value);
+            document.getElementById('banner-text').innerText = document.getElementById('conf-run').value;
+            showToast("Settings Saved!");
+            updateStats();
+        }
+
+        function updateStats() {
+            document.getElementById('stat-prod').innerText = db.length;
+            document.getElementById('stat-cat').innerText = cats.length;
+            const q = localStorage.getItem('w4_qris');
+            document.getElementById('stat-qris').innerText = q ? "Ready" : "Missing";
+            document.getElementById('stat-qris').style.color = q ? "#10b981" : "#ef4444";
+            const w = localStorage.getItem('w4_webhook');
+            document.getElementById('stat-webhook').innerText = w ? "Connected" : "Offline";
+            document.getElementById('stat-webhook').style.color = w ? "#10b981" : "#ef4444";
+        }
+
+        function doLogin() { if(document.getElementById('adm-pass').value === 'admin123') { document.getElementById('admin-view').classList.remove('hidden'); document.getElementById('user-view').classList.add('hidden'); closeModal('login-modal'); renderAdmin(); } else showToast("Wrong!"); }
         function openModal(id) { document.getElementById(id).style.display = 'flex'; }
         function closeModal(id) { document.getElementById(id).style.display = 'none'; }
+        
         window.onload = init;
     </script>
 </body>
