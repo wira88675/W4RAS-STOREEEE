@@ -10,7 +10,7 @@
             --bg: #05060b; --card: #0f111a; --glass: rgba(255, 255, 255, 0.03);
             --glass-border: rgba(255, 255, 255, 0.08); --purple: #7c3aed;
             --purple-glow: rgba(124, 58, 237, 0.5); --text: #ffffff; --muted: #94a3b8;
-            --success: #10b981;
+            --success: #10b981; --danger: #f43f5e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; }
@@ -25,53 +25,74 @@
         /* --- HEADER --- */
         header { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(5,6,11,0.8); backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 1000; border-bottom: 1px solid var(--glass-border); }
         .logo { font-size: 1.5rem; font-weight: 800; color: white; text-decoration: none; }
-        .logo span { color: var(--purple); text-shadow: 0 0 15px var(--purple-glow); }
-        .admin-btn { background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .admin-btn:hover { background: var(--purple); box-shadow: 0 0 20px var(--purple-glow); }
+        .logo span { color: var(--purple); }
+        .admin-btn { background: var(--glass); border: 1px solid var(--glass-border); color: white; padding: 10px 20px; border-radius: 12px; font-weight: 700; cursor: pointer; }
 
-        /* --- EPIC HERO GALAXY --- */
-        .hero-container { padding: 80px 8% 40px; display: flex; justify-content: center; background: radial-gradient(circle at top, rgba(124, 58, 237, 0.1) 0%, transparent 70%); }
+        /* --- EPIC HERO (Sesuai image_30b5fb.png & image_2fd888.jpg) --- */
+        .hero-container { padding: 60px 8% 20px; display: flex; justify-content: center; }
         .hero-glass { 
             background: rgba(15, 17, 26, 0.6); backdrop-filter: blur(20px); border: 2px solid var(--purple);
-            border-radius: 40px; padding: 60px; width: 100%; max-width: 900px; text-align: center;
-            box-shadow: 0 0 50px rgba(124, 58, 237, 0.15);
+            border-radius: 40px; padding: 60px 40px; width: 100%; max-width: 900px; text-align: center;
         }
-        .hero-glass h1 { font-size: 4rem; font-weight: 900; margin: 15px 0; letter-spacing: -2px; }
-        .stats-row { display: flex; justify-content: center; gap: 50px; margin-top: 30px; }
-        .stat-box b { display: block; font-size: 2.5rem; color: var(--purple); }
-        .stat-box span { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; font-weight: 700; }
+        .hero-glass p.small { font-size: 0.9rem; color: var(--muted); margin-bottom: 5px; }
+        .hero-glass h1 { font-size: 4rem; font-weight: 900; margin: 10px 0; line-height: 1.1; }
+        .hero-glass .sub-text { color: var(--muted); font-size: 0.95rem; max-width: 500px; margin: 20px auto; line-height: 1.6; }
 
-        /* --- CATEGORY & GRID --- */
-        .nav-cat { display: flex; justify-content: center; gap: 12px; margin: 40px 0; padding: 0 8%; flex-wrap: wrap; }
+        /* --- STATS (Sesuai image_2fd4c0.png) --- */
+        .stats-row { display: flex; justify-content: center; gap: 60px; margin-top: 40px; }
+        .stat-box b { display: block; font-size: 2.8rem; color: var(--purple); font-weight: 800; }
+        .stat-box span { font-size: 0.75rem; color: var(--muted); text-transform: uppercase; font-weight: 700; letter-spacing: 1px; }
+
+        /* --- SEARCH & CATEGORY --- */
+        .search-container { padding: 0 8%; max-width: 600px; margin: 50px auto 20px; position: relative; }
+        .search-input { width: 100%; padding: 16px 20px 16px 50px; background: var(--card); border: 1px solid var(--glass-border); border-radius: 15px; color: white; font-size: 1rem; }
+        .search-icon { position: absolute; left: 20px; top: 18px; color: var(--muted); }
+
+        .nav-cat { display: flex; justify-content: center; gap: 12px; margin-bottom: 40px; padding: 0 8%; flex-wrap: wrap; }
         .btn-cat { padding: 12px 24px; border-radius: 50px; background: var(--card); border: 1px solid var(--glass-border); color: white; cursor: pointer; transition: 0.3s; font-weight: 600; }
-        .btn-cat.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 15px var(--purple-glow); }
+        .btn-cat.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 20px var(--purple-glow); }
 
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 80px; }
-        .p-card { background: var(--card); border-radius: 28px; padding: 20px; border: 1px solid var(--glass-border); transition: 0.4s; }
+        /* --- PRODUCT GRID (Sesuai image_2fd51f.jpg) --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 100px; }
+        .p-card { background: var(--card); border-radius: 24px; padding: 20px; border: 1px solid var(--glass-border); transition: 0.4s; position: relative; overflow: hidden; }
         .p-card:hover { transform: translateY(-10px); border-color: var(--purple); }
-        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 20px; object-fit: cover; margin-bottom: 15px; background: #000; }
-        .p-badge { background: rgba(16, 185, 129, 0.1); color: var(--success); padding: 4px 10px; border-radius: 6px; font-size: 0.7rem; font-weight: 800; }
-        .p-price { font-size: 1.6rem; font-weight: 800; color: var(--purple); margin: 12px 0; }
-        .buy-btn { width: 100%; background: #1a1d29; border: 1px solid var(--glass-border); color: white; padding: 14px; border-radius: 14px; font-weight: 700; cursor: pointer; transition: 0.3s; }
-        .p-card:hover .buy-btn { background: var(--purple); }
+        .p-img { width: 100%; aspect-ratio: 1/1; border-radius: 18px; object-fit: cover; margin-bottom: 20px; border: 1px solid var(--glass-border); }
+        
+        .p-badge { position: absolute; top: 30px; right: 30px; padding: 6px 12px; border-radius: 10px; font-size: 0.65rem; font-weight: 800; display: flex; align-items: center; gap: 6px; }
+        .badge-in { background: rgba(16,185,129,0.2); color: var(--success); }
+        .badge-out { background: rgba(244,63,94,0.2); color: var(--danger); }
 
-        /* --- MODALS --- */
-        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.9); display:none; align-items:center; justify-content:center; z-index:2000; padding:20px; }
-        .modal-content { background:var(--card); width:100%; max-width:400px; padding:30px; border-radius:24px; border:1px solid var(--glass-border); }
-        input, select { width:100%; padding:12px; background:#05060b; border:1px solid #222; color:white; border-radius:10px; margin-top:8px; margin-bottom:15px; }
+        .p-code { font-size: 0.7rem; color: #505979; font-weight: 700; text-transform: uppercase; }
+        .p-title { font-size: 1.1rem; font-weight: 700; margin: 8px 0; color: white; height: 50px; overflow: hidden; }
+        .p-price { font-size: 1.8rem; font-weight: 800; color: var(--purple); margin: 5px 0; }
+        .p-reseller { font-size: 0.85rem; font-weight: 700; color: var(--success); margin-bottom: 15px; }
+        
+        .stock-info { background: #161922; padding: 10px; border-radius: 10px; display: flex; align-items: center; gap: 8px; font-size: 0.8rem; color: #a0aec0; }
+        .dot { height: 8px; width: 8px; border-radius: 50%; }
+        
+        .buy-btn { width: 100%; padding: 15px; border-radius: 14px; font-weight: 800; cursor: pointer; border: none; margin-top: 15px; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-ready { background: linear-gradient(to right, #6366f1, #a855f7); color: white; }
+        .btn-habis { background: #1e2231; color: #4e5569; cursor: not-allowed; }
 
-        /* --- ADMIN PANEL --- */
+        /* --- MODALS (Sesuai image_3045a2.png & image_3048c1.png) --- */
+        .modal { position: fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.92); display:none; align-items:center; justify-content:center; z-index:2000; padding:20px; }
+        .modal-content { background:var(--card); width:100%; max-width:420px; padding:35px; border-radius:30px; border:1px solid var(--glass-border); position: relative; }
+        
+        .copy-box { background: #05060b; border: 1px solid #222; padding: 12px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin: 10px 0; }
+        .copy-btn { background: var(--purple); border: none; color: white; padding: 5px; border-radius: 6px; cursor: pointer; }
+
+        .qty-box { display: flex; align-items: center; gap: 15px; margin: 20px 0; }
+        .q-btn { width: 35px; height: 35px; border-radius: 8px; border: none; background: var(--purple); color: white; font-weight: 800; cursor: pointer; }
+        
+        input, select { width:100%; padding:14px; background:#05060b; border:1px solid #222; color:white; border-radius:12px; margin-top:10px; }
+
         #adminArea { display:none; padding:40px 8%; background:#0a0c14; border-top:2px solid var(--purple); }
-        .adm-card { background:var(--card); padding:25px; border-radius:20px; border:1px solid var(--glass-border); margin-bottom:20px; }
-
-        /* --- CS FLOATING --- */
-        .cs-info { position: fixed; bottom: 20px; left: 20px; z-index: 999; background: var(--purple); padding: 10px 20px; border-radius: 50px; font-size: 0.8rem; font-weight: 700; box-shadow: 0 0 20px var(--purple-glow); display: flex; align-items: center; gap: 10px; }
     </style>
 </head>
 <body>
 
     <div class="top-bar">
-        <div class="marquee"><span id="mq1">WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span><span id="mq2">WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span></div>
+        <div class="marquee"><span>WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span><span>WELCOME TO W4RAS STORE • PREMIUM QUALITY • INSTANT DELIVERY • </span></div>
     </div>
 
     <header>
@@ -81,184 +102,199 @@
 
     <section class="hero-container">
         <div class="hero-glass">
-            <p>Ready to upgrade your game?</p>
+            <p class="small">Looking for Gaming Accounts?</p>
             <h1>Premium <span style="color:var(--purple)">Gaming Hub.</span></h1>
+            <p class="sub-text">W4RAS STORE is the number one destination for quality accounts, spoofers, cheats & more.</p>
+            
             <div class="stats-row">
-                <div class="stat-box"><b>1,139</b><span>Sold</span></div>
-                <div class="stat-box"><b id="countP">0</b><span>Products</span></div>
-                <div class="stat-box"><b>24/7</b><span>Support</span></div>
+                <div class="stat-box"><b>1,139</b><span>Products Sold</span></div>
+                <div class="stat-box"><b id="countP">0</b><span>Total Products</span></div>
+                <div class="stat-box"><b>4.99</b><span>Average Rating</span></div>
             </div>
         </div>
     </section>
 
-    <div class="nav-cat" id="navCat">
-        <button class="btn-cat active" onclick="setFilter('All')">All</button>
+    <div class="search-container">
+        <span class="search-icon">🔍</span>
+        <input type="text" class="search-input" id="searchInput" placeholder="Cari produk..." onkeyup="render()">
     </div>
+
+    <div class="nav-cat" id="navCat"></div>
 
     <div class="product-grid" id="productGrid"></div>
 
     <div class="modal" id="orderModal">
         <div class="modal-content">
-            <h2 id="orderTitle" style="margin-bottom:15px;">Checkout</h2>
-            <label style="font-size:0.8rem; color:var(--muted)">Email Penerima:</label>
-            <input type="email" id="userEmail" placeholder="nama@email.com">
-            <div style="background:rgba(124,58,237,0.1); padding:20px; border-radius:15px; margin-bottom:15px; text-align:center;">
-                <p style="font-size:0.8rem; color:var(--muted)">Total Pembayaran:</p>
+            <h2 style="display:flex; align-items:center; gap:10px;">🛒 Checkout</h2>
+            <input type="text" id="pNameDisp" readonly style="background:transparent; border:none; font-weight:700; font-size:1.1rem; padding:0;">
+            <input type="email" id="userEmail" placeholder="wira999990@gmail.com">
+            
+            <div class="qty-box">
+                <button class="q-btn" onclick="changeQty(-1)">-</button>
+                <span id="qtyVal" style="font-weight:800; font-size:1.2rem;">1</span>
+                <button class="q-btn" onclick="changeQty(1)">+</button>
+            </div>
+
+            <div style="background:rgba(124,58,237,0.1); padding:20px; border-radius:20px; margin-bottom:20px;">
+                <p style="font-size:0.8rem; color:var(--muted)">Total:</p>
                 <h2 id="orderPrice" style="color:var(--purple)">Rp0</h2>
             </div>
-            <button class="buy-btn" style="background:var(--purple)" onclick="toQRIS()">Bayar Sekarang (QRIS)</button>
-            <button class="buy-btn" style="background:transparent; border:none; margin-top:5px;" onclick="closeM()">Batal</button>
+            
+            <button class="buy-btn btn-ready" onclick="toQRIS()">Bayar (QRIS)</button>
+            <button class="buy-btn" style="background:transparent; color:var(--muted)" onclick="closeM()">Batal</button>
         </div>
     </div>
 
     <div class="modal" id="qrisModal">
         <div class="modal-content" style="text-align:center">
-            <h3 style="margin-bottom:15px;">Scan QRIS</h3>
-            <div style="background:white; padding:10px; border-radius:15px; display:inline-block; margin-bottom:15px;">
-                <img id="qrisImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=W4RAS_STORE" width="200">
+            <div class="copy-box">
+                <span style="font-size:0.7rem; color:var(--muted)">Order ID: <b id="qID" style="color:white"></b></span>
+                <button class="copy-btn" onclick="copyID()">📋</button>
             </div>
-            <p style="font-size:0.8rem; color:var(--muted)">Silakan selesaikan pembayaran sesuai nominal.</p>
-            <button class="buy-btn" style="margin-top:20px; background:var(--success)" onclick="toNota()">Konfirmasi Sudah Bayar</button>
+            <div class="copy-box">
+                <span style="font-size:0.7rem; color:var(--muted)">Total: <b id="qTotal" style="color:white"></b></span>
+            </div>
+            
+            <div style="background:white; padding:15px; border-radius:20px; display:inline-block; margin:20px 0;">
+                <img id="qrisImg" src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=W4RAS" width="200">
+            </div>
+            
+            <p style="font-size:0.8rem; color:var(--muted); margin-bottom:20px;">Scan QR Code di atas menggunakan aplikasi mobile banking atau e-wallet Anda.</p>
+            
+            <button class="buy-btn btn-ready" onclick="toNota()">⌛ Menunggu pembayaran...</button>
+            <button class="buy-btn" style="background:transparent;" onclick="closeM()">Tutup</button>
         </div>
     </div>
 
     <div class="modal" id="notaModal">
         <div class="modal-content">
-            <h2 style="color:var(--success); text-align:center;">✓ PEMBAYARAN BERHASIL</h2>
-            <div id="notaDetail" style="margin:20px 0; font-size:0.9rem; line-height:1.8; border-top:1px dashed #333; padding-top:15px;"></div>
-            <div style="background:rgba(16,185,129,0.1); padding:15px; border-radius:12px; border:1px solid var(--success); font-size:0.8rem; text-align:center;">
-                <b>PENTING:</b> Silakan hubungi admin di Tawk.to (Kiri Bawah) untuk pengiriman akun!
-            </div>
-            <button class="buy-btn" style="margin-top:20px" onclick="location.reload()">Selesai</button>
+            <h2 style="color:var(--success); text-align:center;">✓ PAID SUCCESS</h2>
+            <div id="notaDetail" style="margin:25px 0; font-size:0.9rem; line-height:1.8; border-top:1px dashed #333; padding-top:15px;"></div>
+            <button class="buy-btn btn-ready" onclick="location.reload()">Selesai</button>
         </div>
     </div>
 
     <div id="adminArea">
-        <h2 style="margin-bottom:30px;">🛠 Dashboard Owner</h2>
         <div style="display:grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap:20px;">
             <div class="adm-card">
-                <h3>Tambah Produk Baru</h3>
+                <h3>+ Produk Baru</h3>
                 <input type="text" id="addName" placeholder="Nama Produk">
-                <input type="number" id="addPrice" placeholder="Harga (Angka)">
-                <input type="number" id="addStock" placeholder="Jumlah Stok">
+                <input type="number" id="addPrice" placeholder="Harga Jual">
+                <input type="number" id="addReseller" placeholder="Harga Reseller">
+                <input type="number" id="addStock" placeholder="Stok">
                 <select id="addCatSel"></select>
-                <input type="text" id="addImg" placeholder="URL Link Gambar (Opsional)">
-                <button class="admin-btn" style="width:100%" onclick="saveProduct()">Simpan Produk</button>
+                <input type="text" id="addImg" placeholder="URL Gambar">
+                <button class="admin-btn" style="width:100%; margin-top:10px;" onclick="saveProduct()">Simpan Produk</button>
             </div>
             <div class="adm-card">
-                <h3>Kelola Kategori</h3>
-                <input type="text" id="newCatInput" placeholder="Nama Kategori Baru">
-                <button class="admin-btn" style="width:100%" onclick="saveCat()">Tambah Kategori</button>
+                <h3>+ Kategori</h3>
+                <input type="text" id="newCatInput" placeholder="Nama Kategori">
+                <button class="admin-btn" style="width:100%; margin-top:10px;" onclick="saveCat()">Tambah Kategori</button>
             </div>
         </div>
-        <div class="adm-card" style="margin-top:20px;">
-            <h3>List Produk & Hapus</h3>
-            <div id="admProdList"></div>
-        </div>
-    </div>
-
-    <div class="cs-info">
-        <span>🎧 Need Help? Chat Admin (Tawk.to)</span>
+        <div class="adm-card" id="admProdList" style="margin-top:20px;"></div>
     </div>
 
     <script>
-        // DATA PERSISTENCE
-        let products = JSON.parse(localStorage.getItem('w4_products')) || [];
-        let categories = JSON.parse(localStorage.getItem('w4_categories')) || ['Steam', 'Rockstar', 'Cloud Phone'];
+        let products = JSON.parse(localStorage.getItem('w4_p')) || [];
+        let categories = JSON.parse(localStorage.getItem('w4_c')) || ['Steam', 'Rockstar', 'Cloud Phone'];
         let filter = 'All';
-        let selectedProduct = null;
+        let selP = null;
+        let currentQty = 1;
 
         function render() {
             const grid = document.getElementById('productGrid');
             const nav = document.getElementById('navCat');
-            const selCat = document.getElementById('addCatSel');
-            const admList = document.getElementById('admProdList');
+            const search = document.getElementById('searchInput').value.toLowerCase();
             
-            // Render Nav
             nav.innerHTML = `<button class="btn-cat ${filter==='All'?'active':''}" onclick="setFilter('All')">All Products</button>`;
-            selCat.innerHTML = '';
+            document.getElementById('addCatSel').innerHTML = '';
             categories.forEach(c => {
                 nav.innerHTML += `<button class="btn-cat ${filter===c?'active':''}" onclick="setFilter('${c}')">${c}</button>`;
-                selCat.innerHTML += `<option value="${c}">${c}</option>`;
+                document.getElementById('addCatSel').innerHTML += `<option value="${c}">${c}</option>`;
             });
 
-            // Render Products
-            grid.innerHTML = ''; admList.innerHTML = '';
-            const filtered = filter === 'All' ? products : products.filter(p => p.category === filter);
+            grid.innerHTML = '';
+            let filtered = products.filter(p => (filter === 'All' || p.category === filter) && p.name.toLowerCase().includes(search));
             document.getElementById('countP').innerText = products.length;
 
             filtered.forEach(p => {
+                const isOut = p.stock <= 0;
                 grid.innerHTML += `
                 <div class="p-card">
-                    <span class="p-badge">IN STOCK</span>
-                    <img src="${p.img || 'https://via.placeholder.com/300/0f111a/7c3aed?text=No+Image'}" class="p-img">
-                    <h3>${p.name}</h3>
-                    <p style="color:var(--muted); font-size:0.7rem; margin-top:5px;">${p.category} • Stok: ${p.stock}</p>
+                    <div class="p-badge ${isOut?'badge-out':'badge-in'}">
+                        ${isOut ? '✘ OUT OF STOCK' : '✔ IN STOCK'}
+                    </div>
+                    <img src="${p.img || 'https://via.placeholder.com/300'}" class="p-img">
+                    <div class="p-code">Code: ${p.category}</div>
+                    <div class="p-title">${p.name}</div>
                     <div class="p-price">Rp${p.price.toLocaleString()}</div>
-                    <button class="buy-btn" onclick="openCheckout(${p.id})">🛒 Buy Now</button>
+                    <div class="p-reseller">Reseller: Rp${p.reseller.toLocaleString()}</div>
+                    <div class="stock-info">
+                        <div class="dot" style="background:${isOut?'#f43f5e':'#10b981'}"></div>
+                        Stock: ${isOut ? 'Habis' : p.stock}
+                    </div>
+                    <button class="buy-btn ${isOut?'btn-habis':'btn-ready'}" onclick="${isOut?'':`openCheckout(${p.id})`}">
+                        ${isOut ? 'Unavailable' : '🛒 Buy Now'}
+                    </button>
                 </div>`;
-                
-                admList.innerHTML += `<div style="padding:10px; border-bottom:1px solid #222">${p.name} (${p.category}) - Rp${p.price} <button onclick="deleteProd(${p.id})" style="color:#f43f5e; float:right; background:none; border:none; cursor:pointer;">Hapus</button></div>`;
             });
         }
 
-        // --- CORE FUNCTIONS ---
-        function setFilter(c) { filter = c; render(); }
-
         function openCheckout(id) {
-            selectedProduct = products.find(p => p.id === id);
-            document.getElementById('orderTitle').innerText = selectedProduct.name;
-            document.getElementById('orderPrice').innerText = "Rp" + selectedProduct.price.toLocaleString();
+            selP = products.find(p => p.id === id);
+            currentQty = 1;
+            document.getElementById('pNameDisp').value = selP.name;
+            document.getElementById('qtyVal').innerText = 1;
+            document.getElementById('orderPrice').innerText = "Rp" + selP.price.toLocaleString();
             document.getElementById('orderModal').style.display = 'flex';
         }
 
+        function changeQty(v) {
+            currentQty = Math.max(1, Math.min(selP.stock, currentQty + v));
+            document.getElementById('qtyVal').innerText = currentQty;
+            document.getElementById('orderPrice').innerText = "Rp" + (selP.price * currentQty).toLocaleString();
+        }
+
         function toQRIS() {
-            if(!document.getElementById('userEmail').value) return alert("Email harus diisi!");
+            if(!document.getElementById('userEmail').value) return alert("Masukkan Email!");
             document.getElementById('orderModal').style.display = 'none';
+            document.getElementById('qTotal').innerText = document.getElementById('orderPrice').innerText;
+            document.getElementById('qID').innerText = "ORD" + Date.now() + "ZBGU1";
             document.getElementById('qrisModal').style.display = 'flex';
         }
 
+        function copyID() {
+            navigator.clipboard.writeText(document.getElementById('qID').innerText);
+            alert("Order ID disalin!");
+        }
+
         function toNota() {
-            // POTONG STOK
-            selectedProduct.stock -= 1;
+            selP.stock -= currentQty;
             saveDB();
-            
             document.getElementById('qrisModal').style.display = 'none';
-            document.getElementById('notaDetail').innerHTML = `
-                <b>Item:</b> ${selectedProduct.name}<br>
-                <b>Email:</b> ${document.getElementById('userEmail').value}<br>
-                <b>Total:</b> Rp${selectedProduct.price.toLocaleString()}<br>
-                <b>Order ID:</b> ORD-${Math.floor(Math.random()*999999)}
-            `;
+            document.getElementById('notaDetail').innerHTML = `<b>Order ID:</b> ${document.getElementById('qID').innerText}<br><b>Item:</b> ${selP.name}<br><b>Email:</b> ${document.getElementById('userEmail').value}<br><b>Total:</b> ${document.getElementById('qTotal').innerText}`;
             document.getElementById('notaModal').style.display = 'flex';
         }
 
-        // --- ADMIN FUNCTIONS ---
-        function openAdmin() { if(prompt("Password Owner:") === "wira123") document.getElementById('adminArea').style.display='block'; }
-
+        function openAdmin() { if(prompt("Pass:") === "admin123") document.getElementById('adminArea').style.display='block'; }
         function saveProduct() {
-            const n = document.getElementById('addName').value;
-            const p = document.getElementById('addPrice').value;
-            const s = document.getElementById('addStock').value;
-            const c = document.getElementById('addCatSel').value;
-            const i = document.getElementById('addImg').value;
-            if(!n || !p) return alert("Nama & Harga wajib!");
-            
-            products.push({ id: Date.now(), name: n, price: parseInt(p), stock: parseInt(s), category: c, img: i });
-            saveDB(); alert("Produk Disimpan!");
+            products.push({
+                id: Date.now(),
+                name: document.getElementById('addName').value,
+                price: parseInt(document.getElementById('addPrice').value),
+                reseller: parseInt(document.getElementById('addReseller').value),
+                stock: parseInt(document.getElementById('addStock').value),
+                category: document.getElementById('addCatSel').value,
+                img: document.getElementById('addImg').value
+            });
+            saveDB(); alert("Produk Berhasil Ditambah!");
         }
-
-        function saveCat() {
-            const val = document.getElementById('newCatInput').value;
-            if(val) { categories.push(val); localStorage.setItem('w4_categories', JSON.stringify(categories)); render(); }
-        }
-
-        function deleteProd(id) { if(confirm("Hapus?")) { products = products.filter(p => p.id !== id); saveDB(); } }
-        function saveDB() { localStorage.setItem('w4_products', JSON.stringify(products)); render(); }
-        function closeM() { document.getElementById('orderModal').style.display = 'none'; }
-
+        function saveCat() { categories.push(document.getElementById('newCatInput').value); saveDB(); }
+        function saveDB() { localStorage.setItem('w4_p', JSON.stringify(products)); localStorage.setItem('w4_c', JSON.stringify(categories)); render(); }
+        function setFilter(c) { filter = c; render(); }
+        function closeM() { document.querySelectorAll('.modal').forEach(m => m.style.display='none'); }
         render();
     </script>
-
-    </body>
+</body>
 </html>
