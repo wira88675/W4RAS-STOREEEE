@@ -3,201 +3,251 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Elite Mutakhir Store</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-
+<title>W4RAS STORE</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
 <style>
-*{margin:0;padding:0;box-sizing:border-box;font-family:'Poppins',sans-serif;}
-body{
-  background:linear-gradient(135deg,#0f172a,#1e293b);
-  color:white;
+:root{
+--bg:#0f1115;
+--card:#1a1d24;
+--text:#e4e6eb;
+--muted:#9aa0a6;
+--neon1:#00f0ff;
+--neon2:#8a2eff;
 }
+*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
+body{background:var(--bg);color:var(--text)}
 header{
-  padding:20px;
-  text-align:center;
-  font-size:24px;
-  font-weight:700;
-  background:linear-gradient(90deg,#0ea5e9,#22c55e);
+display:flex;justify-content:space-between;align-items:center;
+padding:18px 40px;background:#12151c;border-bottom:1px solid #222
 }
-.hero{
-  padding:80px 20px;
-  text-align:center;
-}
-.hero h1{
-  font-size:42px;
-  margin-bottom:20px;
-}
+.logo{font-weight:800;font-size:20px;letter-spacing:1px}
+.logo span{color:var(--neon1);text-shadow:0 0 8px var(--neon1)}
+.visitor{font-size:13px;color:var(--muted)}
+.hero{text-align:center;padding:70px 20px}
+.hero h1{font-size:36px;margin-bottom:10px}
+.hero p{color:var(--muted)}
 .products{
-  display:flex;
-  flex-wrap:wrap;
-  justify-content:center;
-  gap:30px;
-  padding:60px 20px;
+display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
+gap:25px;padding:40px
 }
 .card{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(10px);
-  border:1px solid rgba(255,255,255,0.1);
-  padding:25px;
-  border-radius:20px;
-  width:280px;
-  text-align:center;
-  transition:0.3s;
+background:var(--card);
+border-radius:14px;
+padding:20px;
+transition:.3s;
+position:relative;
+overflow:hidden;
 }
 .card:hover{
-  transform:translateY(-8px);
-  box-shadow:0 10px 30px rgba(0,0,0,0.5);
+transform:translateY(-6px);
+box-shadow:0 0 15px rgba(0,240,255,.2),0 0 30px rgba(138,46,255,.15);
 }
-.price{
-  margin:15px 0;
-  font-size:22px;
-  font-weight:600;
-  color:#22c55e;
-}
+.price{margin:8px 0;font-weight:600;color:var(--neon1)}
 button{
-  background:#22c55e;
-  padding:12px 25px;
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-weight:bold;
-  cursor:pointer;
+width:100%;padding:10px;border:none;border-radius:8px;
+font-weight:600;cursor:pointer;
+background:linear-gradient(90deg,var(--neon1),var(--neon2));
+color:#000;
+transition:.3s;
 }
-button:hover{opacity:0.8;}
-
-.success-popup{
-  position:fixed;
-  top:50%;
-  left:50%;
-  transform:translate(-50%,-50%);
-  background:#1e293b;
-  padding:30px;
-  border-radius:20px;
-  text-align:center;
-  display:none;
-  box-shadow:0 0 30px rgba(0,0,0,0.7);
-  z-index:999;
+button:hover{box-shadow:0 0 15px var(--neon1)}
+button:disabled{background:#444;cursor:not-allowed}
+.modal{
+display:none;position:fixed;inset:0;
+background:rgba(0,0,0,.75);
+justify-content:center;align-items:center;z-index:1000
 }
-
-.testimoni{
-  padding:60px 20px;
-  text-align:center;
+.modal-content{
+background:var(--card);
+padding:25px;border-radius:14px;
+width:360px;text-align:center;
+animation:fade .4s ease
 }
-.testimoni input,.testimoni textarea{
-  width:100%;
-  max-width:400px;
-  padding:12px;
-  margin:10px auto;
-  border:none;
-  border-radius:10px;
-  display:block;
+.modal-content img{margin:15px 0;border-radius:8px}
+input{width:100%;padding:8px;margin-top:8px;border-radius:6px;border:none}
+.close{background:#333;color:white;margin-top:10px}
+.countdown{margin-top:10px;font-size:14px;color:#ffcc00}
+section.review{padding:50px;text-align:center}
+.stars span{font-size:22px;cursor:pointer}
+#notif{
+position:fixed;bottom:20px;right:20px;
+background:#111;padding:12px 18px;border-radius:8px;
+display:none;color:white;
+box-shadow:0 0 10px var(--neon2);
 }
-footer{
-  padding:30px;
-  text-align:center;
-  opacity:0.6;
+@keyframes fade{
+from{opacity:0;transform:scale(.95)}
+to{opacity:1;transform:scale(1)}
 }
 </style>
 </head>
 <body>
 
-<header>🚀 Elite Mutakhir Digital Store</header>
+<header>
+<div class="logo">W4RAS <span>STORE</span></div>
+<div class="visitor" id="visitorCount">👁 0 Pengunjung Online</div>
+</header>
 
 <section class="hero">
-  <h1>Digital Product Premium</h1>
-  <p>Fast Response • Aman • Support 24 Jam</p>
+<h1>Premium Gaming Accounts</h1>
+<p>Secure Payment • Fast Delivery • Trusted Seller</p>
 </section>
 
 <section class="products">
-  <div class="card">
-    <h3>Netflix Premium</h3>
-    <div class="price">Rp 30.000</div>
-    <button onclick="beli()">Beli Sekarang</button>
-  </div>
-
-  <div class="card">
-    <h3>Canva Pro</h3>
-    <div class="price">Rp 25.000</div>
-    <button onclick="beli()">Beli Sekarang</button>
-  </div>
+<div class="card">
+<h3>MLBB Sultan Account</h3>
+<div class="price">Rp150.000</div>
+<button onclick="beli('MLBB Sultan Account',150000)">BELI SEKARANG</button>
+</div>
+<div class="card">
+<h3>Valorant Rare Skin</h3>
+<div class="price">Rp220.000</div>
+<button onclick="beli('Valorant Rare Skin',220000)">BELI SEKARANG</button>
+</div>
 </section>
 
-<div class="success-popup" id="popup">
-  <h2>✔ Pembayaran Berhasil</h2>
-  <p>Silakan hubungi Customer Service untuk klaim akun.</p>
-  <br>
-  <button onclick="hubungiCS()">💬 Hubungi CS</button>
+<div class="modal" id="qrisModal">
+<div class="modal-content">
+<h2>Scan QRIS</h2>
+<input type="text" id="customerName" placeholder="Masukkan Nama Anda">
+<p id="produkText"></p>
+<img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471880949603106992/Untitled_design.png" width="230">
+<div class="countdown" id="countdown"></div>
+<input type="file" id="bukti">
+<button id="confirmBtn" onclick="konfirmasi()">Saya Sudah Bayar</button>
+<button class="close" onclick="closeQR()">Batal</button>
+</div>
 </div>
 
-<section class="testimoni">
-  <h2>💬 Kirim Testimoni</h2>
-  <input type="text" id="nama" placeholder="Nama Kamu">
-  <textarea id="pesan" placeholder="Tulis pengalaman kamu..."></textarea>
-  <button onclick="kirimTestimoni()">Kirim Testimoni</button>
+<section class="review">
+<h2>Customer Reviews</h2>
+<div class="stars">
+<span onclick="rate(1)">⭐</span>
+<span onclick="rate(2)">⭐</span>
+<span onclick="rate(3)">⭐</span>
+<span onclick="rate(4)">⭐</span>
+<span onclick="rate(5)">⭐</span>
+</div>
+<p id="ratingResult"></p>
 </section>
 
-<footer>
-© 2026 Elite Mutakhir Store
-</footer>
+<div id="notif"></div>
 
+<!-- TAWK -->
 <script>
-function beli(){
-  document.getElementById("popup").style.display="block";
-}
-
-function hubungiCS(){
-  if(typeof Tawk_API!=="undefined"){
-    Tawk_API.maximize();
-  }
-}
-
-function kirimTestimoni(){
-  const nama=document.getElementById("nama").value;
-  const pesan=document.getElementById("pesan").value;
-
-  if(!nama||!pesan){
-    alert("Isi semua field!");
-    return;
-  }
-
-  fetch("https://discordapp.com/api/webhooks/1472118483176259620/f36W29aXGAPtsNjxS541bawOCluQ8UZ4UoF0jIk4iWjYUXTsbW6gA6PDv6CWtN-32KTC",{
-    method:"POST",
-    headers:{"Content-Type":"application/json"},
-    body:JSON.stringify({
-      embeds:[{
-        title:"📝 Testimoni Baru",
-        color:5763719,
-        fields:[
-          {name:"Nama",value:nama},
-          {name:"Pesan",value:pesan}
-        ],
-        footer:{text:"Elite Mutakhir Store"}
-      }]
-    })
-  })
-  .then(()=>{
-    alert("Terima kasih atas testimoni ❤️");
-    document.getElementById("nama").value="";
-    document.getElementById("pesan").value="";
-  })
-  .catch(()=>alert("Gagal kirim."));
-}
-</script>
-
-<!-- Tawk.to Live Chat -->
-<script>
-var Tawk_API=Tawk_API||{},Tawk_LoadStart=new Date();
+var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
 (function(){
 var s1=document.createElement("script"),
 s0=document.getElementsByTagName("script")[0];
 s1.async=true;
-s1.src='https://embed.tawk.to/698f4abfcf39cf1c38c19b82/default';
+s1.src='https://embed.tawk.to/698f4abfcf39cf1c38c19b82/1i3u3u0u0';
 s1.charset='UTF-8';
 s1.setAttribute('crossorigin','*');
 s0.parentNode.insertBefore(s1,s0);
 })();
 </script>
 
+<script>
+const webhook="YOUR_WEBHOOK_HERE";
+let currentProduct="",currentPrice=0;
+let countdownInterval;
+let cooldown=false;
+
+function randomVisitor(){
+let count=Math.floor(Math.random()*500)+800;
+document.getElementById("visitorCount").innerText="👁 "+count+" Pengunjung Online";
+}
+setInterval(randomVisitor,4000);
+randomVisitor();
+
+function beli(nama,harga){
+if(cooldown){showNotif("Tunggu 30 detik sebelum order lagi.");return;}
+currentProduct=nama;
+currentPrice=harga;
+document.getElementById("produkText").innerText=nama+" - Rp"+harga;
+document.getElementById("qrisModal").style.display="flex";
+startCountdown(300);
+}
+
+function closeQR(){
+document.getElementById("qrisModal").style.display="none";
+clearInterval(countdownInterval);
+}
+
+function startCountdown(sec){
+let timer=sec;
+countdownInterval=setInterval(()=>{
+let m=Math.floor(timer/60);
+let s=timer%60;
+document.getElementById("countdown").innerText=
+"Verifikasi dalam "+m+":"+(s<10?"0"+s:s);
+if(timer<60) document.getElementById("countdown").style.color="red";
+timer--;
+if(timer<0){
+clearInterval(countdownInterval);
+document.getElementById("confirmBtn").disabled=true;
+}
+},1000);
+}
+
+function generateInvoice(){
+return "INV-"+Math.floor(Math.random()*999999);
+}
+
+function konfirmasi(){
+let name=document.getElementById("customerName").value||"Customer";
+let file=document.getElementById("bukti").files[0];
+let invoice=generateInvoice();
+let date=new Date().toLocaleString();
+
+fetch(webhook,{
+method:"POST",
+headers:{"Content-Type":"application/json"},
+body:JSON.stringify({
+embeds:[{
+title:"ORDER BARU",
+color:3447003,
+fields:[
+{name:"Nama",value:name},
+{name:"Invoice",value:invoice},
+{name:"Produk",value:currentProduct},
+{name:"Harga",value:"Rp"+currentPrice},
+{name:"Bukti",value:file?file.name:"Tidak ada"},
+{name:"Tanggal",value:date}
+]
+}]
+})
+});
+
+closeQR();
+cooldown=true;
+setTimeout(()=>cooldown=false,30000);
+
+setTimeout(()=>{
+Tawk_API.maximize();
+Tawk_API.sendMessage(
+"Halo CS, saya sudah bayar.\n\n"+
+"Nama: "+name+
+"\nInvoice: "+invoice+
+"\nProduk: "+currentProduct+
+"\nHarga: Rp"+currentPrice+
+"\nTanggal: "+date
+);
+},800);
+}
+
+function rate(star){
+document.getElementById("ratingResult").innerText=
+"Terima kasih atas rating "+star+"⭐!";
+}
+
+function showNotif(text){
+let n=document.getElementById("notif");
+n.innerText=text;
+n.style.display="block";
+setTimeout(()=>n.style.display="none",3000);
+}
+</script>
+
 </body>
 </html>
-
