@@ -3,24 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>W4RAS MARKET</title>
+<title>W4RAS STORE</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#0f1115;
---card:#181b21;
---border:#23262d;
+--bg:#0c0f14;
+--nav:#11151b;
+--card:#161b22;
+--border:#232a33;
 --blue:#3b82f6;
 --green:#22c55e;
---text:#e5e7eb;
---muted:#9ca3af;
+--text:#e6edf3;
+--muted:#9aa4b2;
 }
+
 *{
 margin:0;
 padding:0;
 box-sizing:border-box;
 font-family:Inter,sans-serif;
 }
+
 body{
 background:var(--bg);
 color:var(--text);
@@ -28,57 +31,69 @@ color:var(--text);
 
 /* NAVBAR */
 header{
+background:var(--nav);
+padding:20px 70px;
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 60px;
 border-bottom:1px solid var(--border);
-background:#121418;
 }
+
 .logo{
+font-size:18px;
 font-weight:600;
-font-size:16px;
+letter-spacing:.5px;
 }
+
 nav a{
-margin-left:24px;
+margin-left:28px;
 text-decoration:none;
 color:var(--muted);
 font-size:14px;
+transition:.2s;
 }
 nav a:hover{color:white}
 
-/* PRODUCT GRID */
+/* CONTAINER */
+.container{
+padding:50px 70px;
+}
+
+/* GRID */
 .products{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:24px;
-padding:40px 60px;
+gap:28px;
 }
 
 /* CARD */
 .card{
 background:var(--card);
-border-radius:10px;
-overflow:hidden;
 border:1px solid var(--border);
-transition:0.2s;
+border-radius:12px;
+overflow:hidden;
+transition:.25s ease;
 }
 .card:hover{
-transform:translateY(-4px);
+transform:translateY(-6px);
+border-color:var(--blue);
 }
 
+/* BANNER */
 .banner{
-height:110px;
-background:#222;
+height:120px;
+background:#1e242c;
 display:flex;
 align-items:center;
 justify-content:center;
 font-weight:600;
 font-size:14px;
+letter-spacing:.5px;
 }
 
+/* BODY */
 .card-body{
-padding:14px 16px 18px 16px;
+padding:18px;
 }
 
 .code{
@@ -88,7 +103,7 @@ margin-bottom:6px;
 }
 
 .price{
-font-size:15px;
+font-size:16px;
 font-weight:600;
 color:var(--blue);
 }
@@ -96,27 +111,29 @@ color:var(--blue);
 .reseller{
 font-size:12px;
 color:var(--green);
-margin-top:2px;
+margin-top:3px;
 }
 
 .stock{
+margin-top:8px;
 font-size:12px;
-color:var(--muted);
-margin-top:6px;
 display:flex;
 justify-content:space-between;
+color:var(--muted);
 }
 
+/* BUTTON */
 .buy-btn{
-margin-top:12px;
+margin-top:14px;
 width:100%;
-padding:9px;
+padding:10px;
 border:none;
-border-radius:6px;
+border-radius:8px;
 background:var(--blue);
 color:white;
 font-weight:600;
 cursor:pointer;
+transition:.2s;
 }
 .buy-btn:hover{
 opacity:.9;
@@ -127,6 +144,8 @@ opacity:.9;
 .products{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:600px){
+header{padding:20px 25px}
+.container{padding:30px 25px}
 .products{grid-template-columns:1fr}
 }
 </style>
@@ -134,7 +153,7 @@ opacity:.9;
 <body>
 
 <header>
-<div class="logo">W4RAS MARKET</div>
+<div class="logo">W4RAS STORE</div>
 <nav>
 <a href="#">Home</a>
 <a href="#">Products</a>
@@ -143,30 +162,34 @@ opacity:.9;
 </nav>
 </header>
 
-<section class="products" id="productList"></section>
+<div class="container">
+<div class="products" id="productList"></div>
+</div>
 
 <script>
 const products=[
-["MLBB Sultan","ACC-ML01",150000,43],
-["Valorant Rare","ACC-VL02",220000,12],
-["Free Fire Sultan","ACC-FF03",130000,21],
-["PUBG Mythic","ACC-PB04",175000,5],
-["Genshin AR60","ACC-GI05",300000,3],
-["COC TH15","ACC-CO06",250000,9],
-["Steam Wallet 50k","ACC-ST07",50000,80],
+["Mobile Legends Sultan","ACC-ML01",150000,42],
+["Valorant Rare Skin","ACC-VL02",220000,18],
+["Free Fire Sultan","ACC-FF03",130000,27],
+["PUBG Mythic","ACC-PB04",175000,6],
+["Genshin AR60","ACC-GI05",300000,4],
+["Clash of Clans TH15","ACC-CO06",250000,9],
+["Steam Wallet 50K","ACC-ST07",50000,80],
 ["Netflix 1 Bulan","ACC-NF08",45000,25]
 ];
 
 const list=document.getElementById("productList");
 
 products.forEach(p=>{
+const resellerPrice = p[2] * 0.5;
+
 list.innerHTML+=`
 <div class="card">
 <div class="banner">${p[0]}</div>
 <div class="card-body">
 <div class="code">${p[1]}</div>
-<div class="price">Rp${p[2]}</div>
-<div class="reseller">Reseller Rp${p[2]-10000}</div>
+<div class="price">Rp ${p[2].toLocaleString()}</div>
+<div class="reseller">Reseller Rp ${resellerPrice.toLocaleString()}</div>
 <div class="stock">
 <span>Stock</span>
 <span>${p[3]}</span>
@@ -177,6 +200,118 @@ list.innerHTML+=`
 `;
 });
 </script>
+
+<script>
+let webhook = localStorage.getItem("webhook") || "";
+let qrisImage = localStorage.getItem("qrisImage") || "";
+
+document.addEventListener("keydown", function(e){
+if(e.ctrlKey && e.shiftKey && e.key === "A"){
+const pass = prompt("Enter Admin Password");
+if(pass === "w4rasadmin"){
+openAdmin();
+}else{
+alert("Wrong Password");
+}
+}
+});
+
+function openAdmin(){
+document.getElementById("adminPanel").style.display="block";
+loadSelectOptions();
+}
+
+function closeAdmin(){
+document.getElementById("adminPanel").style.display="none";
+}
+
+function saveWebhook(){
+webhook = document.getElementById("webhookInput").value;
+localStorage.setItem("webhook", webhook);
+alert("Webhook saved!");
+}
+
+function saveQRIS(){
+const file = document.getElementById("qrisUpload").files[0];
+const reader = new FileReader();
+reader.onload = function(){
+localStorage.setItem("qrisImage", reader.result);
+alert("QRIS saved!");
+}
+reader.readAsDataURL(file);
+}
+
+function loadSelectOptions(){
+let restockSelect = document.getElementById("restockIndex");
+let priceSelect = document.getElementById("priceIndex");
+
+restockSelect.innerHTML="";
+priceSelect.innerHTML="";
+
+products.forEach((p,i)=>{
+restockSelect.innerHTML += `<option value="${i}">${p[0]}</option>`;
+priceSelect.innerHTML += `<option value="${i}">${p[0]}</option>`;
+});
+}
+
+function restock(){
+let index = document.getElementById("restockIndex").value;
+let amount = parseInt(document.getElementById("restockAmount").value);
+products[index][3] += amount;
+alert("Stock updated!");
+location.reload();
+}
+
+function updatePrice(){
+let index = document.getElementById("priceIndex").value;
+let newPrice = parseInt(document.getElementById("newPrice").value);
+products[index][2] = newPrice;
+alert("Price updated!");
+location.reload();
+}
+</script>
+
+
+<!-- ADMIN PANEL -->
+<div id="adminPanel" style="display:none;position:fixed;inset:0;background:#0c0f14;z-index:9999;padding:40px;overflow:auto;">
+<h2 style="margin-bottom:20px">W4RAS ADMIN DASHBOARD</h2>
+
+<div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(300px,1fr));gap:20px">
+
+<!-- WEBHOOK -->
+<div style="background:#161b22;padding:20px;border-radius:10px">
+<h3>Discord Webhook</h3>
+<input id="webhookInput" placeholder="Paste webhook here" style="width:100%;margin-top:10px;padding:8px">
+<button onclick="saveWebhook()" style="margin-top:10px;padding:8px;width:100%">Save</button>
+</div>
+
+<!-- QRIS -->
+<div style="background:#161b22;padding:20px;border-radius:10px">
+<h3>QRIS Image</h3>
+<input type="file" id="qrisUpload" accept="image/*" style="margin-top:10px">
+<button onclick="saveQRIS()" style="margin-top:10px;padding:8px;width:100%">Save QRIS</button>
+</div>
+
+<!-- RESTOCK -->
+<div style="background:#161b22;padding:20px;border-radius:10px">
+<h3>Restock Product</h3>
+<select id="restockIndex" style="width:100%;margin-top:10px;padding:8px"></select>
+<input id="restockAmount" type="number" placeholder="Tambah stock" style="width:100%;margin-top:10px;padding:8px">
+<button onclick="restock()" style="margin-top:10px;padding:8px;width:100%">Restock</button>
+</div>
+
+<!-- EDIT PRICE -->
+<div style="background:#161b22;padding:20px;border-radius:10px">
+<h3>Edit Harga</h3>
+<select id="priceIndex" style="width:100%;margin-top:10px;padding:8px"></select>
+<input id="newPrice" type="number" placeholder="Harga baru" style="width:100%;margin-top:10px;padding:8px">
+<button onclick="updatePrice()" style="margin-top:10px;padding:8px;width:100%">Update</button>
+</div>
+
+</div>
+
+<button onclick="closeAdmin()" style="margin-top:30px;padding:10px 20px">Close Panel</button>
+</div>
 
 </body>
 </html>
