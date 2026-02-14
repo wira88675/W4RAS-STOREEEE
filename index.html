@@ -1,416 +1,133 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>🛒 W4RAS STORE</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
-<style>
-:root{
---bg:#0b0d14;
---nav:#0f1220;
---purple1:#7c3aed;
---purple2:#a855f7;
---text:#f3f4f6;
---muted:#9ca3af;
-}
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Inter,sans-serif;
-}
-
-body{
-background:
-radial-gradient(circle at 50% 0%, rgba(124,58,237,0.15), transparent 60%),
-repeating-linear-gradient(
-to right,
-rgba(255,255,255,0.03) 0px,
-rgba(255,255,255,0.03) 1px,
-transparent 1px,
-transparent 40px
-),
-var(--bg);
-color:var(--text);
-min-height:100vh;
-}
-
-/* NAVBAR */
-header{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 60px;
-background:var(--nav);
-border-bottom:1px solid rgba(255,255,255,0.05);
-}
-
-.logo{
-font-weight:700;
-font-size:18px;
-}
-
-nav a{
-margin-left:28px;
-text-decoration:none;
-color:var(--muted);
-font-size:14px;
-transition:.2s;
-}
-
-nav a:hover{
-color:white;
-}
-
-/* HERO */
-.hero{
-display:flex;
-flex-direction:column;
-align-items:center;
-justify-content:center;
-text-align:center;
-padding:120px 20px;
-}
-
-.hero h1{
-font-size:70px;
-font-weight:800;
-line-height:1.1;
-}
-
-.gradient{
-background:linear-gradient(90deg,var(--purple1),var(--purple2));
--webkit-background-clip:text;
--webkit-text-fill-color:transparent;
-}
-
-.subtitle{
-font-size:28px;
-margin-top:25px;
-font-weight:600;
-}
-
-.desc{
-margin-top:20px;
-color:var(--muted);
-max-width:600px;
-line-height:1.6;
-}
-
-/* BUTTONS */
-.buttons{
-margin-top:40px;
-display:flex;
-gap:20px;
-flex-wrap:wrap;
-justify-content:center;
-}
-
-.btn-primary{
-padding:14px 28px;
-border-radius:12px;
-border:none;
-font-weight:600;
-cursor:pointer;
-background:linear-gradient(90deg,var(--purple1),var(--purple2));
-color:white;
-font-size:15px;
-}
-
-.btn-secondary{
-padding:14px 28px;
-border-radius:12px;
-border:1px solid rgba(255,255,255,0.2);
-background:transparent;
-color:white;
-font-weight:600;
-cursor:pointer;
-font-size:15px;
-}
-
-.btn-secondary:hover{
-background:rgba(255,255,255,0.05);
-}
-
-/* RESPONSIVE */
-@media(max-width:768px){
-.hero h1{
-font-size:42px;
-}
-.subtitle{
-font-size:20px;
-}
-}
-</style>
-</head>
-<body>
-
-<header>
-<div class="logo">🛒 W4RAS STORE</div>
-<nav>
-<a href="#">Home</a>
-<a href="#">Products</a>
-<a href="#">History</a>
-<a href="#">Login</a>
-</nav>
-</header>
-
-<section class="hero">
-<h1>
-Looking for <br>
-<span class="gradient">Premium Gaming Accounts?</span>
-</h1>
-
-<div class="subtitle">We've got you covered.</div>
-
-<p class="desc">
-W4RAS STORE is your trusted destination for high quality gaming accounts,
-exclusive items, and premium digital products.
-</p>
-
-<div class="buttons">
-<button class="btn-primary">Check our Products</button>
-<button class="btn-secondary">View History</button>
-</div>
-</section>
-
-
-<div class="container-fitur">
-
-    <div class="kartu">
-        <div class="ikon-ungu">
-            &#128737; 
-        </div>
-        <h3>Guaranteed Quality</h3>
-        <p>We provide only the highest quality accounts and software.</p>
-    </div>
-
-    <div class="kartu kartu-aktif">
-        <div class="ikon-ungu">
-            &#9889; </div>
-        <h3>Instant Delivery</h3>
-        <p>Get your products delivered instantly after payment.</p>
-    </div>
-
-    <div class="kartu">
-        <div class="ikon-ungu">
-            &#127895; </div>
-        <h3>Live Support</h3>
-        <p>Our customer support is available 24/7. Join our Discord.</p>
-    </div>
-
-</div>
-
-<div class="stats-container">
-    <div class="stat-item">
-        <h2 class="stat-number">1139</h2>
-        <p class="stat-label">PRODUCTS SOLD</p>
-    </div>
-    <div class="stat-item">
-        <h2 class="stat-number">5</h2>
-        <p class="stat-label">TOTAL PRODUCTS</p>
-    </div>
-    <div class="stat-item">
-        <h2 class="stat-number">4.99</h2>
-        <p class="stat-label">AVERAGE RATING</p>
-    </div>
-</div>
-
-<div class="product-header">
-    <h1>Explore our products</h1>
-    <p>Pick a category to refine your search and find the perfect item.</p>
-</div>
-
-<div class="filter-section">
-    <div class="category-buttons">
-        <button class="btn-category active-cat">🎮 FiveM</button>
-        <button class="btn-category">📱 Cloud Phone</button>
-    </div>
-    
-    <div class="search-container">
-        <span class="search-icon">&#128269;</span>
-        <input type="text" placeholder="Cari produk...">
-    </div>
-</div>
-
-<head>
     <meta charset="UTF-8">
-    <title>Admin Panel Terpadu</title>
-</head>
-<body>
-
-    <section id="login-section">
-        <h1>Login Admin</h1>
-        <p>Gunakan Username dan Password untuk masuk ke panel kontrol.</p>
-        
-        <form>
-            <div>
-                <label>Username:</label><br>
-                <input type="text" name="user" placeholder="Admin123" required>
-            </div>
-            <br>
-            <div>
-                <label>Password:</label><br>
-                <input type="password" name="pass" placeholder="••••••••" required>
-            </div>
-            <br>
-            <button type="submit">Buka Admin Panel</button>
-        </form>
-    </section>
-
-    <hr> <section id="admin-panel">
-        <h1>Dashboard Admin - Kelola Toko</h1>
-        
-        <div>
-            <h2>Tambah Produk & Kategori</h2>
-            <form>
-                <label>Nama Produk:</label><br>
-                <input type="text" placeholder="Nama produk baru" required><br><br>
-
-                <label>Pilih Kategori:</label><br>
-                <select name="kategori">
-                    <option value="fivem">FiveM</option>
-                    <option value="cloud">Cloud Phone</option>
-                    <option value="software">Software</option>
-                </select><br><br>
-
-                <label>Harga Produk:</label><br>
-                <input type="number" placeholder="Contoh: 50000"><br><br>
-
-                <button type="submit">Simpan ke Database</button>
-            </form>
-        </div>
-
-        <br>
-
-        <div>
-            <h2>Data Stok Produk</h2>
-            <table border="1" cellpadding="10">
-                <thead>
-                    <tr>
-                        <th>ID</th>
-                        <th>Produk</th>
-                        <th>Kategori</th>
-                        <th>Stok</th>
-                        <th>Update Stok</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>01</td>
-                        <td>Akun FiveM Gold</td>
-                        <td>FiveM</td>
-                        <td>5</td>
-                        <td>
-                            <input type="number" style="width: 50px;" value="0">
-                            <button>Restok</button>
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-
-        <br>
-
-        <div>
-            <h2>Konfigurasi Sistem</h2>
-            <form>
-                <label>Webhook Discord:</label><br>
-                <input type="url" placeholder="https://discord.com/api/webhooks/..." style="width: 400px;"><br><br>
-
-                <label>Integrasi QRIS (Merchant ID):</label><br>
-                <input type="text" placeholder="Contoh: MID-123456789"><br><br>
-
-                <button type="submit">Simpan Perubahan Sistem</button>
-            </form>
-        </div>
-    </section>
-
-
-<head>
-    <meta charset="UTF-8">
-    <title>Halaman Produk dengan Keranjang</title>
-    
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🛒 W4RAS STORE</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
-        .keranjang-melayang {
-            /* Membuat posisi tetap di layar meskipun di-skrol */
-            position: fixed; 
-            top: 20px;    /* Jarak dari atas */
-            right: 20px;  /* Jarak dari kanan */
-            
-            /* Tampilan kotak keranjang */
-            background-color: #8b5cf6; 
-            color: white;
-            padding: 15px 25px;
-            border-radius: 10px;
-            box-shadow: 0px 4px 10px rgba(0,0,0,0.3);
-            z-index: 1000; /* Agar selalu berada di paling depan */
-            text-decoration: none;
-            font-family: sans-serif;
-            font-weight: bold;
+        :root {
+            --bg: #0b0d14;
+            --nav: #0f1220;
+            --purple1: #7c3aed;
+            --purple2: #a855f7;
+            --text: #f3f4f6;
+            --muted: #9ca3af;
         }
 
-        /* Hanya untuk simulasi agar halaman bisa di-skrol */
-        .konten-panjang {
-            height: 2000px; 
-            padding: 20px;
-            background: #0d0d0f;
-            color: white;
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Inter', sans-serif;
         }
+
+        body {
+            background: radial-gradient(circle at 50% 0%, rgba(124,58,237,0.15), transparent 60%), var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+        }
+
+        /* NAVBAR */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 60px; background: var(--nav);
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+
+        /* KERANJANG MELAYANG */
+        .keranjang-melayang {
+            position: fixed; top: 80px; right: 20px;
+            background: var(--purple1); color: white;
+            padding: 12px 20px; border-radius: 10px;
+            text-decoration: none; font-weight: bold;
+            z-index: 1000; box-shadow: 0 4px 15px rgba(124,58,237,0.4);
+        }
+
+        /* HERO SECTION */
+        .hero { text-align: center; padding: 100px 20px; }
+        .hero h1 { font-size: 50px; font-weight: 800; }
+        .gradient { background: linear-gradient(90deg, var(--purple1), var(--purple2)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* SECTIONS COMMON */
+        section { padding: 40px 60px; border-bottom: 1px solid rgba(255,255,255,0.1); }
+        
+        /* FORM & INPUT STYLE */
+        input, select, table { width: 100%; max-width: 500px; padding: 10px; margin-top: 5px; border-radius: 8px; border: 1px solid #2a2a2e; background: #16161a; color: white; }
+        button { padding: 10px 20px; border-radius: 8px; border: none; background: var(--purple1); color: white; cursor: pointer; font-weight: bold; margin-top: 10px; }
+        
+        /* TABLE STYLE */
+        table { border-collapse: collapse; margin-top: 20px; }
+        th, td { border: 1px solid #2a2a2e; padding: 12px; text-align: left; }
     </style>
 </head>
 <body>
 
-    <a href="#checkout" class="keranjang-melayang">
-        🛒 Keranjang (<span id="jumlah-item">0</span>)
-    </a>
+    <header>
+        <div class="logo">🛒 W4RAS STORE</div>
+        <nav>
+            <a href="#" style="color:white; text-decoration:none; margin-left:20px;">Home</a>
+            <a href="#admin-panel" style="color:white; text-decoration:none; margin-left:20px;">Admin</a>
+            <a href="#pembayaran" style="color:white; text-decoration:none; margin-left:20px;">Bayar</a>
+        </nav>
+    </header>
 
-    <div class="konten-panjang">
-        <h1>Selamat Datang di Toko Kami</h1>
-        <p>Scroll ke bawah untuk melihat efek keranjang yang mengikuti...</p>
-        
-        <button type="button">Tambah Produk ke Keranjang</button>
+    <a href="#checkout" class="keranjang-melayang">🛒 Keranjang (0)</a>
 
+    <section class="hero">
+        <h1>Looking for <br><span class="gradient">Premium Gaming Accounts?</span></h1>
+        <p class="desc" style="color:var(--muted); margin-top:20px;">Trusted destination for high quality gaming products.</p>
+    </section>
+
+    <section style="text-align:center; display:flex; justify-content:center; gap:50px;">
+        <div><h2>1139</h2><p>SOLD</p></div>
+        <div><h2>5</h2><p>PRODUCTS</p></div>
+        <div><h2>4.99</h2><p>RATING</p></div>
+    </section>
+
+    <section id="login-section">
+        <h2>🔐 Login Admin</h2>
+        <form>
+            <label>Username:</label><br>
+            <input type="text" placeholder="Admin123" required><br><br>
+            <label>Password:</label><br>
+            <input type="password" placeholder="••••••••" required><br>
+            <button type="submit">Buka Admin Panel</button>
+        </form>
+    </section>
+
+    <section id="admin-panel">
+        <h2>🛠️ Dashboard Admin</h2>
+        <div style="margin-top:20px;">
+            <h3>Tambah Produk</h3>
+            <input type="text" placeholder="Nama Produk">
+            <select>
+                <option>FiveM</option>
+                <option>Cloud Phone</option>
+            </select>
+            <input type="number" placeholder="Harga">
+            <button>Simpan</button>
         </div>
 
-        <section id="pembayaran">
-    <h2>Menu Pembayaran</h2>
-    
-    <div style="text-align: center; border: 1px solid #2a2a2e; padding: 20px; border-radius: 10px; background-color: #16161a;">
-        <h3>Scan QRIS Di Bawah Ini</h3>
-        <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=CONTOH-QRIS" alt="QRIS Pembayaran" width="200">
-        
-        <p style="color: #ffcc00; font-weight: bold; margin-top: 15px;">
-            NOTE: Hubungi CS Untuk Mengambil Akun Anda
-        </p>
-    </div>
+        <div style="margin-top:30px;">
+            <h3>Stok Produk</h3>
+            <table>
+                <tr><th>Produk</th><th>Stok</th><th>Aksi</th></tr>
+                <tr><td>Akun FiveM</td><td>5</td><td><button>Restok</button></td></tr>
+            </table>
+        </div>
+    </section>
 
-    <br>
-
-    <div style="border: 1px solid #2a2a2e; padding: 20px; border-radius: 10px;">
-        <h3>Konfirmasi Pembayaran</h3>
+    <section id="pembayaran">
+        <h2>💳 Menu Pembayaran</h2>
+        <div style="text-align:center; margin: 20px 0;">
+            <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=WARAS-STORE" alt="QRIS">
+            <p style="color:yellow; margin-top:10px;">NOTE: Hubungi CS Untuk Mengambil Akun Anda</p>
+        </div>
         <form>
-            <label>Nama Pengirim / Username:</label><br>
-            <input type="text" placeholder="Masukkan nama Anda" required><br><br>
-
-            <label>Jumlah Transfer (Rp):</label><br>
-            <input type="number" placeholder="Contoh: 50000" required><br><br>
-
-            <label>Upload Bukti Pembayaran (Gambar):</label><br>
-            <input type="file" accept="image/*" required>
-            <p style="font-size: 12px; color: #94949e;">Format: JPG, PNG, atau Screenshot</p>
-            
-            <br>
-
-            <button type="submit" style="background-color: #6366f1; color: white; padding: 10px 20px; border: none; border-radius: 5px; cursor: pointer;">
-                Kirim Konfirmasi
-            </button>
+            <label>Upload Bukti Transfer:</label><br>
+            <input type="file" accept="image/*" required><br>
+            <button type="submit">Kirim Konfirmasi</button>
         </form>
-    </div>
-</section>
-
+    </section>
 
 </body>
 </html>
