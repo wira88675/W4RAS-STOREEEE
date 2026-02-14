@@ -7,284 +7,188 @@
     <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
-            --bg: #05060b; --card: #0f111a; --glass: rgba(255, 255, 255, 0.03);
-            --glass-border: rgba(255, 255, 255, 0.08); --purple: #7c3aed;
-            --purple-glow: rgba(124, 58, 237, 0.5); --text: #ffffff; --muted: #94a3b8;
+            --bg: #05060b;
+            --card: #0f111a;
+            --glass: rgba(255, 255, 255, 0.03);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --purple: #7c3aed;
+            --purple-glow: rgba(124, 58, 237, 0.5);
+            --text: #ffffff;
+            --muted: #94a3b8;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Plus Jakarta Sans', sans-serif; scroll-behavior: smooth; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
-
-        /* --- ANNOUNCEMENT BAR (RUNNING TEXT) --- */
-        .announcement {
-            background: linear-gradient(90deg, var(--purple), var(--accent));
-            color: white; padding: 10px 0; overflow: hidden; position: relative; font-size: 0.85rem; font-weight: 700;
+        
+        body { 
+            background: var(--bg); 
+            color: var(--text); 
+            overflow-x: hidden;
+            background-image: 
+                radial-gradient(circle at 10% 20%, rgba(124, 58, 237, 0.08) 0%, transparent 40%),
+                radial-gradient(circle at 90% 80%, rgba(79, 70, 229, 0.08) 0%, transparent 40%);
         }
-        .marquee { display: flex; white-space: nowrap; animation: marquee 20s linear infinite; }
-        .marquee span { padding: 0 50px; }
-        @keyframes marquee { 0% { transform: translateX(100%); } 100% { transform: translateX(-100%); } }
 
-        /* --- NAVIGATION --- */
+        /* --- RUNNING TEXT (TOP BAR) --- */
+        .top-bar {
+            background: rgba(124, 58, 237, 0.1);
+            border-bottom: 1px solid var(--glass-border);
+            padding: 10px 0;
+            overflow: hidden;
+        }
+        .marquee {
+            display: flex;
+            white-space: nowrap;
+            animation: marquee 25s linear infinite;
+        }
+        .marquee span {
+            padding: 0 40px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            color: var(--purple);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+        @keyframes marquee {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* --- HEADER --- */
         header {
             display: flex; justify-content: space-between; align-items: center;
-            padding: 15px 8%; background: rgba(5, 6, 11, 0.9);
+            padding: 20px 8%; background: rgba(5, 6, 11, 0.7);
             backdrop-filter: blur(20px); position: sticky; top: 0; z-index: 100;
             border-bottom: 1px solid var(--glass-border);
         }
-        .logo { font-size: 1.4rem; font-weight: 800; }
-        .logo span { color: var(--purple); }
+        .logo { font-size: 1.5rem; font-weight: 800; letter-spacing: -1px; }
+        .logo span { color: var(--purple); text-shadow: 0 0 20px var(--purple-glow); }
         .nav-right { display: flex; align-items: center; gap: 20px; }
-        nav a { color: var(--muted); text-decoration: none; font-weight: 600; transition: 0.3s; font-size: 0.9rem; }
-        nav a:hover { color: white; }
-        .admin-link { background: var(--glass); padding: 8px 15px; border-radius: 10px; border: 1px solid var(--glass-border); color: #fff !important; }
-
-        /* --- HERO & STATS --- */
-        .hero { text-align: center; padding: 80px 5% 40px; }
-        .hero h1 { font-size: 3.5rem; font-weight: 800; letter-spacing: -2px; margin-bottom: 20px; }
-        .gradient-text { background: linear-gradient(to right, #fff, var(--purple)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        
-        .stats-bar { display: flex; justify-content: center; gap: 60px; margin-top: 40px; }
-        .stat-item h2 { font-size: 2rem; color: var(--purple); }
-        .stat-item p { font-size: 0.7rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; }
-
-        /* --- PRODUCT GRID --- */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 60px 8%; }
-        .p-card { background: var(--card); border-radius: 24px; padding: 20px; border: 1px solid var(--glass-border); transition: 0.4s; }
-        .p-card:hover { transform: translateY(-10px); border-color: var(--purple); }
-        .p-img { width: 100%; border-radius: 18px; margin-bottom: 15px; aspect-ratio: 1/1; object-fit: cover; border: 1px solid var(--glass-border); }
-        
-        .p-info h4 { font-size: 1.1rem; margin-bottom: 5px; }
-        .p-price { font-size: 1.5rem; font-weight: 800; margin-bottom: 15px; color: var(--purple); }
-        
-        .btn-buy { 
-            width: 100%; background: var(--purple); color: white; border: none; padding: 12px; 
-            border-radius: 12px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        .admin-btn {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 12px;
+            font-weight: 700;
+            text-decoration: none;
+            transition: 0.3s;
+            cursor: pointer;
         }
-        .btn-buy:disabled { background: #222; color: #555; cursor: not-allowed; }
+        .admin-btn:hover { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 20px var(--purple-glow); }
 
-        /* --- MODALS --- */
-        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; padding: 20px; }
-        .modal-content { background: #0f111a; width: 100%; max-width: 450px; border-radius: 24px; padding: 30px; border: 1px solid var(--glass-border); }
-        .input-group { margin-bottom: 15px; }
-        .input-group label { font-size: 0.8rem; color: var(--muted); display: block; margin-bottom: 5px; }
-        .input-group input, .input-group select { width: 100%; background: #161925; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; }
+        /* --- HERO --- */
+        .hero { text-align: center; padding: 100px 5% 60px; }
+        .hero h1 { font-size: 4rem; margin-bottom: 20px; font-weight: 800; letter-spacing: -2px; line-height: 1; }
+        .gradient-text { background: linear-gradient(to right, #fff, var(--purple), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+
+        /* --- FEATURES SECTION --- */
+        .features-grid { 
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); 
+            gap: 25px; padding: 40px 8%; 
+        }
+        .f-card { 
+            background: var(--card); padding: 40px; border-radius: 24px; 
+            border: 1px solid var(--glass-border); text-align: center;
+            transition: 0.4s;
+        }
+        .f-card:hover { border-color: var(--purple); transform: translateY(-10px); background: rgba(124, 58, 237, 0.02); }
+        .f-icon { 
+            width: 60px; height: 60px; background: var(--purple); border-radius: 18px; 
+            display: flex; align-items: center; justify-content: center; margin: 0 auto 25px;
+            font-size: 1.5rem; box-shadow: 0 10px 20px var(--purple-glow);
+        }
+
+        /* --- PRODUCT CARDS --- */
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 30px; padding: 60px 8% 100px; }
+        .p-card { 
+            background: var(--card); border-radius: 28px; padding: 20px; 
+            border: 1px solid var(--glass-border); transition: 0.5s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .p-card:hover { transform: translateY(-12px); border-color: var(--purple); box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .p-img-box { position: relative; border-radius: 20px; overflow: hidden; aspect-ratio: 1/1; margin-bottom: 20px; }
+        .p-img-box img { width: 100%; height: 100%; object-fit: cover; }
         
-        .qty-ctrl { display: flex; align-items: center; gap: 15px; background: #161925; padding: 8px; border-radius: 10px; width: fit-content; }
-        .btn-qty { background: #2d3142; border: none; color: white; width: 30px; height: 30px; border-radius: 5px; cursor: pointer; }
+        .badge { position: absolute; top: 15px; right: 15px; background: rgba(16, 185, 129, 0.2); color: #10b981; padding: 6px 12px; border-radius: 10px; font-size: 0.7rem; font-weight: 800; border: 1px solid rgba(16, 185, 129, 0.3); backdrop-filter: blur(5px); }
 
-        /* --- ADMIN PANEL --- */
-        #adminPanel { display: none; margin: 40px 8%; background: var(--card); padding: 30px; border-radius: 24px; border: 1px dashed var(--purple); }
-        .admin-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px; }
-        .admin-table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        .admin-table th, .admin-table td { padding: 12px; border: 1px solid #222; text-align: left; font-size: 0.85rem; }
+        .btn-buy { 
+            width: 100%; background: #1a1d29; color: white; border: 1px solid var(--glass-border);
+            padding: 15px; border-radius: 16px; font-weight: 700; cursor: pointer; transition: 0.3s;
+        }
+        .p-card:hover .btn-buy { background: var(--purple); border-color: var(--purple); box-shadow: 0 10px 20px var(--purple-glow); }
 
-        .cart-float { position: fixed; bottom: 30px; right: 30px; background: var(--purple); padding: 15px 25px; border-radius: 50px; font-weight: 800; cursor: pointer; box-shadow: 0 10px 20px var(--purple-glow); z-index: 999; }
+        /* --- ADMIN PANEL (GLASS STYLE) --- */
+        #adminPanel { 
+            display: none; margin: 20px 8%; padding: 40px; 
+            background: rgba(15, 17, 26, 0.8); border-radius: 30px; 
+            border: 1px dashed var(--purple); backdrop-filter: blur(20px);
+        }
+        .admin-input { background: #05060b; border: 1px solid #222; color: white; padding: 12px; border-radius: 12px; width: 100%; margin-bottom: 10px; }
+
+        /* --- MODAL --- */
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
+        .modal-content { background: var(--card); padding: 40px; border-radius: 30px; border: 1px solid var(--glass-border); width: 90%; max-width: 450px; }
     </style>
 </head>
 <body>
 
-    <div class="announcement">
-        <div class="marquee"><span id="runningTextDisplay">Selamat Datang di W4RAS STORE - Premium Gaming Account & Digital Solutions - Murah & Terpercaya</span></div>
+    <div class="top-bar">
+        <div class="marquee" id="marqueeBox">
+            <span id="runText">WELCOME TO W4RAS STORE • PREMIUM ACCOUNTS • 24/7 SUPPORT • INSTANT DELIVERY • BEST PRICE GUARANTEED • </span>
+            <span id="runText2">WELCOME TO W4RAS STORE • PREMIUM ACCOUNTS • 24/7 SUPPORT • INSTANT DELIVERY • BEST PRICE GUARANTEED • </span>
+        </div>
     </div>
 
     <header>
         <div class="logo">W4RAS <span>STORE</span></div>
         <div class="nav-right">
-            <nav>
-                <a href="#">Home</a>
-                <a href="#products">Products</a>
-                <a href="javascript:void(0)" class="admin-link" onclick="promptAdmin()">Admin Panel</a>
-            </nav>
+            <a href="#" style="color: var(--muted); text-decoration: none; font-weight: 600;">Home</a>
+            <div class="admin-btn" onclick="cekAdmin()">Admin Panel</div>
         </div>
     </header>
 
-    <div class="cart-float">🛒 Keranjang (<span id="cartCount">0</span>)</div>
-
     <section class="hero">
-        <h1>Premium Gaming <br><span class="gradient-text">Experience.</span></h1>
-        <p style="color: var(--muted); margin: 0 auto; max-width: 600px;">Satu tempat untuk semua kebutuhan gaming Anda. Cepat, aman, dan bergaransi.</p>
-        <div class="stats-bar">
-            <div class="stat-item"><h2 id="soldCount">1139</h2><p>Sold</p></div>
-            <div class="stat-item"><h2 id="totalItems">0</h2><p>Products</p></div>
-            <div class="stat-item"><h2>4.99</h2><p>Rating</p></div>
-        </div>
+        <h1>Looking for <br><span class="gradient-text">Gaming Accounts?</span></h1>
+        <p style="color: var(--muted); margin-top: 20px;">Lah Market is the number one destination for quality accounts & more.</p>
     </section>
 
-    <div class="product-grid" id="productDisplay"></div>
-
-    <div class="modal-overlay" id="modalOrder">
-        <div class="modal-content">
-            <h2 style="margin-bottom:20px;">🛒 Checkout</h2>
-            <div class="input-group">
-                <label>Produk</label>
-                <input type="text" id="mProd" readonly>
-            </div>
-            <div class="input-group">
-                <label>Email Penerima</label>
-                <input type="email" id="mEmail" placeholder="email@gmail.com">
-            </div>
-            <div class="input-group">
-                <label>Jumlah</label>
-                <div class="qty-ctrl">
-                    <button class="btn-qty" onclick="ubahQty(-1)">-</button>
-                    <b id="mQty">1</b>
-                    <button class="btn-qty" onclick="ubahQty(1)">+</button>
-                </div>
-            </div>
-            <div style="background:rgba(124,58,237,0.1); padding:20px; border-radius:15px; margin:20px 0; border:1px solid var(--purple);">
-                <span style="color:var(--muted); font-size:0.8rem;">Total Bayar</span>
-                <h2 id="mTotal">Rp0</h2>
-            </div>
-            <button class="btn-buy" style="padding:15px;" onclick="simulasiBayar()">Bayar Sekarang (QRIS)</button>
-            <button class="btn-buy" style="background:transparent; margin-top:10px;" onclick="tutupModal('modalOrder')">Batal</button>
+    <div class="features-grid">
+        <div class="f-card">
+            <div class="f-icon">🛡️</div>
+            <h3>Guaranteed Quality</h3>
+            <p>Kami menyediakan hanya akun dengan kualitas terbaik dan aman.</p>
+        </div>
+        <div class="f-card">
+            <div class="f-icon">⚡</div>
+            <h3>Instant Delivery</h3>
+            <p>Produk langsung dikirim secara otomatis setelah pembayaran sukses.</p>
+        </div>
+        <div class="f-card">
+            <div class="f-icon">🎧</div>
+            <h3>Live Support</h3>
+            <p>Butuh bantuan? Tim support kami siap melayani Anda 24/7.</p>
         </div>
     </div>
 
-    <div id="adminPanel">
-        <div style="display:flex; justify-content:space-between; align-items:center;">
-            <h2>🛠️ Dashboard Admin</h2>
-            <button onclick="location.reload()" style="background:var(--red); border:none; color:white; padding:5px 10px; border-radius:5px; cursor:pointer;">Logout</button>
-        </div>
-        
-        <div class="admin-grid">
-            <div class="input-group">
-                <label>Update Tulisan Berjalan</label>
-                <input type="text" id="adminRunText" placeholder="Ketik pengumuman baru...">
-                <button class="btn-buy" style="margin-top:10px; font-size:0.8rem;" onclick="updateMarquee()">Update Text</button>
-            </div>
-            <div class="input-group">
-                <label>Tambah Produk Baru</label>
-                <input type="text" id="admNama" placeholder="Nama Produk">
-                <input type="number" id="admHarga" placeholder="Harga" style="margin-top:5px;">
-                <input type="number" id="admStok" placeholder="Stok" style="margin-top:5px;">
-                <button class="btn-buy" style="margin-top:10px; font-size:0.8rem;" onclick="tambahProduk()">Simpan Produk</button>
-            </div>
-        </div>
+    <div class="product-grid" id="pDisplay"></div>
 
-        <table class="admin-table">
-            <thead>
-                <tr><th>Nama Produk</th><th>Stok</th><th>Harga</th><th>Aksi</th></tr>
-            </thead>
-            <tbody id="adminList"></tbody>
-        </table>
+    <div id="adminPanel">
+        <h2 style="margin-bottom: 20px;">🛠️ Admin Dashboard</h2>
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+            <div>
+                <h3>Tambah Produk</h3>
+                <input type="text" id="admNama" class="admin-input" placeholder="Nama Produk">
+                <input type="number" id="admHarga" class="admin-input" placeholder="Harga (Rp)">
+                <input type="number" id="admStok" class="admin-input" placeholder="Stok">
+                <button class="admin-btn" style="width:100%" onclick="tambah()">Simpan Produk</button>
+            </div>
+            <div>
+                <h3>Update Running Text</h3>
+                <input type="text" id="admRun" class="admin-input" placeholder="Teks baru...">
+                <button class="admin-btn" style="width:100%" onclick="updateText()">Update Pengumuman</button>
+            </div>
+        </div>
     </div>
 
     <script>
-        let products = JSON.parse(localStorage.getItem('waras_db')) || [
-            { id: 1, name: 'LAH STEAM FRESH', price: 1500, stock: 43, img: 'https://via.placeholder.com/400/0b0d14/7c3aed?text=Steam' },
-            { id: 2, name: 'LAH ROCKSTAR PRIVATE', price: 13000, stock: 14, img: 'https://via.placeholder.com/400/0b0d14/7c3aed?text=Rockstar' }
-        ];
-
-        let pPrice = 0, pQty = 1, currentID = null, cart = 0;
-
-        // --- CORE FUNCTIONS ---
-        function render() {
-            const display = document.getElementById('productDisplay');
-            const adminList = document.getElementById('adminList');
-            display.innerHTML = ''; adminList.innerHTML = '';
-
-            products.forEach(p => {
-                // Render UI Toko
-                display.innerHTML += `
-                    <div class="p-card">
-                        <img src="${p.img}" class="p-img">
-                        <div class="p-info">
-                            <h4>${p.name}</h4>
-                            <div class="p-price">Rp${p.price.toLocaleString('id-ID')}</div>
-                            <p style="font-size:0.8rem; color:var(--muted); margin-bottom:15px;">Stok tersedia: ${p.stock}</p>
-                            <button class="btn-buy" ${p.stock <= 0 ? 'disabled' : ''} onclick="bukaOrder(${p.id})">
-                                ${p.stock <= 0 ? 'Habis' : 'Beli Sekarang'}
-                            </button>
-                        </div>
-                    </div>`;
-                
-                // Render UI Admin
-                adminList.innerHTML += `
-                    <tr>
-                        <td>${p.name}</td>
-                        <td>${p.stock}</td>
-                        <td>Rp${p.price}</td>
-                        <td><button onclick="hapusProduk(${p.id})" style="color:red; border:none; background:none; cursor:pointer;">Hapus</button></td>
-                    </tr>`;
-            });
-
-            document.getElementById('totalItems').innerText = products.length;
-            // Load Running Text
-            const savedText = localStorage.getItem('waras_marquee') || "Selamat Datang di W4RAS STORE - Premium Gaming Account & Digital Solutions";
-            document.getElementById('runningTextDisplay').innerText = savedText;
-        }
-
-        // --- ORDER LOGIC ---
-        function bukaOrder(id) {
-            const p = products.find(x => x.id === id);
-            currentID = id; pPrice = p.price; pQty = 1;
-            document.getElementById('mProd').value = p.name;
-            document.getElementById('mQty').innerText = pQty;
-            updateTotal();
-            document.getElementById('modalOrder').style.display = 'flex';
-        }
-
-        function ubahQty(n) {
-            const p = products.find(x => x.id === currentID);
-            if(pQty + n > p.stock) return alert("Stok tidak cukup!");
-            pQty += n; if(pQty < 1) pQty = 1;
-            document.getElementById('mQty').innerText = pQty;
-            updateTotal();
-        }
-
-        function updateTotal() {
-            document.getElementById('mTotal').innerText = "Rp" + (pPrice * pQty).toLocaleString('id-ID');
-        }
-
-        function simulasiBayar() {
-            if(!document.getElementById('mEmail').value) return alert("Email wajib diisi!");
-            const p = products.find(x => x.id === currentID);
-            p.stock -= pQty; cart++;
-            document.getElementById('cartCount').innerText = cart;
-            save();
-            alert("Pembayaran Berhasil! Cek email Anda.");
-            tutupModal('modalOrder');
-        }
-
-        // --- ADMIN LOGIC ---
-        function promptAdmin() {
-            const pass = prompt("Masukkan Password Admin:");
-            if(pass === "admin123") {
-                document.getElementById('adminPanel').style.display = 'block';
-                window.location.hash = "adminPanel";
-            } else { alert("Akses Ditolak!"); }
-        }
-
-        function updateMarquee() {
-            const txt = document.getElementById('adminRunText').value;
-            if(!txt) return;
-            localStorage.setItem('waras_marquee', txt);
-            document.getElementById('runningTextDisplay').innerText = txt;
-            alert("Running text diperbarui!");
-        }
-
-        function tambahProduk() {
-            const n = document.getElementById('admNama').value;
-            const h = document.getElementById('admHarga').value;
-            const s = document.getElementById('admStok').value;
-            if(!n || !h) return alert("Isi data produk!");
-            products.push({ id: Date.now(), name: n, price: parseInt(h), stock: parseInt(s), img: 'https://via.placeholder.com/400/0b0d14/7c3aed?text=Account' });
-            save();
-        }
-
-        function hapusProduk(id) {
-            products = products.filter(p => p.id !== id);
-            save();
-        }
-
-        function save() {
-            localStorage.setItem('waras_db', JSON.stringify(products));
-            render();
-        }
-
-        function tutupModal(id) { document.getElementById(id).style.display = 'none'; }
-
-        render();
-    </script>
-</body>
-</html>
+        let db = JSON.parse(localStorage.getItem('w4ras_premium')) || [
+            {id: 1, name: 'STEAM FRESH', price: 1500, stock: 2, img: '
