@@ -10,17 +10,14 @@
         :root { --emerald: #10b981; --dark-bg: #020617; }
         body { background: var(--dark-bg); color: #fff; font-family: 'Plus Jakarta Sans', sans-serif; min-height: 100vh; overflow-x: hidden; }
         
-        /* BACKGROUND & GRID ANIMATION */
         .bg-matrix { position: fixed; inset: 0; z-index: -1; background: linear-gradient(rgba(2,6,23,0.85), rgba(2,6,23,0.85)), url('https://www.transparenttextures.com/patterns/carbon-fibre.png'); }
         .grid-overlay { position: fixed; inset: 0; z-index: -1; background-image: linear-gradient(var(--emerald) 1px, transparent 1px), linear-gradient(90deg, var(--emerald) 1px, transparent 1px); background-size: 50px 50px; opacity: 0.05; animation: moveGrid 20s linear infinite; }
         @keyframes moveGrid { from { transform: translateY(0); } to { transform: translateY(50px); } }
 
-        /* GLASS UI COMPONENTS */
         .glass-box { background: rgba(255, 255, 255, 0.03); backdrop-filter: blur(15px); border: 1px solid rgba(255, 255, 255, 0.05); border-radius: 40px; }
         .hero-banner { background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(0, 0, 0, 0.4)); border-radius: 50px; padding: 60px; position: relative; border: 1px solid rgba(16, 185, 129, 0.2); overflow: hidden; }
         .btn-emerald { background: var(--emerald); color: #000; font-weight: 800; border-radius: 12px; transition: 0.3s; cursor: pointer; }
         
-        /* MARQUEE RUNNING TEXT */
         .marquee-container { position: absolute; bottom: 30px; left: 0; width: 100%; overflow: hidden; }
         .marquee-text { color: var(--emerald); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.4em; white-space: nowrap; }
 
@@ -54,24 +51,26 @@
         <section class="hero-banner">
             <h2 class="text-5xl font-black italic text-white uppercase tracking-tighter mb-4">W4RAS <span class="text-emerald-500">ULTIMATE</span></h2>
             <div class="marquee-container">
-                <marquee id="banner-text" class="marquee-text" scrollamount="6">LOADING SYSTEM... — SILAHKAN BELANJA — PROSES INSTAN 24/7 — </marquee>
+                <marquee id="banner-text" class="marquee-text" scrollamount="6">RELIABLE PREMIUM STORE — PROSES INSTAN 24/7 — </marquee>
             </div>
         </section>
 
         <div class="flex flex-wrap items-center gap-4">
             <input type="text" id="search-box" placeholder="Cari item..." class="bg-black/40 border border-white/10 rounded-xl p-4 w-full md:w-80 outline-none focus:border-emerald-500 transition font-bold text-sm" onkeyup="filterProducts()">
-            <div id="category-list" class="flex flex-wrap gap-2">
-                </div>
+            <div id="category-list" class="flex flex-wrap gap-2"></div>
         </div>
 
         <main id="shop-view" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 xl:grid-cols-5 gap-8 pt-4"></main>
 
         <main id="admin-view" class="hidden grid grid-cols-1 lg:grid-cols-12 gap-8">
             <aside class="lg:col-span-4 glass-box p-8 space-y-4">
-                <h3 class="text-emerald-500 font-black uppercase mb-4 italic text-xl">Master Admin</h3>
+                <div class="flex justify-between items-center mb-4">
+                    <h3 class="text-emerald-500 font-black uppercase italic text-xl">Master Admin</h3>
+                    <button onclick="logoutAdmin()" class="bg-red-500/20 text-red-500 text-[10px] font-black px-4 py-2 rounded-xl border border-red-500/20 hover:bg-red-500 hover:text-white transition">EXIT PANEL</button>
+                </div>
                 
                 <div class="p-4 bg-white/5 rounded-2xl border border-white/10 space-y-2">
-                    <p class="text-[9px] font-bold text-gray-500 uppercase">Pengaturan Login Admin</p>
+                    <p class="text-[9px] font-bold text-gray-500 uppercase">Login Settings</p>
                     <input type="text" id="new-adm-user" placeholder="Username Baru" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs">
                     <input type="text" id="new-adm-pass" placeholder="Password Baru" class="w-full bg-black/40 border border-white/10 p-3 rounded-xl text-xs">
                     <button onclick="updateAdminAccount()" class="btn-emerald w-full py-2 text-[10px]">SAVE LOGIN</button>
@@ -84,7 +83,7 @@
 
                 <hr class="opacity-10 my-6">
                 
-                <h4 class="text-xs font-black uppercase text-gray-500 italic">Produk & Stok</h4>
+                <h4 class="text-xs font-black uppercase text-gray-500 italic">Add Product / Restock</h4>
                 <input type="text" id="p-category" placeholder="Kategori (Contoh: DISCORD)" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
                 <input type="text" id="p-name" placeholder="Nama Produk" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
                 <input type="number" id="p-price" placeholder="Harga" class="w-full bg-black/40 border border-white/10 p-4 rounded-xl text-sm">
@@ -100,7 +99,7 @@
 
     <div id="cart-modal" class="modal-blur">
         <div class="glass-box p-10 max-w-md w-full">
-            <h3 class="text-emerald-500 font-black mb-8 uppercase italic text-center">Keranjang</h3>
+            <h3 class="text-emerald-500 font-black mb-8 uppercase italic text-center">Keranjang Belanja</h3>
             <div id="cart-list" class="space-y-4 mb-8"></div>
             <div class="flex justify-between font-black text-2xl mb-8 pt-4 border-t border-white/10 text-emerald-500">
                 <span>TOTAL</span><span id="cart-total">Rp 0</span>
@@ -115,7 +114,7 @@
             <h3 class="text-emerald-500 font-black mb-4 uppercase italic">Scan QRIS</h3>
             <img id="qris-img" src="" class="w-full bg-white p-4 rounded-[2.5rem] mb-6 shadow-2xl">
             <div class="bg-emerald-500/10 border border-emerald-500/30 p-4 rounded-2xl mb-6">
-                <p class="text-[10px] font-black uppercase text-emerald-500 italic">⚠ SUDAH BAYAR? HUBUNGI CS <br>UNTUK AMBIL AKUN ANDA!</p>
+                <p class="text-[10px] font-black uppercase text-emerald-500 italic">⚠ SUDAH BAYAR? HUBUNGI CS <br>UNTUK AMBIL AKUN!</p>
             </div>
             <input type="file" id="proof-upload" class="hidden" onchange="showToast('BUKTI TERPILIH!')">
             <button onclick="document.getElementById('proof-upload').click()" class="w-full bg-white/5 border border-white/10 py-3 rounded-xl text-[10px] mb-4 uppercase font-bold text-gray-400">Pilih Bukti Pembayaran</button>
@@ -125,9 +124,9 @@
 
     <div id="login-modal" class="modal-blur">
         <div class="glass-box p-10 max-w-sm w-full text-center">
-            <h3 class="text-emerald-500 font-black mb-8 uppercase italic">Unlock System</h3>
-            <input type="text" id="adm-user" placeholder="Username" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-4">
-            <input type="password" id="adm-pass" placeholder="Password" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-8">
+            <h3 class="text-emerald-500 font-black mb-8 uppercase italic">Unlock Panel</h3>
+            <input type="text" id="adm-user" placeholder="Username" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-4 outline-none">
+            <input type="password" id="adm-pass" placeholder="Password" class="w-full bg-black/60 border border-white/10 p-4 rounded-xl text-center mb-8 outline-none">
             <button onclick="doLogin()" class="btn-emerald w-full py-4 text-xs uppercase">Unlock</button>
         </div>
     </div>
@@ -150,7 +149,6 @@
         let db = JSON.parse(localStorage.getItem('w4_db')) || [];
         let cart = [];
 
-        // FUNCTION: TOAST NOTIF
         function showToast(msg) {
             const container = document.getElementById('toast-container');
             const toast = document.createElement('div');
@@ -159,14 +157,13 @@
             setTimeout(() => toast.remove(), 3000);
         }
 
-        // FUNCTION: RENDER SHOP DENGAN FILTER KATEGORI
         function renderShop(cat = 'ALL') {
             const displayDb = cat === 'ALL' ? db : db.filter(p => p.category === cat);
             document.getElementById('shop-view').innerHTML = displayDb.map(p => `
                 <div class="glass-box p-6 border-white/5 hover:border-emerald-500 transition duration-500 group">
                     <div class="relative mb-6 rounded-2xl overflow-hidden">
                         <img src="${p.img}" class="w-full h-44 object-cover group-hover:scale-110 transition duration-700">
-                        <span class="absolute top-3 right-3 bg-black/80 text-emerald-500 text-[9px] font-black px-3 py-1 rounded-lg uppercase">${p.category}</span>
+                        <span class="absolute top-3 right-3 bg-black/80 text-emerald-500 text-[9px] font-black px-3 py-1 rounded-lg uppercase border border-emerald-500/20">${p.category}</span>
                         <span class="absolute bottom-3 left-3 bg-emerald-500 text-black text-[8px] font-black px-2 py-1 rounded-md">STOCK: ${p.accounts.length}</span>
                     </div>
                     <h3 class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1 italic">${p.name}</h3>
@@ -176,7 +173,6 @@
             renderCategories();
         }
 
-        // FUNCTION: RENDER BUTTON KATEGORI
         function renderCategories() {
             const cats = [...new Set(db.map(p => p.category))];
             document.getElementById('category-list').innerHTML = `
@@ -184,7 +180,6 @@
                 ` + cats.map(c => `<button onclick="renderShop('${c}')" class="bg-white/5 border border-white/10 px-6 py-3 rounded-xl text-[10px] font-black uppercase hover:bg-emerald-500 hover:text-black transition">${c}</button>`).join('');
         }
 
-        // FUNCTION: KERANJANG & QUANTITY
         function addToCart(id) {
             const item = db.find(x => x.id == id);
             const inCart = cart.find(x => x.id == id);
@@ -223,7 +218,6 @@
             document.getElementById('cart-count').innerText = cart.length;
         }
 
-        // WEBHOOK FORMAT PREMIUM (SESUAI FOTO)
         async function sendToDiscord() {
             const webhookUrl = localStorage.getItem('w4_webhook');
             const proof = document.getElementById('proof-upload').files[0];
@@ -237,7 +231,7 @@
             const formData = new FormData();
             formData.append("payload_json", JSON.stringify({
                 embeds: [{
-                    title: "⚠ ORDER BARU - VERIFIKASI SEKARANG",
+                    title: "⚠ ORDER BARU - #1 ONTOP",
                     color: 16763904,
                     fields: [
                         { name: "Order ID", value: `\`${orderID}\``, inline: true },
@@ -246,14 +240,14 @@
                         { name: "🔑 AKUN", value: "```MINTA ADMIN```" }
                     ],
                     image: { url: "attachment://proof.png" },
-                    footer: { text: "W4RAS STORE | #1 ONTOP DI INDO" }
+                    footer: { text: "W4RAS STORE V37.0" }
                 }]
             }));
             formData.append("file1", proof, "proof.png");
 
             try {
                 await fetch(webhookUrl, { method: 'POST', body: formData });
-                showToast("PESANAN TERKIRIM!"); setTimeout(() => location.reload(), 2000);
+                showToast("TERKIRIM!"); setTimeout(() => location.reload(), 2000);
             } catch (e) { showToast("GAGAL!"); btn.disabled = false; btn.innerText = "KIRIM KE DISCORD"; }
         }
 
@@ -274,6 +268,12 @@
             } else { showToast("LOGIN GAGAL!"); }
         }
 
+        function logoutAdmin() {
+            document.getElementById('admin-view').classList.add('hidden');
+            document.getElementById('shop-view').classList.remove('hidden');
+            showToast("KELUAR DARI PANEL");
+        }
+
         function addProduct() {
             const name = document.getElementById('p-name').value;
             const category = document.getElementById('p-category').value.toUpperCase();
@@ -281,10 +281,10 @@
             const existing = db.find(p => p.name === name);
             if(existing) {
                 existing.accounts = [...existing.accounts, ...newAccs];
-                showToast("STOK DITAMBAHKAN!");
+                showToast("STOK DI-RESTOK!");
             } else {
                 db.push({ id: Date.now(), category: category, name: name, price: Number(document.getElementById('p-price').value), accounts: newAccs, img: document.getElementById('p-img').value });
-                showToast("PRODUK BARU DISIMPAN!");
+                showToast("PRODUK DISIMPAN!");
             }
             localStorage.setItem('w4_db', JSON.stringify(db)); renderShop(); renderAdmin();
         }
@@ -315,8 +315,7 @@
             document.querySelectorAll('#shop-view > div').forEach(c => c.style.display = c.innerText.toLowerCase().includes(val) ? 'block' : 'none');
         }
 
-        // INITIAL LOAD
-        document.getElementById('banner-text').innerText = localStorage.getItem('w4_marquee') || "SELAMAT DATANG DI W4RAS STORE — #1 ONTOP DI INDO —";
+        document.getElementById('banner-text').innerText = localStorage.getItem('w4_marquee') || "W4RAS STORE | #1 ONTOP DI INDO —";
         renderShop();
     </script>
 </body>
