@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>W4RAS STORE | Admin & Shop</title>
+    <title>W4RAS STORE | OFFICIAL STORE</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
     <style>
         :root {
@@ -17,49 +17,71 @@
             --muted: #9ca3af;
         }
 
-        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; }
-        body { background: var(--bg); color: var(--text); overflow-x: hidden; }
+        * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
+        body { background: var(--bg); color: var(--text); }
 
-        /* --- NAV & HERO --- */
-        header { display: flex; justify-content: space-between; align-items: center; padding: 20px 8%; background: rgba(11, 13, 20, 0.9); position: sticky; top: 0; z-index: 100; border-bottom: 1px solid #222; }
-        .logo { font-size: 1.5rem; font-weight: 800; }
+        /* --- NAVIGATION --- */
+        header {
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 20px 8%; background: rgba(11, 13, 20, 0.95);
+            backdrop-filter: blur(10px); position: sticky; top: 0; z-index: 1000;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; color: white; display: flex; align-items: center; gap: 10px; }
         .logo span { color: var(--purple); }
-        nav a { color: var(--muted); text-decoration: none; margin-left: 25px; font-weight: 600; cursor: pointer; }
+        nav a { color: var(--muted); text-decoration: none; margin-left: 25px; font-weight: 600; cursor: pointer; transition: 0.3s; }
+        nav a:hover { color: white; }
 
-        .hero { text-align: center; padding: 40px 5%; }
-        .stats-container { display: flex; justify-content: center; gap: 40px; margin-top: 20px; }
-        .stat-item h2 { color: var(--purple); font-size: 2.2rem; }
+        /* --- HERO SECTION --- */
+        .hero { text-align: center; padding: 80px 5% 40px; background: radial-gradient(circle at top, rgba(124, 58, 237, 0.15), transparent); }
+        .hero h1 { font-size: 3.5rem; margin-bottom: 15px; font-weight: 800; }
+        .gradient-text { background: linear-gradient(90deg, var(--purple), #a855f7); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        
+        .stats-container { display: flex; justify-content: center; gap: 50px; margin-top: 30px; }
+        .stat-item h2 { color: var(--purple); font-size: 2.5rem; font-weight: 800; }
+        .stat-item p { font-size: 0.8rem; color: var(--muted); text-transform: uppercase; letter-spacing: 1px; font-weight: 700; }
 
-        /* --- CATEGORY SELECTOR --- */
-        .cat-filter { display: flex; justify-content: center; gap: 15px; margin-bottom: 30px; }
-        .cat-btn { background: #1c1f2a; border: 1px solid #333; color: white; padding: 8px 20px; border-radius: 10px; cursor: pointer; display: flex; align-items: center; gap: 8px; font-size: 14px; }
-        .cat-btn.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 15px rgba(124, 58, 237, 0.4); }
+        /* --- CATEGORY --- */
+        .cat-filter { display: flex; justify-content: center; gap: 15px; margin: 40px 0; }
+        .cat-btn { background: #1c1f2a; border: 1px solid #333; color: white; padding: 10px 25px; border-radius: 12px; cursor: pointer; font-weight: 600; transition: 0.3s; }
+        .cat-btn.active { background: var(--purple); border-color: var(--purple); box-shadow: 0 0 20px rgba(124, 58, 237, 0.3); }
 
         /* --- PRODUCT GRID --- */
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; padding: 0 8% 40px; }
-        .p-card { background: var(--card); border-radius: 18px; padding: 15px; border: 1px solid #222; position: relative; }
-        .p-image-box img { width: 100%; border: 2px solid var(--green); border-radius: 12px; }
-        .p-price { font-size: 24px; font-weight: 800; color: #8b5cf6; }
-        .p-old-price { font-size: 14px; color: var(--red); text-decoration: line-through; margin-left: 10px; }
-        .stock-box { background: #1c1f2a; padding: 10px; border-radius: 10px; font-size: 12px; margin: 15px 0; display: flex; align-items: center; gap: 8px; }
+        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 25px; padding: 0 8% 60px; }
+        .p-card { background: var(--card); border-radius: 20px; padding: 18px; border: 1px solid #222; transition: 0.3s; position: relative; }
+        .p-card:hover { transform: translateY(-5px); border-color: var(--purple); }
         
-        /* --- ADMIN PANEL --- */
-        #admin { padding: 60px 8%; background: #050505; border-top: 1px solid #333; }
-        .admin-card { background: var(--card); padding: 25px; border-radius: 15px; border: 1px solid #333; margin-bottom: 20px; }
-        .admin-input { width: 100%; padding: 12px; background: #161925; border: 1px solid #333; color: white; border-radius: 8px; margin-bottom: 10px; }
-        table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-        th { text-align: left; color: var(--muted); padding: 10px; border-bottom: 1px solid #333; }
-        td { padding: 10px; border-bottom: 1px solid #111; }
+        .p-image-box { position: relative; margin-bottom: 20px; border-radius: 15px; overflow: hidden; }
+        .p-image-box img { width: 100%; border: 2px solid var(--green); border-radius: 12px; display: block; }
+        .badge-status { position: absolute; top: 12px; right: 12px; padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; background: rgba(34, 197, 94, 0.2); color: var(--green); border: 1px solid var(--green); }
+        
+        .p-info h4 { font-size: 18px; margin-bottom: 5px; color: white; }
+        .p-code { font-size: 11px; color: var(--accent); font-weight: 700; margin-bottom: 15px; display: block; text-transform: uppercase; }
+        .p-price { font-size: 26px; font-weight: 800; color: #8b5cf6; margin-bottom: 5px; }
+        .p-reseller { font-size: 14px; color: var(--muted); margin-bottom: 15px; }
+        .p-reseller span { color: var(--green); font-weight: 700; }
+        
+        .stock-box { background: #1c1f2a; padding: 12px; border-radius: 12px; font-size: 13px; display: flex; align-items: center; gap: 10px; margin-bottom: 20px; color: var(--muted); }
+        .dot { width: 8px; height: 8px; border-radius: 50%; background: var(--green); box-shadow: 0 0 8px var(--green); }
+        
+        .btn-buy { background: linear-gradient(90deg, var(--accent), var(--purple)); color: white; border: none; padding: 14px; border-radius: 12px; font-weight: 800; cursor: pointer; width: 100%; transition: 0.3s; display: flex; align-items: center; justify-content: center; gap: 10px; }
+        .btn-buy:hover { filter: brightness(1.2); }
 
-        .btn-action { background: var(--purple); color: white; border: none; padding: 12px 20px; border-radius: 10px; cursor: pointer; font-weight: bold; width: 100%; }
-        .btn-sm { padding: 5px 10px; font-size: 12px; width: auto; }
+        /* --- ADMIN DASHBOARD --- */
+        #admin { padding: 80px 8%; background: #050505; border-top: 1px solid #222; }
+        .admin-card { background: var(--card); padding: 30px; border-radius: 20px; border: 1px solid #333; margin-top: 25px; }
+        .admin-input { width: 100%; padding: 14px; background: #161925; border: 1px solid #333; color: white; border-radius: 10px; margin-bottom: 15px; }
+        
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th { text-align: left; color: var(--muted); padding: 15px; border-bottom: 1px solid #333; }
+        td { padding: 15px; border-bottom: 1px solid #111; }
 
         /* --- MODAL --- */
-        .modal { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); display: none; align-items: center; justify-content: center; z-index: 1000; }
-        .modal-content { background: #0f121d; padding: 30px; border-radius: 20px; width: 400px; border: 1px solid #222; }
+        .modal-overlay { position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.95); display: none; align-items: center; justify-content: center; z-index: 2000; }
+        .modal-content { background: #0f121d; width: 90%; max-width: 450px; border-radius: 24px; padding: 30px; border: 1px solid #333; }
     </style>
 </head>
-<body onload="renderProducts()">
+<body onload="refreshApp()">
 
     <header>
         <div class="logo">🛒 W4RAS <span>STORE</span></div>
@@ -71,150 +93,177 @@
 
     <section class="hero">
         <h1>Premium Gaming <span class="gradient-text">Accounts?</span></h1>
+        <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">Destinasi terpercaya untuk akun gaming berkualitas tinggi dan produk digital eksklusif.</p>
+        
         <div class="stats-container">
-            <div class="stat-item"><h2 id="countSold">1139</h2><p>Sold</p></div>
-            <div class="stat-item"><h2 id="countTotal">0</h2><p>Products</p></div>
+            <div class="stat-item"><h2 id="dispSold">1139</h2><p>Sold</p></div>
+            <div class="stat-item"><h2 id="dispTotal">0</h2><p>Products</p></div>
+            <div class="stat-item"><h2>4.99</h2><p>Rating</p></div>
         </div>
     </section>
 
-    <div class="cat-filter" id="catList">
-        <button class="cat-btn active" onclick="filterCat('All')">All</button>
-        <button class="cat-btn" onclick="filterCat('FiveM')">🎮 FiveM</button>
-        <button class="cat-btn" onclick="filterCat('Cloud Phone')">📱 Cloud Phone</button>
+    <div class="cat-filter">
+        <button class="cat-btn active" onclick="setFilter('All')">All</button>
+        <button class="cat-btn" onclick="setFilter('FiveM')">🎮 FiveM</button>
+        <button class="cat-btn" onclick="setFilter('Cloud Phone')">📱 Cloud Phone</button>
     </div>
 
-    <div class="product-grid" id="shopGrid">
-        </div>
+    <div class="product-grid" id="mainGrid"></div>
 
     <section id="admin">
-        <div id="loginArea">
-            <h2>🔐 Admin Login</h2>
-            <div class="admin-card" style="max-width: 400px;">
-                <input type="text" id="userA" class="admin-input" placeholder="Username">
-                <input type="password" id="passA" class="admin-input" placeholder="Password">
-                <button class="btn-action" onclick="login()">Login</button>
+        <div id="adminLogin">
+            <h2 style="text-align:center; margin-bottom:20px;">🔐 Admin Login</h2>
+            <div class="admin-card" style="max-width: 400px; margin: 0 auto;">
+                <input type="text" id="user" class="admin-input" placeholder="Username">
+                <input type="password" id="pass" class="admin-input" placeholder="Password">
+                <button class="btn-buy" onclick="handleLogin()">Masuk Dashboard</button>
             </div>
         </div>
 
-        <div id="dashArea" style="display: none;">
-            <h2>🛠️ Dashboard Admin</h2>
-            
+        <div id="adminDash" style="display: none;">
+            <div style="display:flex; justify-content:space-between; align-items:center;">
+                <h2>📊 Dashboard Kontrol Toko</h2>
+                <button onclick="handleLogout()" style="background:var(--red); color:white; border:none; padding:8px 15px; border-radius:8px; cursor:pointer;">Logout</button>
+            </div>
+
             <div class="admin-card">
-                <h4>➕ Tambah Produk & Diskon</h4>
-                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 15px;">
-                    <input type="text" id="pName" class="admin-input" placeholder="Nama Produk">
-                    <input type="number" id="pPrice" class="admin-input" placeholder="Harga (Rp)">
-                    <input type="number" id="pOldPrice" class="admin-input" placeholder="Harga Coret (Opsional)">
-                    <select id="pCat" class="admin-input">
+                <h4>➕ Tambah/Edit Produk</h4>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; margin-top: 20px;">
+                    <input type="text" id="nProd" class="admin-input" placeholder="Nama Produk">
+                    <input type="number" id="hProd" class="admin-input" placeholder="Harga (Rp)">
+                    <select id="kProd" class="admin-input">
                         <option value="FiveM">FiveM</option>
                         <option value="Cloud Phone">Cloud Phone</option>
                     </select>
-                    <input type="number" id="pStock" class="admin-input" placeholder="Stok Awal">
-                    <input type="text" id="pImg" class="admin-input" placeholder="URL Gambar">
+                    <input type="number" id="sProd" class="admin-input" placeholder="Stok">
+                    <input type="text" id="iProd" class="admin-input" placeholder="Link Gambar (URL)">
                 </div>
-                <button class="btn-action" onclick="addProduct()">Simpan Produk</button>
+                <button class="btn-buy" onclick="saveProduct()">Simpan Produk Baru</button>
             </div>
 
             <div class="admin-card">
-                <h4>📦 Manajemen Stok (Restok)</h4>
+                <h4>📦 Stok & Inventaris</h4>
                 <table id="stockTable">
                     <thead>
-                        <tr><th>Produk</th><th>Stok</th><th>Aksi</th></tr>
+                        <tr><th>Produk</th><th>Kategori</th><th>Stok</th><th>Aksi</th></tr>
                     </thead>
-                    <tbody id="adminStockBody"></tbody>
+                    <tbody id="stockBody"></tbody>
                 </table>
             </div>
         </div>
     </section>
 
     <script>
-        // DATA AWAL
-        let products = JSON.parse(localStorage.getItem('w_prod')) || [
-            { id: 1, name: "LAH STEAM FRESH", price: 1500, oldPrice: 2000, cat: "FiveM", stock: 43, img: "https://via.placeholder.com/300/000000/22c55e?text=Steam" },
-            { id: 2, name: "LAH ROCKSTAR PRIVATE", price: 13000, oldPrice: 0, cat: "FiveM", stock: 14, img: "https://via.placeholder.com/300/000000/22c55e?text=Rockstar" }
+        // DATA PERSISTENCE
+        let db = JSON.parse(localStorage.getItem('waras_db')) || [
+            { id: 1, name: "LAH STEAM FRESH", price: 1500, cat: "FiveM", stock: 43, img: "https://via.placeholder.com/400/000000/22c55e?text=Steam" },
+            { id: 2, name: "LAH ROCKSTAR PRIVATE", price: 13000, cat: "FiveM", stock: 14, img: "https://via.placeholder.com/400/000000/22c55e?text=Rockstar" }
         ];
+        let currentFilter = 'All';
 
-        function renderProducts(filter = 'All') {
-            const grid = document.getElementById('shopGrid');
+        function refreshApp() {
+            renderGrid();
+            renderAdminTable();
+            document.getElementById('dispTotal').innerText = db.length;
+            document.getElementById('dispSold').innerText = localStorage.getItem('waras_sold') || 1139;
+        }
+
+        function renderGrid() {
+            const grid = document.getElementById('mainGrid');
             grid.innerHTML = "";
-            let count = 0;
-
-            products.forEach((p, index) => {
-                if (filter === 'All' || p.cat === filter) {
-                    count++;
+            db.forEach(p => {
+                if(currentFilter === 'All' || p.cat === currentFilter) {
                     grid.innerHTML += `
                         <div class="p-card">
                             <div class="p-image-box">
+                                <div class="badge-status">✓ IN STOCK</div>
                                 <img src="${p.img}">
-                                <div class="badge-status">${p.stock > 0 ? '✓ IN STOCK' : '× OUT'}</div>
                             </div>
-                            <h4>${p.name}</h4>
-                            <div class="p-price">Rp${p.price.toLocaleString()}${p.oldPrice > 0 ? `<span class="p-old-price">Rp${p.oldPrice.toLocaleString()}</span>` : ''}</div>
-                            <div class="stock-box"><div class="dot"></div> Stok: ${p.stock}</div>
-                            <button class="btn-action" ${p.stock <= 0 ? 'disabled' : ''}>${p.stock > 0 ? '🛒 Buy Now' : '🚫 Habis'}</button>
+                            <div class="p-info">
+                                <h4>${p.name}</h4>
+                                <span class="p-code">Code: ${p.cat}</span>
+                                <div class="p-price">Rp${p.price.toLocaleString('id-ID')}</div>
+                                <div class="p-reseller">Reseller: <span>Rp${(p.price*0.7).toLocaleString('id-ID')}</span></div>
+                                <div class="stock-box"><div class="dot"></div> Stok: <b>${p.stock}</b></div>
+                                <button class="btn-buy" onclick="alert('Checkout Berhasil!')">🛒 Buy Now</button>
+                            </div>
                         </div>
                     `;
                 }
             });
-            document.getElementById('countTotal').innerText = products.length;
-            renderAdminTable();
         }
 
-        // FUNGSI ADMIN
-        function login() {
-            if(document.getElementById('userA').value === "Admin123" && document.getElementById('passA').value === "admin123") {
-                document.getElementById('loginArea').style.display = 'none';
-                document.getElementById('dashArea').style.display = 'block';
+        // ADMIN LOGIC
+        function handleLogin() {
+            if(document.getElementById('user').value === "Admin123" && document.getElementById('pass').value === "admin123") {
+                document.getElementById('adminLogin').style.display = 'none';
+                document.getElementById('adminDash').style.display = 'block';
             } else { alert("Login Gagal!"); }
         }
 
-        function addProduct() {
+        function handleLogout() {
+            document.getElementById('adminLogin').style.display = 'block';
+            document.getElementById('adminDash').style.display = 'none';
+        }
+
+        function saveProduct() {
             const newP = {
                 id: Date.now(),
-                name: document.getElementById('pName').value,
-                price: parseInt(document.getElementById('pPrice').value),
-                oldPrice: parseInt(document.getElementById('pOldPrice').value) || 0,
-                cat: document.getElementById('pCat').value,
-                stock: parseInt(document.getElementById('pStock').value),
-                img: document.getElementById('pImg').value || "https://via.placeholder.com/300"
+                name: document.getElementById('nProd').value,
+                price: parseInt(document.getElementById('hProd').value),
+                cat: document.getElementById('kProd').value,
+                stock: parseInt(document.getElementById('sProd').value),
+                img: document.getElementById('iProd').value || "https://via.placeholder.com/400"
             };
-            products.push(newP);
-            save();
-            alert("Produk Berhasil Ditambah!");
+            db.push(newP);
+            sync();
+            alert("Produk Berhasil Ditambahkan!");
         }
 
         function restock(id) {
-            const amt = prompt("Masukkan jumlah stok tambahan:");
+            const amt = prompt("Tambah berapa stok?");
             if(amt) {
-                const p = products.find(x => x.id === id);
-                p.stock += parseInt(amt);
-                save();
+                const item = db.find(x => x.id === id);
+                item.stock += parseInt(amt);
+                sync();
+            }
+        }
+
+        function deleteProd(id) {
+            if(confirm("Hapus produk ini?")) {
+                db = db.filter(x => x.id !== id);
+                sync();
             }
         }
 
         function renderAdminTable() {
-            const body = document.getElementById('adminStockBody');
+            const body = document.getElementById('stockBody');
             body.innerHTML = "";
-            products.forEach(p => {
+            db.forEach(p => {
                 body.innerHTML += `
                     <tr>
                         <td>${p.name}</td>
+                        <td>${p.cat}</td>
                         <td><b>${p.stock}</b></td>
-                        <td><button class="btn-action btn-sm" onclick="restock(${p.id})">Restok</button></td>
+                        <td>
+                            <button onclick="restock(${p.id})" style="background:var(--green); border:none; padding:5px 10px; border-radius:5px; color:black; cursor:pointer;">Restok</button>
+                            <button onclick="deleteProd(${p.id})" style="background:var(--red); border:none; padding:5px 10px; border-radius:5px; color:white; cursor:pointer; margin-left:5px;">Hapus</button>
+                        </td>
                     </tr>
                 `;
             });
         }
 
-        function filterCat(c) {
-            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            renderProducts(c);
+        function sync() {
+            localStorage.setItem('waras_db', JSON.stringify(db));
+            refreshApp();
         }
 
-        function save() {
-            localStorage.setItem('w_prod', JSON.stringify(products));
-            renderProducts();
+        function setFilter(c) {
+            currentFilter = c;
+            document.querySelectorAll('.cat-btn').forEach(b => b.classList.remove('active'));
+            event.target.classList.add('active');
+            renderGrid();
         }
     </script>
 </body>
