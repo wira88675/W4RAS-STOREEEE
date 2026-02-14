@@ -4,164 +4,251 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>W4RAS STORE</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#0f1115;
---card:#1a1d24;
---text:#e4e6eb;
+--bg:#0b0e13;
+--card:#141821;
+--blue:#2f6bff;
+--green:#00c853;
+--text:#e6e6e6;
 --muted:#9aa0a6;
---neon1:#00f0ff;
---neon2:#8a2eff;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:Inter,sans-serif}
-body{background:var(--bg);color:var(--text)}
+*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+body{
+background:radial-gradient(circle at 20% 20%,rgba(47,107,255,.12),transparent 40%),
+radial-gradient(circle at 80% 80%,rgba(0,200,83,.08),transparent 40%),
+var(--bg);
+color:var(--text);
+}
+
+/* NAVBAR */
 header{
-display:flex;justify-content:space-between;align-items:center;
-padding:18px 40px;background:#12151c;border-bottom:1px solid #222
+display:flex;
+justify-content:space-between;
+align-items:center;
+padding:18px 40px;
+border-bottom:1px solid #1c2230;
+background:#0f131a;
 }
-.logo{font-weight:800;font-size:20px;letter-spacing:1px}
-.logo span{color:var(--neon1);text-shadow:0 0 8px var(--neon1)}
-.visitor{font-size:13px;color:var(--muted)}
-.hero{text-align:center;padding:70px 20px}
-.hero h1{font-size:36px;margin-bottom:10px}
-.hero p{color:var(--muted)}
+.logo{font-weight:700;font-size:18px}
+nav a{
+margin-left:20px;
+color:var(--muted);
+text-decoration:none;
+font-size:14px;
+}
+nav a:hover{color:white}
+
+/* GRID */
 .products{
-display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));
-gap:25px;padding:40px
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:22px;
+padding:40px;
 }
+
+/* CARD STYLE */
 .card{
 background:var(--card);
 border-radius:14px;
-padding:20px;
-transition:.3s;
-position:relative;
 overflow:hidden;
+transition:.3s;
+border:1px solid #1c2230;
 }
 .card:hover{
-transform:translateY(-6px);
-box-shadow:0 0 15px rgba(0,240,255,.2),0 0 30px rgba(138,46,255,.15);
+transform:translateY(-5px);
+box-shadow:0 10px 25px rgba(0,0,0,.5);
 }
-.price{margin:8px 0;font-weight:600;color:var(--neon1)}
+
+.banner{
+height:120px;
+background:linear-gradient(90deg,#2f6bff,#7b3cff);
+display:flex;
+align-items:center;
+justify-content:center;
+font-weight:600;
+}
+
+.card-body{padding:16px}
+
+.code{
+font-size:11px;
+color:var(--muted);
+margin-bottom:6px;
+}
+
+.price{
+color:var(--blue);
+font-weight:600;
+font-size:16px;
+}
+
+.reseller{
+color:var(--green);
+font-size:13px;
+margin-top:4px;
+}
+
+.stock{
+font-size:12px;
+margin-top:6px;
+color:var(--muted);
+}
+.stock span{color:var(--green);font-weight:600}
+
 button{
-width:100%;padding:10px;border:none;border-radius:8px;
-font-weight:600;cursor:pointer;
-background:linear-gradient(90deg,var(--neon1),var(--neon2));
-color:#000;
+margin-top:12px;
+width:100%;
+padding:10px;
+border:none;
+border-radius:8px;
+background:linear-gradient(90deg,#2f6bff,#7b3cff);
+color:white;
+font-weight:600;
+cursor:pointer;
 transition:.3s;
 }
-button:hover{box-shadow:0 0 15px var(--neon1)}
-button:disabled{background:#444;cursor:not-allowed}
+button:hover{
+opacity:.9;
+}
+
+/* QRIS POPUP */
 .modal{
-display:none;position:fixed;inset:0;
+display:none;
+position:fixed;
+inset:0;
 background:rgba(0,0,0,.75);
-justify-content:center;align-items:center;z-index:1000
+justify-content:center;
+align-items:center;
+z-index:999;
 }
 .modal-content{
 background:var(--card);
-padding:25px;border-radius:14px;
-width:360px;text-align:center;
-animation:fade .4s ease
+padding:25px;
+border-radius:14px;
+width:350px;
+text-align:center;
 }
-.modal-content img{margin:15px 0;border-radius:8px}
-input{width:100%;padding:8px;margin-top:8px;border-radius:6px;border:none}
-.close{background:#333;color:white;margin-top:10px}
-.countdown{margin-top:10px;font-size:14px;color:#ffcc00}
-section.review{padding:50px;text-align:center}
-.stars span{font-size:22px;cursor:pointer}
-#notif{
-position:fixed;bottom:20px;right:20px;
-background:#111;padding:12px 18px;border-radius:8px;
-display:none;color:white;
-box-shadow:0 0 10px var(--neon2);
+input{
+width:100%;
+padding:8px;
+margin-top:10px;
+border:none;
+border-radius:6px;
 }
-@keyframes fade{
-from{opacity:0;transform:scale(.95)}
-to{opacity:1;transform:scale(1)}
+.countdown{
+margin-top:10px;
+font-size:14px;
+color:#ffcc00;
+}
+
+/* ADMIN */
+.admin-modal{
+display:none;
+position:fixed;
+inset:0;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+z-index:1000;
+}
+.admin-box{
+background:var(--card);
+padding:25px;
+border-radius:14px;
+width:400px;
+max-height:80vh;
+overflow:auto;
+}
+table{
+width:100%;
+margin-top:10px;
+font-size:12px;
+border-collapse:collapse;
+}
+th,td{
+padding:6px;
+border-bottom:1px solid #222;
+}
+
+@media(max-width:1100px){
+.products{grid-template-columns:repeat(2,1fr)}
+}
+@media(max-width:600px){
+.products{grid-template-columns:1fr}
 }
 </style>
 </head>
 <body>
 
 <header>
-<div class="logo">W4RAS <span>STORE</span></div>
-<div class="visitor" id="visitorCount">👁 0 Pengunjung Online</div>
+<div class="logo">W4RAS STORE</div>
+<nav>
+<a href="#">Home</a>
+<a href="#">Products</a>
+<a href="#">Discord</a>
+<a href="#">Login</a>
+</nav>
 </header>
 
-<section class="hero">
-<h1>Premium Gaming Accounts</h1>
-<p>Secure Payment • Fast Delivery • Trusted Seller</p>
-</section>
+<section class="products" id="productList"></section>
 
-<section class="products">
-<div class="card">
-<h3>MLBB Sultan Account</h3>
-<div class="price">Rp150.000</div>
-<button onclick="beli('MLBB Sultan Account',150000)">BELI SEKARANG</button>
-</div>
-<div class="card">
-<h3>Valorant Rare Skin</h3>
-<div class="price">Rp220.000</div>
-<button onclick="beli('Valorant Rare Skin',220000)">BELI SEKARANG</button>
-</div>
-</section>
-
+<!-- QRIS MODAL -->
 <div class="modal" id="qrisModal">
 <div class="modal-content">
-<h2>Scan QRIS</h2>
-<input type="text" id="customerName" placeholder="Masukkan Nama Anda">
+<h3>Scan QRIS</h3>
+<input id="customerName" placeholder="Nama Anda">
 <p id="produkText"></p>
-<img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471880949603106992/Untitled_design.png" width="230">
+<img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471880949603106992/Untitled_design.png" width="220">
 <div class="countdown" id="countdown"></div>
-<input type="file" id="bukti">
-<button id="confirmBtn" onclick="konfirmasi()">Saya Sudah Bayar</button>
-<button class="close" onclick="closeQR()">Batal</button>
+<button onclick="konfirmasi()">Saya Sudah Bayar</button>
+<button onclick="closeQR()">Batal</button>
 </div>
 </div>
 
-<section class="review">
-<h2>Customer Reviews</h2>
-<div class="stars">
-<span onclick="rate(1)">⭐</span>
-<span onclick="rate(2)">⭐</span>
-<span onclick="rate(3)">⭐</span>
-<span onclick="rate(4)">⭐</span>
-<span onclick="rate(5)">⭐</span>
+<!-- ADMIN -->
+<div class="admin-modal" id="adminModal">
+<div class="admin-box">
+<h3>Admin Panel</h3>
+<input type="password" id="adminPass" placeholder="Password">
+<button onclick="loginAdmin()">Login</button>
+<div id="adminContent"></div>
 </div>
-<p id="ratingResult"></p>
-</section>
-
-<div id="notif"></div>
-
-<!-- TAWK -->
-<script>
-var Tawk_API=Tawk_API||{}, Tawk_LoadStart=new Date();
-(function(){
-var s1=document.createElement("script"),
-s0=document.getElementsByTagName("script")[0];
-s1.async=true;
-s1.src='https://embed.tawk.to/698f4abfcf39cf1c38c19b82/1i3u3u0u0';
-s1.charset='UTF-8';
-s1.setAttribute('crossorigin','*');
-s0.parentNode.insertBefore(s1,s0);
-})();
-</script>
+</div>
 
 <script>
-const webhook="YOUR_WEBHOOK_HERE";
+const products=[
+["MLBB Sultan","ACC-ML01",150000,43],
+["Valorant Rare","ACC-VL02",220000,12],
+["FF Sultan","ACC-FF03",130000,21],
+["PUBG Mythic","ACC-PB04",175000,5],
+["Genshin AR60","ACC-GI05",300000,3],
+["COC TH15","ACC-CO06",250000,9],
+["Steam Wallet 50k","ACC-ST07",50000,80],
+["Netflix 1 Bulan","ACC-NF08",45000,25]
+];
+
+const list=document.getElementById("productList");
+
+products.forEach(p=>{
+list.innerHTML+=`
+<div class="card">
+<div class="banner">${p[0]}</div>
+<div class="card-body">
+<div class="code">${p[1]}</div>
+<div class="price">Rp${p[2]}</div>
+<div class="reseller">Reseller Rp${p[2]-10000}</div>
+<div class="stock">Stock: <span>${p[3]}</span></div>
+<button onclick="beli('${p[0]}',${p[2]})">BUY NOW</button>
+</div>
+</div>`;
+});
+
 let currentProduct="",currentPrice=0;
 let countdownInterval;
-let cooldown=false;
-
-function randomVisitor(){
-let count=Math.floor(Math.random()*500)+800;
-document.getElementById("visitorCount").innerText="👁 "+count+" Pengunjung Online";
-}
-setInterval(randomVisitor,4000);
-randomVisitor();
 
 function beli(nama,harga){
-if(cooldown){showNotif("Tunggu 30 detik sebelum order lagi.");return;}
 currentProduct=nama;
 currentPrice=harga;
 document.getElementById("produkText").innerText=nama+" - Rp"+harga;
@@ -179,73 +266,28 @@ let timer=sec;
 countdownInterval=setInterval(()=>{
 let m=Math.floor(timer/60);
 let s=timer%60;
-document.getElementById("countdown").innerText=
-"Verifikasi dalam "+m+":"+(s<10?"0"+s:s);
-if(timer<60) document.getElementById("countdown").style.color="red";
+document.getElementById("countdown").innerText="Verifikasi "+m+":"+(s<10?"0"+s:s);
 timer--;
-if(timer<0){
-clearInterval(countdownInterval);
-document.getElementById("confirmBtn").disabled=true;
-}
+if(timer<0) clearInterval(countdownInterval);
 },1000);
 }
 
-function generateInvoice(){
-return "INV-"+Math.floor(Math.random()*999999);
+function konfirmasi(){
+alert("Order dikirim (demo version)");
+closeQR();
 }
 
-function konfirmasi(){
-let name=document.getElementById("customerName").value||"Customer";
-let file=document.getElementById("bukti").files[0];
-let invoice=generateInvoice();
-let date=new Date().toLocaleString();
-
-fetch(webhook,{
-method:"POST",
-headers:{"Content-Type":"application/json"},
-body:JSON.stringify({
-embeds:[{
-title:"ORDER BARU",
-color:3447003,
-fields:[
-{name:"Nama",value:name},
-{name:"Invoice",value:invoice},
-{name:"Produk",value:currentProduct},
-{name:"Harga",value:"Rp"+currentPrice},
-{name:"Bukti",value:file?file.name:"Tidak ada"},
-{name:"Tanggal",value:date}
-]
-}]
-})
+/* ADMIN HOTKEY */
+document.addEventListener("keydown",e=>{
+if(e.ctrlKey&&e.shiftKey&&e.key==="A"){
+document.getElementById("adminModal").style.display="flex";
+}
 });
 
-closeQR();
-cooldown=true;
-setTimeout(()=>cooldown=false,30000);
-
-setTimeout(()=>{
-Tawk_API.maximize();
-Tawk_API.sendMessage(
-"Halo CS, saya sudah bayar.\n\n"+
-"Nama: "+name+
-"\nInvoice: "+invoice+
-"\nProduk: "+currentProduct+
-"\nHarga: Rp"+currentPrice+
-"\nTanggal: "+date
-);
-},800);
+function loginAdmin(){
+if(document.getElementById("adminPass").value==="w4ras2026"){
+document.getElementById("adminContent").innerHTML="<p>Login Berhasil</p>";
 }
-
-function rate(star){
-document.getElementById("ratingResult").innerText=
-"Terima kasih atas rating "+star+"⭐!";
-}
-
-function showNotif(text){
-let n=document.getElementById("notif");
-n.innerText=text;
-n.style.display="block";
-setTimeout(()=>n.style.display="none",3000);
 }
 </script>
 
