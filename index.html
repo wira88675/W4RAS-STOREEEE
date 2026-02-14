@@ -3,22 +3,26 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>W4RAS STORE</title>
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<title>W4RAS MARKET</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 :root{
---bg:#0b0e13;
---card:#141821;
---blue:#2f6bff;
---green:#00c853;
---text:#e6e6e6;
---muted:#9aa0a6;
+--bg:#0f1115;
+--card:#181b21;
+--border:#23262d;
+--blue:#3b82f6;
+--green:#22c55e;
+--text:#e5e7eb;
+--muted:#9ca3af;
 }
-*{margin:0;padding:0;box-sizing:border-box;font-family:Poppins,sans-serif}
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Inter,sans-serif;
+}
 body{
-background:radial-gradient(circle at 20% 20%,rgba(47,107,255,.12),transparent 40%),
-radial-gradient(circle at 80% 80%,rgba(0,200,83,.08),transparent 40%),
-var(--bg);
+background:var(--bg);
 color:var(--text);
 }
 
@@ -27,50 +31,55 @@ header{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:18px 40px;
-border-bottom:1px solid #1c2230;
-background:#0f131a;
+padding:18px 60px;
+border-bottom:1px solid var(--border);
+background:#121418;
 }
-.logo{font-weight:700;font-size:18px}
+.logo{
+font-weight:600;
+font-size:16px;
+}
 nav a{
-margin-left:20px;
-color:var(--muted);
+margin-left:24px;
 text-decoration:none;
+color:var(--muted);
 font-size:14px;
 }
 nav a:hover{color:white}
 
-/* GRID */
+/* PRODUCT GRID */
 .products{
 display:grid;
 grid-template-columns:repeat(4,1fr);
-gap:22px;
-padding:40px;
+gap:24px;
+padding:40px 60px;
 }
 
-/* CARD STYLE */
+/* CARD */
 .card{
 background:var(--card);
-border-radius:14px;
+border-radius:10px;
 overflow:hidden;
-transition:.3s;
-border:1px solid #1c2230;
+border:1px solid var(--border);
+transition:0.2s;
 }
 .card:hover{
-transform:translateY(-5px);
-box-shadow:0 10px 25px rgba(0,0,0,.5);
+transform:translateY(-4px);
 }
 
 .banner{
-height:120px;
-background:linear-gradient(90deg,#2f6bff,#7b3cff);
+height:110px;
+background:#222;
 display:flex;
 align-items:center;
 justify-content:center;
 font-weight:600;
+font-size:14px;
 }
 
-.card-body{padding:16px}
+.card-body{
+padding:14px 16px 18px 16px;
+}
 
 .code{
 font-size:11px;
@@ -79,100 +88,42 @@ margin-bottom:6px;
 }
 
 .price{
-color:var(--blue);
+font-size:15px;
 font-weight:600;
-font-size:16px;
+color:var(--blue);
 }
 
 .reseller{
+font-size:12px;
 color:var(--green);
-font-size:13px;
-margin-top:4px;
+margin-top:2px;
 }
 
 .stock{
 font-size:12px;
-margin-top:6px;
 color:var(--muted);
+margin-top:6px;
+display:flex;
+justify-content:space-between;
 }
-.stock span{color:var(--green);font-weight:600}
 
-button{
+.buy-btn{
 margin-top:12px;
 width:100%;
-padding:10px;
+padding:9px;
 border:none;
-border-radius:8px;
-background:linear-gradient(90deg,#2f6bff,#7b3cff);
+border-radius:6px;
+background:var(--blue);
 color:white;
 font-weight:600;
 cursor:pointer;
-transition:.3s;
 }
-button:hover{
+.buy-btn:hover{
 opacity:.9;
 }
 
-/* QRIS POPUP */
-.modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.75);
-justify-content:center;
-align-items:center;
-z-index:999;
-}
-.modal-content{
-background:var(--card);
-padding:25px;
-border-radius:14px;
-width:350px;
-text-align:center;
-}
-input{
-width:100%;
-padding:8px;
-margin-top:10px;
-border:none;
-border-radius:6px;
-}
-.countdown{
-margin-top:10px;
-font-size:14px;
-color:#ffcc00;
-}
-
-/* ADMIN */
-.admin-modal{
-display:none;
-position:fixed;
-inset:0;
-background:rgba(0,0,0,.8);
-justify-content:center;
-align-items:center;
-z-index:1000;
-}
-.admin-box{
-background:var(--card);
-padding:25px;
-border-radius:14px;
-width:400px;
-max-height:80vh;
-overflow:auto;
-}
-table{
-width:100%;
-margin-top:10px;
-font-size:12px;
-border-collapse:collapse;
-}
-th,td{
-padding:6px;
-border-bottom:1px solid #222;
-}
-
-@media(max-width:1100px){
+/* RESPONSIVE */
+@media(max-width:1200px){
 .products{grid-template-columns:repeat(2,1fr)}
 }
 @media(max-width:600px){
@@ -183,45 +134,22 @@ border-bottom:1px solid #222;
 <body>
 
 <header>
-<div class="logo">W4RAS STORE</div>
+<div class="logo">W4RAS MARKET</div>
 <nav>
 <a href="#">Home</a>
 <a href="#">Products</a>
-<a href="#">Discord</a>
+<a href="#">Top Up</a>
 <a href="#">Login</a>
 </nav>
 </header>
 
 <section class="products" id="productList"></section>
 
-<!-- QRIS MODAL -->
-<div class="modal" id="qrisModal">
-<div class="modal-content">
-<h3>Scan QRIS</h3>
-<input id="customerName" placeholder="Nama Anda">
-<p id="produkText"></p>
-<img src="https://cdn.discordapp.com/attachments/1457989439694311519/1471880949603106992/Untitled_design.png" width="220">
-<div class="countdown" id="countdown"></div>
-<button onclick="konfirmasi()">Saya Sudah Bayar</button>
-<button onclick="closeQR()">Batal</button>
-</div>
-</div>
-
-<!-- ADMIN -->
-<div class="admin-modal" id="adminModal">
-<div class="admin-box">
-<h3>Admin Panel</h3>
-<input type="password" id="adminPass" placeholder="Password">
-<button onclick="loginAdmin()">Login</button>
-<div id="adminContent"></div>
-</div>
-</div>
-
 <script>
 const products=[
 ["MLBB Sultan","ACC-ML01",150000,43],
 ["Valorant Rare","ACC-VL02",220000,12],
-["FF Sultan","ACC-FF03",130000,21],
+["Free Fire Sultan","ACC-FF03",130000,21],
 ["PUBG Mythic","ACC-PB04",175000,5],
 ["Genshin AR60","ACC-GI05",300000,3],
 ["COC TH15","ACC-CO06",250000,9],
@@ -239,56 +167,15 @@ list.innerHTML+=`
 <div class="code">${p[1]}</div>
 <div class="price">Rp${p[2]}</div>
 <div class="reseller">Reseller Rp${p[2]-10000}</div>
-<div class="stock">Stock: <span>${p[3]}</span></div>
-<button onclick="beli('${p[0]}',${p[2]})">BUY NOW</button>
+<div class="stock">
+<span>Stock</span>
+<span>${p[3]}</span>
 </div>
-</div>`;
+<button class="buy-btn">BUY</button>
+</div>
+</div>
+`;
 });
-
-let currentProduct="",currentPrice=0;
-let countdownInterval;
-
-function beli(nama,harga){
-currentProduct=nama;
-currentPrice=harga;
-document.getElementById("produkText").innerText=nama+" - Rp"+harga;
-document.getElementById("qrisModal").style.display="flex";
-startCountdown(300);
-}
-
-function closeQR(){
-document.getElementById("qrisModal").style.display="none";
-clearInterval(countdownInterval);
-}
-
-function startCountdown(sec){
-let timer=sec;
-countdownInterval=setInterval(()=>{
-let m=Math.floor(timer/60);
-let s=timer%60;
-document.getElementById("countdown").innerText="Verifikasi "+m+":"+(s<10?"0"+s:s);
-timer--;
-if(timer<0) clearInterval(countdownInterval);
-},1000);
-}
-
-function konfirmasi(){
-alert("Order dikirim (demo version)");
-closeQR();
-}
-
-/* ADMIN HOTKEY */
-document.addEventListener("keydown",e=>{
-if(e.ctrlKey&&e.shiftKey&&e.key==="A"){
-document.getElementById("adminModal").style.display="flex";
-}
-});
-
-function loginAdmin(){
-if(document.getElementById("adminPass").value==="w4ras2026"){
-document.getElementById("adminContent").innerHTML="<p>Login Berhasil</p>";
-}
-}
 </script>
 
 </body>
