@@ -13,6 +13,7 @@
             --accent: #a855f7;
             --text: #f3f4f6;
             --muted: #9ca3af;
+            --green: #22c55e;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; font-family: 'Inter', sans-serif; scroll-behavior: smooth; }
@@ -48,27 +49,48 @@
         .kartu:hover { border-color: var(--purple); transform: translateY(-5px); }
         .ikon-ungu { background: var(--purple); width: 60px; height: 60px; border-radius: 15px; margin: 0 auto 20px; display: flex; align-items: center; justify-content: center; font-size: 1.5rem; }
 
-        /* --- PRODUCT SECTION --- */
+        /* --- MODERN PRODUCT GRID --- */
         .products { padding: 50px 5%; text-align: center; }
-        .product-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 25px; margin-top: 30px; }
-        .p-card { background: var(--card); padding: 20px; border-radius: 15px; text-align: left; border: 1px solid rgba(255,255,255,0.05); }
-        .p-card h4 { margin: 10px 0; }
-        .btn-buy { width: 100%; background: var(--purple); color: white; border: none; padding: 10px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; }
+        .product-grid-modern { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 25px; margin-top: 30px; }
+        .p-card-modern { background: #11141d; border-radius: 15px; padding: 15px; border: 1px solid #222; transition: 0.3s; text-align: left; }
+        .p-card-modern:hover { border-color: var(--green); transform: translateY(-5px); }
+        .p-image-box { position: relative; width: 100%; height: 180px; background: #050505; border-radius: 10px; border: 2px solid var(--green); display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        .badge-stok { position: absolute; top: 10px; right: 10px; padding: 5px 12px; border-radius: 20px; font-size: 10px; font-weight: 800; }
+        .in-stock { background: rgba(34, 197, 94, 0.2); color: var(--green); border: 1px solid var(--green); }
+        .out-stock { background: rgba(239, 68, 68, 0.2); color: #ef4444; border: 1px solid #ef4444; }
+        .p-info { margin-top: 15px; }
+        .p-code { color: var(--purple); font-size: 12px; font-weight: bold; text-transform: uppercase; }
+        .p-title { font-weight: 800; font-size: 18px; margin: 5px 0; }
+        .p-price-main { color: var(--accent); font-size: 24px; font-weight: 900; margin: 5px 0; }
+        .p-price-reseller { color: var(--green); font-size: 14px; font-weight: bold; }
+        .p-stock-count { background: #1a1a1a; padding: 8px; border-radius: 8px; font-size: 12px; margin-top: 15px; display: block; }
+        .btn-buy { width: 100%; background: var(--purple); color: white; border: none; padding: 12px; border-radius: 8px; cursor: pointer; font-weight: bold; margin-top: 15px; transition: 0.3s; }
+        .btn-buy:hover { background: var(--accent); }
 
-        /* --- CHECKOUT / QRIS SECTION --- */
+        /* --- MODAL STYLES (DIPERLUKAN) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85); display: none; align-items: center; justify-content: center; z-index: 2000;
+        }
+        .modal-content {
+            background: #0f121d; width: 95%; max-width: 450px; border-radius: 20px;
+            padding: 25px; border: 1px solid #222; position: relative;
+        }
+        .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; }
+        .btn-close { background: none; border: none; color: white; font-size: 28px; cursor: pointer; }
+        .input-group { margin-bottom: 20px; }
+        .input-group label { display: block; margin-bottom: 8px; font-weight: 600; font-size: 14px; }
+        .input-group input { width: 100%; background: #161925; border: 1px solid #333; color: white; padding: 12px; border-radius: 10px; outline: none; }
+        .qty-control { display: flex; align-items: center; gap: 15px; background: #161925; padding: 10px; border-radius: 10px; width: fit-content; }
+        .btn-qty { background: #2d3142; border: none; color: white; width: 35px; height: 35px; border-radius: 8px; cursor: pointer; font-size: 18px; }
+        .total-box { background: rgba(124, 58, 237, 0.1); border: 1px solid var(--purple); padding: 15px; border-radius: 12px; display: flex; align-items: center; gap: 15px; margin-top: 15px; }
+        .total-box h2 { color: var(--accent); font-size: 24px; font-weight: 800; }
+
+        /* --- CHECKOUT & ADMIN --- */
         #checkout { padding: 80px 5%; background: #0f1220; border-radius: 30px 30px 0 0; margin-top: 50px; }
         .qris-box { max-width: 500px; margin: 0 auto; background: var(--card); padding: 30px; border-radius: 20px; text-align: center; }
         .qris-img { background: white; padding: 10px; border-radius: 10px; margin: 20px 0; width: 200px; }
-        .note { color: #ffcc00; font-size: 0.9rem; font-weight: bold; margin-bottom: 20px; }
-
-        /* --- ADMIN PANEL --- */
         #admin { padding: 50px 5%; background: #050505; border-top: 2px solid var(--purple); }
-        .admin-form { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px; background: #111; padding: 20px; border-radius: 10px; }
-        input, select { background: #1a1a1a; border: 1px solid #333; color: white; padding: 12px; border-radius: 8px; outline: none; }
-        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
-        th, td { padding: 15px; text-align: left; border-bottom: 1px solid #222; }
-
-        @media (max-width: 768px) { .hero h1 { font-size: 2.5rem; } }
     </style>
 </head>
 <body>
@@ -88,8 +110,6 @@
 
     <section class="hero">
         <h1>Looking for <br><span class="gradient-text">Premium Gaming Accounts?</span></h1>
-        <p style="color: var(--muted); max-width: 600px; margin: 0 auto;">Destinasi terpercaya untuk akun gaming berkualitas tinggi dan produk digital eksklusif.</p>
-        
         <div class="stats">
             <div class="stat-item"><h2>1139</h2><p>PRODUCTS SOLD</p></div>
             <div class="stat-item"><h2>5</h2><p>TOTAL PRODUCTS</p></div>
@@ -101,89 +121,138 @@
         <div class="kartu">
             <div class="ikon-ungu">🛡️</div>
             <h3>Guaranteed Quality</h3>
-            <p>Kami hanya menyediakan akun dan software kualitas terbaik.</p>
+            <p>Kami menyediakan akun dan software kualitas terbaik.</p>
         </div>
-        <div class="kartu" style="border-color: var(--purple);">
+        <div class="kartu" style="border: 2px solid var(--purple);">
             <div class="ikon-ungu">⚡</div>
             <h3>Instant Delivery</h3>
-            <p>Produk langsung dikirim setelah pembayaran terverifikasi.</p>
+            <p>Produk dikirim instan setelah pembayaran terproses otomatis.</p>
         </div>
         <div class="kartu">
             <div class="ikon-ungu">🎧</div>
             <h3>Live Support</h3>
-            <p>Bantuan 24/7 melalui Discord resmi kami.</p>
+            <p>Bantuan 24/7. Hubungi kami melalui Discord kapan saja.</p>
         </div>
     </section>
 
     <section class="products">
-        <h2 style="font-size: 2.5rem;">Explore our products</h2>
-        <div class="product-grid">
-            <div class="p-card">
-                <div style="background: #333; height: 150px; border-radius: 10px;"></div>
-                <h4>Akun FiveM Premium</h4>
-                <p style="color: var(--purple); font-weight: bold;">Rp 50.000</p>
-                <button class="btn-buy" onclick="tambahKeKeranjang()">Tambah Ke Keranjang</button>
+        <h2 style="font-size: 2.5rem; margin-bottom: 10px;">Explore our products</h2>
+        <p style="color: var(--muted);">Pick a category to refine your search.</p>
+        
+        <div class="product-grid-modern">
+            <div class="p-card-modern">
+                <div class="p-image-box">
+                    <div class="badge-stok in-stock">✓ IN STOCK</div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/888/888879.png" width="60">
+                </div>
+                <div class="p-info">
+                    <span class="p-code">Code: STEAM</span>
+                    <h4 class="p-title">LAH STEAM FRESH</h4>
+                    <div class="p-price-main">Rp1.500</div>
+                    <div class="p-price-reseller">Reseller: <span>Rp900</span></div>
+                    <span class="p-stock-count">🟢 Stock: 43</span>
+                    <button class="btn-buy" onclick="bukaModal('LAH STEAM FRESH', 1500)">Tambah Ke Keranjang</button>
+                </div>
             </div>
-            <div class="p-card">
-                <div style="background: #333; height: 150px; border-radius: 10px;"></div>
-                <h4>Cloud Phone 24 Jam</h4>
-                <p style="color: var(--purple); font-weight: bold;">Rp 25.000</p>
-                <button class="btn-buy" onclick="tambahKeKeranjang()">Tambah Ke Keranjang</button>
+
+            <div class="p-card-modern">
+                <div class="p-image-box">
+                    <div class="badge-stok in-stock">✓ IN STOCK</div>
+                    <img src="https://cdn-icons-png.flaticon.com/512/5969/5969244.png" width="60">
+                </div>
+                <div class="p-info">
+                    <span class="p-code">Code: ROCKSTAR</span>
+                    <h4 class="p-title">LAH ROCKSTAR FRESH PRIVATE</h4>
+                    <div class="p-price-main">Rp13.000</div>
+                    <div class="p-price-reseller">Reseller: <span>Rp8.000</span></div>
+                    <span class="p-stock-count">🟢 Stock: 12</span>
+                    <button class="btn-buy" onclick="bukaModal('LAH ROCKSTAR FRESH PRIVATE', 13000)">Tambah Ke Keranjang</button>
+                </div>
             </div>
         </div>
     </section>
 
     <section id="checkout">
         <div class="qris-box">
-            <h2 style="margin-bottom: 10px;">💳 Pembayaran QRIS</h2>
-            <p style="font-size: 0.9rem; color: var(--muted);">Scan kode di bawah untuk menyelesaikan pesanan</p>
-            
+            <h2>💳 Pembayaran QRIS</h2>
             <center>
                 <img src="https://api.qrserver.com/v1/create-qr-code/?size=200x200&data=WARAS-STORE-QRIS" class="qris-img" alt="QRIS">
             </center>
-
-            <p class="note">⚠️ NOTE: Hubungi CS Untuk Mengambil Akun Anda Setelah Bayar</p>
-
-            <form style="text-align: left;">
-                <label>Upload Bukti Transfer:</label><br>
-                <input type="file" accept="image/*" style="width: 100%; margin: 10px 0;" required>
-                <button type="submit" style="width: 100%; background: #22c55e;">Kirim Konfirmasi Webhook</button>
-            </form>
+            <p style="color:yellow; font-weight:bold;">NOTE: Hubungi CS Untuk Mengambil Akun Anda</p>
         </div>
     </section>
 
-    <section id="admin">
-        <h2 style="margin-bottom: 20px;">🛠️ Admin Panel (Restricted)</h2>
-        <div class="admin-form">
-            <input type="text" placeholder="Nama Produk">
-            <input type="number" placeholder="Harga">
-            <select><option>FiveM</option><option>Cloud Phone</option></select>
-            <button>Tambah Produk</button>
+    <div class="modal-overlay" id="orderModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2 style="display: flex; align-items: center; gap: 10px;">🛒 Beli Produk</h2>
+                <button class="btn-close" onclick="tutupModal()">×</button>
+            </div>
+            <div class="input-group">
+                <label>📦 Produk</label>
+                <input type="text" id="modalNamaProduk" readonly>
+            </div>
+            <div class="input-group">
+                <label>📧 Email Penerima Akun</label>
+                <input type="email" id="userEmail" placeholder="Email untuk menerima akun">
+            </div>
+            <div class="input-group">
+                <label># Jumlah</label>
+                <div class="qty-control">
+                    <button class="btn-qty" onclick="ubahQty(-1)">-</button>
+                    <b id="displayQty">1</b>
+                    <button class="btn-qty" onclick="ubahQty(1)">+</button>
+                </div>
+            </div>
+            <div class="total-box">
+                <div style="background: var(--purple); padding: 10px; border-radius: 10px;">💳</div>
+                <h2 id="modalTotalHarga">Rp0</h2>
+            </div>
+            <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 25px;">
+                <button onclick="tutupModal()" style="background: #222; color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer;">✕ Batal</button>
+                <button onclick="lanjutBayar()" style="background: var(--purple); color: white; padding: 12px; border-radius: 10px; border: none; cursor: pointer; font-weight: bold;">✓ Lanjutkan</button>
+            </div>
         </div>
-
-        <table>
-            <thead>
-                <tr><th>Produk</th><th>Stok</th><th>Harga</th><th>Aksi</th></tr>
-            </thead>
-            <tbody>
-                <tr><td>Akun FiveM Premium</td><td>12</td><td>Rp 50.000</td><td><button style="background: #ef4444;">Hapus</button></td></tr>
-            </tbody>
-        </table>
-
-        <div style="margin-top: 30px;">
-            <h3>⚙️ Konfigurasi Webhook & QRIS</h3>
-            <input type="url" placeholder="Paste Discord Webhook URL" style="width: 100%; margin: 10px 0;">
-            <input type="text" placeholder="Ganti Data QRIS (Link/Teks)" style="width: 100%;">
-            <button>Simpan Pengaturan Sistem</button>
-        </div>
-    </section>
+    </div>
 
     <script>
         let count = 0;
-        function tambahKeKeranjang() {
+        let currentPrice = 0;
+        let currentQty = 1;
+
+        function bukaModal(nama, harga) {
+            currentPrice = harga;
+            currentQty = 1;
+            document.getElementById('modalNamaProduk').value = nama;
+            document.getElementById('displayQty').innerText = currentQty;
+            updateTotal();
+            document.getElementById('orderModal').style.display = 'flex';
+        }
+
+        function tutupModal() {
+            document.getElementById('orderModal').style.display = 'none';
+        }
+
+        function ubahQty(val) {
+            currentQty += val;
+            if (currentQty < 1) currentQty = 1;
+            document.getElementById('displayQty').innerText = currentQty;
+            updateTotal();
+        }
+
+        function updateTotal() {
+            let total = currentPrice * currentQty;
+            document.getElementById('modalTotalHarga').innerText = "Rp" + total.toLocaleString('id-ID');
+        }
+
+        function lanjutBayar() {
+            let email = document.getElementById('userEmail').value;
+            if(!email) return alert("Masukkan email penerima akun!");
             count++;
             document.getElementById('count').innerText = count;
-            alert("Produk berhasil masuk keranjang!");
+            tutupModal();
+            window.location.href = "#checkout";
+            alert("Pesanan dicatat! Silakan selesaikan pembayaran QRIS.");
         }
     </script>
 </body>
